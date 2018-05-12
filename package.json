@@ -1,0 +1,19 @@
+{
+  "name": "vinyl",
+  "version": "0.0.1",
+  "description": "Frontend for openrecord platform.",
+  "main": "TODO",
+  "scripts": {
+    "test": "TODO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openrecord/vinyl.git"
+  },
+  "author": "openrecord",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/openrecord/vinyl/issues"
+  },
+  "homepage": "https://github.com/openrecord/vinyl#readme"
+}
