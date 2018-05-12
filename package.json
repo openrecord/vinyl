@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/openrecord/vinyl/issues"
   },
-  "homepage": "https://github.com/openrecord/vinyl#readme"
+  "homepage": "https://github.com/openrecord/vinyl#readme",
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "prettier": "^1.12.1",
+    "pretty-quick": "^1.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }
