@@ -1,2 +1,2 @@
 # vinyl
-Frontend for openrecord platform.
+Frontend for the openrecord platform.
