@@ -1,3 +1,6 @@
+@import 'utilities/global-vars';
+@import 'utilities/mixins';
+
 body {
-  background: red;
+  background: $background-color;
 }
