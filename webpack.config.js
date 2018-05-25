@@ -6,9 +6,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
-  entry: [
-    './src/index.jsx'
-  ],
+  entry: ['babel-polyfill', './src/index.jsx'],
   module: {
     rules: [
       {
@@ -24,5 +22,6 @@ module.exports = {
       },
     ]
   },
+  devtool: 'inline-source-map',
   plugins: [htmlWebpackPlugin]
 };
