@@ -21,7 +21,9 @@ import React from 'react';
     }
 
     async _apiHealthcheck() {
-      const response = await fetch('http://localhost:3000/healthcheck');
+      // const url = 'http://localhost:3000/healthcheck';
+      const url = 'https://iefvy6bi21.execute-api.us-east-1.amazonaws.com/dev/healthcheck';
+      const response = await fetch(url);
       const health = await response.json();
       this.setState({apiHealthy: health.healthy})
     }
