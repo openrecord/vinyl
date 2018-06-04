@@ -1,0 +1,16 @@
+version: '3'
+services:
+  api:
+    image: openrecord/turntable:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./docker/mysql/mount:/var/lib/mysql # Add a mount for all mysql files, so you can persist across container tear-downs.
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
