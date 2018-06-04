@@ -1,24 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk        from 'redux-thunk'; //Used to dispatch actions as functions
-import reducers     from './store/reducers';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
+import rootReducer from './modules/common/rootReducer';
+import HealthContainer from './modules/health/HealthContainer';
 
-import Header      from './components/Header.jsx'
+const composeEnhancers = composeWithDevTools({});
+const middleware = applyMiddleware(thunk);
 
-require('./stylesheets/base.scss');
+const store = createStore(rootReducer, composeEnhancers(middleware));
 
+const render = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <HealthContainer />
+    </Provider>,
+    document.getElementById('root')
+  );
+};
 
-
-let store = createStore(reducers, applyMiddleware(thunk));
-
-ReactDOM.render(
-  <Provider store={store}>
-    <div className="main">
-      <Header/>
-    </div>
-  </Provider>, 
-  document.getElementById("app")
-);
-
+render();
