@@ -6,3 +6,6 @@ node_modules
 
 # Operating system
 .DS_Store
+
+# Dist
+dist
