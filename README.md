@@ -1,24 +1,40 @@
-# vinyl
+# Openrecord Front-End
 
-Frontend for the openrecord platform.
-
-The app is currently built in [React](https://reactjs.org/) & [Redux](https://redux.js.org/). 
+The web application for the openrecord platform.
 
 ## Local Development
 
-To set up your local development, make sure you have Node.js version 8 or above installed.
+#### Requirements
+- [ ] Node.js >= 8.0.0
+- [ ] Docker (and docker-compose)
 
 ```bash
-npm install     # Install packages
-npm start       # Run the frontend locally
+npm install     # Install packages.
+npm start       # Run the frontend using webpack-dev-server (with hot module replacement). Default address is http://localhost:8080
 ```
 
-#### Webpack & SCSS
+To develop locally against a working backend, use [docker-compose](https://docs.docker.com/compose/):
 
-This codebase uses [Webpack 4](https://webpack.js.org/) to bundle modules and generate static assets. It uses [Sass](https://sass-lang.com/) as a CSS preprocessor for enabling the use of CSS variables, nesting, mixins, and inheritance. 
+```bash
+docker-compose up -d      # Starts an instance of the openrecord api and a mysql server.
+```
 
+## Configuration
 
-## TODO
-* [ ] Setup Redux Store
-* [ ] Setup React Routes
-* [ ] Finish README
+Configuration is managed using [node-config](https://github.com/lorenwest/node-config). *All* configuration options should go in the _config/_ directory.
+
+Configs are inherited from _default.yml_ initially. When NODE_ENV is set, a file matching _[NODE_ENV].yml_ will be loaded (i.e. staging and production).
+
+To override any configuration, add a file called _local.yml_ (git-ignored) or map an environment variable to a configuration option in _custom-environment-variables.yml_.
+
+Example configuration setup for `API_PORT=1234 NODE_ENV=staging npm start`: _default.yml_ -> _staging.yml_ -> _local.yml_ -> _local-staging.yml_ -> Environment Variables (_API_PORT_)
+
+## Tech
+- [React 16](https://reactjs.org/)
+- [Redux 4](https://redux.js.org/)
+- [Webpack 4](https://webpack.js.org/)
+- [Sass](https://sass-lang.com/)
+- [Styled Components](https://github.com/styled-components/styled-components)
+- [Docker](https://docs.docker.com/)
+- [React Router + Redux](https://github.com/supasate/connected-react-router)
+- [AWS Cloudfront] (https://aws.amazon.com/cloudfront/)

@@ -9,3 +9,6 @@ node_modules
 
 # Dist
 dist
+
+# Local configs
+config/**/*local*.yml

@@ -8,9 +8,9 @@ module.exports = (env, argv) => {
 	console.info('Building webpack...', {mode: argv.mode});
 	const isProduction = argv.mode === 'production';
 
-	let devtool;
+	let devtool, devServer, plugins;
 
-	const plugins = [
+	plugins = [
 		new HtmlWebPackPlugin({title: 'Open Record'}), // automatically create index.html based on webpack config
 		new ReactRootPlugin() // create react root within generated html file
 	];
@@ -62,6 +62,9 @@ module.exports = (env, argv) => {
 		},
 		resolve: {
 			extensions: ['.js', '.jsx'] // load jsx files without including extension
+		},
+		externals: {
+			config: JSON.stringify(require('config')) // Allow front-end to import config as "config"
 		},
 		plugins,
 		devtool,

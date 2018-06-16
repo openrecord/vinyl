@@ -3,7 +3,9 @@ services:
   api:
     image: openrecord/turntable:latest
     ports:
-      - 3000:3000
+      - 7001:7001
+    environment:
+      PORT:     # Optionally specify a port for the API here.
     depends_on:
       - mysql
   mysql:

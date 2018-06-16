@@ -1,4 +1,4 @@
-// "ducks" pattern: https://github.com/erikras/ducks-modular-redux
+import HealthApi from './HealthApi';
 
 // Actions
 const API_HEALTH_REQ = 'health/API_HEALTH_REQ';
@@ -30,8 +30,7 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
 export function checkApiHealth() {
 	return async dispatch => {
 		dispatch({type: API_HEALTH_REQ});
-		const response = await fetch('http://localhost:3099/healthcheck'); //TODO: Setup base API route from config
-		const body = await response.json();
-		dispatch({type: API_HEALTH_REQ_SUCCESS, payload: body});
+		const payload = await HealthApi.getApiHealth();
+		dispatch({type: API_HEALTH_REQ_SUCCESS, payload});
 	};
 }

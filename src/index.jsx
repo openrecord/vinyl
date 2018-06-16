@@ -36,7 +36,7 @@ function configureStoreAndRender() {
     });
 
     module.hot.accept(['./modules/common/rootReducer'], () => {
-      const nextReducer = require('./modules/common/rootReducer'); // Re-import the reducer if it was changed.
+      const nextReducer = require('./modules/common/rootReducer').default; // Re-import the reducer if it was changed.
       store.replaceReducer(nextReducer);
     });
   }

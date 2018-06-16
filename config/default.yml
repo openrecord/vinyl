@@ -4,3 +4,9 @@ aws:
   s3:
     bucket: null
     bucketPath: null
+
+api:
+  host: 0.0.0.0
+  port: 7001
+  baseUrl: http://localhost:7001
+  timeout: 1000

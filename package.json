@@ -4,11 +4,11 @@
   "description": "Frontend for openrecord platform.",
   "main": "TODO",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development",
     "build:prod": "webpack --mode production",
     "deploy": "npm run deploy:staging",
-    "deploy:staging": "npm run build:prod && AWS_PROFILE=chas-aws node bin/deploy -e staging",
-    "deploy:prod": "npm run build:prod && AWS_PROFILE=chas-aws node bin/deploy -e production"
+    "deploy:staging": "npm run build:prod && node bin/deploy -e staging",
+    "deploy:prod": "npm run build:prod && node bin/deploy -e production"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,8 @@
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-react": "^7.0.0-beta.49",
     "aws-sdk": "^2.259.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^8.0.0-beta.3",
     "config": "^1.30.0",
     "css-loader": "^0.28.11",
@@ -33,6 +35,7 @@
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-root-plugin": "^0.10.0",
     "husky": "^0.14.3",
+    "jest": "^23.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "prettier": "^1.12.1",
@@ -53,6 +56,7 @@
     }
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "history": "^4.7.2",
     "react": "^16.3.2",
