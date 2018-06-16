@@ -1,0 +1,6 @@
+aws:
+  cloudFront:
+    distribution: null
+  s3:
+    bucket: null
+    bucketPath: null

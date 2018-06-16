@@ -1,0 +1,6 @@
+aws:
+  cloudFront:
+    distribution: E3GFFSSY6CG50Q
+  s3:
+    bucket: openrecord.co
+    bucketPath: /staging

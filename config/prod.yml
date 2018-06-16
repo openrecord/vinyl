@@ -1,0 +1,6 @@
+aws:
+  cloudFront:
+    distribution: E1S5RJHDAULECZ
+  s3:
+    bucket: openrecord.co
+    bucketPath: /production
