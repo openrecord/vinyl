@@ -1,19 +1,19 @@
 import React from 'react';
 import * as Redux from 'react-redux';
 
-import RegisterForm from './RegisterForm.jsx'
-import RegisterSuccess from './RegisterSuccess.jsx'
+import RegisterForm from './RegisterForm.jsx';
+import RegisterSuccess from './RegisterSuccess.jsx';
 
 class RegisterContainer extends React.Component {
 	render() {
-		return this.props.auth.user ? <RegisterSuccess/> : <RegisterForm />
+		return this.props.auth.user ? <RegisterSuccess /> : <RegisterForm />;
 	}
 }
 
 function mapStateToProps(state, props) {
-  return {
-    auth: state.auth
-  }
+	return {
+		auth: state.auth
+	};
 }
 
-export default Redux.connect(mapStateToProps)(RegisterContainer)
+export default Redux.connect(mapStateToProps)(RegisterContainer);

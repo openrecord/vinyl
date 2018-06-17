@@ -12,7 +12,7 @@ export default class RegisterForm extends React.Component {
 	}
 
 	_submit(e) {
-	  e.preventDefault()
+		e.preventDefault();
 		console.log('asdf');
 	}
 }
