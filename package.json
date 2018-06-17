@@ -8,7 +8,8 @@
     "build:prod": "webpack --mode production",
     "deploy": "npm run deploy:staging",
     "deploy:staging": "npm run build:prod && node bin/deploy -e staging",
-    "deploy:prod": "npm run build:prod && node bin/deploy -e production"
+    "deploy:prod": "npm run build:prod && node bin/deploy -e production",
+    "config": "node bin/printConfig.js"
   },
   "repository": {
     "type": "git",
