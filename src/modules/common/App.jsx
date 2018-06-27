@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch, Link} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
+import styled from 'styled-components';
 
 import HomeContainer from '../home/HomeContainer';
 import HealthContainer from '../health/HealthContainer';
@@ -9,13 +10,29 @@ import HealthContainer from '../health/HealthContainer';
 import './styles/base.scss';
 
 export default function App({history}) {
+
+  const Nav = styled.nav`
+    position: absolute;
+    text-align: left;
+    z-index: 2;
+
+    a{
+      color: white;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+  `;
+
   return (
     <ConnectedRouter history={history}>
       <div>
-        <nav>
+        <Nav>
           <Link to={'/'}>Home</Link>
           <Link to={'/health'}>Health</Link>
-        </nav>
+        </Nav>
         <Switch>
           <Route exact path="/" component={HomeContainer} />
           <Route exact path="/health" component={HealthContainer} />
