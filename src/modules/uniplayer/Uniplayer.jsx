@@ -23,80 +23,55 @@ export default class Uniplayer extends React.Component {
      seeking: false,
    };
 
-   //React Player Functions
-   this.stop = this.stop.bind(this);
-   this.toggleLoop = this.toggleLoop.bind(this);
-   this.setVolume = this.setVolume.bind(this);
-   this.toggleMuted = this.toggleMuted.bind(this);
-   this.setPlaybackRate = this.setPlaybackRate.bind(this);
-   this.onPlay = this.onPlay.bind(this);
-   this.onPause = this.onPause.bind(this);
-   this.onSeekMouseDown = this.onSeekMouseDown.bind(this);
-   this.onSeekChange = this.onSeekChange.bind(this);
-   this.onSeekMouseUp = this.onSeekMouseUp.bind(this);
-   this.onProgress = this.onProgress.bind(this);
-   this.onEnded = this.onEnded.bind(this);
-   this.onDuration = this.onDuration.bind(this);
-
-   //OpenRecord Player Addon Functions
-   this.playToggle = this.playToggle.bind(this);
  }
 
  //React Player Functions
- stop(){
+ stop = () => {
    this.setState({ url: null, playing: false })
  }
- toggleLoop(){
+ toggleLoop = () => {
    this.setState({ loop: !this.state.loop })
  }
- setVolume(e){
+ setVolume = (e) => {
    this.setState({ volume: parseFloat(e.target.value) })
  }
- toggleMuted(){
+ toggleMuted = () => {
    this.setState({ muted: !this.state.muted })
  }
- setPlaybackRate(e){
+ setPlaybackRate = (e) => {
    this.setState({ playbackRate: parseFloat(e.target.value) })
  }
- onPlay(){
+ onPlay = () => {
    this.setState({ playing: true })
  }
- onPause(){
+ onPause = () => {
    this.setState({ playing: false })
  }
- onEnded(){
-   if(this.state.repeat){
-     if(this.state.isYouTube){
-       this.YTPlayer.seekTo(0);
-     } else {
-       this.SCPlayer.seekTo(0);
-     }
-   } else{
-     this.autoplayNext();
-   }
+ onEnded = () => {
+  console.log('Song ended')
  }
- onSeekMouseDown(e){
+ onSeekMouseDown = (e) => {
    this.setState({ seeking: true })
  }
- onSeekChange(e){
+ onSeekChange = (e) => {
    this.setState({ played: parseFloat(e.target.value) })
  }
- onSeekMouseUp(e){
+ onSeekMouseUp = (e) => {
    this.setState({ seeking: false });
    this.YTPlayer.seekTo(parseFloat(e.target.value));
  }
- onProgress(state){
+ onProgress = (state) => {
    // We only want to update time slider if we are not currently seeking
    if (!this.state.seeking) {
      this.setState(state)
    }
  }
- onDuration(duration){
+ onDuration = (duration) => {
    this.setState({ duration })
  }
 
  //OpenRecord Player Addon Functions
- playToggle(){
+ playToggle = () => {
    if(this.state.playing){
      this.setState({playing: false});
    } else{

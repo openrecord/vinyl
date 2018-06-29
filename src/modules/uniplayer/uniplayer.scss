@@ -89,14 +89,14 @@
           }
 
           &.previous{
-            background: url('../../images/controls/prev-arrow.svg');
+            background: url('./images/prev-arrow.svg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 24px 24px;
             margin-left: 20px;
           }
           &.next{
-            background: url('../../images/controls/next-arrow.svg');
+            background: url('./images/next-arrow.svg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 24px 24px;
@@ -116,14 +116,14 @@
           }
 
           &.playing{
-            background: url('../../images/controls/pause.svg');
+            background: url('./images/pause.svg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 24px 24px;
           }
 
           &.paused{
-            background: url('../../images/controls/play.svg');
+            background: url('./images/play.svg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 18px 18px;
