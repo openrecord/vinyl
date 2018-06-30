@@ -1,0 +1,210 @@
+@import '../common/styles/utilities/global-vars';
+@import '../common/styles/utilities/mixins';
+
+.uniplayer-container{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+
+  .uniplayer-holder{
+    background-color: #0D0D0D;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    position: relative;
+    user-select: none;
+    z-index: 2;
+
+    .uniplayer{
+      align-items: center;
+      display: -ms-flexbox;
+      display: flex;
+      flex-direction: row;
+      height: 48px;
+      -ms-flex-align: center;
+      -ms-flex-direction: row;
+      -ms-flex-pack: justify;
+
+      //User
+      .user-box{
+        align-items: center;
+        border-right: 1px solid rgba(153, 153, 153, 0.2);
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: row;
+        height: 48px;
+        justify-content: flex-start;
+        min-width: 168px;
+        width: 20%;
+        -ms-flex-direction: row;
+        -ms-flex-pack: start;
+        -ms-flex-align: center;
+
+        .user-image-holder{
+          margin-left: 10px;
+          padding: 6px;
+
+          .user-image{
+            background: #77BA99;
+            border-radius: 50%;
+            height: 24px;
+            width: 24px;
+          }
+        }
+
+        .user-id{
+          h5{
+            color: #999999;
+          }
+        }
+      }
+
+      .controls-box{
+        align-items: center;
+        border-right: 1px solid rgba(153, 153, 153, 0.2);
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: row;
+        height: 48px;
+        justify-content: flex-start;
+        width: 136px;
+        -ms-flex-direction: row;
+        -ms-flex-pack: start;
+        -ms-flex-align: center;
+
+        .arrow{
+          cursor: pointer;
+          height: 24px;
+          margin: 8px;
+          opacity: 0.75;
+          width: 24px;
+
+          &:hover{
+            opacity: 1;
+          }
+
+          &.previous{
+            background: url('./images/prev-arrow.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            margin-left: 20px;
+          }
+          &.next{
+            background: url('./images/next-arrow.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            margin-right: 20px;
+          }
+        }
+
+        .play-pause{
+          cursor: pointer;
+          height: 24px;
+          margin: 8px;
+          opacity: 0.75;
+          width: 24px;
+
+          &:hover{
+            opacity: 1;
+          }
+
+          &.playing{
+            background: url('./images/pause.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+          }
+
+          &.paused{
+            background: url('./images/play.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 18px 18px;
+          }
+        }
+      }
+
+      .playback-box{
+        align-items: center;
+        border-right: 1px solid rgba(153, 153, 153, 0.2);
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: row;
+        height: 48px;
+        justify-content: flex-start;
+        min-width: 480px;
+        position: relative;
+        width: 50%;
+        -ms-flex-direction: row;
+        -ms-flex-pack: start;
+        -ms-flex-align: center;
+
+        .player-bar{
+          appearance: none;
+          background: transparent;
+          height: 100%;
+          margin: 0;
+          outline: none;
+          overflow: hidden;
+          width: 100%;
+          -webkit-appearance: none;
+
+          &::-webkit-slider-thumb {
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            height: 48px;
+            width: 0;
+            z-index: 10;
+            -webkit-appearance: none;
+            @include transition( all 0.1s );
+            box-shadow: -1000px 0 0 1000px rgba(242, 242, 242, 0.2);
+          }
+        }
+
+        .song-title{
+          color: #999999;
+          left: 16px;
+          pointer-events: none;
+          position: absolute;
+        }
+
+        .time-box{
+          right: 16px;
+          pointer-events: none;
+          position: absolute;
+
+          time{
+            font-size: 1rem;
+            color: #999999;
+          }
+
+          .time-divider{
+            color: #999999;
+            display: inline-block;
+            margin: 0 6px;
+            position: relative;
+            top: -1px;
+          }
+        }
+      }
+    }
+  }
+
+  //Player
+  .player-holder{
+    bottom: 48px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1
+  }
+}
