@@ -28,7 +28,7 @@ function Hero() {
 
   return (
     <HeroContainer>
-      <h1>OPEN RECORD</h1>
+      <h1>OPENRECORD</h1>
     </HeroContainer>
   );
 }
