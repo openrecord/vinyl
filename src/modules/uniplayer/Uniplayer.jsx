@@ -21,6 +21,8 @@ export default class Uniplayer extends React.Component {
      playbackRate: 1.0,
      loop: false,
      seeking: false,
+     hoverTime: '',
+     mousePosition: ''
    };
 
  }
@@ -50,6 +52,17 @@ export default class Uniplayer extends React.Component {
  onEnded = () => {
   console.log('Song ended')
  }
+ onProgress = (state) => {
+   // We only want to update time slider if we are not currently seeking
+   if (!this.state.seeking) {
+     this.setState(state)
+   }
+ }
+ onDuration = (duration) => {
+   this.setState({ duration })
+ }
+
+ //Click functions for scrubbing through the player
  onSeekMouseDown = (e) => {
    this.setState({ seeking: true })
  }
@@ -60,15 +73,29 @@ export default class Uniplayer extends React.Component {
    this.setState({ seeking: false });
    this.YTPlayer.seekTo(parseFloat(e.target.value));
  }
- onProgress = (state) => {
-   // We only want to update time slider if we are not currently seeking
-   if (!this.state.seeking) {
-     this.setState(state)
-   }
+
+ //Hover functions for showing current time
+ onMouseEnter = (e) =>{
+   this.setState({ hovering: true });
  }
- onDuration = (duration) => {
-   this.setState({ duration })
+ onMouseLeave = (e) =>{
+   this.setState({ hovering: false});
  }
+ onMouseMove = (e) =>{
+   var barWidth = this.refs.playerBar.offsetWidth,
+       songDuration = this.state.duration,
+       mousePosition = e.nativeEvent.offsetX,
+       scrubTime = ((songDuration / barWidth) * mousePosition),
+       minutes = Math.floor(scrubTime / 60),
+       seconds = Math.round(scrubTime - minutes * 60);
+       if(seconds <= 9){
+         seconds = '0' + seconds;
+       }
+   var hoverTime = ("" + minutes + ":" + seconds + "");
+   this.setState({hoverTime: hoverTime});
+   this.setState({mousePosition: mousePosition});
+ }
+
 
  //OpenRecord Player Addon Functions
  playToggle = () => {
@@ -117,9 +144,14 @@ export default class Uniplayer extends React.Component {
  render(){
    var player = {};
    if(this.state.playing){
-     player.status = "playing";
+     player.status = " playing";
    } else{
-     player.status = "paused";
+     player.status = " paused";
+   }
+   if(this.state.hovering){
+     player.hover = " hovering";
+   } else{
+     player.hover = "";
    }
    return(
    <div className="uniplayer-container">
@@ -136,13 +168,18 @@ export default class Uniplayer extends React.Component {
          </div>
          <div className="controls-box">
            <div className="arrow previous"/>
-           <div className={"play-pause " + player.status} onClick={this.playToggle}/>
+           <div className={"play-pause" + player.status} onClick={this.playToggle}/>
            <div className="arrow next"/>
          </div>
          <div className="playback-box">
+           <span className={"hover-time" + player.hover} style={{left: " " + this.state.mousePosition + "px"}}>{this.state.hoverTime}</span>
            <input className="player-bar"
+             ref="playerBar"
              type='range' min={0} max={1} step='any'
              value={this.state.played}
+             onMouseEnter={this.onMouseEnter}
+             onMouseMove={this.onMouseMove}
+             onMouseLeave={this.onMouseLeave}
              onMouseDown={this.onSeekMouseDown}
              onChange={this.onSeekChange}
              onMouseUp={this.onSeekMouseUp}
