@@ -24,7 +24,7 @@ export default function App({history}) {
       &:hover{
         text-decoration: underline;
       }
-      
+
       &.contribute-link{
         float: right;
       }
@@ -32,7 +32,7 @@ export default function App({history}) {
       h2{
         display: inline-block;
         font-weight: 700;
-        padding: 10px;
+        padding: 8px;
         position: relative;
       }
     }

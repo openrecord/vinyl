@@ -9,7 +9,7 @@ export default function Landing({}) {
 
 function LandingBox() {
   const LandingInner = styled.div`
-    background: #090C15;
+    background: #9C4D9D;
     left: 0;
     right: 0;
     top: 0;
@@ -38,13 +38,17 @@ function LandingBox() {
     position: absolute;
     transform: translate(-50%, -50%);
 
-    &#c1{ width: 50%; padding-top: 50%; background: #FFFFFF; z-index: 7; }
-    &#c2{ width: 58%; padding-top: 58%; background: #FCD731; z-index: 6; }
-    &#c3{ width: 66%; padding-top: 66%; background: #FBB12B; z-index: 5; }
-    &#c4{ width: 74%; padding-top: 74%; background: #FB8235; z-index: 4; }
-    &#c5{ width: 82%; padding-top: 82%; background: #F8785D; z-index: 3; }
-    &#c6{ width: 90%; padding-top: 90%; background: #BC5BA1; z-index: 2; }
-    &#c7{ width: 100%; padding-top: 100%; background: #9C4D9D; z-index: 1; }
+    &#c1{
+      width: 24%;
+      padding-top: 24%;
+      background: #FFFFFF;
+      z-index: 7;
+    }
+    &#c2{ width: 40%; padding-top: 40%; background: #FCD731; z-index: 6; }
+    &#c3{ width: 56%; padding-top: 56%; background: #FBB12B; z-index: 5; }
+    &#c4{ width: 72%; padding-top: 72%; background: #FB8235; z-index: 4; }
+    &#c5{ width: 88%; padding-top: 88%; background: #F8785D; z-index: 3; }
+    &#c6{ width: 100%; padding-top: 100%; background: #BC5BA1; z-index: 2; }
   `;
 
   return (
@@ -56,7 +60,6 @@ function LandingBox() {
       <Circle id="c4" />
       <Circle id="c5" />
       <Circle id="c6" />
-      <Circle id="c7" />
     </LandingInner>
   );
 }
