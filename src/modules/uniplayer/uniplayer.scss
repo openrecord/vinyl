@@ -140,25 +140,24 @@
         height: 48px;
         justify-content: flex-start;
         min-width: 480px;
+        overflow: hidden;
         position: relative;
         width: 50%;
         -ms-flex-direction: row;
         -ms-flex-pack: start;
         -ms-flex-align: center;
 
-        .hover-time{
-          background: black;
-          color: white;
-          font-size: 14px;
-          padding: 5px 5px 5px 5px;
-          opacity: 0;
+        .hover-range{
+          background: rgba(200, 200, 200, 0.2);
+          display: none;
+          height: 48px;
+          width: 5000px;
           position: absolute;
-          pointer-events: none;
-          top: -26px;
+          margin-left: -5000px;
+          z-index: 1;
 
           &.hovering{
-            opacity: 1;
-            pointer-events: all;
+            display: block;
           }
         }
 
@@ -170,19 +169,21 @@
           margin: 0;
           outline: none;
           overflow: hidden;
+          position: relative;
           width: 100%;
+          z-index: 2;
           -webkit-appearance: none;
 
           &::-webkit-slider-thumb {
             appearance: none;
             background: transparent;
-            cursor: pointer;
             height: 48px;
+            pointer-events: none;
             width: 0;
             z-index: 10;
             -webkit-appearance: none;
             @include transition( all 0.1s );
-            box-shadow: -1000px 0 0 1000px rgba(242, 242, 242, 0.2);
+            box-shadow: -5000px 0 0 5000px rgba(242, 242, 242, 0.2);
           }
         }
 
@@ -201,6 +202,25 @@
           time{
             font-size: 1rem;
             color: #999999;
+
+            &.time-played{
+              &.hovering{
+                  display: none;
+              }
+            }
+          }
+
+          .hover-time{
+            font-size: 1rem;
+            color: #999999;
+            display: none;
+            left: 0;
+
+            &.hovering{
+              display: inline-block;
+              opacity: 1;
+              pointer-events: all;
+            }
           }
 
           .time-divider{

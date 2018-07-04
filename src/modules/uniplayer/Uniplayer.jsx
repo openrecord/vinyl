@@ -12,7 +12,7 @@ export default class Uniplayer extends React.Component {
    this.state = {
 
      //Player State
-     playing: true,
+     playing: false,
      volume: 1,
      muted: false,
      played: 0,
@@ -22,7 +22,8 @@ export default class Uniplayer extends React.Component {
      loop: false,
      seeking: false,
      hoverTime: '',
-     mousePosition: ''
+     hoverRange: '',
+     mousePosition: '',
    };
 
  }
@@ -86,6 +87,7 @@ export default class Uniplayer extends React.Component {
        songDuration = this.state.duration,
        mousePosition = e.nativeEvent.offsetX,
        scrubTime = ((songDuration / barWidth) * mousePosition),
+       rangeTime = (mousePosition / barWidth),
        minutes = Math.floor(scrubTime / 60),
        seconds = Math.round(scrubTime - minutes * 60);
        if(seconds <= 9){
@@ -94,6 +96,7 @@ export default class Uniplayer extends React.Component {
    var hoverTime = ("" + minutes + ":" + seconds + "");
    this.setState({hoverTime: hoverTime});
    this.setState({mousePosition: mousePosition});
+   this.setState({hoverRange: rangeTime});
  }
 
 
@@ -172,8 +175,8 @@ export default class Uniplayer extends React.Component {
            <div className="arrow next"/>
          </div>
          <div className="playback-box">
-           <span className={"hover-time" + player.hover} style={{left: " " + this.state.mousePosition + "px"}}>{this.state.hoverTime}</span>
-           <input className="player-bar"
+           <div className={"hover-range" + player.hover} style={{left: " " + this.state.mousePosition + "px"}} />
+           <input className={"player-bar" + player.hover}
              ref="playerBar"
              type='range' min={0} max={1} step='any'
              value={this.state.played}
@@ -186,7 +189,8 @@ export default class Uniplayer extends React.Component {
            />
            <h4 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h4>
            <div className="time-box">
-             <Duration seconds={this.state.duration * this.state.played} />
+             <Duration seconds={this.state.duration * this.state.played} className={"time-played" + player.hover} />
+             <span className={"hover-time" + player.hover}>{this.state.hoverTime}</span>
              <h4 className="time-divider">-</h4>
              <Duration seconds={this.state.duration} />
            </div>
