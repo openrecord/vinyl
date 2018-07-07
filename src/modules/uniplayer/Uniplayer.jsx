@@ -116,31 +116,46 @@ export default class Uniplayer extends React.Component {
  renderYT(){
    var player = {};
    player.id = 'https://www.youtube.com/watch?v=' + '2H5R0bdblEE';
+   player.background = 'http://i3.ytimg.com/vi/' + '2H5R0bdblEE' + '/maxresdefault.jpg';
+   var backgroundStyle = {
+     background: 'url(' + player.background + ')',
+     backgroundPosition: 'center',
+     backgroundSize: 'cover'
+   }
    return(
      <div className="player-holder">
-       <ReactPlayer
-         ref={this.setYTPlayer}
-         className='react-player'
-         width='100%'
-         height='100%'
-         url={player.id}
-         playing={this.state.playing}
-         loop={this.state.loop}
-         playbackRate={this.state.playbackRate}
-         volume={this.state.volume}
-         muted={this.state.muted}
-         onReady={() => console.log('onReady')}
-         onStart={() => console.log('onStart')}
-         onPlay={this.onPlay}
-         onPause={this.onPause}
-         onBuffer={() => console.log('onBuffer')}
-         onSeek={e => console.log('onSeek', e)}
-         onEnded={this.onEnded}
-         onError={e => console.log('onError', e)}
-         onProgress={this.onProgress}
-         onDuration={this.onDuration}
-       />
+      <div className="player-outer">
+       <div className="player-background" style={backgroundStyle} />
+       <div className="player-inner">
+         <div className="player-holder">
+           <div className="player-inner-holder">
+             <ReactPlayer
+               ref={this.setYTPlayer}
+               className='react-player'
+               width='100%'
+               height='100%'
+               url={player.id}
+               playing={this.state.playing}
+               loop={this.state.loop}
+               playbackRate={this.state.playbackRate}
+               volume={this.state.volume}
+               muted={this.state.muted}
+               onReady={this.onReady}
+               onStart={() => console.log('onStart')}
+               onPlay={this.onPlay}
+               onPause={this.onPause}
+               onBuffer={() => console.log('onBuffer')}
+               onSeek={e => console.log('onSeek', e)}
+               onEnded={this.onEnded}
+               onError={e => console.log('onError', e)}
+               onProgress={this.onProgress}
+               onDuration={this.onDuration}
+             />
+           </div>
+         </div>
+       </div>
      </div>
+   </div>
    )
  }
 
