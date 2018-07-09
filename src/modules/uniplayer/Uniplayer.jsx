@@ -3,8 +3,9 @@ import './uniplayer.scss';
 import React from 'react';
 import ReactPlayer from 'react-player';
 import Duration from './Duration.jsx';
+import Timeout from './Timeout';
 
-export default class Uniplayer extends React.Component {
+class Uniplayer extends React.Component {
 
   constructor(props) {
    super(props);
@@ -24,6 +25,7 @@ export default class Uniplayer extends React.Component {
      hoverTime: '',
      hoverRange: '',
      mousePosition: '',
+     playerActive: true,
    };
 
  }
@@ -45,10 +47,11 @@ export default class Uniplayer extends React.Component {
    this.setState({ playbackRate: parseFloat(e.target.value) })
  }
  onPlay = () => {
-   this.setState({ playing: true })
+   this.setState({ playing: true });
  }
  onPause = () => {
-   this.setState({ playing: false })
+   this.setState({ playing: false });
+   this.setState({playerActive: true});
  }
  onEnded = () => {
   console.log('Song ended')
@@ -99,6 +102,15 @@ export default class Uniplayer extends React.Component {
    this.setState({hoverRange: rangeTime});
  }
 
+ playerActive = () => {
+   this.setState({playerActive: true});
+   this.props.clearTimeouts();
+   if(this.state.playing){
+    this.props.setTimeout(() => {
+      this.setState({playerActive: false});
+    }, 2500);
+   }
+ }
 
  //OpenRecord Player Addon Functions
  playToggle = () => {
@@ -106,6 +118,10 @@ export default class Uniplayer extends React.Component {
      this.setState({playing: false});
    } else{
      this.setState({playing: true});
+     this.props.setTimeout(() => {
+       console.log('hi');
+       this.setState({playerActive: false});
+     }, 2500);
    }
  }
 
@@ -151,6 +167,11 @@ export default class Uniplayer extends React.Component {
    } else{
      player.status = " paused";
    }
+   if(this.state.playerActive){
+     player.active = " active";
+   } else{
+     player.active = "";
+   }
    if(this.state.hovering){
      player.hover = " hovering";
    } else{
@@ -158,23 +179,19 @@ export default class Uniplayer extends React.Component {
    }
    return(
    <div className="uniplayer-container">
-     <div className="uniplayer-holder">
+     <div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
+     <div className={"uniplayer-holder" + player.active} onMouseMove={this.playerActive}>
        <div className="uniplayer">
+         <div className={"play-pause" + player.status} onClick={this.playToggle}/>
          <div className="user-box">
            <div className="user-image-holder">
              <div className="user-image"/>
            </div>
            <div className="user-id">
-             <h5>Added by</h5>
-             <h5>Superluckyland</h5>
+             <h4>Superluckyland</h4>
            </div>
          </div>
-         <div className="controls-box">
-           <div className="arrow previous"/>
-           <div className={"play-pause" + player.status} onClick={this.playToggle}/>
-           <div className="arrow next"/>
-         </div>
-         <div className="playback-box">
+         <div className="playback-box" >
            <div className={"hover-range" + player.hover} style={{left: " " + this.state.mousePosition + "px"}} />
            <input className={"player-bar" + player.hover}
              ref="playerBar"
@@ -195,6 +212,7 @@ export default class Uniplayer extends React.Component {
              <Duration seconds={this.state.duration} />
            </div>
          </div>
+         <div className="next-arrow"/>
        </div>
      </div>
      {this.renderYT()}
@@ -203,3 +221,5 @@ export default class Uniplayer extends React.Component {
    )
  }
 }
+
+export default Timeout(Uniplayer);
