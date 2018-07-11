@@ -52,34 +52,6 @@
       -ms-flex-direction: row;
       -ms-flex-pack: justify;
 
-      //Play Toggle
-      .play-pause{
-        cursor: pointer;
-        height: 24px;
-        padding: 8px;
-        opacity: 0.75;
-        padding: 16px 20px;
-        width: 24px;
-
-        &:hover{
-          opacity: 1;
-        }
-
-        &.playing{
-          background: url('./images/pause.svg');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: 24px 24px;
-        }
-
-        &.paused{
-          background: url('./images/play.svg');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: 18px 18px;
-        }
-      }
-
       //User
       .user-box{
         align-items: center;
@@ -209,6 +181,34 @@
             position: relative;
             top: -1px;
           }
+        }
+      }
+
+      //Play Toggle
+      .play-pause{
+        cursor: pointer;
+        height: 24px;
+        padding: 8px;
+        opacity: 0.75;
+        padding: 16px 20px;
+        width: 24px;
+
+        &:hover{
+          opacity: 1;
+        }
+
+        &.playing{
+          background: url('./images/pause.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 24px 24px;
+        }
+
+        &.paused{
+          background: url('./images/play.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 18px 18px;
         }
       }
 

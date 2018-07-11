@@ -182,7 +182,6 @@ class Uniplayer extends React.Component {
      <div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
      <div className={"uniplayer-holder" + player.active} onMouseMove={this.playerActive}>
        <div className="uniplayer">
-         <div className={"play-pause" + player.status} onClick={this.playToggle}/>
          <div className="user-box">
            <div className="user-image-holder">
              <div className="user-image"/>
@@ -212,6 +211,7 @@ class Uniplayer extends React.Component {
              <Duration seconds={this.state.duration} />
            </div>
          </div>
+         <div className={"play-pause" + player.status} onClick={this.playToggle}/>
          <div className="next-arrow"/>
        </div>
      </div>
