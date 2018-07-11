@@ -18,7 +18,11 @@ export default function App({history}) {
 
     a{
       color: white;
+      position: relative;
       display: inline-block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 8px;
       position: relative;
 
       &:hover{
@@ -28,13 +32,6 @@ export default function App({history}) {
       &.contribute-link{
         float: right;
       }
-
-      h2{
-        display: inline-block;
-        font-weight: 700;
-        padding: 8px;
-        position: relative;
-      }
     }
 
   `;
@@ -43,8 +40,8 @@ export default function App({history}) {
     <ConnectedRouter history={history}>
       <div>
         <Nav>
-          <Link className="home-link" to={'/'}><h2>OPENRECORD</h2></Link>
-          <Link className="contribute-link" to={'/'}><h2>ASK TO CONTRIBUTE</h2></Link>
+          <Link className="home-link" to={'/'}>OPENRECORD</Link>
+          <Link className="contribute-link" to={'/'}>ASK TO CONTRIBUTE</Link>
         </Nav>
         <Switch>
           <Route exact path="/" component={HomeContainer} />

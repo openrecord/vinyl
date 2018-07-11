@@ -10,15 +10,11 @@ export default class Landing extends React.Component {
     }
   }
 
-  closeLanding = () =>{
-    this.props.closeLanding();
-  }
-
   render(){
     return (
       <LandingInner>
         <h1>Listen</h1>
-        <Circle id="c1" onClick={this.closeLanding} />
+        <Circle id="c1" onClick={this.props.closeLanding} />
         <Circle id="c2" />
         <Circle id="c3" />
         <Circle id="c4" />
@@ -46,6 +42,7 @@ const LandingInner = styled.div`
     font-weight: 700;
     left: 50%;
     line-height: normal;
+    pointer-events: none;
     position: absolute;
     text-align: center;
     top: 50%;
@@ -73,4 +70,6 @@ const Circle = styled.div`
   &#c4{ width: 72%; padding-top: 72%; background: #FB8235; z-index: 4; }
   &#c5{ width: 88%; padding-top: 88%; background: #F8785D; z-index: 3; }
   &#c6{ width: 100%; padding-top: 100%; background: #BC5BA1; z-index: 2; }
+
+
 `;
