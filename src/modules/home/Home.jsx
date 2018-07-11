@@ -2,33 +2,36 @@ import React from 'react';
 import styled from 'styled-components';
 
 import UniplayerContainer from '../uniplayer/UniplayerContainer';
+import Landing from '../landing/Landing.jsx'
 
-export default function Home({}) {
-  return (
-    <main>
-      <Hero />
-      <UniplayerContainer/>
-    </main>
-  );
-}
+export default class Home extends React.Component {
 
-function Hero() {
-  const HeroContainer = styled.div`
-    margin: 5px auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
+  constructor(props) {
+   super(props);
 
-    h1{
-      color: #FFFFFF;
-      line-height: normal;
-      font-size: 24px;
+   this.state = {
+     showLanding: true
     }
-  `;
+  }
 
-  return (
-    <HeroContainer>
-      <h1>OPENRECORD</h1>
-    </HeroContainer>
-  );
+  closeLanding = () =>{
+    this.setState({showLanding: false});
+  }
+
+  renderLanding = () =>{
+    if(this.state.showLanding){
+      return(
+        <Landing closeLanding={this.closeLanding}/>
+      );
+    }
+  }
+
+  render(){
+    return (
+      <main>
+        <UniplayerContainer/>
+        {this.renderLanding()}
+      </main>
+    );
+  }
 }
