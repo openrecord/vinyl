@@ -49,6 +49,7 @@ export default function App({history}) {
 				</Nav>
 				<Switch>
 					<Route exact path="/" component={HomeContainer} />
+					<Route exact path="/register" component={RegisterContainer} />
 
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
