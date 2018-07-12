@@ -138,11 +138,18 @@ async function getInvalidationStatus(invalidationId, distribution) {
  */
 function _deployOptions(env) {
 	const conf = _loadConfigForNodeEnv(env);
-	return {
+
+	const deployOptions = {
 		bucket: conf.aws.s3.bucket,
 		bucketPath: conf.aws.s3.bucketPath,
 		distribution: conf.aws.cloudFront.distribution
 	};
+
+	if (!deployOptions.bucket || !deployOptions.bucketPath || !deployOptions.distribution) {
+		throw new Error('DeployOptions missing bucket, bucketPath, or distribution.');
+	}
+
+	return deployOptions;
 }
 
 /**
