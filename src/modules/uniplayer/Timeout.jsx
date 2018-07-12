@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 const Timeout = Composition => class _Timeout extends Component {
-    constructor(props) {
-      super(props);
-    }
 
     componentWillMount () {
       this.timeouts = [];

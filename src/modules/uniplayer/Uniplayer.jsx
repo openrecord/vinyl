@@ -50,8 +50,8 @@ class Uniplayer extends React.Component {
    this.setState({ playing: true });
  }
  onPause = () => {
-   this.setState({ playing: false });
-   this.setState({playerActive: true});
+   this.setState({ playing: false,
+                   playerActive: true });
  }
  onEnded = () => {
   console.log('Song ended')
@@ -119,7 +119,6 @@ class Uniplayer extends React.Component {
    } else{
      this.setState({playing: true});
      this.props.setTimeout(() => {
-       console.log('hi');
        this.setState({playerActive: false});
      }, 2500);
    }
