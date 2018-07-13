@@ -8,7 +8,8 @@
     "build:prod": "webpack --mode production",
     "deploy": "npm run deploy:staging",
     "deploy:staging": "npm run build:prod && node bin/deploy -e staging",
-    "deploy:prod": "npm run build:prod && node bin/deploy -e production"
+    "deploy:prod": "npm run build:prod && node bin/deploy -e production",
+    "config": "node bin/printConfig.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-root-plugin": "^0.10.0",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0-rc.13",
     "jest": "^23.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
@@ -59,8 +60,11 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "history": "^4.7.2",
+    "lodash": "^4.17.10",
+    "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-player": "^1.6.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",

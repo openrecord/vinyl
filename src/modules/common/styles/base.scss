@@ -1,32 +1,42 @@
 @import 'utilities/mixins';
 
 body {
-  background: #9C4D9D;
-  font-family: 'Graphik', Arial, sans-serif;
-  margin: 0;
+	background: #9c4d9d;
+	font-family: 'Graphik', Arial, sans-serif;
+	margin: 0;
 }
 
-a{
-  text-decoration: none;
+a {
+	text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  font-weight: 400;
-  margin: 0;
-  -webkit-margin-before:0em;
-  -webkit-margin-after:0em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	font-weight: 400;
+	margin: 0;
+	-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
 }
 
-h2{
-  font-size: 1.5rem;
+h2 {
+	font-size: 1.5rem;
 }
 
-h4{
-  font-size: 1rem;
-  line-height: 19px;
+h4 {
+	font-size: 1rem;
+	line-height: 19px;
 }
 
-h5{
-  font-size: 0.75rem;
-  line-height: 14px;
+h5 {
+	font-size: 0.75rem;
+	line-height: 14px;
+}
+
+main {
+	margin: 0 5%;
 }
