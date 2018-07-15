@@ -8,7 +8,6 @@ export default function Register(props) {
 	return (
 		<div>
 			<RegisterFormContainer>
-				<h2>Register</h2>
 				<RegisterForm submitRegister={props.submitRegister} />
 			</RegisterFormContainer>
 		</div>
@@ -16,11 +15,14 @@ export default function Register(props) {
 }
 
 const RegisterFormContainer = styled.main`
+	background: #08368D;
+	position: absolute;
 	text-align: center;
-
-	> * {
-		margin: 30px auto;
-	}
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 5;
 `;
 
 const CheckBoxWrapper = styled.div`
@@ -31,7 +33,7 @@ const CheckBoxWrapper = styled.div`
 function Input(props) {
 	return (
 		<div>
-			<label htmlFor={props.name}>{_.startCase(props.name)}</label>
+			<label htmlFor={props.name}>{props.name}</label>
 			<input type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} />
 		</div>
 	);
@@ -40,26 +42,30 @@ function Input(props) {
 class RegisterForm extends React.Component {
 	render() {
 		const Form = styled.form`
-			display: flex;
-			flex-direction: column;
-			max-width: 300px;
+			left: 50%;
+			position: absolute;
 			text-align: left;
-
-			border: 1px white solid;
-			padding: 15px;
+			top: 50%;
+			transform: translate(-50%, -50%);
 
 			label {
-				font-size: 14px;
-				padding: 15px 0 2px 0;
+				color: white;
+				font-size: 42px;
 			}
 
 			input {
 				&[type='text'],
 				&[type='email'],
 				&[type='password'] {
-					font-size: 14px;
-					padding: 6px;
+					background: none;
+					border: none;
+					border-bottom: 4px solid white;
 					display: block;
+					font-size: 42px;
+					line-height: 42px;
+					outline: none;
+					padding: 32px 0;
+					width: 545px;
 				}
 			}
 
@@ -70,9 +76,8 @@ class RegisterForm extends React.Component {
 
 		return (
 			<Form onSubmit={this.submit}>
-				<Input type={'text'} name={'firstName'} autoComplete={'given-name'} />
-				<Input type={'text'} name={'lastName'} autoComplete={'family-name'} />
-				<Input type={'email'} name={'email'} autoComplete={'email'} />
+				<Input type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
+				<Input type={'email'} name={"What's your email?"} autoComplete={'email'} />
 				<PasswordInput />
 
 				<button type={'submit'}>Continue</button>
@@ -108,7 +113,7 @@ class PasswordInput extends React.Component {
 	render() {
 		return (
 			<div>
-				<label htmlFor={'password'}>Password</label>
+				<label htmlFor={'password'}>Create your password</label>
 				<input
 					type={this.state.showPassword ? 'text' : 'password'}
 					name={'password'}
