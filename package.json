@@ -2,7 +2,6 @@
   "name": "vinyl",
   "version": "0.0.1",
   "description": "Frontend for openrecord platform.",
-  "main": "TODO",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build:prod": "webpack --mode production",

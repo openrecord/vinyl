@@ -11,6 +11,8 @@ export default function Register(props) {
 				<h2>Register</h2>
 				<RegisterForm submitRegister={props.submitRegister} />
 			</RegisterFormContainer>
+
+			<button onClick={props.healthCheck}>Health</button>
 		</div>
 	);
 }
