@@ -1,4 +1,5 @@
 import React from 'react';
+import {Route, Switch, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 
@@ -8,11 +9,13 @@ export default function Register(props) {
 	return (
 		<div>
 			<RegisterFormContainer>
+				<Link id="home-x" to={'/'}><span/></Link>
 				<RegisterForm submitRegister={props.submitRegister} />
 			</RegisterFormContainer>
 		</div>
 	);
 }
+
 
 const RegisterFormContainer = styled.main`
 	background: #08368D;
@@ -23,6 +26,50 @@ const RegisterFormContainer = styled.main`
 	right: 0;
 	top: 0;
 	z-index: 5;
+
+
+	#home-x{
+		left: 36px;
+		position: absolute;
+		top: 36px;
+		z-index: 10;
+
+		&:hover{
+			span{
+				opacity: 1;
+			}
+		}
+
+		span{
+			display: block;
+			height: 40px;
+			padding: 10px;
+			opacity: 0.5;
+			width: 40px;
+
+			&::before{
+				background: white;
+				content: '';
+				position: absolute;
+				height: 52px;
+				margin-left: -2px;
+				top: 5px;
+				transform: rotate(45deg);
+				width: 4px;
+			}
+
+			&::after{
+				background: white;
+				content: '';
+				position: absolute;
+				height: 52px;
+				margin-left: -2px;
+				top: 5px;
+				transform: rotate(-45deg);
+				width: 4px;
+			}
+		}
+	}
 `;
 
 const CheckBoxWrapper = styled.div`
@@ -109,6 +156,7 @@ class PasswordInput extends React.Component {
 			showPassword: false
 		};
 	}
+
 
 	render() {
 		return (
