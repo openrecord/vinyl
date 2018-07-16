@@ -4,7 +4,7 @@ import {ConnectedRouter} from 'react-router-redux';
 import styled from 'styled-components';
 
 import HomeContainer from '../home/HomeContainer';
-import HealthContainer from '../health/HealthContainer';
+import AdminContainer from '../admin/AdminContainer';
 import RegisterContainer from '../register/RegisterContainer';
 
 // Import common styles
@@ -50,6 +50,7 @@ export default function App({history}) {
 				<Switch>
 					<Route exact path="/" component={HomeContainer} />
 					<Route exact path="/register" component={RegisterContainer} />
+					<Route exact path="/admin" component={AdminContainer} />
 
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>

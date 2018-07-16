@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import Register from './Register.jsx';
 import * as authActions from '../auth';
-import * as healthActions from '../health';
 
 const mapStateToProps = (state, props) => ({auth: state.auth});
 
@@ -15,11 +14,7 @@ const mapDispatchToProps = dispatch => {
 		dispatch(authActions.register(registerDto));
 	};
 
-	const healthCheck = () => {
-		dispatch(healthActions.checkApiHealth());
-	};
-
-	return {submitRegister, healthCheck};
+	return {submitRegister};
 };
 
 const RegisterContainer = connect(

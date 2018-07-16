@@ -1,9 +1,6 @@
-import axios from 'axios';
-import config from 'config';
+import BaseApi from '../common/BaseApi';
 
-export default class HealthApi {
-	static client = axios.create({baseURL: config.api.baseUrl, timeout: config.api.timeout, withCredentials: true});
-
+export default class HealthApi extends BaseApi {
 	static async getApiHealth() {
 		const response = await this.client.get('/healthcheck');
 		return response.data;
