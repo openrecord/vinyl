@@ -74,26 +74,30 @@ const RegisterFormContainer = styled.main`
 
 const CheckBoxWrapper = styled.div`
 	white-space: nowrap;
-	padding: 10px 0;
+	padding: 10px 10px;
+
+	&.password-toggle{
+		height: 24px
+		position: absolute;
+		right: 0;
+		top: 40px
+
+	}
 `;
 
-function Input(props) {
-	return (
-		<div>
-			<label htmlFor={props.name}>{props.name}</label>
-			<input type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} />
-		</div>
-	);
-}
+	const Form = styled.form`
+		left: 50%;
+		position: absolute;
+		text-align: left;
+		top: 50%;
+		transform: translate(-50%, -50%);
 
-class RegisterForm extends React.Component {
-	render() {
-		const Form = styled.form`
-			left: 50%;
-			position: absolute;
-			text-align: left;
-			top: 50%;
-			transform: translate(-50%, -50%);
+		.input-container{
+			display: none;
+
+			&.active{
+				display: block;
+			}
 
 			label {
 				color: white;
@@ -117,19 +121,160 @@ class RegisterForm extends React.Component {
 			}
 
 			input[type='checkbox'] {
-				margin: 0 8px 0 0;
+				margin: 0;
 			}
-		`;
+		}
 
+		.step, button{
+			background: none;
+			border: 2px solid white;
+			color: white;
+			cursor: pointer;
+			display: none;
+			font-size: 20px;
+			margin-top: 24px;
+			outline: none;
+			padding: 8px 16px;
+
+			&:hover{
+				background: white;
+				color: #08368D;
+			}
+
+			&.show-submit{
+				display: inline-block;
+				float: right;
+			}
+			&.show-next{
+				display: inline-block;
+				float: right;
+			}
+			&.show-back{
+				display: inline-block;
+			}
+		}
+	`;
+
+function Input(props) {
+	return (
+		<div className={'input-container' + props.class}>
+			<label htmlFor={props.name}>{props.name}</label>
+			<input type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} />
+		</div>
+	);
+}
+
+
+
+class RegisterForm extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			nameActive: true,
+			emailActive: false,
+			passwordActive: false,
+			name: '',
+			email: '',
+			password: '',
+			showPassword: false
+		};
+	}
+
+	//Progress Through Input Active States
+	showNext = () => {
+		if(this.state.nameActive){
+			this.setState({
+				nameActive: false,
+				emailActive: true
+			});
+		} else if(this.state.emailActive){
+			this.setState({
+				emailActive: false,
+				passwordActive: true
+			});
+		}
+	};
+
+	goBack= () => {
+		if(this.state.emailActive){
+			this.setState({
+				nameActive: true,
+				emailActive: false
+			});
+		} else if(this.state.passwordActive){
+			this.setState({
+				emailActive: true,
+				passwordActive: false
+			});
+		}
+	};
+
+	// Password Show / Hide
+	showPassword = e => {
+		this.setState({
+			showPassword: !this.state.showPassword
+		});
+	};
+
+	nameChanged = e => {
+		this.setState({
+			name: e.target.value
+		});
+	};
+
+	emailChanged = e => {
+		this.setState({
+			name: e.target.value
+		});
+	};
+
+	passwordChanged = e => {
+		this.setState({
+			password: e.target.value
+		});
+	};
+
+	render() {
+
+		var status = {};
+		if (this.state.nameActive){status.name = ' active';}	else {status.name = '';}
+		if (this.state.emailActive){status.email = ' active';} else {status.email = '';}
+		if (this.state.passwordActive){status.password = ' active'; status.submit = ' show-submit'} else {status.password = ''; status.submit = ''}
+		if (this.state.nameActive || this.state.emailActive){status.next = ' show-next'} else{status.next = ''}
+		if (this.state.emailActive || this.state.passwordActive){status.back = ' show-back'} else{status.back = ''}
 		return (
 			<Form onSubmit={this.submit}>
-				<Input type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
-				<Input type={'email'} name={"What's your email?"} autoComplete={'email'} />
-				<PasswordInput />
+				<Input component={this.renderInput} class={status.name}type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
+				<Input component={this.renderInput} class={status.email} type={'email'} name={"What's your email?"} autoComplete={'email'} />
 
-				<button type={'submit'}>Continue</button>
+				<div className={'input-container' + status.password}>
+					<label htmlFor={'password'}>Create your password</label>
+					<input
+						type={this.state.showPassword ? 'text' : 'password'}
+						name={'password'}
+						id={'password'}
+						autoComplete={'current-password'}
+						value={this.state.password}
+						onChange={this.passwordChanged}
+					/>
 
-				<CheckBoxWrapper>
+				<CheckBoxWrapper className="password-toggle">
+						<input
+							type={'checkbox'}
+							name={'showPassword'}
+							id={'showPassword'}
+							checked={this.state.showPassword}
+							onChange={this.showPassword}
+						/>
+					</CheckBoxWrapper>
+				</div>
+
+				<div className={'step' + status.back} onClick={this.goBack}>Back</div>
+				<div className={'step' + status.next} onClick={this.showNext}>Next</div>
+				<button className={status.submit} type={'submit'}>Submit</button>
+
+				<CheckBoxWrapper style={{display: 'none'}}>
 					<input type={'checkbox'} name={'terms'} id={'terms'} />
 					<label htmlFor="terms">
 						I agree to the <a href="#">Terms of Use</a>
@@ -144,56 +289,5 @@ class RegisterForm extends React.Component {
 		e.stopPropagation();
 		const registerDto = RegisterDTO.fromFormElement(e.target);
 		this.props.submitRegister(registerDto);
-	};
-}
-
-class PasswordInput extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			password: '',
-			showPassword: false
-		};
-	}
-
-
-	render() {
-		return (
-			<div>
-				<label htmlFor={'password'}>Create your password</label>
-				<input
-					type={this.state.showPassword ? 'text' : 'password'}
-					name={'password'}
-					id={'password'}
-					autoComplete={'current-password'}
-					value={this.state.password}
-					onChange={this.passwordChanged}
-				/>
-
-				<CheckBoxWrapper>
-					<input
-						type={'checkbox'}
-						name={'showPassword'}
-						id={'showPassword'}
-						checked={this.state.showPassword}
-						onChange={this.showPassword}
-					/>
-					<label htmlFor={'showPassword'}>Show Password</label>{' '}
-				</CheckBoxWrapper>
-			</div>
-		);
-	}
-
-	showPassword = e => {
-		this.setState({
-			showPassword: !this.state.showPassword
-		});
-	};
-
-	passwordChanged = e => {
-		this.setState({
-			password: e.target.value
-		});
 	};
 }
