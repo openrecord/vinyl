@@ -90,6 +90,7 @@ const CheckBoxWrapper = styled.div`
 			background-size: 56px 33px;
 			background-position: center;
 			background-repeat: no-repeat;
+			border: none;
 			cursor: pointer;
 			height: 33px;
 			margin-top: 32px;
@@ -139,7 +140,7 @@ const Form = styled.form`
 				font-size: 2.625em;
 			}
 
-			input:-webkit-autofill {
+			input {
 				&[type='text'],
 				&[type='email'],
 				&[type='password'] {
@@ -437,7 +438,7 @@ class RegisterForm extends React.Component {
 								type={'button'}
 								name={'showPassword'}
 								id={'showPassword'}
-								checked={this.state.showPassword}
+								onClick={this.state.showPassword}
 								onChange={this.showPassword}
 							/>
 						</CheckBoxWrapper>
