@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Route, Switch, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -218,7 +219,7 @@ function Input(props) {
 	return (
 		<div className={'input-container' + props.class}>
 			<label htmlFor={props.name}>{props.name}</label>
-			<input type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} onFocus={props.onFocus} onBlur={props.onBlur} />
+			<input onChange={props.onChange} type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} onFocus={props.onFocus} onBlur={props.onBlur} />
 		</div>
 	);
 }
@@ -243,6 +244,23 @@ class RegisterForm extends React.Component {
 		};
 	}
 
+	componentWillMount(){
+    window.addEventListener('keydown', this.handleKeyPress);
+  }
+  componentWillUnmount(){
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+	handleKeyPress = e =>{
+    if(e.keyCode == 13) {
+			this.showNext();
+			if(!this.state.passwordActive){
+				e.preventDefault();
+				return false;
+			}
+    }
+  }
+
 	//Progress Through Input Active States
 	showNext = () => {
 		if(this.state.nameActive){
@@ -250,12 +268,15 @@ class RegisterForm extends React.Component {
 				nameActive: false,
 				emailActive: true
 			});
+			ReactDOM.findDOMNode(this.refs.emailInput).children[1].focus();
 		} else if(this.state.emailActive){
 			this.setState({
 				emailActive: false,
 				passwordActive: true
 			});
+			ReactDOM.findDOMNode(this.refs.passwordInput).focus();
 		}
+
 	};
 
 	goBack= () => {
@@ -264,11 +285,13 @@ class RegisterForm extends React.Component {
 				nameActive: true,
 				emailActive: false
 			});
+			ReactDOM.findDOMNode(this.refs.nameInput).children[1].focus();
 		} else if(this.state.passwordActive){
 			this.setState({
 				emailActive: true,
 				passwordActive: false
 			});
+			ReactDOM.findDOMNode(this.refs.emailInput).children[1].focus();
 		}
 	};
 
@@ -280,52 +303,29 @@ class RegisterForm extends React.Component {
 	};
 
 	nameChanged = e => {
-		this.setState({
-			name: e.target.value
-		});
+		var nameString = JSON.stringify(e.target.value),
+			  nameLength = nameString.replace(/\"/g, "").length;
+		if(nameLength > 0){
+			this.setState({nameFocus: true});
+		}
+		this.setState({name: e.target.value});
 	};
 	emailChanged = e => {
-		this.setState({
-			name: e.target.value
-		});
+		var emailString = JSON.stringify(e.target.value),
+			  emailLength = emailString.replace(/\"/g, "").length;
+		if(emailLength > 0){
+			this.setState({emailFocus: true});
+		}
+		this.setState({email: e.target.value});
 	};
 	passwordChanged = e => {
-		this.setState({
-			password: e.target.value
-		});
+		var passwordString = JSON.stringify(e.target.value),
+			  passwordLength = passwordString.replace(/\"/g, "").length;
+		if(passwordLength > 0){
+			this.setState({passwordFocus: true});
+		}
+		this.setState({password: e.target.value});
 	};
-
-	focusName = () => {
-		this.setState({
-			nameFocus: true
-		});
-	}
-	focusEmail = () => {
-		this.setState({
-			emailFocus: true
-		});
-	}
-	focusPassword = () => {
-		this.setState({
-			passwordFocus: true
-		});
-	}
-
-	blurName = () => {
-		this.setState({
-			nameFocus: false
-		});
-	}
-	blurEmail = () => {
-		this.setState({
-			emailFocus: false
-		});
-	}
-	blurPassword = () => {
-		this.setState({
-			passwordFocus: false
-		});
-	}
 
 	render() {
 
@@ -344,8 +344,8 @@ class RegisterForm extends React.Component {
 		return (
 			<Form onSubmit={this.submit}>
 				<div className="form-inner">
-					<Input class={status.name + focus.name} onFocus={this.focusName} onBlur={this.blurName} type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
-					<Input class={status.email + focus.email} onFocus={this.focusEmail} onBlur={this.blurEmail} type={'email'} name={"What's your email?"} autoComplete={'email'} />
+					<Input ref='nameInput' onChange={this.nameChanged} class={status.name + focus.name} type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
+					<Input ref='emailInput' onChange={this.emailChanged} class={status.email + focus.email} type={'email'} name={"What's your email?"} autoComplete={'email'} />
 
 					<div className={'input-container' + status.password + focus.password}>
 						<label htmlFor={'password'}>Create your password</label>
@@ -353,6 +353,7 @@ class RegisterForm extends React.Component {
 							type={this.state.showPassword ? 'text' : 'password'}
 							name={'password'}
 							id={'password'}
+							ref='passwordInput'
 							autoComplete={'current-password'}
 							value={this.state.password}
 							onChange={this.passwordChanged}
@@ -397,7 +398,9 @@ class RegisterForm extends React.Component {
 	submit = e => {
 		e.preventDefault();
 		e.stopPropagation();
-		const registerDto = RegisterDTO.fromFormElement(e.target);
-		this.props.submitRegister(registerDto);
+		if(this.state.passwordActive){
+			const registerDto = RegisterDTO.fromFormElement(e.target);
+			this.props.submitRegister(registerDto);
+		}
 	};
 }
