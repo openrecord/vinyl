@@ -4,6 +4,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 import arrow from './images/registration-arrow.svg';
+import show from './images/show-icn.svg';
 
 import RegisterDTO from './RegisterDTO';
 
@@ -11,13 +12,14 @@ export default function Register(props) {
 	return (
 		<div>
 			<RegisterFormContainer>
-				<Link id="home-x" to={'/'}><span/></Link>
+				<Link id="home-x" to={'/'}>
+					<span />
+				</Link>
 				<RegisterForm submitRegister={props.submitRegister} />
 			</RegisterFormContainer>
 		</div>
 	);
 }
-
 
 const RegisterFormContainer = styled.main`
 	background: black;
@@ -29,27 +31,26 @@ const RegisterFormContainer = styled.main`
 	top: 0;
 	z-index: 5;
 
-
-	#home-x{
+	#home-x {
 		left: 36px;
 		position: absolute;
 		top: 36px;
 		z-index: 10;
 
-		&:hover{
-			span{
+		&:hover {
+			span {
 				opacity: 1;
 			}
 		}
 
-		span{
+		span {
 			display: block;
 			height: 40px;
 			padding: 10px;
 			opacity: 0.5;
 			width: 40px;
 
-			&::before{
+			&::before {
 				background: white;
 				content: '';
 				position: absolute;
@@ -60,7 +61,7 @@ const RegisterFormContainer = styled.main`
 				width: 4px;
 			}
 
-			&::after{
+			&::after {
 				background: white;
 				content: '';
 				position: absolute;
@@ -78,12 +79,29 @@ const CheckBoxWrapper = styled.div`
 	white-space: nowrap;
 	padding: 10px 10px;
 
-	&.password-toggle{
-		height: 24px
+	&.password-toggle {
+		height: 24px;
 		position: absolute;
 		right: 0;
-		top: 40px
+		top: 40px;
 
+		.eye-toggle {
+			background: url(${show});
+			background-size: 56px 33px;
+			background-position: center;
+			background-repeat: no-repeat;
+			cursor: pointer;
+			height: 33px;
+			margin-top: 32px;
+			opacity: 0.4;
+			float: right;
+			/*padding: 8px 0;*/
+			width: 56px;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 `;
 
@@ -96,22 +114,22 @@ const Form = styled.form`
 	text-align: left;
 	top: 0;
 
-	.form-inner{
+	.form-inner {
 		display: block;
 		left: 50%;
 		position: absolute;
 		top: 50%;
 		transform: translate(-50%, -50%);
 
-		.input-container{
+		.input-container {
 			display: none;
 
-			&.active{
+			&.active {
 				display: block;
 			}
 
-			&.focus{
-				label{
+			&.focus {
+				label {
 					opacity: 0.5;
 				}
 			}
@@ -121,7 +139,7 @@ const Form = styled.form`
 				font-size: 2.625em;
 			}
 
-			input {
+			input:-webkit-autofill {
 				&[type='text'],
 				&[type='email'],
 				&[type='password'] {
@@ -138,7 +156,7 @@ const Form = styled.form`
 			}
 		}
 
-		.step{
+		.step {
 			background: url(${arrow});
 			background-size: 60px 26px;
 			background-position: center;
@@ -151,21 +169,21 @@ const Form = styled.form`
 			padding: 8px 0;
 			width: 60px;
 
-			&:hover{
+			&:hover {
 				opacity: 1;
 			}
-			&.show-next{
+			&.show-next {
 				display: inline-block;
 				float: right;
 			}
-			&.show-back{
+			&.show-back {
 				display: inline-block;
 				float: left;
 				transform: scale(-1);
 			}
 		}
 
-		button{
+		button {
 			background: none;
 			border: 0;
 			color: white;
@@ -179,29 +197,28 @@ const Form = styled.form`
 			outline: none;
 			padding: 0;
 
-			&:hover{
+			&:hover {
 				opacity: 1;
 			}
 
-			&.show-submit{
+			&.show-submit {
 				display: inline-block;
 			}
-
 		}
 	}
 
-	.page-numbers{
+	.page-numbers {
 		bottom: 20px;
 		position: fixed;
 		opacity: 0.5;
 		right: 20px;
 
-		span{
+		span {
 			display: inline-block;
 			color: white;
 			font-size: 1.875em;
 
-			&.dash{
+			&.dash {
 				background: white;
 				height: 2px;
 				margin: 0 3px;
@@ -211,20 +228,24 @@ const Form = styled.form`
 			}
 		}
 	}
-
-
 `;
 
 function Input(props) {
 	return (
 		<div className={'input-container' + props.class}>
 			<label htmlFor={props.name}>{props.name}</label>
-			<input onChange={props.onChange} type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} onFocus={props.onFocus} onBlur={props.onBlur} />
+			<input
+				onChange={props.onChange}
+				type={props.type}
+				name={props.name}
+				id={props.name}
+				autoComplete={props.autoComplete}
+				onFocus={props.onFocus}
+				onBlur={props.onBlur}
+			/>
 		</div>
 	);
 }
-
-
 
 class RegisterForm extends React.Component {
 	constructor(props) {
@@ -244,49 +265,48 @@ class RegisterForm extends React.Component {
 		};
 	}
 
-	componentWillMount(){
-    window.addEventListener('keydown', this.handleKeyPress);
-  }
-  componentWillUnmount(){
-    window.removeEventListener('keydown', this.handleKeyPress);
-  }
+	componentWillMount() {
+		window.addEventListener('keydown', this.handleKeyPress);
+	}
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyPress);
+	}
 
-	handleKeyPress = e =>{
-    if(e.keyCode == 13) {
+	handleKeyPress = e => {
+		if (e.keyCode == 13) {
 			this.showNext();
-			if(!this.state.passwordActive){
+			if (!this.state.passwordActive) {
 				e.preventDefault();
 				return false;
 			}
-    }
-  }
+		}
+	};
 
 	//Progress Through Input Active States
 	showNext = () => {
-		if(this.state.nameActive){
+		if (this.state.nameActive) {
 			this.setState({
 				nameActive: false,
 				emailActive: true
 			});
 			ReactDOM.findDOMNode(this.refs.emailInput).children[1].focus();
-		} else if(this.state.emailActive){
+		} else if (this.state.emailActive) {
 			this.setState({
 				emailActive: false,
 				passwordActive: true
 			});
 			ReactDOM.findDOMNode(this.refs.passwordInput).focus();
 		}
-
 	};
 
-	goBack= () => {
-		if(this.state.emailActive){
+	goBack = () => {
+		if (this.state.emailActive) {
 			this.setState({
 				nameActive: true,
 				emailActive: false
 			});
 			ReactDOM.findDOMNode(this.refs.nameInput).children[1].focus();
-		} else if(this.state.passwordActive){
+		} else if (this.state.passwordActive) {
 			this.setState({
 				emailActive: true,
 				passwordActive: false
@@ -304,48 +324,98 @@ class RegisterForm extends React.Component {
 
 	nameChanged = e => {
 		var nameString = JSON.stringify(e.target.value),
-			  nameLength = nameString.replace(/\"/g, "").length;
-		if(nameLength > 0){
+			nameLength = nameString.replace(/\"/g, '').length;
+		if (nameLength > 0) {
 			this.setState({nameFocus: true});
 		}
 		this.setState({name: e.target.value});
 	};
 	emailChanged = e => {
 		var emailString = JSON.stringify(e.target.value),
-			  emailLength = emailString.replace(/\"/g, "").length;
-		if(emailLength > 0){
+			emailLength = emailString.replace(/\"/g, '').length;
+		if (emailLength > 0) {
 			this.setState({emailFocus: true});
 		}
 		this.setState({email: e.target.value});
 	};
 	passwordChanged = e => {
 		var passwordString = JSON.stringify(e.target.value),
-			  passwordLength = passwordString.replace(/\"/g, "").length;
-		if(passwordLength > 0){
+			passwordLength = passwordString.replace(/\"/g, '').length;
+		if (passwordLength > 0) {
 			this.setState({passwordFocus: true});
 		}
 		this.setState({password: e.target.value});
 	};
 
 	render() {
-
 		var status = {},
-				focus = {},
-				page = {};
-		if (this.state.nameActive){status.name = ' active'; page.number='1';}	else {status.name = '';}
-		if (this.state.emailActive){status.email = ' active'; page.number='2';} else {status.email = '';}
-		if (this.state.passwordActive){status.password = ' active'; page.number='3'; status.submit = ' show-submit'} else {status.password = ''; status.submit = ''}
-		if (this.state.nameActive || this.state.emailActive){status.next = ' show-next'} else{status.next = ''}
-		if (this.state.emailActive || this.state.passwordActive){status.back = ' show-back'} else{status.back = ''}
-		if (this.state.nameFocus){focus.name = ' focus';} else{focus.name = ''};
-		if (this.state.emailFocus){focus.email = ' focus';} else{focus.email = ''};
-		if (this.state.passwordFocus){focus.password = ' focus';} else{focus.password = ''};
+			focus = {},
+			page = {};
+		if (this.state.nameActive) {
+			status.name = ' active';
+			page.number = '1';
+		} else {
+			status.name = '';
+		}
+		if (this.state.emailActive) {
+			status.email = ' active';
+			page.number = '2';
+		} else {
+			status.email = '';
+		}
+		if (this.state.passwordActive) {
+			status.password = ' active';
+			page.number = '3';
+			status.submit = ' show-submit';
+		} else {
+			status.password = '';
+			status.submit = '';
+		}
+		if (this.state.nameActive || this.state.emailActive) {
+			status.next = ' show-next';
+		} else {
+			status.next = '';
+		}
+		if (this.state.emailActive || this.state.passwordActive) {
+			status.back = ' show-back';
+		} else {
+			status.back = '';
+		}
+		if (this.state.nameFocus) {
+			focus.name = ' focus';
+		} else {
+			focus.name = '';
+		}
+		if (this.state.emailFocus) {
+			focus.email = ' focus';
+		} else {
+			focus.email = '';
+		}
+		if (this.state.passwordFocus) {
+			focus.password = ' focus';
+		} else {
+			focus.password = '';
+		}
 
 		return (
 			<Form onSubmit={this.submit}>
 				<div className="form-inner">
-					<Input ref='nameInput' onChange={this.nameChanged} class={status.name + focus.name} type={'text'} name={"What's your name?"} autoComplete={'given-name'} />
-					<Input ref='emailInput' onChange={this.emailChanged} class={status.email + focus.email} type={'email'} name={"What's your email?"} autoComplete={'email'} />
+					<Input
+						ref="nameInput"
+						onChange={this.nameChanged}
+						class={status.name + focus.name}
+						type={'text'}
+						name={"What's your name?"}
+						autoComplete={'given-name'}
+					/>
+					<Input
+						ref="emailInput"
+						onChange={this.emailChanged}
+						class={status.email + focus.email}
+						type={'email'}
+						name={"What's your email?"}
+						autoComplete={'email'}
+					/>
 
 					<div className={'input-container' + status.password + focus.password}>
 						<label htmlFor={'password'}>Create your password</label>
@@ -353,7 +423,7 @@ class RegisterForm extends React.Component {
 							type={this.state.showPassword ? 'text' : 'password'}
 							name={'password'}
 							id={'password'}
-							ref='passwordInput'
+							ref="passwordInput"
 							autoComplete={'current-password'}
 							value={this.state.password}
 							onChange={this.passwordChanged}
@@ -361,29 +431,30 @@ class RegisterForm extends React.Component {
 							onBlur={this.blurPassword}
 						/>
 
-					<CheckBoxWrapper className="password-toggle">
+						<CheckBoxWrapper className="password-toggle">
 							<input
-								type={'checkbox'}
+								className="eye-toggle"
+								type={'button'}
 								name={'showPassword'}
 								id={'showPassword'}
 								checked={this.state.showPassword}
 								onChange={this.showPassword}
 							/>
-						<span className="eye-toggle" />
 						</CheckBoxWrapper>
 					</div>
 
-					<div className={'step' + status.back} onClick={this.goBack}/>
-					<div className={'step' + status.next} onClick={this.showNext}/>
-					<button className={status.submit} type={'submit'}>Done</button>
+					<div className={'step' + status.back} onClick={this.goBack} />
+					<div className={'step' + status.next} onClick={this.showNext} />
+					<button className={status.submit} type={'submit'}>
+						Done
+					</button>
 				</div>
 
 				<div className="page-numbers">
 					<span>{page.number}</span>
-					<span className="dash"/>
+					<span className="dash" />
 					<span>3</span>
 				</div>
-
 
 				<CheckBoxWrapper style={{display: 'none'}}>
 					<input type={'checkbox'} name={'terms'} id={'terms'} />
@@ -398,7 +469,7 @@ class RegisterForm extends React.Component {
 	submit = e => {
 		e.preventDefault();
 		e.stopPropagation();
-		if(this.state.passwordActive){
+		if (this.state.passwordActive) {
 			const registerDto = RegisterDTO.fromFormElement(e.target);
 			this.props.submitRegister(registerDto);
 		}
