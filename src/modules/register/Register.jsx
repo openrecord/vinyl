@@ -129,17 +129,6 @@ const Form = styled.form`
 				display: block;
 			}
 
-			&.focus {
-				label {
-					opacity: 0.5;
-				}
-			}
-
-			label {
-				color: white;
-				font-size: 2.625em;
-			}
-
 			input {
 				&[type='text'],
 				&[type='email'],
@@ -151,10 +140,23 @@ const Form = styled.form`
 					display: block;
 					font-size: 2.625em;
 					line-height: 94px;
+					margin-top: 48px;
 					outline: none;
 					width: 545px;
 				}
+
+				&:focus + label{
+					opacity: 0.5;
+				}
 			}
+
+			label {
+				position: absolute;
+				color: white;
+				font-size: 2.625em;
+				top: 0;
+			}
+
 		}
 
 		.step {
@@ -234,16 +236,14 @@ const Form = styled.form`
 function Input(props) {
 	return (
 		<div className={'input-container' + props.class}>
-			<label htmlFor={props.name}>{props.name}</label>
 			<input
 				onChange={props.onChange}
 				type={props.type}
 				name={props.name}
 				id={props.name}
 				autoComplete={props.autoComplete}
-				onFocus={props.onFocus}
-				onBlur={props.onBlur}
 			/>
+			<label htmlFor={props.name}>{props.name}</label>
 		</div>
 	);
 }
@@ -256,9 +256,6 @@ class RegisterForm extends React.Component {
 			nameActive: true,
 			emailActive: false,
 			passwordActive: false,
-			nameFocus: false,
-			emailFocus: false,
-			passwordFocus: false,
 			name: '',
 			email: '',
 			password: '',
@@ -325,14 +322,12 @@ class RegisterForm extends React.Component {
 
 	onChange = field => ({target: { value }})  => {
   this.setState({
-    focus: value.length ? field : state.focus,
     [field]: value,
   })
 };
 
 	render() {
 		var status = {},
-			focus = {},
 			page = {};
 		if (this.state.nameActive) {
 			status.name = ' active';
@@ -364,21 +359,6 @@ class RegisterForm extends React.Component {
 		} else {
 			status.back = '';
 		}
-		if (this.state.nameFocus) {
-			focus.name = ' focus';
-		} else {
-			focus.name = '';
-		}
-		if (this.state.emailFocus) {
-			focus.email = ' focus';
-		} else {
-			focus.email = '';
-		}
-		if (this.state.passwordFocus) {
-			focus.password = ' focus';
-		} else {
-			focus.password = '';
-		}
 
 		return (
 			<Form onSubmit={this.submit}>
@@ -386,7 +366,7 @@ class RegisterForm extends React.Component {
 					<Input
 						ref="nameInput"
 						onChange={this.onChange('name')}
-						class={status.name + focus.name}
+						class={status.name}
 						type={'text'}
 						name={"What's your name?"}
 						autoComplete={'given-name'}
@@ -394,14 +374,13 @@ class RegisterForm extends React.Component {
 					<Input
 						ref="emailInput"
 						onChange={this.onChange('email')}
-						class={status.email + focus.email}
+						class={status.email}
 						type={'email'}
 						name={"What's your email?"}
 						autoComplete={'email'}
 					/>
 
-					<div className={'input-container' + status.password + focus.password}>
-						<label htmlFor={'password'}>Create your password</label>
+					<div className={'input-container' + status.password}>
 						<input
 							type={this.state.showPassword ? 'text' : 'password'}
 							name={'password'}
@@ -411,6 +390,7 @@ class RegisterForm extends React.Component {
 							value={this.state.password}
 							onChange={this.onChange('password')}
 						/>
+						<label htmlFor={'password'}>Create your password</label>
 
 						<CheckBoxWrapper className="password-toggle">
 							<input
