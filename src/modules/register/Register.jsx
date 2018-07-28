@@ -327,8 +327,17 @@ class RegisterForm extends React.Component {
 };
 
 	render() {
-		var status = {},
-			page = {};
+		var status = {
+		  name: '',
+		  email: '',
+		  password: '',
+			submit: '',
+			next: '',
+			back: ''
+		}
+		var page = {
+				number: '',
+		}
 		if (this.state.nameActive) {
 			status.name = ' active';
 			page.number = '1';
