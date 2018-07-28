@@ -323,30 +323,12 @@ class RegisterForm extends React.Component {
 		});
 	};
 
-	nameChanged = e => {
-		var nameString = JSON.stringify(e.target.value),
-			nameLength = nameString.replace(/\"/g, '').length;
-		if (nameLength > 0) {
-			this.setState({nameFocus: true});
-		}
-		this.setState({name: e.target.value});
-	};
-	emailChanged = e => {
-		var emailString = JSON.stringify(e.target.value),
-			emailLength = emailString.replace(/\"/g, '').length;
-		if (emailLength > 0) {
-			this.setState({emailFocus: true});
-		}
-		this.setState({email: e.target.value});
-	};
-	passwordChanged = e => {
-		var passwordString = JSON.stringify(e.target.value),
-			passwordLength = passwordString.replace(/\"/g, '').length;
-		if (passwordLength > 0) {
-			this.setState({passwordFocus: true});
-		}
-		this.setState({password: e.target.value});
-	};
+	onChange = field => ({target: { value }})  => {
+  this.setState({
+    focus: value.length ? field : state.focus,
+    [field]: value,
+  })
+};
 
 	render() {
 		var status = {},
@@ -403,7 +385,7 @@ class RegisterForm extends React.Component {
 				<div className="form-inner">
 					<Input
 						ref="nameInput"
-						onChange={this.nameChanged}
+						onChange={this.onChange('name')}
 						class={status.name + focus.name}
 						type={'text'}
 						name={"What's your name?"}
@@ -411,7 +393,7 @@ class RegisterForm extends React.Component {
 					/>
 					<Input
 						ref="emailInput"
-						onChange={this.emailChanged}
+						onChange={this.onChange('email')}
 						class={status.email + focus.email}
 						type={'email'}
 						name={"What's your email?"}
@@ -427,9 +409,7 @@ class RegisterForm extends React.Component {
 							ref="passwordInput"
 							autoComplete={'current-password'}
 							value={this.state.password}
-							onChange={this.passwordChanged}
-							onFocus={this.focusPassword}
-							onBlur={this.blurPassword}
+							onChange={this.onChange('password')}
 						/>
 
 						<CheckBoxWrapper className="password-toggle">
