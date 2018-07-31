@@ -252,6 +252,12 @@ class RegisterForm extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.inputs = {
+			name: React.createRef(),
+		  email: React.createRef(),
+		  password: React.createRef(),
+		}
+
 		this.state = {
 			nameActive: true,
 			emailActive: false,
@@ -280,6 +286,16 @@ class RegisterForm extends React.Component {
 		}
 	};
 
+	focusNameInput = () =>{
+		console.log(this.inputs.name.current.focus());
+	}
+	focusEmailInput = () =>{
+		console.log(this.inputs.email.current.focus());
+	}
+	focusPasswordInput= () =>{
+		console.log(this.inputs.password.current.focus());
+	}
+
 	//Progress Through Input Active States
 	showNext = () => {
 		if (this.state.nameActive) {
@@ -287,13 +303,13 @@ class RegisterForm extends React.Component {
 				nameActive: false,
 				emailActive: true
 			});
-			ReactDOM.findDOMNode(this.refs.emailInput).children[1].focus();
+			this.focusEmailInput();
 		} else if (this.state.emailActive) {
 			this.setState({
 				emailActive: false,
 				passwordActive: true
 			});
-			ReactDOM.findDOMNode(this.refs.passwordInput).focus();
+			this.focusPasswordInput();
 		}
 	};
 
@@ -303,18 +319,18 @@ class RegisterForm extends React.Component {
 				nameActive: true,
 				emailActive: false
 			});
-			ReactDOM.findDOMNode(this.refs.nameInput).children[1].focus();
+			this.focusNameInput();
 		} else if (this.state.passwordActive) {
 			this.setState({
 				emailActive: true,
 				passwordActive: false
 			});
-			ReactDOM.findDOMNode(this.refs.emailInput).children[1].focus();
+			this.focusEmailInput();
 		}
 	};
 
 	// Password Show / Hide
-	showPassword = e => {
+	togglePassword= e => {
 		this.setState({
 			showPassword: !this.state.showPassword
 		});
@@ -373,7 +389,7 @@ class RegisterForm extends React.Component {
 			<Form onSubmit={this.submit}>
 				<div className="form-inner">
 					<Input
-						ref="nameInput"
+						ref={this.inputs.name}
 						onChange={this.onChange('name')}
 						class={status.name}
 						type={'text'}
@@ -381,7 +397,7 @@ class RegisterForm extends React.Component {
 						autoComplete={'given-name'}
 					/>
 					<Input
-						ref="emailInput"
+						ref={this.inputs.email}
 						onChange={this.onChange('email')}
 						class={status.email}
 						type={'email'}
@@ -391,10 +407,10 @@ class RegisterForm extends React.Component {
 
 					<div className={'input-container' + status.password}>
 						<input
+							ref={this.inputs.password}
 							type={this.state.showPassword ? 'text' : 'password'}
 							name={'password'}
 							id={'password'}
-							ref="passwordInput"
 							autoComplete={'current-password'}
 							value={this.state.password}
 							onChange={this.onChange('password')}
@@ -407,8 +423,7 @@ class RegisterForm extends React.Component {
 								type={'button'}
 								name={'showPassword'}
 								id={'showPassword'}
-								onClick={this.state.showPassword}
-								onChange={this.showPassword}
+								onClick={this.togglePassword}
 							/>
 						</CheckBoxWrapper>
 					</div>
