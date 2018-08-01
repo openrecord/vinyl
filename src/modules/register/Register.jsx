@@ -123,12 +123,6 @@ const Form = styled.form`
 		transform: translate(-50%, -50%);
 
 		.input-container {
-			display: none;
-
-			&.active {
-				display: block;
-			}
-
 			input {
 				&[type='text'],
 				&[type='email'],
@@ -145,7 +139,7 @@ const Form = styled.form`
 					width: 545px;
 				}
 
-				&:focus + label{
+				&:focus + label {
 					opacity: 0.5;
 				}
 			}
@@ -156,7 +150,6 @@ const Form = styled.form`
 				font-size: 2.625em;
 				top: 0;
 			}
-
 		}
 
 		.step {
@@ -233,17 +226,12 @@ const Form = styled.form`
 	}
 `;
 
-function Input(props) {
+function Input({type, name, autoComplete, onChange, value, className = '', children}) {
 	return (
-		<div className={'input-container' + props.class}>
-			<input
-				onChange={props.onChange}
-				type={props.type}
-				name={props.name}
-				id={props.name}
-				autoComplete={props.autoComplete}
-			/>
-			<label htmlFor={props.name}>{props.name}</label>
+		<div className={`input-container ${className}`}>
+			<input autoFocus onChange={onChange} type={type} name={name} id={name} autoComplete={autoComplete} value={value} />
+			<label htmlFor={name}>{name}</label>
+			{children}
 		</div>
 	);
 }
@@ -252,16 +240,26 @@ class RegisterForm extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.inputs = {
-			name: React.createRef(),
-		  email: React.createRef(),
-		  password: React.createRef(),
-		}
+		this.SCREENS = {
+			NAME: 'name',
+			PASSWORD: 'password',
+			EMAIL: 'email'
+		};
+
+		this.screenOrder = [this.SCREENS.NAME, this.SCREENS.EMAIL, this.SCREENS.PASSWORD];
+
+		this.nextScreen = {};
+		this.prevScreen = {};
+
+		// this.nextScreen[this.SCREENS.SCREEN_NAME] yields the next screen in the flow
+		// this.prevScreen[this.SCREENS.SCREEN_NAME] yields the previous screen in the flow
+		_.zip(this.screenOrder, this.screenOrder.slice(1)).forEach(([from = null, to = null]) => {
+			this.nextScreen[from] = to;
+			this.prevScreen[to] = from;
+		});
 
 		this.state = {
-			nameActive: true,
-			emailActive: false,
-			passwordActive: false,
+			active: this.SCREENS.NAME,
 			name: '',
 			email: '',
 			password: '',
@@ -269,184 +267,85 @@ class RegisterForm extends React.Component {
 		};
 	}
 
-	componentWillMount() {
-		window.addEventListener('keydown', this.handleKeyPress);
-	}
-	componentWillUnmount() {
-		window.removeEventListener('keydown', this.handleKeyPress);
-	}
-
 	handleKeyPress = e => {
-		if (e.keyCode == 13) {
+		if (e.key == 'Enter' && this.getNextScreen()) {
 			this.showNext();
-			if (!this.state.passwordActive) {
-				e.preventDefault();
-				return false;
-			}
 		}
 	};
 
-	focusNameInput = () =>{
-		console.log(this.inputs.name.current.focus());
-	}
-	focusEmailInput = () =>{
-		console.log(this.inputs.email.current.focus());
-	}
-	focusPasswordInput= () =>{
-		console.log(this.inputs.password.current.focus());
-	}
+	getNextScreen = () => this.nextScreen[this.state.active];
 
-	//Progress Through Input Active States
+	getPrevScreen = () => this.prevScreen[this.state.active];
+
 	showNext = () => {
-		if (this.state.nameActive) {
-			this.setState({
-				nameActive: false,
-				emailActive: true
-			});
-			this.focusEmailInput();
-		} else if (this.state.emailActive) {
-			this.setState({
-				emailActive: false,
-				passwordActive: true
-			});
-			this.focusPasswordInput();
-		}
+		this.setState({active: this.getNextScreen()});
 	};
 
 	goBack = () => {
-		if (this.state.emailActive) {
-			this.setState({
-				nameActive: true,
-				emailActive: false
-			});
-			this.focusNameInput();
-		} else if (this.state.passwordActive) {
-			this.setState({
-				emailActive: true,
-				passwordActive: false
-			});
-			this.focusEmailInput();
-		}
+		this.setState({active: this.getPrevScreen()});
 	};
 
 	// Password Show / Hide
-	togglePassword= e => {
+	togglePassword = e => {
 		this.setState({
 			showPassword: !this.state.showPassword
 		});
 	};
 
-	onChange = field => ({target: { value }})  => {
-  this.setState({
-    [field]: value,
-  })
-};
+	onChange = field => ({target: {value}}) => {
+		this.setState({
+			[field]: value
+		});
+	};
 
 	render() {
-		var status = {
-		  name: '',
-		  email: '',
-		  password: '',
-			submit: '',
-			next: '',
-			back: ''
-		}
-		var page = {
-				number: '',
-		}
-		if (this.state.nameActive) {
-			status.name = ' active';
-			page.number = '1';
-		} else {
-			status.name = '';
-		}
-		if (this.state.emailActive) {
-			status.email = ' active';
-			page.number = '2';
-		} else {
-			status.email = '';
-		}
-		if (this.state.passwordActive) {
-			status.password = ' active';
-			page.number = '3';
-			status.submit = ' show-submit';
-		} else {
-			status.password = '';
-			status.submit = '';
-		}
-		if (this.state.nameActive || this.state.emailActive) {
-			status.next = ' show-next';
-		} else {
-			status.next = '';
-		}
-		if (this.state.emailActive || this.state.passwordActive) {
-			status.back = ' show-back';
-		} else {
-			status.back = '';
-		}
+		const {active, showPassword} = this.state;
+
+		const inputProps = {
+			[this.SCREENS.NAME]: {
+				type: 'text',
+				name: "What's your name?",
+				autoComplete: 'given-name',
+				value: this.state.name
+			},
+			[this.SCREENS.EMAIL]: {
+				type: 'email',
+				name: "What's your email?",
+				autoComplete: 'email',
+				value: this.state.email
+			},
+			[this.SCREENS.PASSWORD]: {
+				type: showPassword ? 'text' : 'password',
+				name: 'Create your password',
+				autoComplete: 'current-password',
+				value: this.state.password,
+				children: (
+					<CheckBoxWrapper className="password-toggle">
+						<input className="eye-toggle" type="button" name="showPassword" id="showPassword" onClick={this.togglePassword} />
+					</CheckBoxWrapper>
+				)
+			}
+		};
 
 		return (
 			<Form onSubmit={this.submit}>
-				<div className="form-inner">
-					<Input
-						ref={this.inputs.name}
-						onChange={this.onChange('name')}
-						class={status.name}
-						type={'text'}
-						name={"What's your name?"}
-						autoComplete={'given-name'}
-					/>
-					<Input
-						ref={this.inputs.email}
-						onChange={this.onChange('email')}
-						class={status.email}
-						type={'email'}
-						name={"What's your email?"}
-						autoComplete={'email'}
-					/>
-
-					<div className={'input-container' + status.password}>
-						<input
-							ref={this.inputs.password}
-							type={this.state.showPassword ? 'text' : 'password'}
-							name={'password'}
-							id={'password'}
-							autoComplete={'current-password'}
-							value={this.state.password}
-							onChange={this.onChange('password')}
-						/>
-						<label htmlFor={'password'}>Create your password</label>
-
-						<CheckBoxWrapper className="password-toggle">
-							<input
-								className="eye-toggle"
-								type={'button'}
-								name={'showPassword'}
-								id={'showPassword'}
-								onClick={this.togglePassword}
-							/>
-						</CheckBoxWrapper>
-					</div>
-
-					<div className={'step' + status.back} onClick={this.goBack} />
-					<div className={'step' + status.next} onClick={this.showNext} />
-					<button className={status.submit} type={'submit'}>
-						Done
-					</button>
+				<div className="form-inner" onKeyPress={this.handleKeyPress}>
+					<Input onChange={this.onChange(active)} {...inputProps[active]} key={active} />
+					{this.getPrevScreen() && <div className="step show-back" onClick={this.goBack} />}
+					{this.getNextScreen() ? (
+						<div className="step show-next" onClick={this.showNext} />
+					) : (
+						<button className="show-submit" type="submit">
+							Done
+						</button>
+					)}
 				</div>
 
 				<div className="page-numbers">
-					<span>{page.number}</span>
+					<span>{this.screenOrder.indexOf(active) + 1}</span>
 					<span className="dash" />
-					<span>3</span>
+					<span>{this.screenOrder.length}</span>
 				</div>
-
-				<CheckBoxWrapper style={{display: 'none'}}>
-					<input type={'checkbox'} name={'terms'} id={'terms'} />
-					<label htmlFor="terms">
-						I agree to the <a href="#">Terms of Use</a>
-					</label>
-				</CheckBoxWrapper>
 			</Form>
 		);
 	}
@@ -454,8 +353,11 @@ class RegisterForm extends React.Component {
 	submit = e => {
 		e.preventDefault();
 		e.stopPropagation();
-		if (this.state.passwordActive) {
-			const registerDto = RegisterDTO.fromFormElement(e.target);
+		if (!this.getNextScreen()) {
+			const {name, email, password} = this.state;
+			const [firstName, lastName] = name.split(' ');
+
+			const registerDto = new RegisterDTO(firstName, lastName, email, password);
 			this.props.submitRegister(registerDto);
 		}
 	};
