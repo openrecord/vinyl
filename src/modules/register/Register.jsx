@@ -1,6 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import {Route, Switch, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
+import arrow from './images/registration-arrow.svg';
+import show from './images/show-icn.svg';
 
 import RegisterDTO from './RegisterDTO';
 
@@ -8,7 +12,9 @@ export default function Register(props) {
 	return (
 		<div>
 			<RegisterFormContainer>
-				<h2>Register</h2>
+				<Link id="home-x" to={'/'}>
+					<span />
+				</Link>
 				<RegisterForm submitRegister={props.submitRegister} />
 			</RegisterFormContainer>
 		</div>
@@ -16,73 +22,330 @@ export default function Register(props) {
 }
 
 const RegisterFormContainer = styled.main`
+	background: black;
+	position: absolute;
 	text-align: center;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 5;
 
-	> * {
-		margin: 30px auto;
+	#home-x {
+		left: 36px;
+		position: absolute;
+		top: 36px;
+		z-index: 10;
+
+		&:hover {
+			span {
+				opacity: 1;
+			}
+		}
+
+		span {
+			display: block;
+			height: 40px;
+			padding: 10px;
+			opacity: 0.5;
+			width: 40px;
+
+			&::before {
+				background: white;
+				content: '';
+				position: absolute;
+				height: 52px;
+				margin-left: -2px;
+				top: 5px;
+				transform: rotate(45deg);
+				width: 4px;
+			}
+
+			&::after {
+				background: white;
+				content: '';
+				position: absolute;
+				height: 52px;
+				margin-left: -2px;
+				top: 5px;
+				transform: rotate(-45deg);
+				width: 4px;
+			}
+		}
 	}
 `;
 
 const CheckBoxWrapper = styled.div`
 	white-space: nowrap;
-	padding: 10px 0;
+	padding: 10px 10px;
+
+	&.password-toggle {
+		height: 24px;
+		position: absolute;
+		right: 0;
+		top: 40px;
+
+		.eye-toggle {
+			background: url(${show});
+			background-size: 56px 33px;
+			background-position: center;
+			background-repeat: no-repeat;
+			border: none;
+			cursor: pointer;
+			height: 33px;
+			margin-top: 32px;
+			opacity: 0.4;
+			float: right;
+			/*padding: 8px 0;*/
+			width: 56px;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
 `;
 
-function Input(props) {
+const Form = styled.form`
+	background: 0;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: left;
+	top: 0;
+
+	.form-inner {
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		.input-container {
+			input {
+				&[type='text'],
+				&[type='email'],
+				&[type='password'] {
+					background: none;
+					border: none;
+					border-bottom: 4px solid white;
+					color: white;
+					display: block;
+					font-size: 2.625em;
+					line-height: 94px;
+					margin-top: 48px;
+					outline: none;
+					width: 545px;
+				}
+
+				&:focus + label {
+					opacity: 0.5;
+				}
+			}
+
+			label {
+				position: absolute;
+				color: white;
+				font-size: 2.625em;
+				top: 0;
+			}
+		}
+
+		.step {
+			background: url(${arrow});
+			background-size: 60px 26px;
+			background-position: center;
+			background-repeat: no-repeat;
+			cursor: pointer;
+			display: none;
+			height: 26px;
+			margin-top: 32px;
+			opacity: 0.5;
+			padding: 8px 0;
+			width: 60px;
+
+			&:hover {
+				opacity: 1;
+			}
+			&.show-next {
+				display: inline-block;
+				float: right;
+			}
+			&.show-back {
+				display: inline-block;
+				float: left;
+				transform: scale(-1);
+			}
+		}
+
+		button {
+			background: none;
+			border: 0;
+			color: white;
+			cursor: pointer;
+			display: none;
+			float: right;
+			font-size: 2.625em;
+			font-weight: 700;
+			margin-top: 24px;
+			opacity: 0.5;
+			outline: none;
+			padding: 0;
+
+			&:hover {
+				opacity: 1;
+			}
+
+			&.show-submit {
+				display: inline-block;
+			}
+		}
+	}
+
+	.page-numbers {
+		bottom: 20px;
+		position: fixed;
+		opacity: 0.5;
+		right: 20px;
+
+		span {
+			display: inline-block;
+			color: white;
+			font-size: 1.875em;
+
+			&.dash {
+				background: white;
+				height: 2px;
+				margin: 0 3px;
+				position: relative;
+				top: -10px;
+				width: 20px;
+			}
+		}
+	}
+`;
+
+function Input({type, name, autoComplete, onChange, value, className = '', children}) {
 	return (
-		<div>
-			<label htmlFor={props.name}>{_.startCase(props.name)}</label>
-			<input type={props.type} name={props.name} id={props.name} autoComplete={props.autoComplete} />
+		<div className={`input-container ${className}`}>
+			<input autoFocus onChange={onChange} type={type} name={name} id={name} autoComplete={autoComplete} value={value} />
+			<label htmlFor={name}>{name}</label>
+			{children}
 		</div>
 	);
 }
 
 class RegisterForm extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.SCREENS = {
+			NAME: 'name',
+			PASSWORD: 'password',
+			EMAIL: 'email'
+		};
+
+		this.screenOrder = [this.SCREENS.NAME, this.SCREENS.EMAIL, this.SCREENS.PASSWORD];
+
+		this.nextScreen = {};
+		this.prevScreen = {};
+
+		// this.nextScreen[this.SCREENS.SCREEN_NAME] yields the next screen in the flow
+		// this.prevScreen[this.SCREENS.SCREEN_NAME] yields the previous screen in the flow
+		_.zip(this.screenOrder, this.screenOrder.slice(1)).forEach(([from = null, to = null]) => {
+			this.nextScreen[from] = to;
+			this.prevScreen[to] = from;
+		});
+
+		this.state = {
+			active: this.SCREENS.NAME,
+			name: '',
+			email: '',
+			password: '',
+			showPassword: false
+		};
+	}
+
+	handleKeyPress = e => {
+		if (e.key == 'Enter' && this.getNextScreen()) {
+			this.showNext();
+		}
+	};
+
+	getNextScreen = () => this.nextScreen[this.state.active];
+
+	getPrevScreen = () => this.prevScreen[this.state.active];
+
+	showNext = () => {
+		this.setState({active: this.getNextScreen()});
+	};
+
+	goBack = () => {
+		this.setState({active: this.getPrevScreen()});
+	};
+
+	// Password Show / Hide
+	togglePassword = e => {
+		this.setState({
+			showPassword: !this.state.showPassword
+		});
+	};
+
+	onChange = field => ({target: {value}}) => {
+		this.setState({
+			[field]: value
+		});
+	};
+
 	render() {
-		const Form = styled.form`
-			display: flex;
-			flex-direction: column;
-			max-width: 300px;
-			text-align: left;
+		const {active, showPassword} = this.state;
 
-			border: 1px white solid;
-			padding: 15px;
-
-			label {
-				font-size: 14px;
-				padding: 15px 0 2px 0;
+		const inputProps = {
+			[this.SCREENS.NAME]: {
+				type: 'text',
+				name: "What's your name?",
+				autoComplete: 'given-name',
+				value: this.state.name
+			},
+			[this.SCREENS.EMAIL]: {
+				type: 'email',
+				name: "What's your email?",
+				autoComplete: 'email',
+				value: this.state.email
+			},
+			[this.SCREENS.PASSWORD]: {
+				type: showPassword ? 'text' : 'password',
+				name: 'Create your password',
+				autoComplete: 'current-password',
+				value: this.state.password,
+				children: (
+					<CheckBoxWrapper className="password-toggle">
+						<input className="eye-toggle" type="button" name="showPassword" id="showPassword" onClick={this.togglePassword} />
+					</CheckBoxWrapper>
+				)
 			}
-
-			input {
-				&[type='text'],
-				&[type='email'],
-				&[type='password'] {
-					font-size: 14px;
-					padding: 6px;
-					display: block;
-				}
-			}
-
-			input[type='checkbox'] {
-				margin: 0 8px 0 0;
-			}
-		`;
+		};
 
 		return (
 			<Form onSubmit={this.submit}>
-				<Input type={'text'} name={'firstName'} autoComplete={'given-name'} />
-				<Input type={'text'} name={'lastName'} autoComplete={'family-name'} />
-				<Input type={'email'} name={'email'} autoComplete={'email'} />
-				<PasswordInput />
+				<div className="form-inner" onKeyPress={this.handleKeyPress}>
+					<Input onChange={this.onChange(active)} {...inputProps[active]} key={active} />
+					{this.getPrevScreen() && <div className="step show-back" onClick={this.goBack} />}
+					{this.getNextScreen() ? (
+						<div className="step show-next" onClick={this.showNext} />
+					) : (
+						<button className="show-submit" type="submit">
+							Done
+						</button>
+					)}
+				</div>
 
-				<button type={'submit'}>Continue</button>
-
-				<CheckBoxWrapper>
-					<input type={'checkbox'} name={'terms'} id={'terms'} />
-					<label htmlFor="terms">
-						I agree to the <a href="#">Terms of Use</a>
-					</label>
-				</CheckBoxWrapper>
+				<div className="page-numbers">
+					<span>{this.screenOrder.indexOf(active) + 1}</span>
+					<span className="dash" />
+					<span>{this.screenOrder.length}</span>
+				</div>
 			</Form>
 		);
 	}
@@ -90,57 +353,12 @@ class RegisterForm extends React.Component {
 	submit = e => {
 		e.preventDefault();
 		e.stopPropagation();
-		const registerDto = RegisterDTO.fromFormElement(e.target);
-		this.props.submitRegister(registerDto);
-	};
-}
+		if (!this.getNextScreen()) {
+			const {name, email, password} = this.state;
+			const [firstName, lastName] = name.split(' ');
 
-class PasswordInput extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			password: '',
-			showPassword: false
-		};
-	}
-
-	render() {
-		return (
-			<div>
-				<label htmlFor={'password'}>Password</label>
-				<input
-					type={this.state.showPassword ? 'text' : 'password'}
-					name={'password'}
-					id={'password'}
-					autoComplete={'current-password'}
-					value={this.state.password}
-					onChange={this.passwordChanged}
-				/>
-
-				<CheckBoxWrapper>
-					<input
-						type={'checkbox'}
-						name={'showPassword'}
-						id={'showPassword'}
-						checked={this.state.showPassword}
-						onChange={this.showPassword}
-					/>
-					<label htmlFor={'showPassword'}>Show Password</label>{' '}
-				</CheckBoxWrapper>
-			</div>
-		);
-	}
-
-	showPassword = e => {
-		this.setState({
-			showPassword: !this.state.showPassword
-		});
-	};
-
-	passwordChanged = e => {
-		this.setState({
-			password: e.target.value
-		});
+			const registerDto = new RegisterDTO(firstName, lastName, email, password);
+			this.props.submitRegister(registerDto);
+		}
 	};
 }

@@ -43,7 +43,7 @@ export default function App({history}) {
 					<Link className="home-link" to={'/'}>
 						OPENRECORD
 					</Link>
-					<Link className="contribute-link" to={'/'}>
+					<Link className="contribute-link" to={'/register'}>
 						ASK TO CONTRIBUTE
 					</Link>
 				</Nav>
