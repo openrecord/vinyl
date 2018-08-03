@@ -9,48 +9,66 @@ export default class Nav extends React.Component {
 	};
 
 	render() {
-		const NavContainer = styled.nav`
-			text-align: center;
+		const Nav = styled.nav`
+			margin: 14px;
+			position: relative;
+			text-align: left;
+			z-index: 5;
 
 			a {
-				padding: 0 5px;
+				color: white;
+				position: relative;
+				display: inline-block;
+				font-size: 1.5rem;
+				font-weight: 700;
+				margin: 8px;
+				position: relative;
+
+				&:hover {
+					text-decoration: underline;
+				}
+
+				&:nth-child(2) {
+					float: right;
+				}
 			}
 		`;
 
-		return <NavContainer>{this._renderLinks()}</NavContainer>;
+		return(
+			<Nav>
+				{this._renderLinks()}
+			</Nav>
+		)
+
 	}
 
 	_renderLinks() {
-		return [...this._standardLinks(), ...this._authLinks()];
+		return this.props.user ? this._loggedInLinks() : this._loggedOutLinks()
 	}
 
-	_standardLinks() {
-		return [
-			<Link to={'/'} key={'home'}>
-				Home
-			</Link>,
-			<Link to={'/health'} key={'health'}>
-				Health
-			</Link>
-		];
+	_loggedOutLinks() {
+		return (
+			<>
+				<Link to={'/'} key={'home'}>
+					OPENRECORD
+				</Link>
+				<Link to={'/register'}>
+					ASK TO CONTRIBUTE
+				</Link>
+			</>
+		);
 	}
 
-	_authLinks() {
-		if (this.props.user) {
-			return [
+	_loggedInLinks() {
+		return (
+			<>
+				<Link to={'/'} key={'home'}>
+					OPENRECORD
+				</Link>
 				<Link to={'/account'} key={'account'}>
 					My Account
 				</Link>
-			];
-		} else {
-			return [
-				<Link to={'/register'} key={'register'}>
-					Register
-				</Link>,
-				<Link to={'/login'} key={'login'}>
-					Login
-				</Link>
-			];
-		}
+			</>
+		);
 	}
 }
