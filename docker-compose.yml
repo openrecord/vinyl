@@ -6,6 +6,7 @@ services:
       - 7001:7001
     environment:
       PORT:     # Optionally specify a port for the API here.
+      DB_HOST: mysql
     depends_on:
       - mysql
   mysql:
