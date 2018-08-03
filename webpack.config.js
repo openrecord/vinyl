@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
 	let devtool, devServer, plugins;
 
 	plugins = [
-		new HtmlWebPackPlugin({title: 'Open Record'}), // automatically create index.html based on webpack config
+		new HtmlWebPackPlugin({title: 'Open Record', hash: true}), // automatically create index.html based on webpack config
 		new ReactRootPlugin() // create react root within generated html file
 	];
 
