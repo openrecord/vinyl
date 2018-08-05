@@ -3,7 +3,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import styled from 'styled-components';
 
-import Nav from './Nav';
+import Nav from '../nav/NavContainer';
 import HomeContainer from '../home/HomeContainer';
 import HealthContainer from '../health/HealthContainer';
 import RegisterContainer from '../register/RegisterContainer';

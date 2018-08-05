@@ -3,6 +3,12 @@ import {string, object} from 'prop-types';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
+const ROUTES = {
+	HOME: '/',
+	REGISTER: '/register',
+	PROFILE: '/profile'
+};
+
 export default class Nav extends React.Component {
 	static propTypes = {
 		user: object
@@ -34,25 +40,20 @@ export default class Nav extends React.Component {
 			}
 		`;
 
-		return(
-			<Nav>
-				{this._renderLinks()}
-			</Nav>
-		)
-
+		return <Nav>{this._renderLinks()}</Nav>;
 	}
 
 	_renderLinks() {
-		return this.props.user ? this._loggedInLinks() : this._loggedOutLinks()
+		return this.props.user ? this._loggedInLinks() : this._loggedOutLinks();
 	}
 
 	_loggedOutLinks() {
 		return (
 			<>
-				<Link to={'/'} key={'home'}>
+				<Link to={ROUTES.HOME} key={'home'}>
 					OPENRECORD
 				</Link>
-				<Link to={'/register'}>
+				<Link to={ROUTES.REGISTER} key={'register'}>
 					ASK TO CONTRIBUTE
 				</Link>
 			</>
@@ -62,11 +63,11 @@ export default class Nav extends React.Component {
 	_loggedInLinks() {
 		return (
 			<>
-				<Link to={'/'} key={'home'}>
+				<Link to={ROUTES.HOME} key={'home'}>
 					OPENRECORD
 				</Link>
-				<Link to={'/account'} key={'account'}>
-					My Account
+				<Link to={ROUTES.PROFILE} key={'profile'}>
+					PROFILE
 				</Link>
 			</>
 		);

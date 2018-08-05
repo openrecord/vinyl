@@ -267,8 +267,19 @@ class RegisterForm extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		console.log('hi');
+		document.addEventListener('keypress', this.handleKeyPress, false);
+	}
+	componentWillUnmount() {
+		document.removeEventListener('keypress', this.handleKeyPress, false);
+	}
+
 	handleKeyPress = e => {
 		if (e.key == 'Enter' && this.getNextScreen()) {
+			this.showNext();
+		} else if (e.key == 'Tab' && this.getNextScreen()) {
+			e.preventDefault();
 			this.showNext();
 		}
 	};
