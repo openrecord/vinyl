@@ -241,12 +241,12 @@ class RegisterForm extends React.Component {
 		super(props);
 
 		this.SCREENS = {
-			NAME: 'name',
+			USERNAME: 'username',
 			PASSWORD: 'password',
 			EMAIL: 'email'
 		};
 
-		this.screenOrder = [this.SCREENS.NAME, this.SCREENS.EMAIL, this.SCREENS.PASSWORD];
+		this.screenOrder = [this.SCREENS.USERNAME, this.SCREENS.EMAIL, this.SCREENS.PASSWORD];
 
 		this.nextScreen = {};
 		this.prevScreen = {};
@@ -259,16 +259,27 @@ class RegisterForm extends React.Component {
 		});
 
 		this.state = {
-			active: this.SCREENS.NAME,
-			name: '',
+			active: this.SCREENS.USERNAME,
+			username: '',
 			email: '',
 			password: '',
 			showPassword: false
 		};
 	}
 
+	componentDidMount() {
+		console.log('hi');
+		document.addEventListener('keypress', this.handleKeyPress, false);
+	}
+	componentWillUnmount() {
+		document.removeEventListener('keypress', this.handleKeyPress, false);
+	}
+
 	handleKeyPress = e => {
 		if (e.key == 'Enter' && this.getNextScreen()) {
+			this.showNext();
+		} else if (e.key == 'Tab' && this.getNextScreen()) {
+			e.preventDefault();
 			this.showNext();
 		}
 	};
@@ -302,11 +313,11 @@ class RegisterForm extends React.Component {
 		const {active, showPassword} = this.state;
 
 		const inputProps = {
-			[this.SCREENS.NAME]: {
+			[this.SCREENS.USERNAME]: {
 				type: 'text',
-				name: "What's your name?",
-				autoComplete: 'given-name',
-				value: this.state.name
+				name: 'Create a username',
+				autoComplete: 'username',
+				value: this.state.username
 			},
 			[this.SCREENS.EMAIL]: {
 				type: 'email',
@@ -354,10 +365,9 @@ class RegisterForm extends React.Component {
 		e.preventDefault();
 		e.stopPropagation();
 		if (!this.getNextScreen()) {
-			const {name, email, password} = this.state;
-			const [firstName, lastName] = name.split(' ');
+			const {username, email, password} = this.state;
 
-			const registerDto = new RegisterDTO(firstName, lastName, email, password);
+			const registerDto = new RegisterDTO(username, email, password);
 			this.props.submitRegister(registerDto);
 		}
 	};
