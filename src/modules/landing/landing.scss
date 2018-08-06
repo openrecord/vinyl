@@ -5,22 +5,22 @@
 	10% {
 		transform: translate(-50%, -50%) scale(1.02);
 	}
-	20% {
+	15% {
 		transform: translate(-50%, -50%) scale(1);
 	}
 	30% {
 		transform: translate(-50%, -50%) scale(1.05);
 	}
-	40% {
+	35% {
 		transform: translate(-50%, -50%) scale(1.02);
 	}
-	50% {
+	40% {
 		transform: translate(-50%, -50%) scale(1);
 	}
-	60% {
+	55% {
 		transform: translate(-50%, -50%) scale(0.97);
 	}
-	70% {
+	65% {
 		transform: translate(-50%, -50%) scale(1.05);
 	}
 	80% {
@@ -73,8 +73,11 @@
 			z-index: 7;
 
 			&:hover {
+				animation: pulse 1.5s infinite;
+				will-change: transform;
 				& ~ div {
 					animation: pulse 1.5s infinite;
+					will-change: transform;
 				}
 			}
 		}
