@@ -65,7 +65,7 @@
 		position: absolute;
 		transform: translate(-50%, -50%);
 
-		&#c1 {
+		&.c1 {
 			background: #ffffff;
 			cursor: pointer;
 			padding-top: 24%;
@@ -81,31 +81,31 @@
 				}
 			}
 		}
-		&#c2 {
+		&.c2 {
 			width: 40%;
 			padding-top: 40%;
 			background: #fcd731;
 			z-index: 6;
 		}
-		&#c3 {
+		&.c3 {
 			width: 56%;
 			padding-top: 56%;
 			background: #fbb12b;
 			z-index: 5;
 		}
-		&#c4 {
+		&.c4 {
 			width: 72%;
 			padding-top: 72%;
 			background: #fb8235;
 			z-index: 4;
 		}
-		&#c5 {
+		&.c5 {
 			width: 88%;
 			padding-top: 88%;
 			background: #f8785d;
 			z-index: 3;
 		}
-		&#c6 {
+		&.c6 {
 			width: 100%;
 			padding-top: 100%;
 			background: #bc5ba1;
