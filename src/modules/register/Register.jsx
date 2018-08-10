@@ -99,6 +99,10 @@ const CheckBoxWrapper = styled.div`
 			/*padding: 8px 0;*/
 			width: 56px;
 
+			&:focus {
+				opacity: 1;
+			}
+
 			&:hover {
 				opacity: 1;
 			}
@@ -168,6 +172,11 @@ const Form = styled.form`
 			&:hover {
 				opacity: 1;
 			}
+
+			&:focus {
+				opacity: 1;
+			}
+
 			&.show-next {
 				display: inline-block;
 				float: right;
@@ -198,7 +207,20 @@ const Form = styled.form`
 			}
 
 			&.show-submit {
+				border: 2px solid transparent;
+				box-sizing: border-box;
 				display: inline-block;
+				padding: 2px 8px;
+				position: relative;
+				right: -8px;
+
+				&:focus {
+					border: 2px solid #4d90fe;
+					-webkit-box-shadow: 0px 0px 5px #4d90fe;
+					box-shadow: 0px 0px 5px #4d90fe;
+					color: white;
+					opacity: 1;
+				}
 			}
 		}
 	}
@@ -335,9 +357,9 @@ class RegisterForm extends React.Component {
 					<Input onChange={this.onChange(active)} {...inputProps[active]} key={active} />
 					{this.getPrevScreen() && <div className="step show-back" onClick={this.goBack} />}
 					{this.getNextScreen() ? (
-						<div className="step show-next" onClick={this.showNext} />
+						<div className="step show-next" tabIndex="0" onClick={this.showNext} />
 					) : (
-						<button className="show-submit" type="submit">
+						<button className="show-submit" tabIndex="0" type="submit">
 							Done
 						</button>
 					)}
