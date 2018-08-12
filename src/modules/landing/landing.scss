@@ -79,6 +79,10 @@
 					animation: pulse 1.5s infinite;
 					will-change: transform;
 				}
+				& ~ h1 {
+					animation: pulse 1.5s infinite;
+					will-change: transform;
+				}
 			}
 		}
 		&.c2 {

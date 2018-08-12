@@ -13,13 +13,13 @@ export default class Landing extends React.Component {
 	render() {
 		return (
 			<div className="landing-inner">
-				<h1>Listen</h1>
 				<div className="c1" onClick={this.props.closeLanding} />
 				<div className="c2" />
 				<div className="c3" />
 				<div className="c4" />
 				<div className="c5" />
 				<div className="c6" />
+				<h1>Listen</h1>
 			</div>
 		);
 	}
