@@ -78,12 +78,6 @@ class Uniplayer extends React.Component {
 	};
 
 	//Hover functions for showing current time
-	onMouseEnter = e => {
-		this.setState({hovering: true});
-	};
-	onMouseLeave = e => {
-		this.setState({hovering: false});
-	};
 	onMouseMove = e => {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
@@ -170,11 +164,7 @@ class Uniplayer extends React.Component {
 		} else {
 			player.active = '';
 		}
-		if (this.state.hovering) {
-			player.hover = ' hovering';
-		} else {
-			player.hover = '';
-		}
+
 		return (
 			<div className="uniplayer-container">
 				<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
@@ -189,9 +179,9 @@ class Uniplayer extends React.Component {
 							</div>
 						</div>
 						<div className="playback-box">
-							<div className={'hover-range' + player.hover} style={{left: ' ' + this.state.mousePosition + 'px'}} />
+							<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
 							<input
-								className={'player-bar' + player.hover}
+								className="player-bar"
 								ref="playerBar"
 								type="range"
 								min={0}
@@ -207,8 +197,8 @@ class Uniplayer extends React.Component {
 							/>
 							<h4 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h4>
 							<div className="time-box">
-								<Duration seconds={this.state.duration * this.state.played} className={'time-played' + player.hover} />
-								<span className={'hover-time' + player.hover}>{this.state.hoverTime}</span>
+								<Duration seconds={this.state.duration * this.state.played} className="time-played" />
+								<span className="hover-time">{this.state.hoverTime}</span>
 								<h4 className="time-divider">-</h4>
 								<Duration seconds={this.state.duration} />
 							</div>
