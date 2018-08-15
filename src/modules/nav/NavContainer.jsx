@@ -2,7 +2,7 @@ import React from 'react';
 import {string, object} from 'prop-types';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-import {ROUTES} from '../common/routes';
+import {ROUTES} from '../routes/routes';
 
 const LoggedOutLinks = () => (
 	<>

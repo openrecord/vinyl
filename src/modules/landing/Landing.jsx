@@ -3,7 +3,7 @@ import './landing.scss';
 import {Link} from 'react-router-dom';
 import React from 'react';
 
-import {ROUTES} from '../common/routes';
+import {ROUTES} from '../routes/routes';
 
 export default function Landing() {
 	return (
