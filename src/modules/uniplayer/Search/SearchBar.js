@@ -4,11 +4,9 @@ import styled from 'styled-components';
 import {targetValue} from '../../common/utils';
 
 const StyledSearchBar = styled.input`
-	position: fixed;
-	z-index: 10;
+	display: block;
+	margin: auto;
 	font-size: 1.5rem;
-	left: 50%;
-	transform: translateX(-50%);
 	padding: 0.75rem 1rem;
 	background-color: rgba(255, 255, 255, 0.6);
 	border-radius: 0.25rem;
