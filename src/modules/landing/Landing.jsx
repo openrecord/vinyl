@@ -1,26 +1,20 @@
 import './landing.scss';
 
+import {Link} from 'react-router-dom';
 import React from 'react';
-import styled from 'styled-components';
 
-export default class Landing extends React.Component {
-	constructor(props) {
-		super(props);
+import {ROUTES} from '../common/routes';
 
-		this.state = {};
-	}
-
-	render() {
-		return (
-			<div className="landing-inner">
-				<div className="c1" onClick={this.props.closeLanding} />
-				<div className="c2" />
-				<div className="c3" />
-				<div className="c4" />
-				<div className="c5" />
-				<div className="c6" />
-				<h1>Listen</h1>
-			</div>
-		);
-	}
+export default function Landing() {
+	return (
+		<Link className="landing-inner" to={ROUTES.PLAYER}>
+			<div className="c1" />
+			<div className="c2" />
+			<div className="c3" />
+			<div className="c4" />
+			<div className="c5" />
+			<div className="c6" />
+			<h1>Listen</h1>
+		</Link>
+	);
 }
