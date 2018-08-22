@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import axios from 'axios';
 
 import App from './modules/common/App';
 import store from './modules/store';
 import history from './modules/routes/history';
+
+// Send all requests with session cookie information.
+axios.defaults.withCredentials = true;
 
 // -------------------
 // Load the Redux App

@@ -1,21 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import Register from './Register.jsx';
 import * as actions from '../auth/state';
 
 const mapStateToProps = (state, props) => ({});
 
-const mapDispatchToProps = dispatch => {
-	/**
-	 * @param {RegisterDTO} registerDto
-	 */
-	const submitRegister = registerDto => {
-		dispatch(actions.register(registerDto));
-	};
-
-	return {submitRegister};
-};
+const mapDispatchToProps = dispatch => bindActionCreators({submitRegister: actions.register}, dispatch);
 
 const RegisterContainer = connect(
 	mapStateToProps,

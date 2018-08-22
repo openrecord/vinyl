@@ -12,4 +12,21 @@ export default class AuthApi {
 		const response = await this.client.post('/auth/register', registerDto);
 		return response.data;
 	}
+
+	/**
+	 * @param {LoginDTO} loginDto
+	 * @return {Promise<object>}
+	 */
+	static async login(loginDto) {
+		const response = await this.client.post('/auth/token', loginDto);
+		return response.data;
+	}
+
+	/**
+	 * @return {Promise<object>}
+	 */
+	static async authenticate() {
+		const response = await this.client.get('/auth/token');
+		return response.data;
+	}
 }
