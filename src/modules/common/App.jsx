@@ -4,7 +4,7 @@ import {ConnectedRouter} from 'connected-react-router';
 import {Route, Switch} from 'react-router-dom';
 import React from 'react';
 
-import {ROUTES} from './routes';
+import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
 import Nav from '../nav/NavContainer';
 import ProfileContainer from '../profile/ProfileContainer';

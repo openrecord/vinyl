@@ -2,7 +2,9 @@ import './uniplayer.scss';
 
 import React from 'react';
 import ReactPlayer from 'react-player';
+
 import Duration from './Duration.jsx';
+import SearchContainer from './Search/SearchContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -167,6 +169,7 @@ class Uniplayer extends React.Component {
 
 		return (
 			<div className="uniplayer-container">
+				<SearchContainer />
 				<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 				<div className={'uniplayer-holder' + player.active} onMouseMove={this.playerActive}>
 					<div className="uniplayer">

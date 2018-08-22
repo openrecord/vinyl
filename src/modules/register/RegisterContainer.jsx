@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Register from './Register.jsx';
-import * as actions from '../auth';
+import * as actions from '../auth/state';
 
 const mapStateToProps = (state, props) => ({});
 
@@ -17,6 +17,9 @@ const mapDispatchToProps = dispatch => {
 	return {submitRegister};
 };
 
-const RegisterContainer = connect(mapStateToProps, mapDispatchToProps)(Register);
+const RegisterContainer = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Register);
 
 export default RegisterContainer;
