@@ -84,7 +84,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = (songDuration / barWidth) * mousePosition,
+			scrubTime = songDuration / barWidth * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -171,46 +171,39 @@ class Uniplayer extends React.Component {
 			<div className="uniplayer-container">
 				<SearchContainer />
 				<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-				<div className={'uniplayer-holder' + player.active} onMouseMove={this.playerActive}>
-					<div className="uniplayer">
-						<div className="user-box">
-							<div className="user-image-holder">
-								<div className="user-image" />
-							</div>
-							<div className="user-id">
-								<h4>Superluckyland</h4>
-							</div>
+				<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
+					<div className="playback-box">
+						<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
+						<input
+							className="player-bar"
+							ref="playerBar"
+							type="range"
+							min={0}
+							max={1}
+							step="any"
+							value={this.state.played}
+							onMouseEnter={this.onMouseEnter}
+							onMouseMove={this.onMouseMove}
+							onMouseLeave={this.onMouseLeave}
+							onMouseDown={this.onSeekMouseDown}
+							onChange={this.onSeekChange}
+							onMouseUp={this.onSeekMouseUp}
+						/>
+						<div className="time-box">
+							<Duration seconds={this.state.duration * this.state.played} className="time-played" />
+							<span className="hover-time">{this.state.hoverTime}</span>
+							<h4 className="time-divider">-</h4>
+							<Duration seconds={this.state.duration} />
 						</div>
-						<div className="playback-box">
-							<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
-							<input
-								className="player-bar"
-								ref="playerBar"
-								type="range"
-								min={0}
-								max={1}
-								step="any"
-								value={this.state.played}
-								onMouseEnter={this.onMouseEnter}
-								onMouseMove={this.onMouseMove}
-								onMouseLeave={this.onMouseLeave}
-								onMouseDown={this.onSeekMouseDown}
-								onChange={this.onSeekChange}
-								onMouseUp={this.onSeekMouseUp}
-							/>
-							<h4 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h4>
-							<div className="time-box">
-								<Duration seconds={this.state.duration * this.state.played} className="time-played" />
-								<span className="hover-time">{this.state.hoverTime}</span>
-								<h4 className="time-divider">-</h4>
-								<Duration seconds={this.state.duration} />
-							</div>
-						</div>
-						<div className={'play-pause' + player.status} onClick={this.playToggle} />
-						<div className="next-arrow" />
+					</div>
+					{this.renderYT()}
+					<div className="info-box">
+						<h3 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h3>
+						<h3 className="user-id">
+							Added by <a href="/">Superluckyland</a>
+						</h3>
 					</div>
 				</div>
-				{this.renderYT()}
 			</div>
 		);
 	}
