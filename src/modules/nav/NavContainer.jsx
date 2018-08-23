@@ -28,6 +28,7 @@ const LoggedInLinks = () => (
 
 const StyledNav = styled.nav`
 	margin: 14px;
+	pointer-events: none;
 	position: relative;
 	text-align: left;
 	z-index: 5;
@@ -39,6 +40,7 @@ const StyledNav = styled.nav`
 		font-size: 1.5rem;
 		font-weight: 700;
 		margin: 8px;
+		pointer-events: all;
 		position: relative;
 
 		&:hover {

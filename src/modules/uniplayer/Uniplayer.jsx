@@ -127,29 +127,31 @@ class Uniplayer extends React.Component {
 		var player = {};
 		player.id = 'https://www.youtube.com/watch?v=' + '2H5R0bdblEE';
 		return (
-			<div className="player-holder">
-				<ReactPlayer
-					ref={this.setYTPlayer}
-					className="react-player"
-					width="100%"
-					height="100%"
-					url={player.id}
-					playing={this.state.playing}
-					loop={this.state.loop}
-					playbackRate={this.state.playbackRate}
-					volume={this.state.volume}
-					muted={this.state.muted}
-					onReady={() => console.log('onReady')}
-					onStart={() => console.log('onStart')}
-					onPlay={this.onPlay}
-					onPause={this.onPause}
-					onBuffer={() => console.log('onBuffer')}
-					onSeek={e => console.log('onSeek', e)}
-					onEnded={this.onEnded}
-					onError={e => console.log('onError', e)}
-					onProgress={this.onProgress}
-					onDuration={this.onDuration}
-				/>
+			<div className="player-outer">
+				<div className="player-inner">
+					<ReactPlayer
+						ref={this.setYTPlayer}
+						className="react-player"
+						width="100%"
+						height="100%"
+						url={player.id}
+						playing={this.state.playing}
+						loop={this.state.loop}
+						playbackRate={this.state.playbackRate}
+						volume={this.state.volume}
+						muted={this.state.muted}
+						onReady={() => console.log('onReady')}
+						onStart={() => console.log('onStart')}
+						onPlay={this.onPlay}
+						onPause={this.onPause}
+						onBuffer={() => console.log('onBuffer')}
+						onSeek={e => console.log('onSeek', e)}
+						onEnded={this.onEnded}
+						onError={e => console.log('onError', e)}
+						onProgress={this.onProgress}
+						onDuration={this.onDuration}
+					/>
+				</div>
 			</div>
 		);
 	}
@@ -168,10 +170,10 @@ class Uniplayer extends React.Component {
 		}
 
 		return (
-			<div className="uniplayer-container">
+			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
 				<SearchContainer />
 				<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-				<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
+				<div className="song-lines">
 					<div className="playback-box">
 						<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
 						<input
@@ -196,6 +198,8 @@ class Uniplayer extends React.Component {
 							<Duration seconds={this.state.duration} />
 						</div>
 					</div>
+				</div>
+				<div className="player-holder">
 					{this.renderYT()}
 					<div className="info-box">
 						<h3 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h3>
