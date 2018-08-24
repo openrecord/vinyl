@@ -14,16 +14,6 @@
 		@include transition(opacity 0.1s);
 		pointer-events: all;
 
-		.song-lines {
-			.playback-box {
-				height: 24px;
-				margin: 0;
-				.time-box {
-					display: inline-block;
-				}
-			}
-		}
-
 		.player-holder {
 			.info-box {
 				opacity: 1;
@@ -48,8 +38,9 @@
 		width: 75%;
 		z-index: 3;
 
-		.playback-box {
-			background: #e6e6e6;
+		.line-box {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 100px;
 			align-items: center;
 			display: -ms-flexbox;
 			display: flex;
@@ -63,29 +54,6 @@
 			-ms-flex-direction: row;
 			-ms-flex-pack: start;
 			-ms-flex-align: center;
-
-			&:hover {
-				.hover-range {
-					background: rgba(100, 100, 100, 0.4);
-					height: 24px;
-					width: 5000px;
-					position: absolute;
-					margin-left: -5000px;
-					z-index: 1;
-				}
-
-				.time-box {
-					.time-played {
-						display: none;
-					}
-
-					.hover-time {
-						display: inline-block;
-						opacity: 1;
-						pointer-events: all;
-					}
-				}
-			}
 
 			.player-bar {
 				appearance: none;
@@ -103,48 +71,13 @@
 				&::-webkit-slider-thumb {
 					appearance: none;
 					background: transparent;
-					height: 56px;
+					height: 3px;
 					pointer-events: none;
 					width: 0;
 					z-index: 10;
 					-webkit-appearance: none;
 					@include transition(all 0.1s);
-					box-shadow: -5000px 0 0 5000px rgba(144, 144, 144, 0.6);
-				}
-			}
-
-			.song-title {
-				color: #222222;
-				left: 16px;
-				pointer-events: none;
-				position: absolute;
-			}
-
-			.time-box {
-				display: none;
-				right: 8px;
-				pointer-events: none;
-				position: absolute;
-				z-index: 1;
-
-				time {
-					font-size: 0.875rem;
-					color: #222222;
-				}
-
-				.hover-time {
-					font-size: 0.875rem;
-					color: #222222;
-					display: none;
-					left: 0;
-				}
-
-				.time-divider {
-					color: #222222;
-					display: inline-block;
-					margin: 0 4px;
-					position: relative;
-					top: -1px;
+					box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
 				}
 			}
 		}
@@ -158,6 +91,7 @@
 		max-width: 1600px;
 		z-index: 3;
 		@include transform(translateY(-50%));
+
 		.player-outer {
 			display: block;
 			left: 50%;
@@ -165,6 +99,16 @@
 			position: relative;
 			width: 75%;
 			@include transform(translateX(-50%));
+
+			&:hover {
+				.playback-box {
+					height: 8px;
+
+					.time-box {
+						opacity: 1;
+					}
+				}
+			}
 
 			.player-inner {
 				height: 0;
@@ -180,9 +124,116 @@
 					height: 100%;
 					cursor: default;
 					margin: 0;
+					overflow: hidden;
+
+					div {
+						height: 160% !important;
+						position: relative;
+						top: -30%;
+						width: 100%;
+					}
+				}
+			}
+
+			.playback-box {
+				background: rgba(255, 255, 255, 0.3);
+				position: absolute;
+				bottom: 0;
+				height: 0;
+				width: 100%;
+				z-index: 2;
+				@include transition(all 0.1s);
+
+				&:hover {
+					.range-holder {
+						display: block;
+						height: 8px;
+						position: absolute;
+						overflow: hidden;
+						width: 100%;
+
+						.hover-range {
+							background: rgba(200, 200, 200, 0.5);
+							height: 8px;
+							width: 5000px;
+							position: absolute;
+							margin-left: -5000px;
+							z-index: 1;
+						}
+					}
+					.time-box {
+						.time-played {
+							display: none;
+						}
+						.hover-time {
+							display: inline-block;
+						}
+					}
+				}
+
+				.player-bar {
+					appearance: none;
+					background: transparent;
+					cursor: pointer;
+					height: 100%;
+					margin: 0;
+					outline: none;
+					overflow: hidden;
+					position: absolute;
+					width: 100%;
+					z-index: 2;
+					-webkit-appearance: none;
+
+					&::-webkit-slider-thumb {
+						appearance: none;
+						background: transparent;
+						height: 6px;
+						pointer-events: none;
+						width: 0;
+						z-index: 10;
+						-webkit-appearance: none;
+						@include transition(all 0.1s);
+						box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
+					}
+				}
+
+				.time-box {
+					display: inline-block;
+					right: 0;
+					opacity: 0;
+					pointer-events: none;
+					position: absolute;
+					right: 8px;
+					top: -24px;
+					z-index: 1;
+					@include transition(all 0.1s);
+
+					time {
+						font-size: 1rem;
+						color: white;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+					}
+
+					.hover-time {
+						font-size: 1rem;
+						color: white;
+						display: none;
+						left: 0;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+					}
+
+					.time-divider {
+						color: white;
+						display: inline-block;
+						margin: 0 4px;
+						position: relative;
+						top: -1px;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+					}
 				}
 			}
 		}
+
 		//Song Info
 		.info-box {
 			display: block;
@@ -197,6 +248,7 @@
 				font-family: Helvetica;
 				margin: 4px 0;
 				color: white;
+				text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
 
 				&.song-title {
 					font-weight: 600;
