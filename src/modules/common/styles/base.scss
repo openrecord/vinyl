@@ -1,8 +1,20 @@
 @import 'utilities/mixins';
 
+@font-face {
+	font-family: 'Haas Reg';
+	src: url('./utilities/fonts/NHaasGroteskDSW02-55Rg.woff2') format('woff2'),
+		url('./utilities/fonts/NHaasGroteskDSW02-55Rg.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Haas Med';
+	src: url('./utilities/fonts/NHaasGroteskDSW02-65Md.woff2') format('woff2'),
+		url('./utilities/fonts/NHaasGroteskDSW02-65Md.woff') format('woff');
+}
+
 body {
 	background: #9c4d9d;
-	font-family: 'Graphik', Arial, sans-serif;
+	font-family: 'Haas Reg', Arial, sans-serif;
 	margin: 0;
 }
 
@@ -25,6 +37,10 @@ p {
 
 h2 {
 	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
 }
 
 h4 {
