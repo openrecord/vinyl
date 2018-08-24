@@ -27,7 +27,7 @@ const LoggedInLinks = () => (
 );
 
 const StyledNav = styled.nav`
-	margin: 14px;
+	margin: 24px 34px 0 34px;
 	pointer-events: none;
 	position: relative;
 	text-align: left;
@@ -37,7 +37,7 @@ const StyledNav = styled.nav`
 		color: white;
 		position: relative;
 		display: inline-block;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		font-weight: 700;
 		margin: 8px;
 		pointer-events: all;

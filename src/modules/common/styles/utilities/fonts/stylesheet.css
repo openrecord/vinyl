@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'NeueHaasGroteskDisp W02';
+	src: url('NHaasGroteskDSW02-55Rg.woff2') format('woff2'), url('NHaasGroteskDSW02-55Rg.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NeueHaasGroteskDisp W02 Md';
+	src: url('NHaasGroteskDSW02-65Md.woff2') format('woff2'), url('NHaasGroteskDSW02-65Md.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+}
