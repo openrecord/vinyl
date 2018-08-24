@@ -170,7 +170,6 @@ class Uniplayer extends React.Component {
 		return (
 			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
 				<SearchContainer />
-				<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 				<div className="song-lines">
 					<div className="line-box">
 						<input
@@ -192,8 +191,9 @@ class Uniplayer extends React.Component {
 				</div>
 				<div className="player-holder">
 					<div className="player-outer">
+						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 						{this.renderYT()}
-						<div className="playback-box">
+						<div className={'playback-box' + player.active}>
 							<div className="range-holder">
 								<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
 							</div>
