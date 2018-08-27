@@ -22,29 +22,42 @@
 	}
 
 	.song-lines {
-		margin: 0px auto;
+		align-items: center;
+		display: -ms-flexbox;
+		display: flex;
+		flex-direction: row;
+		height: 3px;
+		justify-content: flex-start;
+		overflow: hidden;
+		position: relative;
+		-ms-flex-direction: row;
+		-ms-flex-pack: start;
+		-ms-flex-align: center;
+		margin: 0px auto 28px auto;
 		max-width: 800px;
 		position: relative;
-		top: 42px;
+		top: 0;
 		width: 75%;
 		z-index: 3;
 
-		.line-box {
+		.previous-song {
+			background: rgba(255, 255, 255, 0.8);
+			border-radius: 100px;
+			display: inline-block;
+			height: 3px;
+			position: relative;
+			width: 32%;
+		}
+
+		.current-song {
 			background: rgba(255, 255, 255, 0.3);
 			border-radius: 100px;
-			align-items: center;
-			display: -ms-flexbox;
-			display: flex;
-			flex-direction: row;
+			display: inline-block;
 			height: 3px;
-			margin-bottom: 22px;
-			justify-content: flex-start;
 			overflow: hidden;
 			position: relative;
-			width: 30%;
-			-ms-flex-direction: row;
-			-ms-flex-pack: start;
-			-ms-flex-align: center;
+			margin: 0 2%;
+			width: 32%;
 
 			.player-bar {
 				appearance: none;
@@ -56,6 +69,7 @@
 				overflow: hidden;
 				position: relative;
 				width: 100%;
+				vertical-align: top;
 				z-index: 2;
 				-webkit-appearance: none;
 
@@ -71,6 +85,15 @@
 					box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
 				}
 			}
+		}
+
+		.next-song {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 100px;
+			display: inline-block;
+			height: 3px;
+			position: relative;
+			width: 32%;
 		}
 	}
 

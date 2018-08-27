@@ -170,26 +170,28 @@ class Uniplayer extends React.Component {
 		return (
 			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
 				<SearchContainer />
-				<div className="song-lines">
-					<div className="line-box">
-						<input
-							className="player-bar"
-							ref="playerBar"
-							type="range"
-							min={0}
-							max={1}
-							step="any"
-							value={this.state.played}
-							onMouseEnter={this.onMouseEnter}
-							onMouseMove={this.onMouseMove}
-							onMouseLeave={this.onMouseLeave}
-							onMouseDown={this.onSeekMouseDown}
-							onChange={this.onSeekChange}
-							onMouseUp={this.onSeekMouseUp}
-						/>
-					</div>
-				</div>
 				<div className="player-holder">
+					<div className="song-lines">
+						<div className="previous-song" />
+						<div className="current-song">
+							<input
+								className="player-bar"
+								ref="playerBar"
+								type="range"
+								min={0}
+								max={1}
+								step="any"
+								value={this.state.played}
+								onMouseEnter={this.onMouseEnter}
+								onMouseMove={this.onMouseMove}
+								onMouseLeave={this.onMouseLeave}
+								onMouseDown={this.onSeekMouseDown}
+								onChange={this.onSeekChange}
+								onMouseUp={this.onSeekMouseUp}
+							/>
+						</div>
+						<div className="next-song" />
+					</div>
 					<div className="player-outer">
 						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 						{this.renderYT()}
