@@ -39,6 +39,7 @@ class QueueContainer extends React.Component {
 				</div>
 				<QueueButton onClick={this.toggleQueue}>
 					<img src={queue_img} />
+					<div className="queue-x" />
 				</QueueButton>
 			</QueueHolder>
 		);
@@ -54,6 +55,12 @@ const QueueHolder = styled.div`
 	&.open {
 		.queue-list {
 			display: inline-block;
+		}
+		img {
+			opacity: 0;
+		}
+		.queue-x {
+			opacity: 1;
 		}
 	}
 
@@ -107,5 +114,39 @@ const QueueButton = styled.button`
 	image {
 		height: 20px;
 		width: 20px;
+		opacity: 1;
+		transform: transition(all 0.1s);
+	}
+
+	.queue-x {
+		height: 20px;
+		left: 50%;
+		opacity: 0;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		transform: transition(all 0.1s);
+		width: 20px;
+
+		&:before {
+			content: '';
+			background: black;
+			height: 24px;
+			position: absolute;
+			left: 50%;
+			top: -2px;
+			width: 2px;
+			transform: translateX(-50%) rotate(45deg);
+		}
+		&:after {
+			content: '';
+			background: black;
+			height: 24px;
+			position: absolute;
+			left: 50%;
+			top: -2px;
+			width: 2px;
+			transform: translateX(-50%) rotate(-45deg);
+		}
 	}
 `;
