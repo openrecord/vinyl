@@ -1,5 +1,3 @@
-import './styles/base.scss';
-
 import {ConnectedRouter} from 'connected-react-router';
 import {Route, Switch} from 'react-router-dom';
 import React from 'react';

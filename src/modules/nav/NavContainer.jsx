@@ -31,7 +31,6 @@ const StyledNav = styled.nav`
 	pointer-events: none;
 	position: relative;
 	text-align: left;
-	z-index: 5;
 
 	a {
 		color: white;
@@ -54,7 +53,7 @@ const StyledNav = styled.nav`
 `;
 
 export default function Nav({user}) {
-	return <StyledNav>{user ? <LoggedInLinks /> : <LoggedOutLinks />}</StyledNav>;
+	return <StyledNav className="nav">{user ? <LoggedInLinks /> : <LoggedOutLinks />}</StyledNav>;
 }
 
 Nav.propTypes = {
