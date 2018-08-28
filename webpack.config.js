@@ -33,9 +33,15 @@ module.exports = (env, argv) => {
 			rules: [
 				{
 					test: /\.scss/,
+					enforce: 'pre',
+					loader: 'import-glob-loader'
+				},
+				{
+					test: /\.scss/,
 					use: [
 						isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
-						'css-loader', // translates CSS into CommonJS
+						{loader: 'css-loader', options: {importLoaders: 1}}, // translates CSS into CommonJS
+						'postcss-loader', // adds on vendor prefixes and adds css polyfills
 						'sass-loader' // compiles Sass to CSS
 					]
 				},

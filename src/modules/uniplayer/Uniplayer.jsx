@@ -1,5 +1,3 @@
-import './uniplayer.scss';
-
 import React from 'react';
 import ReactPlayer from 'react-player';
 
@@ -84,7 +82,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = songDuration / barWidth * mousePosition,
+			scrubTime = (songDuration / barWidth) * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -169,7 +167,6 @@ class Uniplayer extends React.Component {
 
 		return (
 			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-				<SearchContainer />
 				<div className="song-lines">
 					<div className="line-box">
 						<input
