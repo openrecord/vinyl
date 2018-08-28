@@ -26,19 +26,35 @@
 		display: -ms-flexbox;
 		display: flex;
 		flex-direction: row;
-		height: 3px;
+		height: 31px;
 		justify-content: flex-start;
 		overflow: hidden;
 		position: relative;
 		-ms-flex-direction: row;
 		-ms-flex-pack: start;
 		-ms-flex-align: center;
-		margin: 0px auto 28px auto;
+		margin: 0px auto;
 		max-width: 800px;
 		position: relative;
 		top: 0;
 		width: 75%;
 		z-index: 3;
+
+		&:hover {
+			.previous-song {
+				height: 31px;
+				width: 10%;
+			}
+			.current-song {
+				height: 31px;
+				margin: 0 1%;
+				width: 78%;
+			}
+			.next-song {
+				height: 31px;
+				width: 10%;
+			}
+		}
 
 		.previous-song {
 			background: rgba(255, 255, 255, 0.8);
@@ -47,6 +63,7 @@
 			height: 3px;
 			position: relative;
 			width: 32%;
+			@include transition(all 0.1s);
 		}
 
 		.current-song {
@@ -58,6 +75,7 @@
 			position: relative;
 			margin: 0 2%;
 			width: 32%;
+			@include transition(all 0.1s);
 
 			.player-bar {
 				appearance: none;
@@ -72,6 +90,7 @@
 				vertical-align: top;
 				z-index: 2;
 				-webkit-appearance: none;
+				@include transition(all 0.1s);
 
 				&::-webkit-slider-thumb {
 					appearance: none;
@@ -94,6 +113,7 @@
 			height: 3px;
 			position: relative;
 			width: 32%;
+			@include transition(all 0.1s);
 		}
 	}
 
@@ -158,6 +178,7 @@
 			}
 
 			.playback-box {
+				display: none;
 				background: rgba(255, 255, 255, 0.3);
 				position: absolute;
 				bottom: 0;
