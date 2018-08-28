@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
+import Queue from '../queue/QueueContainer';
 
 import Duration from './Duration.jsx';
-import SearchContainer from './Search/SearchContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -223,6 +223,7 @@ class Uniplayer extends React.Component {
 							Added by <a href="/">Superluckyland</a>
 						</h3>
 					</div>
+					<Queue />
 				</div>
 			</div>
 		);

@@ -10,7 +10,7 @@ const LoggedOutLinks = () => (
 			OPENRECORD
 		</Link>
 		<Link to={ROUTES.REGISTER} key={'register'}>
-			ASK TO CONTRIBUTE
+			SIGN UP
 		</Link>
 	</>
 );
@@ -27,6 +27,7 @@ const LoggedInLinks = () => (
 );
 
 const StyledNav = styled.nav`
+	display: block;
 	margin: 24px 34px 0 34px;
 	pointer-events: none;
 	position: relative;
