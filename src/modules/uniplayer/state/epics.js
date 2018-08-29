@@ -1,3 +1,4 @@
+import {of} from 'rxjs';
 import {ajax} from 'rxjs/ajax';
 import {debounceTime, map, flatMap} from 'rxjs/operators';
 
@@ -6,7 +7,7 @@ import * as playerActions from '.';
 
 const YOUTUBE_API_KEY = 'AIzaSyCum4fCWhpcRNIh8VzD3Fhny5nxYYJrlTI';
 
-export function getYoutubeURL(query) {
+function getYoutubeURL(query) {
 	const querystring = toQueryString({
 		q: query,
 		key: YOUTUBE_API_KEY,
@@ -20,17 +21,18 @@ export function getYoutubeURL(query) {
 	return `https://www.googleapis.com/youtube/v3/search${querystring}`;
 }
 
-const reshapeResult = ({snippet, id: {videoId}}) => ({
+const searchYoutube = payload => ajax(getYoutubeURL(payload)).pipe(map(e => e.response.items.map(reshapeYoutubeResult)));
+
+const reshapeYoutubeResult = ({snippet, id: {videoId}}) => ({
 	...snippet,
 	id: videoId
 });
 
 const onSearch = action$ =>
-	action$.ofType(playerActions.SEARCH_CHANGED).pipe(
+	action$.ofType(playerActions.set.search.toString()).pipe(
 		debounceTime(500),
-		flatMap(({payload}) => ajax(getYoutubeURL(payload))),
-		map(e => e.response.items.map(reshapeResult)),
-		map(playerActions.receiveYoutubeResults)
+		flatMap(({payload}) => (payload ? searchYoutube(payload) : of([]))),
+		map(playerActions.set.youtubeResults)
 	);
 
 export default [onSearch];

@@ -3,6 +3,7 @@ import React from 'react';
 
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
+import WithActions from '../../common/components/WithActions';
 import * as playerActions from '../state';
 
 const mapStateToProps = ({player}) => ({
@@ -14,12 +15,15 @@ const mapStateToProps = ({player}) => ({
 	}))
 });
 
-export default connect(
-	mapStateToProps,
-	playerActions
-)(({search, results, setSearch}) => (
-	<div className="search-container">
-		<SearchBar search={search} onChange={setSearch} />
-		{results.length > 0 && <SearchResults results={results} />}
-	</div>
-));
+export default connect(mapStateToProps)(({search, results}) => {
+	return (
+		<WithActions actions={playerActions.set}>
+			{set => (
+				<div className="search-container">
+					<SearchBar search={search} onChange={set.search} />
+					{results.length > 0 && <SearchResults results={results} />}
+				</div>
+			)}
+		</WithActions>
+	);
+});
