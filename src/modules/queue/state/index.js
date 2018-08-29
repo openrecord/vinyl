@@ -3,12 +3,11 @@ import {handleActions} from 'redux-actions';
 import {createSetters} from '../../common/utils';
 
 export const INITIAL_STATE = {
-	search: '',
-	youtubeResults: [],
-	currentlyPlaying: null
+	queue: [],
+	isOpen: false
 };
 
-export const {set, setterReducers} = createSetters('uniplayer', INITIAL_STATE);
+export const {set, setterReducers} = createSetters('queue', INITIAL_STATE);
 
 export default handleActions(
 	{
