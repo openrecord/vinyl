@@ -2,12 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import queue_img from './images/queue.svg';
+import x_img from './images/x.svg';
 
-export default function QueueComponent(props) {
-	return <QueueContainer />;
-}
-
-class QueueContainer extends React.Component {
+export default class QueueContainer extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -21,79 +18,61 @@ class QueueContainer extends React.Component {
 	};
 
 	render() {
-		var queue = {};
-		if (this.state.queueOpen) {
-			queue.open = ' open';
-		} else {
-			queue.open = '';
+		if (!this.state.queueOpen) {
+			return (
+				<Positioning>
+					<QueueButton onClick={this.toggleQueue}>
+						<img src={queue_img} />
+					</QueueButton>
+				</Positioning>
+			);
 		}
 		return (
-			<QueueHolder className={queue.open}>
-				<div className="queue-list">
+			<Positioning>
+				<QueueList>
 					<QueueItem>
 						<div className="item-image" />
 						<div className="item-info">
 							<h4>Song Title</h4>
 						</div>
 					</QueueItem>
-				</div>
-				<QueueButton onClick={this.toggleQueue}>
-					<img src={queue_img} />
-					<div className="queue-x" />
-				</QueueButton>
-			</QueueHolder>
+					<QueueButton onClick={this.toggleQueue} className="open">
+						<img src={x_img} />
+					</QueueButton>
+				</QueueList>
+			</Positioning>
 		);
 	}
 }
 
-const QueueHolder = styled.div`
-	display: inline-block;
+const Positioning = styled.div`
 	position: absolute;
-	right: 42px;
+	bottom: 0;
+	right: 2.625rem;
 	z-index: 10;
-
-	&.open {
-		.queue-list {
-			display: inline-block;
-		}
-		img {
-			opacity: 0;
-		}
-		.queue-x {
-			opacity: 1;
-		}
-	}
-
-	.queue-list {
-		background: rgba(255, 255, 255, 0.9);
-		bottom: -24px;
-		display: none;
-		height: 600px;
-		position: absolute;
-		right: -24px;
-		min-width: 320px;
-		width: 25%;
-		z-index: 1;
-	}
 `;
 
+const QueueList = styled.div`
+	background: rgba(255, 255, 255, 0.9);
+	min-height: 37.5rem;
+	min-width: 20rem;
+	width: 25%;
+	position: relative;
+`;
 const QueueItem = styled.div`
 	background: white;
 	box-sizing: border-box;
-	display: block;
-	padding: 8px;
-	width: 100%;
+	padding: 0.5rem;
 
 	.item-image {
 		background: #5ab9d3;
 		display: inline-block;
-		height: 32px;
-		width: 32px;
+		height: 2rem;
+		width: 2rem;
 	}
 	.item-info {
 		display: inline-block;
-		position: relative;
-		margin-left: 8px;
+		margin-left: 0.5rem;
 		vertical-align: top;
 	}
 `;
@@ -103,50 +82,14 @@ const QueueButton = styled.button`
 	border-radius: 50%;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-	display: inline-block;
-	height: 64px;
-	margin-top: 16px;
+	height: 4rem;
+	width: 4rem;
+	margin-top: 1rem;
 	outline: none;
-	position: relative;
-	width: 64px;
-	z-index: 2;
 
-	image {
-		height: 20px;
-		width: 20px;
-		opacity: 1;
-		transform: transition(all 0.1s);
-	}
-
-	.queue-x {
-		height: 20px;
-		left: 50%;
-		opacity: 0;
+	&.open {
 		position: absolute;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		transform: transition(all 0.1s);
-		width: 20px;
-
-		&:before {
-			content: '';
-			background: black;
-			height: 24px;
-			position: absolute;
-			left: 50%;
-			top: -2px;
-			width: 2px;
-			transform: translateX(-50%) rotate(45deg);
-		}
-		&:after {
-			content: '';
-			background: black;
-			height: 24px;
-			position: absolute;
-			left: 50%;
-			top: -2px;
-			width: 2px;
-			transform: translateX(-50%) rotate(-45deg);
-		}
+		bottom: 0;
+		right: 0rem;
 	}
 `;
