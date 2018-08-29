@@ -6,7 +6,7 @@ import queue_img from '../images/queue.svg';
 export default class QueueContainer extends React.Component {
 	render() {
 		return (
-			<QueueHolder className={'open'}>
+			<QueueHolder>
 				<div className="queue-list">
 					<QueueItem>
 						<div className="item-image" />
@@ -25,53 +25,34 @@ export default class QueueContainer extends React.Component {
 }
 
 const QueueHolder = styled.div`
-	display: inline-block;
 	position: absolute;
-	right: 42px;
+	bottom: -25%;
+	right: 2.625rem;
 	z-index: 10;
-
-	&.open {
-		.queue-list {
-			display: inline-block;
-		}
-		img {
-			opacity: 0;
-		}
-		.queue-x {
-			opacity: 1;
-		}
-	}
 
 	.queue-list {
 		background: rgba(255, 255, 255, 0.9);
-		bottom: -24px;
-		display: none;
-		height: 600px;
-		position: absolute;
-		right: -24px;
-		min-width: 320px;
+		min-height: 37.5rem;
+		min-width: 20rem;
 		width: 25%;
-		z-index: 1;
+		position: relative;
 	}
 `;
 
 const QueueItem = styled.div`
 	background: white;
 	box-sizing: border-box;
-	display: block;
-	padding: 8px;
-	width: 100%;
+	padding: 0.5rem;
 
 	.item-image {
 		background: #5ab9d3;
 		display: inline-block;
-		height: 32px;
-		width: 32px;
+		height: 2rem;
+		width: 2rem;
 	}
 	.item-info {
 		display: inline-block;
-		position: relative;
-		margin-left: 8px;
+		margin-left: 0.5rem;
 		vertical-align: top;
 	}
 `;
@@ -82,29 +63,30 @@ const QueueButton = styled.button`
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	display: inline-block;
-	height: 64px;
-	margin-top: 16px;
+	height: 4rem;
+	width: 4rem;
+	margin-top: 1rem;
 	outline: none;
-	position: relative;
-	width: 64px;
-	z-index: 2;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 
 	image {
-		height: 20px;
-		width: 20px;
+		height: 1.25rem;
+		width: 1.25rem;
 		opacity: 1;
 		transform: transition(all 0.1s);
 	}
 
 	.queue-x {
-		height: 20px;
+		height: 1.25rem;
 		left: 50%;
 		opacity: 0;
 		position: absolute;
 		top: 50%;
 		transform: translate(-50%, -50%);
 		transform: transition(all 0.1s);
-		width: 20px;
+		width: 1.25rem;
 
 		&:before {
 			content: '';
