@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
 import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
 
@@ -9,12 +10,10 @@ export default function Queue({isOpen, queue, toggleOpen}) {
 		return (
 			<Positioning>
 				<QueueList>
-					<QueueItem>
-						<div className="item-image" />
-						<div className="item-info">
-							<h4>Song Title</h4>
-						</div>
-					</QueueItem>
+					{queue.map(track => (
+						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
+					))}
+
 					<QueueButton onClick={toggleOpen} className="open">
 						<img src={x_img} />
 					</QueueButton>
@@ -41,26 +40,8 @@ const Positioning = styled.div`
 const QueueList = styled.div`
 	background: rgba(255, 255, 255, 0.9);
 	min-height: 37.5rem;
-	min-width: 20rem;
-	width: 25%;
+	width: 20rem;
 	position: relative;
-`;
-const QueueItem = styled.div`
-	background: white;
-	box-sizing: border-box;
-	padding: 0.5rem;
-
-	.item-image {
-		background: #5ab9d3;
-		display: inline-block;
-		height: 2rem;
-		width: 2rem;
-	}
-	.item-info {
-		display: inline-block;
-		margin-left: 0.5rem;
-		vertical-align: top;
-	}
 `;
 
 const QueueButton = styled.button`
