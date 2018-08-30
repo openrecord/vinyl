@@ -13,7 +13,7 @@ const mapStateToProps = ({player}) => ({
 const mapDispatchToProps = {
 	setSearch: playerActions.set.search,
 	enqueue: queueActions.enqueue,
-	clearSearch: () => playerActions.set.search()
+	clearSearch: () => playerActions.set.search('')
 };
 
 export default connect(
