@@ -1,12 +1,8 @@
+import {connect} from 'react-redux';
 import React from 'react';
-import * as Redux from 'react-redux';
 
 import Uniplayer from './Uniplayer.jsx';
 
-class UniplayerContainer extends React.Component {
-	render() {
-		return <Uniplayer />;
-	}
-}
+const mapStateToProps = ({player}) => player;
 
-export default UniplayerContainer;
+export default connect(mapStateToProps)(({currentlyPlaying}) => <Uniplayer currentlyPlaying={currentlyPlaying} />);

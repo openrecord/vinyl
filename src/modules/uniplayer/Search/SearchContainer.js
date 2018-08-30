@@ -3,27 +3,27 @@ import React from 'react';
 
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
-import WithActions from '../../common/components/WithActions';
 import * as playerActions from '../state';
+import * as queueActions from '../../queue/state';
 
 const mapStateToProps = ({player}) => ({
 	...player,
-	results: player.youtubeResults.map(result => ({
-		type: 'youtube',
-		id: result.id,
-		content: result
-	}))
+	results: player.youtubeResults
 });
 
-export default connect(mapStateToProps)(({search, results}) => {
+const mapDispatchToProps = {
+	setSearch: playerActions.set.search,
+	enqueue: queueActions.enqueue
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(({search, results, setSearch, enqueue}) => {
 	return (
-		<WithActions actions={playerActions.set}>
-			{set => (
-				<div className="search-container">
-					<SearchBar search={search} onChange={set.search} />
-					{results.length > 0 && <SearchResults results={results} />}
-				</div>
-			)}
-		</WithActions>
+		<div className="search-container">
+			<SearchBar search={search} onChange={setSearch} />
+			{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
+		</div>
 	);
 });
