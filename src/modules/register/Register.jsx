@@ -11,8 +11,8 @@ import RegisterDTO from './RegisterDTO';
 export default function Register(props) {
 	return (
 		<div>
-			<RegisterFormContainer>
-				<Link id="home-x" to={'/'}>
+			<RegisterFormContainer className="register">
+				<Link className="home-x" to={'/'}>
 					<span />
 				</Link>
 				<RegisterForm submitRegister={props.submitRegister} />
@@ -29,13 +29,11 @@ const RegisterFormContainer = styled.main`
 	left: 0;
 	right: 0;
 	top: 0;
-	z-index: 5;
 
-	#home-x {
+	.home-x {
 		left: 36px;
 		position: absolute;
 		top: 36px;
-		z-index: 10;
 
 		&:hover {
 			span {

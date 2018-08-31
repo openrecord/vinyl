@@ -1,5 +1,3 @@
-import './search.scss';
-
 import {connect} from 'react-redux';
 import React from 'react';
 
@@ -16,10 +14,7 @@ const mapStateToProps = ({player}) => ({
 	}))
 });
 
-export default connect(
-	mapStateToProps,
-	playerActions
-)(({search, results, setSearch}) => (
+export default connect(mapStateToProps, playerActions)(({search, results, setSearch}) => (
 	<div className="search-container">
 		<SearchBar search={search} onChange={setSearch} />
 		{results.length > 0 && <SearchResults results={results} />}
