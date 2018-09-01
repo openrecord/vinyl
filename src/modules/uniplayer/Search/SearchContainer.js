@@ -1,29 +1,24 @@
 import {connect} from 'react-redux';
 import React from 'react';
 
-import SearchBar from './SearchBar';
-import SearchResults from './SearchResults';
-import WithActions from '../../common/components/WithActions';
+import Search from './Search';
 import * as playerActions from '../state';
+import * as queueActions from '../../queue/state';
 
 const mapStateToProps = ({player}) => ({
 	...player,
-	results: player.youtubeResults.map(result => ({
-		type: 'youtube',
-		id: result.id,
-		content: result
-	}))
+	results: player.youtubeResults
 });
 
-export default connect(mapStateToProps)(({search, results}) => {
-	return (
-		<WithActions actions={playerActions.set}>
-			{set => (
-				<div className="search-container">
-					<SearchBar search={search} onChange={set.search} />
-					{results.length > 0 && <SearchResults results={results} />}
-				</div>
-			)}
-		</WithActions>
-	);
+const mapDispatchToProps = {
+	setSearch: playerActions.set.search,
+	enqueue: queueActions.enqueue,
+	clearSearch: () => playerActions.set.search('')
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(({search, results, setSearch, enqueue, clearSearch}) => {
+	return <Search search={search} results={results} setSearch={setSearch} enqueue={enqueue} clearSearch={clearSearch} />;
 });

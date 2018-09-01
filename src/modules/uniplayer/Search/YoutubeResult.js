@@ -19,6 +19,7 @@ const StyledResult = styled.div`
 `;
 
 export default function YoutubeResult({
+	onClick,
 	result: {
 		title,
 		description,
@@ -28,7 +29,7 @@ export default function YoutubeResult({
 	}
 }) {
 	return (
-		<StyledResult>
+		<StyledResult onClick={onClick}>
 			<img src={url} height={height} width={width} />
 			{title}
 		</StyledResult>

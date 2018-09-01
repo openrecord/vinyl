@@ -24,7 +24,8 @@ function getYoutubeURL(query) {
 const searchYoutube = payload => ajax(getYoutubeURL(payload)).pipe(map(e => e.response.items.map(reshapeYoutubeResult)));
 
 const reshapeYoutubeResult = ({snippet, id: {videoId}}) => ({
-	...snippet,
+	content: snippet,
+	type: 'youtube',
 	id: videoId
 });
 
