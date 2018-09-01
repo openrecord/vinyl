@@ -2,7 +2,8 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 
 import Duration from './Duration.jsx';
-import SearchContainer from './Search/SearchContainer';
+import Queue from '../queue/components/QueueContainer';
+import Search from './Search/SearchContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -121,9 +122,9 @@ class Uniplayer extends React.Component {
 		this.YTPlayer = player;
 	};
 
-	renderYT() {
+	renderYT(currentlyPlaying) {
 		var player = {};
-		player.id = 'https://www.youtube.com/watch?v=' + '2H5R0bdblEE';
+		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.id;
 		return (
 			<div className="player-inner">
 				<ReactPlayer
@@ -153,6 +154,8 @@ class Uniplayer extends React.Component {
 	}
 
 	render() {
+		const {currentlyPlaying} = this.props;
+
 		var player = {};
 		if (this.state.playing) {
 			player.status = ' playing';
@@ -196,12 +199,15 @@ class Uniplayer extends React.Component {
 						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 						{this.renderYT()}
 					</div>
-					<div className="info-box">
-						<h3 className="song-title">Diplo - Stay Open (feat. MØ) [Official Lyric Video]</h3>
-						<h3 className="user-id">
-							Added by <a href="/">Superluckyland</a>
-						</h3>
-					</div>
+					{currentlyPlaying && (
+						<div className="info-box">
+							<h3 className="song-title">{currentlyPlaying.content.title}</h3>
+							<h3 className="user-id">
+								Added by <a href="/">Superluckyland</a>
+							</h3>
+						</div>
+					)}
+					<Queue />
 				</div>
 			</div>
 		);

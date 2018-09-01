@@ -8,13 +8,13 @@ const StyledSearchResults = styled.div`
 	margin: auto;
 `;
 
-export default function SearchResults({results}) {
+export default function SearchResults({results, enqueue}) {
 	return (
 		<StyledSearchResults>
 			{results.map(result => {
 				switch (result.type) {
 					case 'youtube':
-						return <YoutubeResult result={result.content} key={result.id} />;
+						return <YoutubeResult result={result.content} key={result.id} onClick={() => enqueue(result)} />;
 					default:
 						return null;
 				}
