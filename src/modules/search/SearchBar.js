@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import {targetValue} from '../../common/utils';
+import {targetValue} from '../common/utils';
 
 const StyledSearchBar = styled.input`
 	display: block;
@@ -13,5 +13,5 @@ const StyledSearchBar = styled.input`
 `;
 
 export default function SearchBar({search, onChange}) {
-	return <StyledSearchBar type="text" value={search} onChange={targetValue(onChange)} />;
+	return <StyledSearchBar type="text" placeholder="Add Song" value={search} onChange={targetValue(onChange)} />;
 }

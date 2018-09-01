@@ -1,23 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
+import YoutubeResult from '../../search/YoutubeResult';
 import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
+
+import Search from '../../search/SearchContainer';
 
 export default function Queue({isOpen, queue, toggleOpen}) {
 	if (isOpen) {
 		return (
 			<Positioning>
-				<QueueList>
-					{queue.map(track => (
-						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
-					))}
+				<QueueOuter>
+					<div className="queue-inner">
+						<Search />
+						{queue.map(track => <YoutubeResult result={track.content} key={track.id} onClick={console.log} />)}
 
-					<QueueButton onClick={toggleOpen} className="open">
-						<img src={x_img} />
-					</QueueButton>
-				</QueueList>
+						<QueueButton onClick={toggleOpen} className="open">
+							<img src={x_img} />
+						</QueueButton>
+					</div>
+				</QueueOuter>
 			</Positioning>
 		);
 	}
@@ -31,17 +34,56 @@ export default function Queue({isOpen, queue, toggleOpen}) {
 }
 
 const Positioning = styled.div`
-	position: absolute;
+	position: fixed;
 	bottom: 0;
-	right: 2.625rem;
+	left: 0;
+	right: 0;
+	pointer-events: none !important;
+	top: 0;
 	z-index: 10;
+
+	* {
+		pointer-events: all;
+	}
 `;
 
-const QueueList = styled.div`
-	background: rgba(255, 255, 255, 0.9);
-	min-height: 37.5rem;
-	width: 20rem;
-	position: relative;
+const QueueOuter = styled.div`
+	background: white;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+
+	.queue-inner {
+		margin: 5rem auto;
+		max-width: 56.25rem;
+		position: relative;
+
+		.search-result {
+			cursor: pointer;
+			padding: 1rem;
+
+			&:hover {
+				background-color: #e5e5e5;
+			}
+
+			.image-holder {
+				position: relative;
+				height: 66px;
+				overflow: hidden;
+				margin-right: 0.75rem;
+				width: 120px;
+
+				img {
+					height: 90px;
+					position: absolute;
+					top: -12px;
+					width: 120px;
+				}
+			}
+		}
+	}
 `;
 
 const QueueButton = styled.button`
@@ -53,10 +95,7 @@ const QueueButton = styled.button`
 	width: 4rem;
 	margin-top: 1rem;
 	outline: none;
-
-	&.open {
-		position: absolute;
-		bottom: 0;
-		right: 0rem;
-	}
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
 `;

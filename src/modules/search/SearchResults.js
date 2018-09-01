@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import YoutubeResult from './YoutubeResult';
 
 const StyledSearchResults = styled.div`
-	max-width: 35rem;
-	margin: auto;
+	background: #f2f2f2;
 `;
 
 export default function SearchResults({results, enqueue}) {

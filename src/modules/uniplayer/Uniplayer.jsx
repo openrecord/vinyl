@@ -2,8 +2,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 
 import Duration from './Duration.jsx';
-import Queue from '../queue/components/QueueContainer';
-import Search from './Search/SearchContainer';
+
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -24,7 +23,8 @@ class Uniplayer extends React.Component {
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			playerActive: true
+			playerActive: true,
+			currentlyPlaying: ''
 		};
 	}
 
@@ -124,7 +124,7 @@ class Uniplayer extends React.Component {
 
 	renderYT(currentlyPlaying) {
 		var player = {};
-		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.id;
+		player.id = 'https://www.youtube.com/watch?v=' + '2H5R0bdblEE';
 		return (
 			<div className="player-inner">
 				<ReactPlayer
@@ -170,7 +170,6 @@ class Uniplayer extends React.Component {
 
 		return (
 			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-				<SearchContainer />
 				<div className="player-holder">
 					<div className="player-outer">
 						<div className={'playback-box'}>
@@ -197,7 +196,7 @@ class Uniplayer extends React.Component {
 							/>
 						</div>
 						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-						{this.renderYT()}
+						{currentlyPlaying && this.renderYT()}
 					</div>
 					{currentlyPlaying && (
 						<div className="info-box">
@@ -207,7 +206,6 @@ class Uniplayer extends React.Component {
 							</h3>
 						</div>
 					)}
-					<Queue />
 				</div>
 			</div>
 		);
