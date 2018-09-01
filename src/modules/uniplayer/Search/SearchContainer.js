@@ -16,9 +16,6 @@ const mapDispatchToProps = {
 	clearSearch: () => playerActions.set.search('')
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(({search, results, setSearch, enqueue, clearSearch}) => {
+export default connect(mapStateToProps, mapDispatchToProps)(({search, results, setSearch, enqueue, clearSearch}) => {
 	return <Search search={search} results={results} setSearch={setSearch} enqueue={enqueue} clearSearch={clearSearch} />;
 });

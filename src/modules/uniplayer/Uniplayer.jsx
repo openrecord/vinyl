@@ -83,7 +83,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = (songDuration / barWidth) * mousePosition,
+			scrubTime = songDuration / barWidth * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -170,33 +170,15 @@ class Uniplayer extends React.Component {
 
 		return (
 			<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-				<Search />
-				<div className="song-lines">
-					<div className="line-box">
-						<input
-							className="player-bar"
-							ref="playerBar"
-							type="range"
-							min={0}
-							max={1}
-							step="any"
-							value={this.state.played}
-							onMouseEnter={this.onMouseEnter}
-							onMouseMove={this.onMouseMove}
-							onMouseLeave={this.onMouseLeave}
-							onMouseDown={this.onSeekMouseDown}
-							onChange={this.onSeekChange}
-							onMouseUp={this.onSeekMouseUp}
-						/>
-					</div>
-				</div>
+				<SearchContainer />
 				<div className="player-holder">
 					<div className="player-outer">
-						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-						{currentlyPlaying && this.renderYT(currentlyPlaying)}
-						<div className={'playback-box' + player.active}>
+						<div className={'playback-box'}>
 							<div className="range-holder">
 								<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
+							</div>
+							<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
+								<span className="hover-time">{this.state.hoverTime}</span>
 							</div>
 							<input
 								className="player-bar"
@@ -213,13 +195,9 @@ class Uniplayer extends React.Component {
 								onChange={this.onSeekChange}
 								onMouseUp={this.onSeekMouseUp}
 							/>
-							<div className="time-box">
-								<Duration seconds={this.state.duration * this.state.played} className="time-played" />
-								<span className="hover-time">{this.state.hoverTime}</span>
-								<h4 className="time-divider">-</h4>
-								<Duration seconds={this.state.duration} />
-							</div>
 						</div>
+						<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
+						{this.renderYT()}
 					</div>
 					{currentlyPlaying && (
 						<div className="info-box">

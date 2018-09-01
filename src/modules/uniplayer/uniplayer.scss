@@ -8,66 +8,9 @@
 	width: 100%;
 
 	&.active {
-		opacity: 1;
-		transition: opacity 0.1s;
-		pointer-events: all;
-
 		.player-holder {
 			.info-box {
 				opacity: 1;
-			}
-		}
-	}
-
-	.song-lines {
-		margin: 0px auto;
-		max-width: 800px;
-		position: relative;
-		top: 42px;
-		width: 75%;
-		z-index: z-index('uniplayer-song-lines');
-
-		.line-box {
-			background: rgba(255, 255, 255, 0.3);
-			border-radius: 100px;
-			align-items: center;
-			display: -ms-flexbox;
-			display: flex;
-			flex-direction: row;
-			height: 3px;
-			margin-bottom: 22px;
-			justify-content: flex-start;
-			overflow: hidden;
-			position: relative;
-			width: 30%;
-			-ms-flex-direction: row;
-			-ms-flex-pack: start;
-			-ms-flex-align: center;
-
-			.player-bar {
-				appearance: none;
-				background: transparent;
-				cursor: pointer;
-				height: 100%;
-				margin: 0;
-				outline: none;
-				overflow: hidden;
-				position: relative;
-				width: 100%;
-				z-index: z-index('uniplayer-bar');
-				-webkit-appearance: none;
-
-				&::-webkit-slider-thumb {
-					appearance: none;
-					background: transparent;
-					height: 3px;
-					pointer-events: none;
-					width: 0;
-					z-index: z-index('uniplayer-slider');
-					-webkit-appearance: none;
-					transition: all 0.1s;
-					box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
-				}
 			}
 		}
 	}
@@ -97,16 +40,6 @@
 				z-index: z-index('uniplayer-iframe-blocker');
 			}
 
-			&:hover {
-				.playback-box {
-					height: 8px;
-
-					.time-box {
-						opacity: 1;
-					}
-				}
-			}
-
 			.player-inner {
 				height: 0;
 				padding-bottom: 56.25%;
@@ -133,12 +66,11 @@
 			}
 
 			.playback-box {
-				background: rgba(255, 255, 255, 0.3);
 				position: absolute;
-				bottom: 0;
-				height: 0;
-				opacity: 0;
+				height: 4px;
+				opacity: 1;
 				width: 100%;
+				transform: translateY(-50%);
 				z-index: z-index('uniplayer-playback-box');
 				transition: all 0.1s;
 
@@ -147,37 +79,72 @@
 				}
 
 				&:hover {
+					height: 8px;
 					.range-holder {
 						display: block;
 						height: 8px;
-						position: absolute;
-						overflow: hidden;
-						width: 100%;
-
 						.hover-range {
-							background: rgba(200, 200, 200, 0.5);
 							height: 8px;
-							width: 5000px;
-							position: absolute;
-							margin-left: -5000px;
-							z-index: z-index('uniplayer-hover-range');
 						}
 					}
-					.time-box {
-						.time-played {
-							display: none;
-						}
+					.time-holder {
+						display: inline-block;
 						.hover-time {
-							display: inline-block;
+							opacity: 1;
 						}
+					}
+					.player-bar {
+						height: 8px;
+						&::-webkit-slider-thumb {
+							height: 8px;
+						}
+					}
+				}
+
+				.range-holder {
+					display: none;
+					height: 4px;
+					position: absolute;
+					overflow: hidden;
+					top: 50%;
+					width: 100%;
+					transition: all 0.1s;
+					transform: translateY(-50%);
+
+					.hover-range {
+						background: rgba(200, 200, 200, 0.5);
+						height: 4px;
+						width: 5000px;
+						position: absolute;
+						margin-left: -5000px;
+						z-index: 1;
+					}
+				}
+
+				.time-holder {
+					display: none;
+					pointer-events: none;
+					position: absolute;
+					page-break-after: auto;
+					top: -22px;
+					z-index: 1;
+					transform: translateX(-50%);
+
+					.hover-time {
+						color: white;
+						background: black;
+						display: inline-block;
+						font-size: 0.875rem;
+						padding: 2px 4px;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
 					}
 				}
 
 				.player-bar {
 					appearance: none;
-					background: transparent;
+					background: rgba(255, 255, 255, 0.3);
 					cursor: pointer;
-					height: 100%;
+					height: 4px;
 					margin: 0;
 					outline: none;
 					overflow: hidden;
@@ -185,52 +152,19 @@
 					width: 100%;
 					z-index: z-index('uniplayer-bar');
 					-webkit-appearance: none;
+					top: 50%;
+					transform: translateY(-50%);
 
 					&::-webkit-slider-thumb {
 						appearance: none;
 						background: transparent;
-						height: 6px;
+						height: 4px;
 						pointer-events: none;
 						width: 0;
 						z-index: z-index('uniplayer-slider');
 						-webkit-appearance: none;
 						transition: all 0.1s;
 						box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
-					}
-				}
-
-				.time-box {
-					display: inline-block;
-					right: 0;
-					opacity: 0;
-					pointer-events: none;
-					position: absolute;
-					right: 8px;
-					top: -24px;
-					z-index: z-index('uniplayer-time-box');
-					transition: all 0.1s;
-
-					time {
-						font-size: 1rem;
-						color: white;
-						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-					}
-
-					.hover-time {
-						font-size: 1rem;
-						color: white;
-						display: none;
-						left: 0;
-						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-					}
-
-					.time-divider {
-						color: white;
-						display: inline-block;
-						margin: 0 4px;
-						position: relative;
-						top: -1px;
-						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
 					}
 				}
 			}
