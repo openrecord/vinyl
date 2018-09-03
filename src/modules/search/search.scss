@@ -1,6 +1,8 @@
 .search {
 	display: none;
-	position: relative;
+	min-height: 3.5rem;
+	position: absolute;
+	width: 100%;
 	z-index: z-index('search-container');
 
 	input {
@@ -10,9 +12,9 @@
 		box-sizing: border-box;
 		display: block;
 		font-size: 1.25rem;
-		margin-bottom: 0.5rem;
 		outline: none;
 		padding: 1rem 1rem;
+		position: absolute;
 		width: 100%;
 	}
 
