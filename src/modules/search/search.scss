@@ -1,7 +1,7 @@
 .search {
 	display: none;
 	min-height: 3.5rem;
-	position: absolute;
+	position: relative;
 	width: 100%;
 	z-index: z-index('search-container');
 
@@ -14,8 +14,9 @@
 		font-size: 1.25rem;
 		outline: none;
 		padding: 1rem 1rem;
-		position: absolute;
+		position: relative;
 		width: 100%;
+		z-index: 1;
 	}
 
 	.search-result {
@@ -40,5 +41,13 @@
 				width: 80px;
 			}
 		}
+	}
+
+	.search-background {
+		background: rgba(255, 255, 255, 0.8);
+		position: fixed;
+		height: calc(100% - 11.54rem);
+		max-width: 56.25rem;
+		width: 100%;
 	}
 }

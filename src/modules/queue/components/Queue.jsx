@@ -1,27 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Search from '../../search/SearchContainer';
 import YoutubeResult from '../../search/YoutubeResult';
 import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
 
-import Search from '../../search/SearchContainer';
-var queue = {};
+var queue = {},
+	filter = {};
 
-export default function Queue({isOpen, queue, toggleOpen, isExpand, toggleExpand}) {
+export default function Queue({isOpen, queue, toggleOpen, isExpand, toggleExpand, isRecent, toggleRecent}) {
 	if (isExpand) {
 		queue.expanded = 'expanded';
-		queue.button = 'Back to Queue';
+		queue.button = 'Back →';
 	} else {
 		queue.expanded = '';
 		queue.button = 'Add Song';
+	}
+	if (isRecent) {
+		filter.button = 'Recently Added';
+		filter.dropdown = 'Queue';
+	} else {
+		filter.button = 'Queue';
+		filter.dropdown = 'Recently Added';
 	}
 	if (isOpen) {
 		return (
 			<Positioning>
 				<QueueOuter className={queue.expanded}>
 					<div className="queue-info">
-						<h3>Music Queue</h3>
+						<div className="queue-filter">
+							<h4>🎵</h4>
+							<button className="filter-switch">{filter.button}</button>
+							<div className="filter-dropdown">
+								<span onClick={toggleRecent}>{filter.dropdown}</span>
+							</div>
+						</div>
 						<button className="add-expand" onClick={toggleExpand}>
 							{queue.button}
 						</button>
@@ -80,31 +93,29 @@ const QueueOuter = styled.div`
 		width: auto;
 		transition: all 0.1s;
 
+		.search{
+			display: block;
+		}
+
 		.queue-info{
-			border-bottom: 0px;
+			border-bottom: 0;
 			display: block;
 			max-width: 56.25rem;
-			margin: 5rem auto 0 auto;
+			margin: 3rem auto 0 auto;
 			position: relative;
-
-			h3{
-				display: none;
+			
+			.queue-filter{
+				margin: 0.5rem 0;
 			}
 
 			.add-expand{
-				position: fixed;
-				top: 1.5rem;
-				right: 1.5rem;
-			}
-
-			.search{
-				display: block;
+				margin: 0.5rem 0;
 			}
 		}
 
 		.queue-inner{
-			height: calc(100% - 8.938rem);
-			margin: 8.938rem auto 0 auto;
+			height: calc(100% - 9.6rem);
+			margin: 0 auto;
 			.search-result{
 				top: 0;
 			}
@@ -119,10 +130,57 @@ const QueueOuter = styled.div`
 		top: 0;
 		width: 100%;
 
-		h3{
+		.queue-filter{
 			display: inline-block;
-			padding: 0.25rem;
-			margin: 0.5rem;
+			position: relative;
+			margin: 0.5rem 1rem;
+			z-index: 22;
+
+			&:hover {
+				.filter-switch {
+					background: #f2f2f2;
+				}
+				.filter-dropdown {
+					display: inline-block;
+				}
+			}
+
+			h4 {
+				display: inline-block;
+			}
+
+			.filter-switch {
+				border: 0;
+				cursor: pointer;
+				display: inline-block;
+				font-size: 1rem;
+				outline: none;
+				left: -0.25rem;
+				padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+				position: relative;
+
+				&:hover {
+					background: #e6e6e6;
+				}
+			}
+
+			.filter-dropdown {
+				background: #f2f2f2;
+				display: none;
+				position: absolute;
+				left: 1.075rem;
+				top: 2.175rem;
+				span {
+					display: block;
+					cursor: pointer;
+					padding: 0.5rem;
+					white-space: nowrap;
+
+					&:hover {
+						background: #e6e6e6;
+					}
+				}
+			}
 		}
 
 		.add-expand {
@@ -134,9 +192,9 @@ const QueueOuter = styled.div`
 			float: right;
 			font-size: 1rem;
 			display; inline-block;
-			padding: 0.325rem 0.5rem;
+			padding: 0.5rem;
 			position: relative;
-			margin: 0.6rem 0.5rem;
+			margin: 0.5rem;
 			outline: none;
 			text-align: left;
 		}
@@ -189,4 +247,5 @@ const QueueButton = styled.button`
 	position: fixed;
 	bottom: 2rem;
 	right: 2rem;
+	z-index: 1;
 `;

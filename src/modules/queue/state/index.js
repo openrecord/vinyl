@@ -6,7 +6,8 @@ import {createSetters} from '../../common/utils';
 export const INITIAL_STATE = {
 	queue: [],
 	isOpen: false,
-	isExpand: false
+	isExpand: false,
+	isRecent: false
 };
 
 export const enqueue = createAction('queue/enqueue');

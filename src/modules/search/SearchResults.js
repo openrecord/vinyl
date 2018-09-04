@@ -5,10 +5,13 @@ import YoutubeResult from './YoutubeResult';
 
 const StyledSearchResults = styled.div`
 	background: #f2f2f2;
-	margin-top: 4rem;
+	margin-top: 0.25rem;
 	overflow: hidden;
 	overflow-y: scroll;
 	max-height: 32rem;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
 `;
 
 export default function SearchResults({results, enqueue}) {

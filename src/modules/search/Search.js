@@ -6,6 +6,7 @@ import SearchResults from './SearchResults';
 
 class Search extends React.Component {
 	handleClickOutside() {
+		console.log(this);
 		this.props.clearSearch();
 	}
 
@@ -16,6 +17,7 @@ class Search extends React.Component {
 			<div className="search">
 				<SearchBar search={search} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
+				{results.length > 0 && <div className="search-background" onClick={this.handleClickOutside} />}
 			</div>
 		);
 	}
