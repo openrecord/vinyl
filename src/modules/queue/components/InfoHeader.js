@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function InputHeader({isSearchOpen, toggleSearch}) {
+export default function InfoHeader({isSearchOpen, toggleSearch}) {
 	return (
-		<StyledInputHeader>
+		<StyledInfoHeader>
 			<button className="filter">
 				Recently Added
 				<div className="dropdown">
@@ -13,11 +13,11 @@ export default function InputHeader({isSearchOpen, toggleSearch}) {
 			<button className="search-btn" onClick={toggleSearch}>
 				{isSearchOpen ? 'Back →' : 'Add Song'}
 			</button>
-		</StyledInputHeader>
+		</StyledInfoHeader>
 	);
 }
 
-const StyledInputHeader = styled.div`
+const StyledInfoHeader = styled.div`
 	border-bottom: 1px solid #f2f2f2;
 	display: flex;
 	justify-content: space-between;
