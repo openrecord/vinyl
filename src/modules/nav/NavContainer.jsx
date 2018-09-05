@@ -3,6 +3,7 @@ import {string, object} from 'prop-types';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {ROUTES} from '../routes/routes';
+import Queue from '../queue/components/QueueContainer';
 
 const LoggedOutLinks = () => (
 	<>
@@ -10,8 +11,9 @@ const LoggedOutLinks = () => (
 			OPENRECORD
 		</Link>
 		<Link to={ROUTES.REGISTER} key={'register'}>
-			ASK TO CONTRIBUTE
+			SIGN UP
 		</Link>
+		<Queue />
 	</>
 );
 
@@ -23,6 +25,7 @@ const LoggedInLinks = () => (
 		<Link to={ROUTES.PROFILE} key={'profile'}>
 			PROFILE
 		</Link>
+		<Queue />
 	</>
 );
 
@@ -32,6 +35,10 @@ const StyledNav = styled.nav`
 	position: relative;
 	text-align: left;
 
+	* {
+		pointer-events: all;
+	}
+
 	a {
 		color: white;
 		position: relative;
@@ -39,7 +46,6 @@ const StyledNav = styled.nav`
 		font-size: 1.25rem;
 		font-weight: 700;
 		margin: 8px;
-		pointer-events: all;
 		position: relative;
 
 		&:hover {

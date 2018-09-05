@@ -1,9 +1,9 @@
 import {connect} from 'react-redux';
 import React from 'react';
 
-import Search from './Search';
-import * as playerActions from '../state';
-import * as queueActions from '../../queue/state';
+import Search from './search';
+import * as playerActions from '../uniplayer/state';
+import * as queueActions from '../queue/state';
 
 const mapStateToProps = ({player}) => ({
 	...player,
