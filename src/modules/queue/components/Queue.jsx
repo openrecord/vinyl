@@ -1,20 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import InfoHeader from './InfoHeader';
+import Positioning from './Positioning';
+import Search from '../../uniplayer/Search/SearchContainer';
 import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
 import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
 
-export default function Queue({isOpen, queue, toggleOpen}) {
-	if (isOpen) {
+export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
+	if (isQueueOpen) {
 		return (
-			<Positioning>
+			<Positioning isSearchOpen={isSearchOpen}>
 				<QueueList>
+					<InfoHeader isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
+					{isSearchOpen && <Search />}
 					{queue.map(track => (
 						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
 					))}
 
-					<QueueButton onClick={toggleOpen} className="open">
+					<QueueButton onClick={toggleQueue} className="open">
 						<img src={x_img} />
 					</QueueButton>
 				</QueueList>
@@ -23,24 +28,18 @@ export default function Queue({isOpen, queue, toggleOpen}) {
 	}
 	return (
 		<Positioning>
-			<QueueButton onClick={toggleOpen}>
+			<QueueButton onClick={toggleQueue}>
 				<img src={queue_img} />
 			</QueueButton>
 		</Positioning>
 	);
 }
 
-const Positioning = styled.div`
-	position: absolute;
-	bottom: 0;
-	right: 2.625rem;
-	z-index: 10;
-`;
-
 const QueueList = styled.div`
-	background: rgba(255, 255, 255, 0.9);
+	background: white;
 	min-height: 37.5rem;
-	width: 20rem;
+	max-width: 56.25rem;
+	margin: auto;
 	position: relative;
 `;
 
@@ -54,9 +53,7 @@ const QueueButton = styled.button`
 	margin-top: 1rem;
 	outline: none;
 
-	&.open {
-		position: absolute;
-		bottom: 0;
-		right: 0rem;
-	}
+	position: fixed;
+	bottom: 2rem;
+	right: 4rem;
 `;

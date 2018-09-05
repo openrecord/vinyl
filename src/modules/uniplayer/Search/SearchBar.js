@@ -4,14 +4,17 @@ import styled from 'styled-components';
 import {targetValue} from '../../common/utils';
 
 const StyledSearchBar = styled.input`
+	background: #f2f2f2;
+	border: 0;
+	border-radius: 0;
+	box-sizing: border-box;
 	display: block;
-	margin: auto;
-	font-size: 1.5rem;
-	padding: 0.75rem 1rem;
-	background-color: rgba(255, 255, 255, 0.6);
-	border-radius: 0.25rem;
+	font-size: 1.25rem;
+	outline: none;
+	padding: 1rem 1rem;
+	width: 100%;
 `;
 
 export default function SearchBar({search, onChange}) {
-	return <StyledSearchBar type="text" value={search} onChange={targetValue(onChange)} />;
+	return <StyledSearchBar type="text" value={search} placeholder="Start typing..." onChange={targetValue(onChange)} />;
 }

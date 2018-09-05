@@ -4,13 +4,11 @@ import React from 'react';
 const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
-	background-color: rgba(255, 255, 255, 0.7);
-	border-bottom: 1px solid;
-	padding: 1rem 0.5rem;
+	padding: 0.75rem 1rem;
 	transition: background-color 0.3s linear;
 
 	&:hover {
-		background-color: rgba(253, 237, 83, 0.7);
+		background-color: #e5e5e5;
 	}
 
 	img {
@@ -30,7 +28,7 @@ export default function YoutubeResult({
 }) {
 	return (
 		<StyledResult onClick={onClick}>
-			<img src={url} height={height} width={width} />
+			<img src={url} height={height * 0.5} width={width * 0.5} />
 			{title}
 		</StyledResult>
 	);

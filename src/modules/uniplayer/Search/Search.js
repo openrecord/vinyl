@@ -13,7 +13,7 @@ class Search extends React.Component {
 		const {search, setSearch, results, enqueue} = this.props;
 
 		return (
-			<div className="search">
+			<div>
 				<SearchBar search={search} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
 			</div>

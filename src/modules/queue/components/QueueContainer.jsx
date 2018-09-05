@@ -7,8 +7,16 @@ import * as queueActions from '../state';
 
 const mapStateToProps = ({queue}) => queue;
 
-export default connect(mapStateToProps)(({isOpen, queue}) => (
+export default connect(mapStateToProps)(({isQueueOpen, isSearchOpen, queue}) => (
 	<WithActions actions={queueActions}>
-		{({set}) => <Queue isOpen={isOpen} queue={queue} toggleOpen={() => set.isOpen(!isOpen)} />}
+		{({set}) => (
+			<Queue
+				isQueueOpen={isQueueOpen}
+				isSearchOpen={isSearchOpen}
+				queue={queue}
+				toggleQueue={() => set.isQueueOpen(!isQueueOpen)}
+				toggleSearch={() => set.isSearchOpen(!isSearchOpen)}
+			/>
+		)}
 	</WithActions>
 ));
