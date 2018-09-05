@@ -10,12 +10,12 @@ class Search extends React.Component {
 	}
 
 	render() {
-		const {search, setSearch, results, enqueue} = this.props;
+		const {search, setSearch, results, clearSearch, enqueue} = this.props;
 
 		return (
 			<div>
 				<SearchBar search={search} onChange={setSearch} />
-				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
+				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} clearSearch={clearSearch} />}
 			</div>
 		);
 	}

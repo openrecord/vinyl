@@ -13,9 +13,9 @@ const StyledSearchResults = styled.div`
 	width: 100%;
 `;
 
-export default function SearchResults({results, enqueue}) {
+export default function SearchResults({results, enqueue, clearSearch}) {
 	return (
-		<StyledSearchResults>
+		<StyledSearchResults onClick={clearSearch}>
 			{results.map(result => {
 				switch (result.type) {
 					case 'youtube':
