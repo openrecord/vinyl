@@ -1,6 +1,7 @@
-.search-container {
+.search {
 	position: fixed;
 	z-index: z-index('search-container');
 	top: 80px;
-	width: 100%;
+	left: 50%;
+	transform: translateX(-50%);
 }
