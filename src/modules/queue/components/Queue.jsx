@@ -1,47 +1,59 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
+import Search from '../../uniplayer/Search/SearchContainer';
 import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
 import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
 
-export default function Queue({isOpen, queue, toggleOpen}) {
-	if (isOpen) {
+export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
+	if (isQueueOpen) {
 		return (
-			<Positioning>
+			<Sidebar white>
+				<Search />
 				<QueueList>
 					{queue.map(track => (
 						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
 					))}
-
-					<QueueButton onClick={toggleOpen} className="open">
-						<img src={x_img} />
-					</QueueButton>
 				</QueueList>
-			</Positioning>
+				<QueueButton onClick={toggleQueue} className="open">
+					<img src={x_img} />
+				</QueueButton>
+			</Sidebar>
 		);
 	}
 	return (
-		<Positioning>
-			<QueueButton onClick={toggleOpen}>
+		<Sidebar>
+			<QueueButton onClick={toggleQueue}>
 				<img src={queue_img} />
 			</QueueButton>
-		</Positioning>
+		</Sidebar>
 	);
 }
 
-const Positioning = styled.div`
-	position: absolute;
-	bottom: 0;
-	right: 2.625rem;
-	z-index: 10;
+const Sidebar = styled.div`
+	position: fixed;
+	bottom: 1rem;
+	height: 80%;
+	right: 1rem;
+	width: 20rem;
+
+	${({white}) =>
+		white &&
+		css`
+			background: white;
+		`};
 `;
 
 const QueueList = styled.div`
-	background: rgba(255, 255, 255, 0.9);
-	min-height: 37.5rem;
-	width: 20rem;
+	max-height: calc(100% - 3.4375rem);
 	position: relative;
+	overflow: hidden;
+	overflow-y: scroll;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 const QueueButton = styled.button`
@@ -54,9 +66,7 @@ const QueueButton = styled.button`
 	margin-top: 1rem;
 	outline: none;
 
-	&.open {
-		position: absolute;
-		bottom: 0;
-		right: 0rem;
-	}
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
 `;
