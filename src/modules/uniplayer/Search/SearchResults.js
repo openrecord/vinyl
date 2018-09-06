@@ -11,12 +11,11 @@ const StyledSearchResults = styled.div`
 	max-height: 32rem;
 	position: absolute;
 	width: 100%;
-	z-index: 1;
 `;
 
 export default function SearchResults({results, enqueue, clearSearch, isSearchOpen}) {
 	return (
-		<StyledSearchResults onClick={clearSearch} className={isSearchOpen ? 'large' : ''}>
+		<StyledSearchResults onClick={clearSearch} className="search-results">
 			{results.map(result => {
 				switch (result.type) {
 					case 'youtube':

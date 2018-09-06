@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import InfoHeader from './InfoHeader';
 import Search from '../../uniplayer/Search/SearchContainer';
@@ -10,11 +10,12 @@ import x_img from './images/x.svg';
 export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
 	if (isQueueOpen) {
 		return (
-			<Sidebar style={{backgroundColor: '#ffffff'}}>
-				<InfoHeader isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
+			<Sidebar white>
+				<Search />
 				<QueueList>
-					{isSearchOpen && <Search />}
-					{queue.map(track => <YoutubeResult result={track.content} key={track.id} onClick={console.log} />)}
+					{queue.map(track => (
+						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
+					))}
 				</QueueList>
 				<QueueButton onClick={toggleQueue} className="open">
 					<img src={x_img} />
@@ -35,18 +36,25 @@ const Sidebar = styled.div`
 	position: fixed;
 	bottom: 1rem;
 	height: 80%;
-	max-height: 50rem;
 	right: 1rem;
-	overflow: hidden;
-	overflow-y: scroll;
 	width: 20rem;
+
+	${({white}) =>
+		white &&
+		css`
+			background: white;
+		`};
 `;
 
 const QueueList = styled.div`
-	max-width: 56.25rem;
-	margin: 3.125rem auto 0 auto;
+	max-height: calc(100% - 3.4375rem);
 	position: relative;
-	z-index: 1;
+	overflow: hidden;
+	overflow-y: scroll;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 const QueueButton = styled.button`
