@@ -6,7 +6,7 @@ export default function InfoHeader({isSearchOpen, toggleSearch}) {
 		<StyledInfoHeader>
 			<h3>🎵 Collection</h3>
 			<button className="search-btn" onClick={toggleSearch}>
-				{isSearchOpen ? 'Back →' : 'Add Song'}
+				{isSearchOpen ? 'Close' : 'Add Song'}
 			</button>
 		</StyledInfoHeader>
 	);
