@@ -11,18 +11,15 @@ import x_img from './images/x.svg';
 export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
 	if (isQueueOpen) {
 		return (
-			<Positioning isSearchOpen={isSearchOpen}>
+			<Positioning isSearchOpen={isSearchOpen} isQueueOpen={isQueueOpen}>
+				<InfoHeader isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
 				<QueueList>
-					<InfoHeader isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />
 					{isSearchOpen && <Search />}
-					{queue.map(track => (
-						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
-					))}
-
-					<QueueButton onClick={toggleQueue} className="open">
-						<img src={x_img} />
-					</QueueButton>
+					{queue.map(track => <YoutubeResult result={track.content} key={track.id} onClick={console.log} />)}
 				</QueueList>
+				<QueueButton onClick={toggleQueue} className="open">
+					<img src={x_img} />
+				</QueueButton>
 			</Positioning>
 		);
 	}
@@ -36,11 +33,10 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 }
 
 const QueueList = styled.div`
-	background: white;
-	min-height: 37.5rem;
 	max-width: 56.25rem;
-	margin: auto;
+	margin: 3.125rem auto 0 auto;
 	position: relative;
+	z-index: 1;
 `;
 
 const QueueButton = styled.button`
@@ -55,5 +51,5 @@ const QueueButton = styled.button`
 
 	position: fixed;
 	bottom: 2rem;
-	right: 4rem;
+	right: 2rem;
 `;

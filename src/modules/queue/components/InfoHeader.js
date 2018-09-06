@@ -4,12 +4,7 @@ import styled from 'styled-components';
 export default function InfoHeader({isSearchOpen, toggleSearch}) {
 	return (
 		<StyledInfoHeader>
-			<button className="filter">
-				Recently Added
-				<div className="dropdown">
-					<span>FIXME</span>
-				</div>
-			</button>
+			<h3>🎵 Collection</h3>
 			<button className="search-btn" onClick={toggleSearch}>
 				{isSearchOpen ? 'Back →' : 'Add Song'}
 			</button>
@@ -18,31 +13,22 @@ export default function InfoHeader({isSearchOpen, toggleSearch}) {
 }
 
 const StyledInfoHeader = styled.div`
+	background: white;
 	border-bottom: 1px solid #f2f2f2;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	position: fixed;
 	padding: 0.5rem;
+	width: 19rem;
+	z-index: 1;
 
 	.filter {
 		border: none;
 		padding: 0.5rem;
 		font-size: 1rem;
 		cursor: pointer;
-		background: #f2f2f2;
 		outline: none;
-
-		.dropdown {
-			display: none;
-			position: absolute;
-		}
-
-		&:hover {
-			background: #e6e6e6;
-			.dropdown {
-				display: block;
-			}
-		}
 	}
 
 	.search-btn {

@@ -1,18 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function Positioning({isSearchOpen, children}) {
+export default function Positioning({isSearchOpen, isQueueOpen, children}) {
 	if (isSearchOpen) {
 		return <FullScreen>{children}</FullScreen>;
 	}
 
-	return <Sidebar>{children}</Sidebar>;
+	return <Sidebar style={isQueueOpen ? {backgroundColor: '#ffffff'} : {}}>{children}</Sidebar>;
 }
 
 const Sidebar = styled.div`
 	position: fixed;
 	bottom: 1rem;
-	right: 2.625rem;
+	height: 80%;
+	max-height: 50rem;
+	right: 1rem;
+	overflow: hidden;
+	overflow-y: scroll;
 	width: 20rem;
 `;
 
