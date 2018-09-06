@@ -13,14 +13,14 @@
 		position: absolute;
 		transform: translate(-50%, -50%);
 
-		&#center {
+		&.center {
 			background: #ffffff;
 			padding-top: 32%;
 			width: 32%;
 			z-index: z-index('landing-c1');
 		}
 
-		&#outer {
+		&.outer {
 			border: 1px solid black;
 			box-sizing: border-box;
 			background: transparent;
@@ -28,14 +28,14 @@
 			width: calc(100% - 20px);
 			z-index: z-index('landing-c5');
 		}
-		&#background {
+		&.background {
 			width: 100%;
 			padding-top: 100%;
-			background: #0d0d0d;
+			background: 0d0d0d;
 			z-index: z-index('landing-c6');
 		}
 
-		&#hole {
+		&.hole {
 			width: 36px;
 			padding-top: 36px;
 			background: #9c4d9d;

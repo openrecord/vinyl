@@ -7,11 +7,11 @@ for (var i = 0; i < 80; i++) {
 export default function Landing() {
 	return (
 		<div className="landing-inner">
-			<div className="circle" id="center" />
+			<div className="circle center" />
 			{rings}
-			<div className="circle" id="outer" />
-			<div className="circle" id="background" />
-			<div className="circle" id="hole" />
+			<div className="circle outer" />
+			<div className="circle background" />
+			<div className="circle hole" />
 			<h1 className="hero-headline">Open music collections</h1>
 			<div className="hero-action">
 				<div className="link-holder">
