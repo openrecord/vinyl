@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import ProfileComponent from './ProfileComponent';
+import Profile from './Profile';
 
 const mapStateToProps = state => ({user: state.auth.user});
 
@@ -7,8 +7,5 @@ const mapDispatchToProps = dispatch => {
 	return {};
 };
 
-const ProfileContainer = connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ProfileComponent);
-export default ProfileContainer;
+const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default Profile;
