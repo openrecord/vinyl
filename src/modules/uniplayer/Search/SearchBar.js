@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import {targetValue} from '../../common/utils';
 
 const StyledSearchBar = styled.input`
-	background: #f2f2f2;
+	background: #efefef;
 	border: 0;
+	border-bottom: 1px solid #cccccc;
 	border-radius: 0;
 	box-sizing: border-box;
 	display: block;
@@ -16,5 +17,5 @@ const StyledSearchBar = styled.input`
 `;
 
 export default function SearchBar({search, onChange}) {
-	return <StyledSearchBar type="text" value={search} placeholder="Start typing..." onChange={targetValue(onChange)} />;
+	return <StyledSearchBar type="text" value={search} placeholder="Add Song..." onChange={targetValue(onChange)} />;
 }
