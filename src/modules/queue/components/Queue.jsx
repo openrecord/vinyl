@@ -11,11 +11,7 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 		return (
 			<Sidebar white>
 				<Search />
-				<QueueList>
-					{queue.map(track => (
-						<YoutubeResult result={track.content} key={track.id} onClick={console.log} />
-					))}
-				</QueueList>
+				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} onClick={console.log} />)}</QueueList>
 				<QueueButton onClick={toggleQueue} className="open">
 					<img src={x_img} />
 				</QueueButton>
@@ -36,7 +32,7 @@ const Sidebar = styled.div`
 	bottom: 1rem;
 	height: 80%;
 	right: 1rem;
-	width: 20rem;
+	width: 25rem;
 
 	${({white}) =>
 		white &&
@@ -46,7 +42,7 @@ const Sidebar = styled.div`
 `;
 
 const QueueList = styled.div`
-	max-height: calc(100% - 3.4375rem);
+	max-height: calc(100% - 3.5rem);
 	position: relative;
 	overflow: hidden;
 	overflow-y: scroll;
