@@ -38,6 +38,7 @@ const Sidebar = styled.div`
 		white &&
 		css`
 			background: white;
+			box-shadow: 0 0 0.5rem 1px rgba(0, 0, 0, 0.25);
 		`};
 `;
 
