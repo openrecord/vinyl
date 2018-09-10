@@ -11,8 +11,10 @@
 
 		&.active {
 			.player-holder {
-				.info-box {
-					opacity: 1;
+				.player-outer {
+					.info-box {
+						opacity: 1;
+					}
 				}
 			}
 		}
@@ -170,30 +172,23 @@
 						}
 					}
 				}
-			}
 
-			//Song Info
-			.info-box {
-				display: block;
-				margin-top: 16px;
-				position: relative;
-				left: 42px;
-				opacity: 0;
-				z-index: z-index('uniplayer-info-box');
-				transition: opacity 0.2s;
+				//Song Info
+				.info-box {
+					display: block;
+					margin-top: 16px;
+					position: relative;
+					opacity: 0;
+					z-index: z-index('uniplayer-info-box');
+					transition: opacity 0.2s;
 
-				h3 {
-					margin: 4px 0;
-					color: white;
-					text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+					h3 {
+						margin: 4px 0;
+						color: white;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
 
-					&.song-title {
-						font-family: 'Haas Med', Arial, sans-serif;
-					}
-					&.user-id {
-						font-family: 'Haas Reg', Arial, sans-serif;
-						a {
-							color: white;
+						&.song-title {
+							font-family: 'Haas Med', Arial, sans-serif;
 						}
 					}
 				}

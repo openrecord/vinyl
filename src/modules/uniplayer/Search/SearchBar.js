@@ -6,16 +6,20 @@ import {targetValue} from '../../common/utils';
 const StyledSearchBar = styled.input`
 	background: transparent;
 	border: 0;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	border-radius: 0;
 	box-sizing: border-box;
-	color: rgba(255, 255, 255, 0.6);
+	color: rgba(255, 255, 255, 1);
 	display: block;
 	font-size: 1.25rem;
 	outline: none;
 	padding: 1rem 1rem;
 	position: relative;
 	width: 100%;
+
+	&::placeholder {
+		color: rgba(255, 255, 255, 0.4);
+	}
 `;
 
 export default function SearchBar({search, onChange}) {

@@ -199,15 +199,12 @@ class Uniplayer extends React.Component {
 								</div>
 								<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 								{currentlyPlaying && this.renderYT(currentlyPlaying)}
+								{currentlyPlaying && (
+									<div className="info-box">
+										<h3 className="song-title">{currentlyPlaying.content.title}</h3>
+									</div>
+								)}
 							</div>
-							{currentlyPlaying && (
-								<div className="info-box">
-									<h3 className="song-title">{currentlyPlaying.content.title}</h3>
-									<h3 className="user-id">
-										Added by <a href="/">Superluckyland</a>
-									</h3>
-								</div>
-							)}
 						</div>
 					</div>
 					<Queue />

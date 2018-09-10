@@ -26,7 +26,7 @@ const StyledResult = styled.div`
 	align-items: center;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
-	transition: background-color 0.3s linear;
+	transition: background-color 0.1s linear;
 
 	&:hover {
 		background-color: #190c18;
@@ -42,6 +42,7 @@ const StyledResult = styled.div`
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+		transition: color 0.1s linear;
 	}
 `;
 
