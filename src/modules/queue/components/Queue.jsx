@@ -87,7 +87,7 @@ const QueueButton = styled.button`
 	}
 
 	&.open {
-		border: 2px solid rgba(0, 0, 0, 0.8);
+		border: 2px solid rgba(0, 0, 0, 0.9);
 		img {
 			filter: invert(0%);
 		}
@@ -117,7 +117,7 @@ const QueueButton = styled.button`
 
 	img {
 		filter: invert(100%);
-		opacity: 0.8;
+		opacity: 0.9;
 		position: relative;
 		top: 0.0625rem;
 		transition: all 0.1s;
