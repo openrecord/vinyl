@@ -25,20 +25,20 @@ const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	padding: 0.5rem 0.75rem;
+	padding: 0.5rem 1rem;
 	transition: background-color 0.1s linear;
 
 	&:hover {
-		background-color: #190c18;
+		background-color: #d5d5d5;
 
 		h4 {
-			color: rgba(255, 255, 255, 1);
+			color: rgba(0, 0, 0, 1);
 		}
 	}
 
 	h4 {
 		overflow: hidden;
-		color: rgba(255, 255, 255, 0.6);
+		color: rgba(0, 0, 0, 0.8);
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
