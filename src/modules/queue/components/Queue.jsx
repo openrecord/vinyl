@@ -28,17 +28,15 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 }
 
 const Sidebar = styled.div`
-	position: fixed;
-	bottom: 1rem;
-	height: 80%;
-	right: 1rem;
-	width: 25rem;
+	background: rgba(0, 0, 0, 0.8);
+	position: relative;
+	transition: all 0.1s;
+	width: 0;
 
 	${({white}) =>
 		white &&
 		css`
-			background: white;
-			box-shadow: 0 0 0.5rem 1px rgba(0, 0, 0, 0.25);
+			width: 25rem;
 		`};
 `;
 
@@ -56,14 +54,12 @@ const QueueList = styled.div`
 const QueueButton = styled.button`
 	background: white;
 	border-radius: 50%;
+	bottom: 1rem;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	height: 4rem;
-	width: 4rem;
-	margin-top: 1rem;
+	left: -5rem;
 	outline: none;
-
-	position: fixed;
-	bottom: 2rem;
-	right: 2rem;
+	position: absolute;
+	width: 4rem;
 `;

@@ -29,11 +29,16 @@ const StyledResult = styled.div`
 	transition: background-color 0.3s linear;
 
 	&:hover {
-		background-color: #e5e5e5;
+		background-color: #190c18;
+
+		h4 {
+			color: rgba(255, 255, 255, 1);
+		}
 	}
 
 	h4 {
 		overflow: hidden;
+		color: rgba(255, 255, 255, 0.6);
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;

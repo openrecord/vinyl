@@ -19,10 +19,9 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 }
 
 const StyledSearchResults = styled.div`
-	background: #f2f2f2;
 	overflow: hidden;
 	overflow-y: scroll;
-	max-height: 32rem;
+	max-height: calc(100% - 3.5rem);
 	position: absolute;
 	width: 100%;
 `;

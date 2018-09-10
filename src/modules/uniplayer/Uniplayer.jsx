@@ -170,7 +170,7 @@ class Uniplayer extends React.Component {
 
 		if (queue.queue.length > 0) {
 			return (
-				<div>
+				<div className="uniplayer-outer">
 					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
 						<div className="player-holder">
 							<div className="player-outer">
@@ -215,10 +215,9 @@ class Uniplayer extends React.Component {
 			);
 		} else {
 			return (
-				<div>
-					<div className="uniplayer">
-						<Queue />
-					</div>
+				<div className="uniplayer-outer">
+					<div className="uniplayer" />
+					<Queue />
 				</div>
 			);
 		}
