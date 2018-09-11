@@ -9,22 +9,24 @@ import x_img from './images/x.svg';
 export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
 	if (isQueueOpen) {
 		return (
-			<Sidebar expand>
+			<Sidebar expand className="sidebar">
 				<h2>Tracklist</h2>
 				<Search />
-				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} onClick={console.log} />)}</QueueList>
-				<QueueButton onClick={toggleQueue} className="open">
+				<QueueList>
+					{queue.map(track => (
+						<YoutubeResult result={track.content} key={track.id} highRes />
+					))}
+				</QueueList>
+				<QueueButton onClick={toggleQueue} open>
 					<img src={x_img} />
 				</QueueButton>
 			</Sidebar>
 		);
 	}
 	return (
-		<Sidebar>
+		<Sidebar className="sidebar">
 			<QueueButton onClick={toggleQueue}>
-				<div className="queue-o">
-					<div className="center-o" />
-				</div>
+				<OButton />
 			</QueueButton>
 		</Sidebar>
 	);
@@ -36,14 +38,7 @@ const Sidebar = styled.div`
 	height: 100%;
 	transition: all 0.1s;
 	right: 0;
-	width: 0;
-	z-index: 100;
-
-	${({expand}) =>
-		expand &&
-		css`
-			width: 25rem;
-		`};
+	width: ${({expand}) => (expand ? '25rem' : '0rem')};
 
 	h2 {
 		display block;
@@ -86,40 +81,36 @@ const QueueButton = styled.button`
 		}
 	}
 
-	&.open {
-		border: 2px solid rgba(0, 0, 0, 0.9);
-		img {
-			filter: invert(0%);
-		}
+	${({open}) =>
+		open &&
+		css`
+			border: 2px solid rgba(0, 0, 0, 0.9);
 
-		&:hover {
-			border: 2px solid rgba(0, 0, 0, 1);
-		}
-	}
-
-	.queue-o {
-		background: rgba(255, 255, 255, 1);
-		border-radius: 50%;
-		display: flex;
-		align-content: center;
-		height: 1.5rem;
-		margin: 0 auto;
-		width: 1.5rem;
-
-		.center-o {
-			background: #9c4d9d;
-			border-radius: 50%;
-			height: 0.25rem;
-			width: 0.25rem;
-			margin: auto;
-		}
-	}
-
-	img {
-		filter: invert(100%);
+			&:hover {
+				border: 2px solid rgba(0, 0, 0, 1);
+			}
+		`} img {
 		opacity: 0.9;
-		position: relative;
 		top: 0.0625rem;
 		transition: all 0.1s;
+	}
+`;
+
+const OButton = styled.div`
+	background: rgba(255, 255, 255, 1);
+	border-radius: 50%;
+	display: flex;
+	align-content: center;
+	height: 1.5rem;
+	margin: 0 auto;
+	width: 1.5rem;
+
+	&::after {
+		content: '';
+		background: #9c4d9d;
+		border-radius: 50%;
+		height: 0.25rem;
+		width: 0.25rem;
+		margin: auto;
 	}
 `;

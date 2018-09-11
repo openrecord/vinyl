@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-import Duration from './Duration.jsx';
 import Queue from '../queue/components/QueueContainer';
-import Search from './Search/SearchContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -83,7 +81,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = songDuration / barWidth * mousePosition,
+			scrubTime = (songDuration / barWidth) * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -168,7 +166,7 @@ class Uniplayer extends React.Component {
 			player.active = '';
 		}
 
-		if (queue.queue.length > 0) {
+		if (queue.length > 0) {
 			return (
 				<div className="uniplayer-outer">
 					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>

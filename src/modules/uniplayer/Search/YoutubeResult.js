@@ -3,18 +3,19 @@ import React from 'react';
 
 export default function YoutubeResult({
 	onClick,
+	highRes,
 	result: {
 		title,
-		description,
 		thumbnails: {
-			default: {url, height, width}
+			default: {url: defaultUrl},
+			high: {url: highUrl}
 		}
 	}
 }) {
 	return (
 		<StyledResult onClick={onClick}>
 			<ImageHolder>
-				<img src={url} height={height * 0.5} width={width * 0.5} />
+				<img src={highRes && highUrl ? highUrl : defaultUrl} />
 			</ImageHolder>
 			<h4>{title}</h4>
 		</StyledResult>

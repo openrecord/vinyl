@@ -3,10 +3,9 @@ import React from 'react';
 
 import Uniplayer from './Uniplayer.jsx';
 
-const mapStateToProps = state => ({
-	player: state.player,
-	currentlyPlaying: state.player.currentlyPlaying,
-	queue: state.queue
+const mapStateToProps = ({player: {currentlyPlaying}, queue: {queue}}) => ({
+	currentlyPlaying,
+	queue
 });
 
-export default connect(mapStateToProps)(({player, queue}) => <Uniplayer currentlyPlaying={player.currentlyPlaying} queue={queue} />);
+export default connect(mapStateToProps)(props => <Uniplayer {...props} />);

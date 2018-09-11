@@ -1,7 +1,7 @@
 $base-z-index-list: 'uniplayer-inner', 'uniplayer-bar', 'uniplayer-iframe-blocker', 'uniplayer-holder', 'uniplayer-time-box',
 	'uniplayer-info-box', 'uniplayer-playback-box', 'uniplayer-song-lines', 'uniplayer-hover-range', 'uniplayer-slider', 'landing-c6',
 	'landing-c5', 'landing-c4', 'landing-c3', 'landing-c2', 'landing-c1', 'landing-title', 'nav', 'register', 'register-x', 'search-opaque',
-	'search-results', 'search-bar', 'queue-icon';
+	'search-results', 'search-bar', 'queue-icon', 'sidebar';
 
 @function z-index($element, $list: $base-z-index-list) {
 	$z-index: index($list, $element);
