@@ -2,10 +2,10 @@ import {connect} from 'react-redux';
 import React from 'react';
 
 import Uniplayer from './Uniplayer.jsx';
-import * as queueActions from '../queue/state';
 
-const mapStateToProps = ({player}) => player;
+const mapStateToProps = ({player: {currentlyPlaying}, queue: {queue}}) => ({
+	currentlyPlaying,
+	queue
+});
 
-export default connect(mapStateToProps)(({currentlyPlaying, results}) => (
-	<Uniplayer currentlyPlaying={currentlyPlaying} results={results} />
-));
+export default connect(mapStateToProps)(props => <Uniplayer {...props} />);

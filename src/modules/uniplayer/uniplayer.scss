@@ -1,197 +1,195 @@
-.uniplayer {
-	background: #8e1d2e;
-	bottom: 0px;
-	left: 0px;
-	position: fixed;
-	right: 0px;
-	top: 0px;
+.uniplayer-outer {
+	display: flex;
+	height: 100vh;
 	width: 100%;
 
-	&.active {
+	.uniplayer {
+		background: rgb(156, 77, 157);
+		background: linear-gradient(180deg, rgba(156, 77, 157, 1) 0%, rgba(25, 12, 24, 0.8) 100%);
+		height: 100%;
+		width: 100%;
+
+		&.active {
+			.player-holder {
+				.player-outer {
+					.info-box {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		//Player
 		.player-holder {
-			.info-box {
-				opacity: 1;
-			}
-		}
-	}
-
-	//Player
-	.player-holder {
-		margin: 0 auto;
-		position: relative;
-		top: 50%;
-		z-index: z-index('uniplayer-holder');
-		transform: translateY(-50%);
-
-		.player-outer {
-			display: block;
-			left: 50%;
-			max-width: 1200px;
+			margin: 0 auto;
 			position: relative;
-			width: 75%;
-			transform: translateX(-50%);
+			top: 50%;
+			z-index: z-index('uniplayer-holder');
+			transform: translateY(-50%);
 
-			.iframeblocker {
-				bottom: 0;
-				left: 0;
-				position: fixed;
-				right: 0;
-				top: 0;
-				z-index: z-index('uniplayer-iframe-blocker');
-			}
-
-			.player-inner {
-				height: 0;
-				padding-bottom: 56.25%;
+			.player-outer {
+				display: block;
+				left: 50%;
+				max-width: 1200px;
 				position: relative;
-				width: 100%;
-				z-index: z-index('uniplayer-inner');
-				.react-player {
-					position: absolute;
-					top: 0;
+				width: 75%;
+				transform: translateX(-50%);
+
+				.iframeblocker {
+					bottom: 0;
 					left: 0;
+					position: fixed;
+					right: 0;
+					top: 0;
+					z-index: z-index('uniplayer-iframe-blocker');
+				}
+
+				.player-inner {
+					height: 0;
+					padding-bottom: 56.25%;
+					position: relative;
 					width: 100%;
-					height: 100%;
-					cursor: default;
-					margin: 0;
-					overflow: hidden;
-
-					div {
-						height: 160% !important;
-						position: relative;
-						top: -30%;
-						width: 100%;
-					}
-				}
-			}
-
-			.playback-box {
-				position: absolute;
-				height: 4px;
-				opacity: 1;
-				width: 100%;
-				transform: translateY(-50%);
-				z-index: z-index('uniplayer-playback-box');
-				transition: all 0.1s;
-
-				&.active {
-					opacity: 1;
-				}
-
-				&:hover {
-					height: 8px;
-					.range-holder {
-						display: block;
-						height: 8px;
-						.hover-range {
-							height: 8px;
-						}
-					}
-					.time-holder {
-						display: inline-block;
-						.hover-time {
-							opacity: 1;
-						}
-					}
-					.player-bar {
-						height: 8px;
-						&::-webkit-slider-thumb {
-							height: 8px;
-						}
-					}
-				}
-
-				.range-holder {
-					display: none;
-					height: 4px;
-					position: absolute;
-					overflow: hidden;
-					top: 50%;
-					width: 100%;
-					transition: all 0.1s;
-					transform: translateY(-50%);
-
-					.hover-range {
-						background: rgba(200, 200, 200, 0.5);
-						height: 4px;
-						width: 5000px;
+					z-index: z-index('uniplayer-inner');
+					.react-player {
 						position: absolute;
-						margin-left: -5000px;
-						z-index: 1;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						cursor: default;
+						margin: 0;
+						overflow: hidden;
+
+						div {
+							height: 160% !important;
+							position: relative;
+							top: -30%;
+							width: 100%;
+						}
 					}
 				}
 
-				.time-holder {
-					display: none;
-					pointer-events: none;
+				.playback-box {
 					position: absolute;
-					page-break-after: auto;
-					top: -22px;
-					z-index: 1;
-					transform: translateX(-50%);
-
-					.hover-time {
-						color: white;
-						background: black;
-						display: inline-block;
-						font-size: 0.875rem;
-						padding: 2px 4px;
-						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-					}
-				}
-
-				.player-bar {
-					appearance: none;
-					background: rgba(255, 255, 255, 0.3);
-					cursor: pointer;
 					height: 4px;
-					margin: 0;
-					outline: none;
-					overflow: hidden;
-					position: absolute;
+					opacity: 1;
 					width: 100%;
-					z-index: z-index('uniplayer-bar');
-					-webkit-appearance: none;
-					top: 50%;
 					transform: translateY(-50%);
+					z-index: z-index('uniplayer-playback-box');
+					transition: all 0.1s;
 
-					&::-webkit-slider-thumb {
-						appearance: none;
-						background: transparent;
+					&.active {
+						opacity: 1;
+					}
+
+					&:hover {
+						height: 8px;
+						.range-holder {
+							display: block;
+							height: 8px;
+							.hover-range {
+								height: 8px;
+							}
+						}
+						.time-holder {
+							display: inline-block;
+							.hover-time {
+								opacity: 1;
+							}
+						}
+						.player-bar {
+							height: 8px;
+							&::-webkit-slider-thumb {
+								height: 8px;
+							}
+						}
+					}
+
+					.range-holder {
+						display: none;
 						height: 4px;
-						pointer-events: none;
-						width: 0;
-						z-index: z-index('uniplayer-slider');
-						-webkit-appearance: none;
+						position: absolute;
+						overflow: hidden;
+						top: 50%;
+						width: 100%;
 						transition: all 0.1s;
-						box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
+						transform: translateY(-50%);
+
+						.hover-range {
+							background: rgba(200, 200, 200, 0.5);
+							height: 4px;
+							width: 5000px;
+							position: absolute;
+							margin-left: -5000px;
+							z-index: 1;
+						}
+					}
+
+					.time-holder {
+						display: none;
+						pointer-events: none;
+						position: absolute;
+						page-break-after: auto;
+						top: -22px;
+						z-index: 1;
+						transform: translateX(-50%);
+
+						.hover-time {
+							color: white;
+							background: black;
+							display: inline-block;
+							font-size: 0.875rem;
+							padding: 2px 4px;
+							text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+						}
+					}
+
+					.player-bar {
+						appearance: none;
+						background: rgba(255, 255, 255, 0.3);
+						cursor: pointer;
+						height: 4px;
+						margin: 0;
+						outline: none;
+						overflow: hidden;
+						position: absolute;
+						width: 100%;
+						z-index: z-index('uniplayer-bar');
+						-webkit-appearance: none;
+						top: 50%;
+						transform: translateY(-50%);
+
+						&::-webkit-slider-thumb {
+							appearance: none;
+							background: transparent;
+							height: 4px;
+							pointer-events: none;
+							width: 0;
+							z-index: z-index('uniplayer-slider');
+							-webkit-appearance: none;
+							transition: all 0.1s;
+							box-shadow: -5000px 0 0 5000px rgba(255, 255, 255, 0.5);
+						}
 					}
 				}
-			}
-		}
 
-		//Song Info
-		.info-box {
-			display: block;
-			margin-top: 16px;
-			position: relative;
-			left: 42px;
-			opacity: 0;
-			z-index: z-index('uniplayer-info-box');
-			transition: opacity 0.2s;
+				//Song Info
+				.info-box {
+					display: block;
+					margin-top: 16px;
+					position: relative;
+					opacity: 0;
+					z-index: z-index('uniplayer-info-box');
+					transition: opacity 0.2s;
 
-			h3 {
-				margin: 4px 0;
-				color: white;
-				text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-
-				&.song-title {
-					font-family: 'Haas Med', Arial, sans-serif;
-				}
-				&.user-id {
-					font-family: 'Haas Reg', Arial, sans-serif;
-					a {
+					h3 {
+						margin: 4px 0;
 						color: white;
+						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+
+						&.song-title {
+							font-family: 'Haas Med', Arial, sans-serif;
+						}
 					}
 				}
 			}

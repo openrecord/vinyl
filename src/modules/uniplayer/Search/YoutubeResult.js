@@ -3,18 +3,19 @@ import React from 'react';
 
 export default function YoutubeResult({
 	onClick,
+	highRes,
 	result: {
 		title,
-		description,
 		thumbnails: {
-			default: {url, height, width}
+			default: {url: defaultUrl},
+			high: {url: highUrl}
 		}
 	}
 }) {
 	return (
 		<StyledResult onClick={onClick}>
 			<ImageHolder>
-				<img src={url} height={height * 0.5} width={width * 0.5} />
+				<img src={highRes && highUrl ? highUrl : defaultUrl} />
 			</ImageHolder>
 			<h4>{title}</h4>
 		</StyledResult>
@@ -25,18 +26,24 @@ const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	padding: 0.5rem 0.75rem;
-	transition: background-color 0.3s linear;
+	padding: 0.5rem 1rem;
+	transition: background-color 0.1s linear;
 
 	&:hover {
-		background-color: #e5e5e5;
+		background-color: #d5d5d5;
+
+		h4 {
+			color: rgba(0, 0, 0, 1);
+		}
 	}
 
 	h4 {
 		overflow: hidden;
+		color: rgba(0, 0, 0, 0.8);
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+		transition: color 0.1s linear;
 	}
 `;
 

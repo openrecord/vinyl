@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-import Duration from './Duration.jsx';
 import Queue from '../queue/components/QueueContainer';
-import Search from './Search/SearchContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
@@ -83,7 +81,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = songDuration / barWidth * mousePosition,
+			scrubTime = (songDuration / barWidth) * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -154,7 +152,7 @@ class Uniplayer extends React.Component {
 	}
 
 	render() {
-		const {currentlyPlaying} = this.props;
+		const {currentlyPlaying, queue} = this.props;
 
 		var player = {};
 		if (this.state.playing) {
@@ -168,50 +166,56 @@ class Uniplayer extends React.Component {
 			player.active = '';
 		}
 
-		return (
-			<div>
-				<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-					<div className="player-holder">
-						<div className="player-outer">
-							<div className={'playback-box'}>
-								<div className="range-holder">
-									<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
+		if (queue.length > 0) {
+			return (
+				<div className="uniplayer-outer">
+					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
+						<div className="player-holder">
+							<div className="player-outer">
+								<div className={'playback-box'}>
+									<div className="range-holder">
+										<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
+									</div>
+									<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
+										<span className="hover-time">{this.state.hoverTime}</span>
+									</div>
+									<input
+										className="player-bar"
+										ref="playerBar"
+										type="range"
+										min={0}
+										max={1}
+										step="any"
+										value={this.state.played}
+										onMouseEnter={this.onMouseEnter}
+										onMouseMove={this.onMouseMove}
+										onMouseLeave={this.onMouseLeave}
+										onMouseDown={this.onSeekMouseDown}
+										onChange={this.onSeekChange}
+										onMouseUp={this.onSeekMouseUp}
+									/>
 								</div>
-								<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
-									<span className="hover-time">{this.state.hoverTime}</span>
-								</div>
-								<input
-									className="player-bar"
-									ref="playerBar"
-									type="range"
-									min={0}
-									max={1}
-									step="any"
-									value={this.state.played}
-									onMouseEnter={this.onMouseEnter}
-									onMouseMove={this.onMouseMove}
-									onMouseLeave={this.onMouseLeave}
-									onMouseDown={this.onSeekMouseDown}
-									onChange={this.onSeekChange}
-									onMouseUp={this.onSeekMouseUp}
-								/>
+								<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
+								{currentlyPlaying && this.renderYT(currentlyPlaying)}
+								{currentlyPlaying && (
+									<div className="info-box">
+										<h3 className="song-title">{currentlyPlaying.content.title}</h3>
+									</div>
+								)}
 							</div>
-							<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-							{currentlyPlaying && this.renderYT(currentlyPlaying)}
 						</div>
-						{currentlyPlaying && (
-							<div className="info-box">
-								<h3 className="song-title">{currentlyPlaying.content.title}</h3>
-								<h3 className="user-id">
-									Added by <a href="/">Superluckyland</a>
-								</h3>
-							</div>
-						)}
 					</div>
+					<Queue />
 				</div>
-				<Queue />
-			</div>
-		);
+			);
+		} else {
+			return (
+				<div className="uniplayer-outer">
+					<div className="uniplayer" />
+					<Queue />
+				</div>
+			);
+		}
 	}
 }
 

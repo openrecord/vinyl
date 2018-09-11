@@ -9,9 +9,6 @@ const LoggedOutLinks = () => (
 		<Link to={ROUTES.LANDING} key={'home'}>
 			OPENRECORD
 		</Link>
-		<Link to={ROUTES.REGISTER} key={'register'}>
-			ASK TO CONTRIBUTE
-		</Link>
 	</>
 );
 
@@ -27,9 +24,9 @@ const LoggedInLinks = () => (
 );
 
 const StyledNav = styled.nav`
-	margin: 24px 34px 0 34px;
+	margin: 1.5rem 1.5rem 0 1.5rem;
 	pointer-events: none;
-	position: relative;
+	position: fixed;
 	text-align: left;
 
 	a {
