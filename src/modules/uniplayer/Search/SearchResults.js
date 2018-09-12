@@ -9,7 +9,7 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 			{results.map(result => {
 				switch (result.type) {
 					case 'youtube':
-						return <YoutubeResult result={result.content} key={result.id} onClick={() => enqueue(result)} />;
+						return <YoutubeResult search={true} result={result.content} key={result.id} onClick={() => enqueue(result)} />;
 					default:
 						return null;
 				}
@@ -19,10 +19,10 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 }
 
 const StyledSearchResults = styled.div`
-	background: white;
+	background: rgba(25, 25, 25);
 	overflow: hidden;
 	overflow-y: scroll;
-	max-height: calc(100% - 8.75rem);
+	max-height: calc(100% - 20.75rem);
 	position: absolute;
 	width: 100%;
 `;

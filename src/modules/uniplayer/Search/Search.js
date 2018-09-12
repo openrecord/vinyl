@@ -24,7 +24,7 @@ class Search extends React.Component {
 }
 
 const SearchOpaque = styled.div`
-	background: rgba(255, 255, 255, 0.8);
+	background: rgba(15, 15, 15, 0.9);
 	bottom: 0;
 	height: calc(100% - 5.25rem);
 	position: absolute;
