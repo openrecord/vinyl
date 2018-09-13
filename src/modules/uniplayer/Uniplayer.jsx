@@ -26,6 +26,10 @@ class Uniplayer extends React.Component {
 		};
 	}
 
+	componentDidUpdate() {
+		console.log(this.state.played);
+	}
+
 	//React Player Functions
 	stop = () => {
 		this.setState({url: null, playing: false});
@@ -154,7 +158,8 @@ class Uniplayer extends React.Component {
 	render() {
 		const {currentlyPlaying, queue} = this.props;
 
-		var player = {};
+		var player = {},
+			playback = this.state.played * 100;
 		if (this.state.playing) {
 			player.status = ' playing';
 		} else {
@@ -173,12 +178,8 @@ class Uniplayer extends React.Component {
 						<div className="player-holder">
 							<div className="player-outer">
 								<div className="playback-box">
-									<div className="range-holder">
-										<div className="hover-range" style={{left: ' ' + this.state.mousePosition + 'px'}} />
-									</div>
-									<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
-										<span className="hover-time">{this.state.hoverTime}</span>
-									</div>
+									<div className="player-bar-bg" />
+									<div className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
 									<input
 										className="player-bar"
 										ref="playerBar"
@@ -194,6 +195,9 @@ class Uniplayer extends React.Component {
 										onChange={this.onSeekChange}
 										onMouseUp={this.onSeekMouseUp}
 									/>
+								</div>
+								<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
+									<span className="hover-time">{this.state.hoverTime}</span>
 								</div>
 								<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
 								{currentlyPlaying && this.renderYT(currentlyPlaying)}
