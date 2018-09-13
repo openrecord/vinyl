@@ -16,6 +16,9 @@ export default function YoutubeResult({
 		<StyledResult onClick={onClick}>
 			<ImageHolder search={search ? search : undefined}>
 				<img src={url} height={height * 0.5} width={width * 0.5} />
+				<PlayBackground />
+				{search && <AddPlus />}
+				{!search && <PlayButton />}
 			</ImageHolder>
 			<h4>{title}</h4>
 		</StyledResult>
@@ -31,6 +34,11 @@ const StyledResult = styled.div`
 
 	&:hover {
 		background: rgba(54, 54, 54);
+		div {
+			span {
+				opacity: 1;
+			}
+		}
 	}
 
 	h4 {
@@ -70,4 +78,59 @@ const ImageHolder = styled.div`
 				width: 6rem;
 			}
 		`};
+`;
+
+const AddPlus = styled.span`
+	height: 1.5rem;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 1.5rem;
+
+	&:before {
+		background: white;
+		content: '';
+		height: 1.5rem;
+		left: 50%;
+		position: absolute;
+		width: 0.25rem;
+		transform: translateX(-50%);
+	}
+
+	&:after {
+		background: white;
+		content: '';
+		height: 1.5rem;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%) rotate(90deg);
+		width: 0.25rem;
+	}
+`;
+
+const PlayBackground = styled.span`
+	background: rgba(16, 16, 16, 0.7);
+	height: 100%;
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	transition: all 0.1s;
+`;
+
+const PlayButton = styled.span`
+	height: 1.5rem;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: all 0.1s;
+
+	box-sizing: border-box;
+	border-width: 0.75rem 0 0.75rem 1.25rem;
+	border-color: transparent transparent transparent white;
+	border-style: solid;
 `;
