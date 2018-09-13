@@ -26,10 +26,6 @@ class Uniplayer extends React.Component {
 		};
 	}
 
-	componentDidUpdate() {
-		console.log(this.state.played);
-	}
-
 	//React Player Functions
 	stop = () => {
 		this.setState({url: null, playing: false});
