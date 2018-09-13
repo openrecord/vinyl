@@ -5,16 +5,14 @@
 
 	.uniplayer {
 		background: rgb(156, 77, 157);
-		background: linear-gradient(180deg, rgba(156, 77, 157, 1) 0%, rgba(25, 12, 24, 0.8) 100%);
+		background: linear-gradient(180deg, rgba(156, 77, 157, 1) 0%, rgba(25, 12, 24, 0.75) 100%);
 		height: 100%;
 		width: 100%;
 
 		&.active {
 			.player-holder {
-				.player-outer {
-					.info-box {
-						opacity: 1;
-					}
+				.info-box {
+					opacity: 1;
 				}
 			}
 		}
@@ -23,6 +21,8 @@
 		.player-holder {
 			margin: 0 auto;
 			position: relative;
+			max-width: 1200px;
+			width: 75%;
 			top: 50%;
 			z-index: z-index('uniplayer-holder');
 			transform: translateY(-50%);
@@ -30,9 +30,8 @@
 			.player-outer {
 				display: block;
 				left: 50%;
-				max-width: 1200px;
+				overflow: hidden;
 				position: relative;
-				width: 75%;
 				transform: translateX(-50%);
 
 				.iframeblocker {
@@ -70,11 +69,11 @@
 				}
 
 				.playback-box {
+					bottom: 0;
 					position: absolute;
-					height: 4px;
+					height: 0.75rem;
 					opacity: 1;
 					width: 100%;
-					transform: translateY(-50%);
 					z-index: z-index('uniplayer-playback-box');
 					transition: all 0.1s;
 
@@ -83,12 +82,12 @@
 					}
 
 					&:hover {
-						height: 8px;
+						height: 0.75rem;
 						.range-holder {
 							display: block;
-							height: 8px;
+							height: 0.75rem;
 							.hover-range {
-								height: 8px;
+								height: 0.75rem;
 							}
 						}
 						.time-holder {
@@ -98,26 +97,25 @@
 							}
 						}
 						.player-bar {
-							height: 8px;
+							height: 0.75rem;
 							&::-webkit-slider-thumb {
-								height: 8px;
+								height: 0.75rem;
 							}
 						}
 					}
 
 					.range-holder {
+						bottom: 0;
 						display: none;
-						height: 4px;
+						height: 0.125rem;
 						position: absolute;
 						overflow: hidden;
-						top: 50%;
 						width: 100%;
 						transition: all 0.1s;
-						transform: translateY(-50%);
 
 						.hover-range {
 							background: rgba(200, 200, 200, 0.5);
-							height: 4px;
+							height: 0.125rem;
 							width: 5000px;
 							position: absolute;
 							margin-left: -5000px;
@@ -130,7 +128,7 @@
 						pointer-events: none;
 						position: absolute;
 						page-break-after: auto;
-						top: -22px;
+						top: -1.375rem;
 						z-index: 1;
 						transform: translateX(-50%);
 
@@ -145,10 +143,11 @@
 					}
 
 					.player-bar {
+						bottom: 0;
 						appearance: none;
 						background: rgba(255, 255, 255, 0.3);
 						cursor: pointer;
-						height: 4px;
+						height: 0.125rem;
 						margin: 0;
 						outline: none;
 						overflow: hidden;
@@ -156,13 +155,12 @@
 						width: 100%;
 						z-index: z-index('uniplayer-bar');
 						-webkit-appearance: none;
-						top: 50%;
-						transform: translateY(-50%);
+						transition: all 0.1s;
 
 						&::-webkit-slider-thumb {
 							appearance: none;
 							background: transparent;
-							height: 4px;
+							height: 0.125rem;
 							pointer-events: none;
 							width: 0;
 							z-index: z-index('uniplayer-slider');
@@ -172,24 +170,23 @@
 						}
 					}
 				}
+			}
+			//Song Info
+			.info-box {
+				display: block;
+				margin-top: 1rem;
+				position: relative;
+				opacity: 0;
+				z-index: z-index('uniplayer-info-box');
+				transition: opacity 0.2s;
 
-				//Song Info
-				.info-box {
-					display: block;
-					margin-top: 16px;
-					position: relative;
-					opacity: 0;
-					z-index: z-index('uniplayer-info-box');
-					transition: opacity 0.2s;
+				h3 {
+					margin: 0.25rem 0;
+					color: white;
+					text-shadow: 0 0.0675rem 0.25rem rgba(0, 0, 0, 0.5);
 
-					h3 {
-						margin: 4px 0;
-						color: white;
-						text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-
-						&.song-title {
-							font-family: 'Haas Med', Arial, sans-serif;
-						}
+					&.song-title {
+						font-family: 'Haas Med', Arial, sans-serif;
 					}
 				}
 			}
