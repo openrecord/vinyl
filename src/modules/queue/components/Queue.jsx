@@ -3,11 +3,10 @@ import styled, {css} from 'styled-components';
 
 import Search from '../../uniplayer/Search/SearchContainer';
 import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
-import queue_img from './images/queue.svg';
 import x_img from './images/x.svg';
 
-export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
-	if (isQueueOpen) {
+export default function Queue({isOpen, queue, toggleQueue}) {
+	if (isOpen) {
 		return (
 			<Sidebar expand className="sidebar">
 				<h2>Tracklist</h2>
@@ -25,7 +24,7 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 	}
 	return (
 		<Sidebar className="sidebar">
-			<QueueButton onClick={toggleQueue}>
+			<QueueButton onClick={() => toggleQueue()}>
 				<OButton />
 			</QueueButton>
 		</Sidebar>

@@ -7,8 +7,8 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 	return (
 		<StyledSearchResults onClick={clearSearch} className="search-results">
 			{results.map(result => {
-				switch (result.type) {
-					case 'youtube':
+				switch (result.__typename) {
+					case 'YoutubeResult':
 						return <YoutubeResult result={result.content} key={result.id} onClick={() => enqueue(result)} />;
 					default:
 						return null;

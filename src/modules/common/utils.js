@@ -69,3 +69,11 @@ export const createSetters = (namespace, initialState) => {
 		setterReducers
 	};
 };
+
+export const ifNull = value => maybeValue => maybeValue || value;
+
+export const makeMutation = query => reducer => (_, variables, {cache}) => {
+	const prev = cache.readQuery({query});
+	cache.writeData({query, data: reducer(variables)(prev)});
+	return null;
+};
