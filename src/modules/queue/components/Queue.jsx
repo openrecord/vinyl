@@ -12,11 +12,7 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 			<Sidebar expand className="sidebar">
 				<h2>Tracklist</h2>
 				<Search />
-				<QueueList>
-					{queue.map(track => (
-						<YoutubeResult result={track.content} key={track.id} highRes />
-					))}
-				</QueueList>
+				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} highRes />)}</QueueList>
 				<QueueButton onClick={toggleQueue} open>
 					<img src={x_img} />
 				</QueueButton>
@@ -33,7 +29,7 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 }
 
 const Sidebar = styled.div`
-	background: rgba(255, 255, 255, 0.97);
+	background: rgba(29, 29, 29, 0.995);
 	position: absolute;
 	height: 100%;
 	transition: all 0.1s;
@@ -42,7 +38,7 @@ const Sidebar = styled.div`
 
 	h2 {
 		display block;
-		color: #1e1e1e;
+		color: #f2f2f2;
 		margin: 1.75rem 0.875rem;
 	}
 `;
@@ -81,18 +77,12 @@ const QueueButton = styled.button`
 		}
 	}
 
-	${({open}) =>
-		open &&
-		css`
-			border: 2px solid rgba(0, 0, 0, 0.9);
-
-			&:hover {
-				border: 2px solid rgba(0, 0, 0, 1);
-			}
-		`} img {
+	img {
 		opacity: 0.9;
+		position: relative;
 		top: 0.0625rem;
 		transition: all 0.1s;
+		filter: invert(100%);
 	}
 `;
 
