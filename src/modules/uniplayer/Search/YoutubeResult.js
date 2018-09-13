@@ -14,7 +14,7 @@ export default function YoutubeResult({
 }) {
 	return (
 		<StyledResult onClick={onClick}>
-			<ImageHolder search={search ? search : undefined}>
+			<ImageHolder search={search}>
 				<img src={url} height={height * 0.5} width={width * 0.5} />
 				<PlayBackground />
 				{search && <AddPlus />}
