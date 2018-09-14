@@ -25,4 +25,8 @@ const StyledSearchResults = styled.div`
 	max-height: calc(100% - 20.75rem);
 	position: absolute;
 	width: 100%;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;

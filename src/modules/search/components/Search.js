@@ -16,8 +16,12 @@ class Search extends React.Component {
 		return (
 			<div>
 				<SearchBar query={query} onChange={setSearch} />
-				{items.length > 0 && <SearchResults results={items} enqueue={enqueue} clearSearch={clearSearch} />}
-				{items.length > 0 && <SearchOpaque className="search-opaque" onClick={clearSearch} />}
+				{items.length > 0 && (
+					<>
+						<SearchResults results={items} enqueue={enqueue} clearSearch={clearSearch} />
+						<SearchOpaque className="search-opaque" onClick={clearSearch} />
+					</>
+				)}
 			</div>
 		);
 	}
