@@ -13,3 +13,4 @@ dist
 # Local configs
 config/**/*local*.yml
 yarn.lock
+.vscode
