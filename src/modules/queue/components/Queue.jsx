@@ -32,7 +32,7 @@ export default function Queue({isOpen, tracks, toggleQueue}) {
 }
 
 const Sidebar = styled.div`
-	background: rgba(255, 255, 255, 0.97);
+	background: rgba(29, 29, 29, 0.995);
 	position: absolute;
 	height: 100%;
 	transition: all 0.1s;
@@ -41,7 +41,7 @@ const Sidebar = styled.div`
 
 	h2 {
 		display block;
-		color: #1e1e1e;
+		color: #f2f2f2;
 		margin: 1.75rem 0.875rem;
 	}
 `;
@@ -80,18 +80,12 @@ const QueueButton = styled.button`
 		}
 	}
 
-	${({open}) =>
-		open &&
-		css`
-			border: 2px solid rgba(0, 0, 0, 0.9);
-
-			&:hover {
-				border: 2px solid rgba(0, 0, 0, 1);
-			}
-		`} img {
+	img {
 		opacity: 0.9;
+		position: relative;
 		top: 0.0625rem;
 		transition: all 0.1s;
+		filter: invert(100%);
 	}
 `;
 

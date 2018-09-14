@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import {targetValue} from '../../common/utils';
 
 const StyledSearchBar = styled.input`
-	background: #e8e8e8;
+	background: rgba(36, 36, 36);
 	border: 0;
 	border-top: 1px solid rgba(50, 50, 50, 0.1);
 	border-bottom: 1px solid rgba(50, 50, 50, 0.1);
 	border-radius: 0;
 	box-sizing: border-box;
-	color: rgba(0, 0, 0, 1);
+	color: #f2f2f2;
 	display: block;
 	font-size: 1.25rem;
 	outline: none;
@@ -19,7 +19,7 @@ const StyledSearchBar = styled.input`
 	width: 100%;
 
 	&::placeholder {
-		color: rgba(0, 0, 0, 0.6);
+		color: rgba(255, 255, 255, 0.6);
 	}
 `;
 
