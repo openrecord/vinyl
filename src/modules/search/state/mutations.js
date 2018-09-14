@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import {set} from 'shades';
 import gql from 'graphql-tag';
-import {makeMutation} from '../../common/utils';
+import {updateQL} from '../../common/utils';
 
-export const updateQuery = makeMutation(gql`
+export const updateQuery = updateQL(gql`
 	query {
 		search @client {
 			query
 		}
 	}
-`)(({query}) => set('search', 'query')(query));
+`).with(({query}) => set('search', 'query')(query));

@@ -8,12 +8,14 @@ export const toQueryString = params =>
 
 export const ifNull = value => maybeValue => maybeValue || value;
 
-export const makeMutation = query => reducer => (_, variables, {cache}) => {
-	const prev = cache.readQuery({query});
+export const updateQL = query => ({
+	with: reducer => (_, variables, {cache}) => {
+		const prev = cache.readQuery({query});
 
-	cache.writeQuery({query, data: reducer(variables)(prev)});
-	return null;
-};
+		cache.writeQuery({query, data: reducer(variables)(prev)});
+		return null;
+	}
+});
 
 export function inspect(value) {
 	console.log(value);
