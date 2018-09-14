@@ -23,13 +23,13 @@ const StyledSearchBar = styled.input`
 	}
 `;
 
-export default function SearchBar({search, onChange}) {
+export default function SearchBar({query, onChange}) {
 	return (
 		<StyledSearchBar
 			autoFocus
 			className="search-bar"
 			type="text"
-			value={search}
+			value={query}
 			placeholder="Add Song..."
 			onChange={targetValue(onChange)}
 		/>

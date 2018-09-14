@@ -7,15 +7,15 @@ import YoutubeQuery from './YoutubeQueryContainer';
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
-		player @client {
-			search
+		search @client {
+			query
 		}
 	}
 `;
 
-const SET_SEARCH = gql`
-	mutation UpdateSearch($search: String!) {
-		updateSearch(search: $search) @client
+const UPDATE_QUERY = gql`
+	mutation UpdateQuery($query: String!) {
+		updateQuery(query: $query) @client
 	}
 `;
 const ENQUEUE = gql`
@@ -28,21 +28,21 @@ export default () => (
 	<Query query={SEARCH_QUERY}>
 		{({
 			data: {
-				player: {search}
+				search: {query}
 			}
 		}) => (
-			<YoutubeQuery search={search}>
+			<YoutubeQuery search={query}>
 				{({data: {youtubeResults}}) => (
-					<Mutation mutation={SET_SEARCH}>
-						{setSearch => (
+					<Mutation mutation={UPDATE_QUERY}>
+						{updateQuery => (
 							<Mutation mutation={ENQUEUE}>
 								{enqueue => (
 									<Search
-										search={search}
+										query={query}
 										results={youtubeResults}
-										setSearch={search => setSearch({variables: {search}})}
+										setSearch={query => updateQuery({variables: {query}})}
 										enqueue={track => enqueue({variables: {track}})}
-										clearSearch={() => setSearch({variables: {search: ''}})}
+										clearSearch={() => updateQuery({variables: {query: ''}})}
 									/>
 								)}
 							</Mutation>

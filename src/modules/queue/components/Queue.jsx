@@ -1,8 +1,8 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
-import Search from '../../uniplayer/Search/SearchContainer';
-import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
+import Search from '../../search/components/SearchContainer';
+import YoutubeResult from '../../search/components/YoutubeResult';
 import x_img from './images/x.svg';
 
 export default function Queue({isOpen, tracks, toggleQueue}) {

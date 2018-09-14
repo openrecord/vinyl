@@ -4,7 +4,7 @@ import {Query, Mutation} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
 import {adopt} from 'react-adopt';
-import {Youtube} from '../../uniplayer/Search/YoutubeQueryContainer';
+import {Youtube} from '../../search/components/YoutubeQueryContainer';
 
 const TOGGLE_QUEUE = gql`
 	mutation ToggleQueue {

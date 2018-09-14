@@ -1,6 +1,8 @@
 import * as queueMutations from '../queue/state/mutations';
-import {queue} from '../queue/state';
+import * as searchMutations from '../search/state/mutations';
 import * as playerMutations from '../uniplayer/state/mutations';
+import {queue} from '../queue/state';
+import {search} from '../search/state';
 import {player} from '../uniplayer/state';
 import {ApolloClient} from 'apollo-client';
 import {InMemoryCache, defaultDataIdFromObject} from 'apollo-cache-inmemory';
@@ -28,11 +30,13 @@ export default new ApolloClient({
 		withClientState({
 			defaults: {
 				queue,
+				search,
 				player
 			},
 			resolvers: {
 				Mutation: {
 					...queueMutations,
+					...searchMutations,
 					...playerMutations
 				}
 			},

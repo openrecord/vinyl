@@ -1,6 +1,3 @@
-import {createActions} from 'redux-actions';
-import {mod, set, map, identity} from 'shades';
-
 export const targetValue = f => ({target: {value}}) => f(value);
 
 export const toQueryString = params =>

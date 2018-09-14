@@ -11,11 +11,11 @@ class Search extends React.Component {
 	}
 
 	render() {
-		const {search, setSearch, results: {items} = {items: []}, clearSearch, enqueue} = this.props;
+		const {query, setSearch, results: {items} = {items: []}, clearSearch, enqueue} = this.props;
 
 		return (
 			<div>
-				<SearchBar search={search} onChange={setSearch} />
+				<SearchBar query={query} onChange={setSearch} />
 				{items.length > 0 && <SearchResults results={items} enqueue={enqueue} clearSearch={clearSearch} />}
 				{items.length > 0 && <SearchOpaque className="search-opaque" onClick={clearSearch} />}
 			</div>

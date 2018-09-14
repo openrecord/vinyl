@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import {mod, set, toggle, updateAll, cons} from 'shades';
-import {makeMutation, inspect, ifNull} from '../../common/utils';
-import {Youtube} from '../../uniplayer/Search/YoutubeQueryContainer';
+import {mod, toggle, updateAll, cons} from 'shades';
+import {makeMutation, ifNull} from '../../common/utils';
+import {Youtube} from '../../search/components/YoutubeQueryContainer';
 
 export const toggleQueue = makeMutation(gql`
 	query {

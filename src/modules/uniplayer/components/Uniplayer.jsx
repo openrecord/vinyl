@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-import Queue from '../queue/components/QueueContainer';
+import Queue from '../../queue/components/QueueContainer';
 import Timeout from './Timeout';
 
 class Uniplayer extends React.Component {
