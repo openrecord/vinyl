@@ -6,25 +6,38 @@ import gql from 'graphql-tag';
 import {adopt} from 'react-adopt';
 
 const TOGGLE_QUEUE = gql`
-	mutation toggleQueue {
+	mutation ToggleQueue {
 		toggleQueue @client
 	}
 `;
 
 const QUEUE_QUERY = gql`
-	{
+	query Queue {
 		queue @client {
 			isOpen
-			queue
+			tracks {
+				id {
+					videoId
+				}
+				snippet {
+					title
+					thumbnails {
+						high {
+							url
+						}
+						default {
+							url
+						}
+					}
+				}
+			}
 		}
 	}
 `;
 
 const Composed = adopt({
-	data: ({render}) => <Query query={QUEUE_QUERY}>{({data: {queue}}) => render(queue)}</Query>,
+	queue: ({render}) => <Query query={QUEUE_QUERY}>{({data: {queue}}) => render(queue)}</Query>,
 	toggleQueue: <Mutation mutation={TOGGLE_QUEUE} />
 });
 
-export default () => (
-	<Composed>{({data: {queue, isOpen}, toggleQueue}) => <Queue queue={queue} isOpen={isOpen} toggleQueue={toggleQueue} />}</Composed>
-);
+export default () => <Composed>{({queue, toggleQueue}) => <Queue {...queue} toggleQueue={toggleQueue} />}</Composed>;

@@ -1,4 +1,3 @@
-import {connect} from 'react-redux';
 import React from 'react';
 
 import Uniplayer from './Uniplayer.jsx';
@@ -8,12 +7,22 @@ import {Query} from 'react-apollo';
 const PLAYER_QUERY = gql`
 	query UniplayerContainer {
 		player @client {
-			currentlyPlaying
+			currentlyPlaying {
+				id {
+					videoId
+				}
+				snippet {
+					title
+				}
+			}
 		}
 
 		queue @client {
-			queue
-			isOpen
+			tracks {
+				id {
+					videoId
+				}
+			}
 		}
 	}
 `;
@@ -23,8 +32,8 @@ export default () => (
 		{({
 			data: {
 				player: {currentlyPlaying},
-				queue: {queue}
+				queue: {tracks}
 			}
-		}) => <Uniplayer currentlyPlaying={currentlyPlaying} queue={queue} />}
+		}) => <Uniplayer currentlyPlaying={currentlyPlaying} tracks={tracks} />}
 	</Query>
 );

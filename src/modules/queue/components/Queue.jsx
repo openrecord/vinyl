@@ -5,15 +5,15 @@ import Search from '../../uniplayer/Search/SearchContainer';
 import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
 import x_img from './images/x.svg';
 
-export default function Queue({isOpen, queue, toggleQueue}) {
+export default function Queue({isOpen, tracks, toggleQueue}) {
 	if (isOpen) {
 		return (
 			<Sidebar expand className="sidebar">
 				<h2>Tracklist</h2>
 				<Search />
 				<QueueList>
-					{queue.map(track => (
-						<YoutubeResult result={track.content} key={track.id} highRes />
+					{tracks.map(track => (
+						<YoutubeResult snippet={track.snippet} key={track.id.videoId} highRes />
 					))}
 				</QueueList>
 				<QueueButton onClick={toggleQueue} open>

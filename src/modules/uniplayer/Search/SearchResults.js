@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 import YoutubeResult from './YoutubeResult';
 
-export default function SearchResults({results, enqueue, clearSearch, isSearchOpen}) {
+export default function SearchResults({results, enqueue, clearSearch}) {
 	return (
 		<StyledSearchResults onClick={clearSearch} className="search-results">
 			{results.map(result => {
 				switch (result.__typename) {
 					case 'YoutubeResult':
-						return <YoutubeResult result={result.content} key={result.id} onClick={() => enqueue(result)} />;
+						return <YoutubeResult snippet={result.snippet} key={result.id.videoId} onClick={() => enqueue(result)} />;
 					default:
 						return null;
 				}

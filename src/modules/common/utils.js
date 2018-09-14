@@ -74,6 +74,12 @@ export const ifNull = value => maybeValue => maybeValue || value;
 
 export const makeMutation = query => reducer => (_, variables, {cache}) => {
 	const prev = cache.readQuery({query});
-	cache.writeData({query, data: reducer(variables)(prev)});
+
+	cache.writeQuery({query, data: reducer(variables)(prev)});
 	return null;
 };
+
+export function inspect(value) {
+	console.log(value);
+	return value;
+}

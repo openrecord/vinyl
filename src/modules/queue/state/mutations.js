@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import {mod, toggle, updateAll, cons} from 'shades';
-import {ifNull, makeMutation} from '../../common/utils';
+import {mod, set, toggle, updateAll, cons} from 'shades';
+import {makeMutation, inspect, ifNull} from '../../common/utils';
 
 export const toggleQueue = makeMutation(gql`
 	query {
@@ -10,16 +10,51 @@ export const toggleQueue = makeMutation(gql`
 	}
 `)(() => mod('queue', 'isOpen')(toggle));
 
-export const enqueue = makeMutation(
-	gql`
+export const enqueue = (_, {track}, {cache}) => {
+	const query = gql`
 		{
 			queue @client {
-				queue
+				tracks {
+					id {
+						videoId
+					}
+					snippet {
+						title
+						thumbnails {
+							high {
+								url
+							}
+							default {
+								url
+							}
+						}
+					}
+				}
 			}
 
 			player @client {
-				currentlyPlaying
+				currentlyPlaying {
+					id {
+						videoId
+					}
+					snippet {
+						title
+						thumbnails {
+							high {
+								url
+							}
+							default {
+								url
+							}
+						}
+					}
+				}
 			}
 		}
-	`
-)(({track}) => updateAll(mod('queue', 'queue')(cons(track)), mod('player', 'currentlyPlaying')(ifNull(track))));
+	`;
+
+	const prev = cache.readQuery({query});
+	const next = updateAll(mod('queue', 'tracks')(cons(track)), mod('player', 'currentlyPlaying')(ifNull(track)))(prev);
+	cache.writeQuery({query, data: next});
+	return null;
+};

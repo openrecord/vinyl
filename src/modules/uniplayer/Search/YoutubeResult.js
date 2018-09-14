@@ -4,7 +4,7 @@ import React from 'react';
 export default function YoutubeResult({
 	onClick,
 	highRes,
-	result: {
+	snippet: {
 		title,
 		thumbnails: {
 			default: {url: defaultUrl},

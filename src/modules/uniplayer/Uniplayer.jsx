@@ -122,7 +122,7 @@ class Uniplayer extends React.Component {
 
 	renderYT(currentlyPlaying) {
 		var player = {};
-		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.id;
+		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.id.videoId;
 		return (
 			<div className="player-inner">
 				<ReactPlayer
@@ -152,7 +152,7 @@ class Uniplayer extends React.Component {
 	}
 
 	render() {
-		const {currentlyPlaying, queue} = this.props;
+		const {currentlyPlaying, tracks} = this.props;
 
 		var player = {};
 		if (this.state.playing) {
@@ -166,7 +166,7 @@ class Uniplayer extends React.Component {
 			player.active = '';
 		}
 
-		if (queue.length > 0) {
+		if (tracks.length > 0) {
 			return (
 				<div className="uniplayer-outer">
 					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
@@ -199,7 +199,7 @@ class Uniplayer extends React.Component {
 								{currentlyPlaying && this.renderYT(currentlyPlaying)}
 								{currentlyPlaying && (
 									<div className="info-box">
-										<h3 className="song-title">{currentlyPlaying.content.title}</h3>
+										<h3 className="song-title">{currentlyPlaying.snippet.title}</h3>
 									</div>
 								)}
 							</div>

@@ -1,5 +1,5 @@
 export const queue = {
 	__typename: 'Queue',
-	queue: [],
+	tracks: [],
 	isOpen: false
 };
