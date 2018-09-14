@@ -3,11 +3,8 @@ import './styles/boot.scss';
 import React from 'react';
 import {ApolloProvider} from 'react-apollo';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 
 import App from './modules/common/App';
-import store from './modules/store';
-import history from './modules/routes/history';
 import client from './modules/apollo';
 
 // -------------------
@@ -18,9 +15,7 @@ const MOUNT_NODE = document.getElementById('root');
 function render(App) {
 	ReactDOM.render(
 		<ApolloProvider client={client}>
-			<Provider store={store}>
-				<App history={history} />
-			</Provider>
+			<App />
 		</ApolloProvider>,
 		MOUNT_NODE
 	);

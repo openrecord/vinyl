@@ -1,5 +1,4 @@
-import {ConnectedRouter} from 'connected-react-router';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import React from 'react';
 
 import {ROUTES} from '../routes/routes';
@@ -9,9 +8,9 @@ import ProfileContainer from '../profile/ProfileContainer';
 import RegisterContainer from '../register/RegisterContainer';
 import UniPlayerContainer from '../uniplayer/UniplayerContainer';
 
-export default function App({history}) {
+export default function App() {
 	return (
-		<ConnectedRouter history={history}>
+		<BrowserRouter>
 			<div>
 				<Nav />
 				<Switch>
@@ -22,6 +21,6 @@ export default function App({history}) {
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
 			</div>
-		</ConnectedRouter>
+		</BrowserRouter>
 	);
 }
