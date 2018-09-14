@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import {mod, set, toggle, updateAll, cons} from 'shades';
 import {makeMutation, inspect, ifNull} from '../../common/utils';
+import {Youtube} from '../../uniplayer/Search/YoutubeQueryContainer';
 
 export const toggleQueue = makeMutation(gql`
 	query {
@@ -15,42 +16,17 @@ export const enqueue = (_, {track}, {cache}) => {
 		{
 			queue @client {
 				tracks {
-					id {
-						videoId
-					}
-					snippet {
-						title
-						thumbnails {
-							high {
-								url
-							}
-							default {
-								url
-							}
-						}
-					}
+					...YoutubeEntry
 				}
 			}
 
 			player @client {
 				currentlyPlaying {
-					id {
-						videoId
-					}
-					snippet {
-						title
-						thumbnails {
-							high {
-								url
-							}
-							default {
-								url
-							}
-						}
-					}
+					...YoutubeEntry
 				}
 			}
 		}
+		${Youtube.fragments.result}
 	`;
 
 	const prev = cache.readQuery({query});

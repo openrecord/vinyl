@@ -4,6 +4,7 @@ import {Query, Mutation} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
 import {adopt} from 'react-adopt';
+import {Youtube} from '../../uniplayer/Search/YoutubeQueryContainer';
 
 const TOGGLE_QUEUE = gql`
 	mutation ToggleQueue {
@@ -16,23 +17,11 @@ const QUEUE_QUERY = gql`
 		queue @client {
 			isOpen
 			tracks {
-				id {
-					videoId
-				}
-				snippet {
-					title
-					thumbnails {
-						high {
-							url
-						}
-						default {
-							url
-						}
-					}
-				}
+				...YoutubeEntry
 			}
 		}
 	}
+	${Youtube.fragments.result}
 `;
 
 const Composed = adopt({
