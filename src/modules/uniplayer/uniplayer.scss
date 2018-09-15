@@ -1,5 +1,5 @@
 .uniplayer-outer {
-	background: rgba(32, 32, 32, 1);
+	background: rgb(36, 36, 36);
 	position: fixed;
 	height: 5rem;
 	width: 100%;
@@ -232,6 +232,7 @@
 					}
 
 					.player-slider {
+						border-radius: 0.25rem;
 						height: 1.5rem;
 						opacity: 1;
 						position: relative;
@@ -241,12 +242,10 @@
 						transition: all 0.1s;
 
 						&:hover {
-							.player-bar-bg {
-								height: 0.25rem;
-							}
-							.progress-bar {
-								background: rgba(255, 255, 255, 0.9);
-								height: 0.25rem;
+							.progress-bar-bg {
+								.progress-bar {
+									background: rgb(156, 77, 157);
+								}
 							}
 							.player-bar {
 								&::-webkit-slider-thumb {
@@ -256,22 +255,25 @@
 							}
 						}
 
-						.player-bar-bg {
-							background: rgba(100, 100, 100, 1);
-							height: 0.125rem;
+						.progress-bar-bg {
+							background: rgb(80, 80, 80);
+							border-radius: 0.5rem;
+							height: 0.25rem;
+							overflow: hidden;
 							position: absolute;
 							top: 50%;
 							width: 100%;
 							transform: translateY(-50%);
-						}
 
-						.progress-bar {
-							background: rgba(255, 255, 255, 0.7);
-							height: 0.125rem;
-							position: absolute;
-							top: 50%;
-							width: 100%;
-							transform: translateY(-50%);
+							.progress-bar {
+								background: rgba(255, 255, 255, 0.6);
+								border-radius: 0 0.5rem 0.5rem 0;
+								height: 0.25rem;
+								position: absolute;
+								top: 50%;
+								width: 100%;
+								transform: translateY(-50%);
+							}
 						}
 
 						.player-bar {
@@ -290,7 +292,7 @@
 
 							&::-webkit-slider-thumb {
 								appearance: none;
-								background: rgb(156, 77, 157);
+								background: rgb(255, 255, 255);
 								border-radius: 50%;
 								height: 0;
 								pointer-events: none;
