@@ -3,12 +3,7 @@ import {connect} from 'react-redux';
 import {map, identity} from 'shades';
 
 const bindActionCreators = dispatch => actionCreator =>
-	typeof actionCreator === 'object'
-		? bindObject(dispatch)(actionCreator)
-		: compose(
-				dispatch,
-				actionCreator
-		  );
+	typeof actionCreator === 'object' ? bindObject(dispatch)(actionCreator) : compose(dispatch, actionCreator);
 
 const bindObject = dispatch => map(bindActionCreators(dispatch));
 

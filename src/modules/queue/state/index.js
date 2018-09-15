@@ -5,7 +5,6 @@ import {createSetters} from '../../common/utils';
 
 export const INITIAL_STATE = {
 	queue: [],
-	isQueueOpen: false,
 	isSearchOpen: false
 };
 
