@@ -8,28 +8,22 @@ import x_img from './images/x.svg';
 
 export default function Queue({isSearchOpen, queue, toggleSearch}) {
 	return (
-		<Sidebar expand className="sidebar">
-			<h2>Tracklist</h2>
+		<QueueInner expand className="queue">
 			<Search />
 			<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} highRes />)}</QueueList>
-		</Sidebar>
+		</QueueInner>
 	);
 }
 
-const Sidebar = styled.div`
-	background: rgba(29, 29, 29, 0.995);
-	position: fixed;
+const QueueInner = styled.div`
+	display: block;
 	height: 100%;
-	transition: all 0.1s;
-	right: 0;
-	top: 0;
-	width: ${({expand}) => (expand ? '25rem' : '0rem')};
-
-	h2 {
-		display block;
-		color: #f2f2f2;
-		margin: 1.75rem 0.875rem;
-	}
+	left: 50%;
+	max-width: 75rem;
+	position: fixed;
+	top: 5.5rem;
+	transform: translateX(-50%);
+	width: 80%;
 `;
 
 const QueueList = styled.div`

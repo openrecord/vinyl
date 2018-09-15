@@ -1,7 +1,6 @@
-$base-z-index-list: 'uniplayer-inner', 'uniplayer-bar', 'uniplayer-iframe-blocker', 'uniplayer-holder', 'uniplayer-time-box',
-	'uniplayer-info-box', 'uniplayer-playback-box', 'uniplayer-song-lines', 'uniplayer-hover-range', 'uniplayer-slider', 'landing-c6',
-	'landing-c5', 'landing-c4', 'landing-c3', 'landing-c2', 'landing-c1', 'landing-title', 'nav', 'register', 'register-x', 'search-opaque',
-	'search-results', 'search-bar', 'queue-icon', 'sidebar';
+$base-z-index-list: 'queue', 'uniplayer', 'uniplayer-holder', 'uniplayer-inner', 'uniplayer-info-box', 'uniplayer-playback-box',
+	'uniplayer-bar', 'uniplayer-slider', 'landing', 'landing-background', 'landing-outer', 'landing-rings', 'landing-center', 'landing-hole',
+	'landing-hero', 'nav', 'register', 'register-x', 'search-opaque', 'search-results', 'search-bar', 'queue-icon';
 
 @function z-index($element, $list: $base-z-index-list) {
 	$z-index: index($list, $element);

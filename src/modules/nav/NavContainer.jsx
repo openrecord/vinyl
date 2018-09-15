@@ -55,7 +55,7 @@ const StyledNav = styled.nav`
 		h3 {
 			color: white;
 			display: table-cell;
-			letter-spacing: 0.125rem;
+			letter-spacing: 0.0675rem;
 			position: relative;
 			vertical-align: middle;
 			transition: all 0.1s;
