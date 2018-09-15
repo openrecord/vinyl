@@ -30,10 +30,11 @@ export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, to
 
 const Sidebar = styled.div`
 	background: rgba(29, 29, 29, 0.995);
-	position: absolute;
+	position: fixed;
 	height: 100%;
 	transition: all 0.1s;
 	right: 0;
+	top: 0;
 	width: ${({expand}) => (expand ? '25rem' : '0rem')};
 
 	h2 {

@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 
 import Queue from '../queue/components/QueueContainer';
 import Timeout from './Timeout';
+import Duration from './Duration';
 
 class Uniplayer extends React.Component {
 	constructor(props) {
@@ -161,48 +162,56 @@ class Uniplayer extends React.Component {
 		} else {
 			player.status = ' paused';
 		}
-		if (this.state.playerActive) {
-			player.active = ' active';
-		} else {
-			player.active = '';
-		}
 
 		if (queue.length > 0) {
 			return (
 				<div className="uniplayer-outer">
-					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-						<div className="player-holder">
-							<div className="player-outer">
-								<div className="playback-box">
-									<div className="player-bar-bg" />
-									<div className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
-									<input
-										className="player-bar"
-										ref="playerBar"
-										type="range"
-										min={0}
-										max={1}
-										step="any"
-										value={this.state.played}
-										onMouseEnter={this.onMouseEnter}
-										onMouseMove={this.onMouseMove}
-										onMouseLeave={this.onMouseLeave}
-										onMouseDown={this.onSeekMouseDown}
-										onChange={this.onSeekChange}
-										onMouseUp={this.onSeekMouseUp}
-									/>
-								</div>
-								<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
-									<span className="hover-time">{this.state.hoverTime}</span>
-								</div>
-								<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-								{currentlyPlaying && this.renderYT(currentlyPlaying)}
-							</div>
+					<div className="uniplayer" onMouseMove={this.playerActive}>
+						<div className="uniplayer-left">
 							{currentlyPlaying && (
 								<div className="info-box">
-									<h3 className="song-title">{currentlyPlaying.content.title}</h3>
+									<div className="image-holder">
+										<img src={currentlyPlaying.content.thumbnails.default.url} />
+									</div>
+									<h5 className="song-title">{currentlyPlaying.content.title}</h5>
 								</div>
 							)}
+						</div>
+						<div className="uniplayer-middle">
+							<div className="player-controls">
+								<div className="player-buttons">
+									<div className="arrow previous" />
+									<div className={'play-button' + player.status} onClick={this.playToggle} />
+									<div className="arrow next" />
+								</div>
+								<div className="playback-holder">
+									<Duration className="duration" seconds={this.state.duration * this.state.played} />
+									<div className="player-slider">
+										<div className="player-bar-bg" />
+										<div className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
+										<input
+											className="player-bar"
+											ref="playerBar"
+											type="range"
+											min={0}
+											max={1}
+											step="any"
+											value={this.state.played}
+											onMouseEnter={this.onMouseEnter}
+											onMouseMove={this.onMouseMove}
+											onMouseLeave={this.onMouseLeave}
+											onMouseDown={this.onSeekMouseDown}
+											onChange={this.onSeekChange}
+											onMouseUp={this.onSeekMouseUp}
+										/>
+									</div>
+									<Duration className="duration" seconds={this.state.duration} />
+								</div>
+							</div>
+						</div>
+						<div className="uniplayer-right" />
+						<div className="player-holder">
+							<div className="player-outer">{currentlyPlaying && this.renderYT(currentlyPlaying)}</div>
 						</div>
 					</div>
 					<Queue />
