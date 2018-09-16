@@ -23,6 +23,7 @@ export default function Queue({isSearchOpen, queue, toggleSearch}) {
 						</AddSong>
 					</CollectionInfo>
 					{!isSearchOpen && <h4>{queue.length} tracks</h4>}
+					{isSearchOpen && <h4>Search for a song on YouTube or Soundcloud</h4>}
 				</QueueHeader>
 				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} highRes />)}</QueueList>
 				{isSearchOpen && <Search />}
@@ -52,6 +53,7 @@ const QueueList = styled.div`
 	position: fixed;
 	overflow: hidden;
 	overflow-y: scroll;
+	width: 100%;
 
 	::-webkit-scrollbar {
 		display: none;
@@ -60,6 +62,7 @@ const QueueList = styled.div`
 
 const QueueHeader = styled.div`
 	border-bottom: 1px solid rgba(40, 40, 40, 1);
+	position: relative;
 	padding: 0 0 1rem 0;
 
 	h4 {
@@ -137,4 +140,13 @@ const AddSong = styled.button`
 		color: rgba(255,255,255,1);
 		background: #9c4d9d;
 	}
+`;
+
+const SearchBackground = styled.div`
+	background: rgba(0, 0, 0, 0.9);
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 12.125rem;
 `;

@@ -1,11 +1,8 @@
 .search-bar {
 	z-index: z-index('search-bar');
+	caret-color: rgb(156, 77, 157);
 }
 
 .search-results {
 	z-index: z-index('search-results');
-}
-
-.search-opaque {
-	z-index: z-index('search-opaque');
 }

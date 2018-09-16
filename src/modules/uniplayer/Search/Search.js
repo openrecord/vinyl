@@ -16,27 +16,17 @@ class Search extends React.Component {
 		return (
 			<SearchHolder onClick={clearSearch}>
 				<SearchBar search={search} onChange={setSearch} />
-				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} clearSearch={clearSearch} />}
-				{results.length > 0 && <SearchOpaque className="search-opaque" onClick={clearSearch} />}
+				<SearchResults results={results} enqueue={enqueue} clearSearch={clearSearch} />
 			</SearchHolder>
 		);
 	}
 }
 
 const SearchHolder = styled.div`
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(36, 36, 36);
+	box-shadow: 0px 8px 12px 8px rgba(0, 0, 0, 0.2);
 	display: block;
 	position: relative;
-`;
-
-const SearchOpaque = styled.div`
-	background: rgba(15, 15, 15, 0.9);
-	bottom: 0;
-	height: 100vh;
-	position: relative;
-
-	max-height: calc(100vh - 20rem);
-	width: 100%;
 `;
 
 export default onClickOutside(Search);

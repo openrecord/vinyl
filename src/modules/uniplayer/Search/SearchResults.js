@@ -21,9 +21,9 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 const StyledSearchResults = styled.div`
 	background: rgba(25, 25, 25);
 	display: block;
+	height: calc(100vh - 24rem);
 	overflow: hidden;
 	overflow-y: scroll;
-	max-height: calc(100vh - 24rem);
-	position: absolute;
+	position: relative;
 	width: 100%;
 `;
