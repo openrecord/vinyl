@@ -14,7 +14,7 @@ class Search extends React.Component {
 		const {search, setSearch, results, clearSearch, enqueue} = this.props;
 
 		return (
-			<SearchHolder>
+			<SearchHolder onClick={clearSearch}>
 				<SearchBar search={search} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} clearSearch={clearSearch} />}
 				{results.length > 0 && <SearchOpaque className="search-opaque" onClick={clearSearch} />}
@@ -24,8 +24,9 @@ class Search extends React.Component {
 }
 
 const SearchHolder = styled.div`
+	background: rgba(0, 0, 0, 0.6);
+	display: block;
 	position: relative;
-	width: 100%;
 `;
 
 const SearchOpaque = styled.div`

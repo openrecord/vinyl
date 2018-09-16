@@ -5,7 +5,7 @@ import {createSetters} from '../../common/utils';
 
 export const INITIAL_STATE = {
 	queue: [],
-	isSearchOpen: false
+	isSearchOpen: true
 };
 
 export const enqueue = createAction('queue/enqueue');
