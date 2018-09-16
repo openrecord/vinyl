@@ -311,12 +311,20 @@
 
 	//Player
 	.player-holder {
+		border-radius: 0.5rem;
+		box-shadow: 0;
 		top: 0;
-		right: 0;
+		right: 0.75rem;
+		overflow: hidden;
 		position: absolute;
-		width: 24rem;
+		width: 28.5%;
+		max-width: 24rem;
 		z-index: z-index('uniplayer-holder');
-		transform: translateY(-100%);
+		transform: translateY(calc(-100% + 4.5rem));
+
+		-webkit-box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.2);
+		box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.2);
 
 		.player-outer {
 			display: block;
