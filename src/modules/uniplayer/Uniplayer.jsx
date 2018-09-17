@@ -22,7 +22,8 @@ class Uniplayer extends React.Component {
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			playerActive: true
+			playerActive: true,
+			expanded: false
 		};
 	}
 
@@ -52,7 +53,7 @@ class Uniplayer extends React.Component {
 		});
 	};
 	onEnded = () => {
-		console.log('Song ended');
+		this.setState({playing: false});
 	};
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
@@ -116,6 +117,15 @@ class Uniplayer extends React.Component {
 		}
 	};
 
+	//OpenRecord Player Addon Functions
+	expandToggle = () => {
+		if (this.state.expanded) {
+			this.setState({expanded: false});
+		} else {
+			this.setState({expanded: true});
+		}
+	};
+
 	setYTPlayer = player => {
 		this.YTPlayer = player;
 	};
@@ -160,6 +170,11 @@ class Uniplayer extends React.Component {
 			player.status = ' playing';
 		} else {
 			player.status = ' paused';
+		}
+		if (this.state.expanded) {
+			player.expanded = ' expanded';
+		} else {
+			player.expanded = '';
 		}
 
 		return (
@@ -208,9 +223,17 @@ class Uniplayer extends React.Component {
 					</div>
 				</div>
 				<div className="uniplayer-right" />
-				<div className="player-holder">
-					<div className="player-outer">{currentlyPlaying && this.renderYT(currentlyPlaying)}</div>
+				<div className={'player-holder' + player.expanded}>
+					<div className="player-outer">
+						<div className="iframeblocker" onClick={this.playToggle} />
+						<div className="size-buttons">
+							<div className="expand-button" onClick={this.expandToggle} />
+							<div className="minimize-button" />
+						</div>
+						{currentlyPlaying && this.renderYT(currentlyPlaying)}
+					</div>
 				</div>
+				{this.state.expanded && <div className="player-background" />}
 			</div>
 		);
 	}
