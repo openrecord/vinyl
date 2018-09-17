@@ -1,4 +1,5 @@
 export const search = {
 	__typename: 'Search',
-	query: ''
+	query: '',
+	isSearchOpen: false
 };

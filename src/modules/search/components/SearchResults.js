@@ -19,11 +19,12 @@ export default function SearchResults({results, enqueue, clearSearch}) {
 }
 
 const StyledSearchResults = styled.div`
+	position: absolute;
 	background: rgba(25, 25, 25);
+	display: block;
+	max-height: 30rem;
 	overflow: hidden;
 	overflow-y: scroll;
-	max-height: calc(100% - 20.75rem);
-	position: absolute;
 	width: 100%;
 
 	::-webkit-scrollbar {

@@ -14,25 +14,19 @@ class Search extends React.Component {
 		const {query, setSearch, results: {items} = {items: []}, clearSearch, enqueue} = this.props;
 
 		return (
-			<div>
+			<SearchHolder onClick={clearSearch}>
 				<SearchBar query={query} onChange={setSearch} />
-				{items.length > 0 && (
-					<>
-						<SearchResults results={items} enqueue={enqueue} clearSearch={clearSearch} />
-						<SearchOpaque className="search-opaque" onClick={clearSearch} />
-					</>
-				)}
-			</div>
+				<SearchResults results={items} enqueue={enqueue} clearSearch={clearSearch} />
+			</SearchHolder>
 		);
 	}
 }
 
-const SearchOpaque = styled.div`
-	background: rgba(15, 15, 15, 0.9);
-	bottom: 0;
-	height: calc(100% - 5.25rem);
-	position: absolute;
-	width: 100%;
+const SearchHolder = styled.div`
+	background: rgba(36, 36, 36);
+	box-shadow: 0px 8px 12px 8px rgba(0, 0, 0, 0.2);
+	display: block;
+	position: relative;
 `;
 
 export default onClickOutside(Search);

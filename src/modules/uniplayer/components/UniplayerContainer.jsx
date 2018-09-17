@@ -3,17 +3,13 @@ import React from 'react';
 import Uniplayer from './Uniplayer.jsx';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import {Youtube} from '../../search/components/YoutubeQueryContainer';
 
 const PLAYER_QUERY = gql`
 	query UniplayerContainer {
 		player @client {
 			currentlyPlaying {
-				id {
-					videoId
-				}
-				snippet {
-					title
-				}
+				...YoutubeEntry
 			}
 		}
 
@@ -25,6 +21,7 @@ const PLAYER_QUERY = gql`
 			}
 		}
 	}
+	${Youtube.fragments.result}
 `;
 
 export default () => (

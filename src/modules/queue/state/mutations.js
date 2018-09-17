@@ -3,14 +3,6 @@ import {mod, toggle, updateAll, cons} from 'shades';
 import {ifNull, updateQL} from '../../common/utils';
 import {Youtube} from '../../search/components/YoutubeQueryContainer';
 
-export const toggleQueue = updateQL(gql`
-	query {
-		queue @client {
-			isOpen
-		}
-	}
-`).with(() => mod('queue', 'isOpen')(toggle));
-
 export const enqueue = updateQL(gql`
 	{
 		queue @client {

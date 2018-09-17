@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-import Queue from '../../queue/components/QueueContainer';
 import Timeout from './Timeout';
+import Duration from './Duration';
 
 class Uniplayer extends React.Component {
 	constructor(props) {
@@ -22,7 +22,8 @@ class Uniplayer extends React.Component {
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			playerActive: true
+			playerActive: true,
+			expanded: false
 		};
 	}
 
@@ -52,7 +53,7 @@ class Uniplayer extends React.Component {
 		});
 	};
 	onEnded = () => {
-		console.log('Song ended');
+		this.setState({playing: false});
 	};
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
@@ -116,6 +117,15 @@ class Uniplayer extends React.Component {
 		}
 	};
 
+	//OpenRecord Player Addon Functions
+	expandToggle = () => {
+		if (this.state.expanded) {
+			this.setState({expanded: false});
+		} else {
+			this.setState({expanded: true});
+		}
+	};
+
 	setYTPlayer = player => {
 		this.YTPlayer = player;
 	};
@@ -161,61 +171,71 @@ class Uniplayer extends React.Component {
 		} else {
 			player.status = ' paused';
 		}
-		if (this.state.playerActive) {
-			player.active = ' active';
+		if (this.state.expanded) {
+			player.expanded = ' expanded';
 		} else {
-			player.active = '';
+			player.expanded = '';
 		}
 
-		if (tracks.length > 0) {
-			return (
-				<div className="uniplayer-outer">
-					<div className={'uniplayer' + player.active} onMouseMove={this.playerActive}>
-						<div className="player-holder">
-							<div className="player-outer">
-								<div className="playback-box">
-									<div className="player-bar-bg" />
-									<div className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
-									<input
-										className="player-bar"
-										ref="playerBar"
-										type="range"
-										min={0}
-										max={1}
-										step="any"
-										value={this.state.played}
-										onMouseEnter={this.onMouseEnter}
-										onMouseMove={this.onMouseMove}
-										onMouseLeave={this.onMouseLeave}
-										onMouseDown={this.onSeekMouseDown}
-										onChange={this.onSeekChange}
-										onMouseUp={this.onSeekMouseUp}
-									/>
-								</div>
-								<div className="time-holder" style={{left: ' ' + this.state.mousePosition + 'px'}}>
-									<span className="hover-time">{this.state.hoverTime}</span>
-								</div>
-								<div className="iframeblocker" onMouseMove={this.playerActive} onClick={this.playToggle} />
-								{currentlyPlaying && this.renderYT(currentlyPlaying)}
+		return (
+			<div className="uniplayer" onMouseMove={this.playerActive}>
+				<div className="uniplayer-left">
+					{currentlyPlaying && (
+						<div className="info-box">
+							<div className="image-holder">
+								<img src={currentlyPlaying.snippet.thumbnails.default.url} />
 							</div>
-							{currentlyPlaying && (
-								<div className="info-box">
-									<h3 className="song-title">{currentlyPlaying.snippet.title}</h3>
+							<h5 className="song-title">{currentlyPlaying.snippet.title}</h5>
+						</div>
+					)}
+				</div>
+				<div className="uniplayer-middle">
+					<div className="player-controls">
+						<div className="player-buttons">
+							<div className="arrow previous" />
+							<div className={'play-button' + player.status} onClick={this.playToggle} />
+							<div className="arrow next" />
+						</div>
+						<div className="playback-holder">
+							<Duration className="duration" seconds={this.state.duration * this.state.played} />
+							<div className="player-slider">
+								<div className="progress-bar-bg">
+									<span className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
 								</div>
-							)}
+								<input
+									className="player-bar"
+									ref="playerBar"
+									type="range"
+									min={0}
+									max={1}
+									step="any"
+									value={this.state.played}
+									onMouseEnter={this.onMouseEnter}
+									onMouseMove={this.onMouseMove}
+									onMouseLeave={this.onMouseLeave}
+									onMouseDown={this.onSeekMouseDown}
+									onChange={this.onSeekChange}
+									onMouseUp={this.onSeekMouseUp}
+								/>
+							</div>
+							<Duration className="duration" seconds={this.state.duration} />
 						</div>
 					</div>
-					<Queue />
 				</div>
-			);
-		} else {
-			return (
-				<div className="uniplayer-outer">
-					<div className="uniplayer" />
-					<Queue />
+				<div className="uniplayer-right" />
+				<div className={'player-holder' + player.expanded}>
+					<div className="player-outer">
+						<div className="iframeblocker" onClick={this.playToggle} />
+						<div className="size-buttons">
+							<div className="expand-button" onClick={this.expandToggle} />
+							<div className="minimize-button" />
+						</div>
+						{currentlyPlaying && this.renderYT(currentlyPlaying)}
+					</div>
 				</div>
-			);
-		}
+				{this.state.expanded && <div className="player-background" />}
+			</div>
+		);
 	}
 }
 

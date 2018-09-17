@@ -5,7 +5,8 @@ import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
 import Nav from '../nav/NavContainer';
 import RegisterContainer from '../register/RegisterContainer';
-import UniPlayerContainer from '../uniplayer/components/UniplayerContainer';
+import UniplayerContainer from '../uniplayer/components/UniplayerContainer';
+import QueueContainer from '../queue/components/QueueContainer';
 
 export default function App() {
 	return (
@@ -15,9 +16,10 @@ export default function App() {
 				<Switch>
 					<Route exact path={ROUTES.LANDING} component={Landing} />
 					<Route exact path={ROUTES.REGISTER} component={RegisterContainer} />
-					<Route path={ROUTES.PLAYER} component={UniPlayerContainer} />
+					<Route path={ROUTES.PLAYER} component={QueueContainer} />
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
+				<UniplayerContainer />
 			</div>
 		</BrowserRouter>
 	);
