@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import YoutubeResult from './YoutubeResult';
 
-export default function SearchResults({results, enqueue, clearSearch, isSearchOpen}) {
+export default function SearchResults({results, enqueue, clearSearch}) {
 	return (
 		<StyledSearchResults onClick={clearSearch} className="search-results">
 			{results.map(result => {
@@ -19,11 +19,15 @@ export default function SearchResults({results, enqueue, clearSearch, isSearchOp
 }
 
 const StyledSearchResults = styled.div`
+	position: absolute;
 	background: rgba(25, 25, 25);
 	display: block;
-	height: calc(100vh - 24rem);
+	max-height: 30rem;
 	overflow: hidden;
 	overflow-y: scroll;
-	position: relative;
 	width: 100%;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;

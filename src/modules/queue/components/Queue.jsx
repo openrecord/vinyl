@@ -8,52 +8,44 @@ import x_img from './images/x.svg';
 
 export default function Queue({isSearchOpen, queue, toggleSearch}) {
 	return (
-		<QueueOuter>
-			<QueueInner expand className="queue">
-				<QueueHeader>
-					<CollectionRecord>
-						<span />
-					</CollectionRecord>
-					<CollectionInfo>
-						<h5>COLLECTION</h5>
-						<h1>/example</h1>
-						<AddSong onClick={toggleSearch}>
-							Add Song
-							<span> +</span>
-						</AddSong>
-					</CollectionInfo>
-					{!isSearchOpen && <h4>{queue.length} tracks</h4>}
-					{isSearchOpen && <h4>Search for a song on YouTube or Soundcloud</h4>}
-				</QueueHeader>
-				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} highRes />)}</QueueList>
-				{isSearchOpen && <Search />}
-			</QueueInner>
-		</QueueOuter>
+		<StyledQueue>
+			<QueueHeader>
+				<CollectionRecord />
+				<CollectionInfo>
+					<h5>COLLECTION</h5>
+					<h1>/example</h1>
+					<AddSong onClick={toggleSearch}>
+						Add Song
+						<span> +</span>
+					</AddSong>
+				</CollectionInfo>
+				{isSearchOpen ? <h4>Search for a song on YouTube or Soundcloud</h4> : <h4>{queue.length} tracks</h4>}
+			</QueueHeader>
+			{isSearchOpen && <Search />}
+			<QueueList>
+				{queue.map(track => (
+					<YoutubeResult result={track.content} key={track.id} highRes />
+				))}
+			</QueueList>
+		</StyledQueue>
 	);
 }
 
-const QueueOuter = styled.div`
-	background: rgb(25, 25, 25);
-	width: 100%;
-`;
-
-const QueueInner = styled.div`
+const StyledQueue = styled.div`
 	display: block;
 	left: 50%;
 	max-width: 75rem;
 	padding-top: 4rem;
 	position: relative;
-
 	transform: translateX(-50%);
 	width: 80%;
 `;
 
 const QueueList = styled.div`
-	max-height: calc(100vh - 18.5rem);
-	position: fixed;
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 100%;
+	max-height: 30rem;
 
 	::-webkit-scrollbar {
 		display: none;
@@ -86,7 +78,8 @@ const CollectionRecord = styled.div`
 	vertical-align: middle;
 	width: 7rem;
 
-	span {
+	::after {
+		content: '';
 		background: transparent;
 		border: 1.25rem solid rgba(150, 150, 150, 1);
 		border-radius: 50%;
@@ -140,13 +133,4 @@ const AddSong = styled.button`
 		color: rgba(255,255,255,1);
 		background: #9c4d9d;
 	}
-`;
-
-const SearchBackground = styled.div`
-	background: rgba(0, 0, 0, 0.9);
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 12.125rem;
 `;
