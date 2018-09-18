@@ -54,6 +54,7 @@ class Uniplayer extends React.Component {
 	};
 	onEnded = () => {
 		this.setState({playing: false});
+		this.props.playNextFromQueue();
 	};
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Uniplayer from './Uniplayer.jsx';
 import gql from 'graphql-tag';
-import {Query} from 'react-apollo';
+import {Query, Mutation} from 'react-apollo';
 import {Youtube} from '../../search/components/YoutubeQueryContainer';
 
 const PLAYER_QUERY = gql`
@@ -24,13 +24,23 @@ const PLAYER_QUERY = gql`
 	${Youtube.fragments.result}
 `;
 
+const PLAY_NEXT_FROM_QUEUE = gql`
+	mutation playNextFromQueue {
+		playNextFromQueue @client
+	}
+`;
+
 export default () => (
-	<Query query={PLAYER_QUERY}>
-		{({
-			data: {
-				player: {currentlyPlaying},
-				queue: {tracks}
-			}
-		}) => <Uniplayer currentlyPlaying={currentlyPlaying} tracks={tracks} />}
-	</Query>
+	<Mutation mutation={PLAY_NEXT_FROM_QUEUE}>
+		{playNextFromQueue => (
+			<Query query={PLAYER_QUERY}>
+				{({
+					data: {
+						player: {currentlyPlaying},
+						queue: {tracks}
+					}
+				}) => <Uniplayer currentlyPlaying={currentlyPlaying} tracks={tracks} playNextFromQueue={() => playNextFromQueue()} />}
+			</Query>
+		)}
+	</Mutation>
 );

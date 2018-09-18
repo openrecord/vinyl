@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Search from '../../search/components/SearchContainer';
 import YoutubeResult from '../../search/components/YoutubeResult';
 
-export default function Queue({isSearchOpen, tracks, toggleSearch}) {
+export default function Queue({isSearchOpen, tracks, toggleSearch, updatePlaying}) {
 	return (
 		<StyledQueue>
 			<QueueHeader>
@@ -26,7 +26,12 @@ export default function Queue({isSearchOpen, tracks, toggleSearch}) {
 			{isSearchOpen && <Search />}
 			<QueueList>
 				{tracks.map(track => (
-					<YoutubeResult snippet={track.snippet} key={track.id.videoId} highRes />
+					<YoutubeResult
+						snippet={track.snippet}
+						key={track.id.videoId}
+						onClick={() => updatePlaying({variables: {videoId: track.id.videoId}})}
+						highRes
+					/>
 				))}
 			</QueueList>
 		</StyledQueue>

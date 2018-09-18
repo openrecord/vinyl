@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import gql from 'graphql-tag';
-import {mod, toggle, updateAll, cons} from 'shades';
+import {mod, updateAll, cons, set, findBy, get, has} from 'shades';
 import {ifNull, updateQL} from '../../common/utils';
 import {Youtube} from '../../search/components/YoutubeQueryContainer';
 

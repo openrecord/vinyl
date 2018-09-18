@@ -27,9 +27,16 @@ const QUEUE_QUERY = gql`
 	${Youtube.fragments.result}
 `;
 
+const UPDATE_PLAYING = gql`
+	mutation UpdatePlaying($videoId: String!) {
+		updatePlaying(videoId: $videoId) @client
+	}
+`;
+
 const Composed = adopt({
 	data: ({render}) => <Query query={QUEUE_QUERY}>{({data}) => render(data)}</Query>,
-	toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />
+	toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />,
+	updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
 });
 
 export default () => (
@@ -39,7 +46,8 @@ export default () => (
 				queue: {tracks},
 				search: {isSearchOpen}
 			},
-			toggleSearch
-		}) => <Queue tracks={tracks} isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />}
+			toggleSearch,
+			updatePlaying
+		}) => <Queue tracks={tracks} isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} updatePlaying={updatePlaying} />}
 	</Composed>
 );
