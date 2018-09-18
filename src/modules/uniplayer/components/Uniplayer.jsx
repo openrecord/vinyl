@@ -52,10 +52,6 @@ class Uniplayer extends React.Component {
 			playerActive: true
 		});
 	};
-	onEnded = () => {
-		this.setState({playing: false});
-		this.props.playNextFromQueue();
-	};
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
 		if (!this.state.seeking) {
@@ -153,7 +149,7 @@ class Uniplayer extends React.Component {
 					onPause={this.onPause}
 					onBuffer={() => console.log('onBuffer')}
 					onSeek={e => console.log('onSeek', e)}
-					onEnded={this.onEnded}
+					onEnded={this.props.playNextFromQueue}
 					onError={e => console.log('onError', e)}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}

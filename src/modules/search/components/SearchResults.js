@@ -33,6 +33,7 @@ const StyledSearchResults = styled.div`
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 100%;
+	box-shadow: 0px 8px 12px 8px rgba(0, 0, 0, 0.2);
 
 	::-webkit-scrollbar {
 		display: none;

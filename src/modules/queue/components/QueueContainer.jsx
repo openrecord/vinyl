@@ -19,8 +19,12 @@ const QUEUE_QUERY = gql`
 				...YoutubeEntry
 			}
 		}
-
-		search {
+		player @client {
+			currentlyPlaying {
+				...YoutubeEntry
+			}
+		}
+		search @client {
 			isSearchOpen
 		}
 	}
@@ -28,8 +32,8 @@ const QUEUE_QUERY = gql`
 `;
 
 const UPDATE_PLAYING = gql`
-	mutation UpdatePlaying($videoId: String!) {
-		updatePlaying(videoId: $videoId) @client
+	mutation UpdatePlaying($track: YoutubeResult!) {
+		updatePlaying(track: $track) @client
 	}
 `;
 
@@ -44,10 +48,19 @@ export default () => (
 		{({
 			data: {
 				queue: {tracks},
+				player: {currentlyPlaying},
 				search: {isSearchOpen}
 			},
 			toggleSearch,
 			updatePlaying
-		}) => <Queue tracks={tracks} isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} updatePlaying={updatePlaying} />}
+		}) => (
+			<Queue
+				tracks={tracks}
+				isSearchOpen={isSearchOpen}
+				toggleSearch={toggleSearch}
+				updatePlaying={updatePlaying}
+				currentlyPlayingId={currentlyPlaying && currentlyPlaying.id.videoId}
+			/>
+		)}
 	</Composed>
 );

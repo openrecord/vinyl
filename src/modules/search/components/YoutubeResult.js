@@ -1,20 +1,20 @@
 import styled, {css} from 'styled-components';
 import React from 'react';
+import classname from 'classnames';
 
 export default function YoutubeResult({
 	onClick,
-	highRes,
+	playing,
 	search,
 	snippet: {
 		title,
-		description,
 		thumbnails: {
 			default: {url}
 		}
 	}
 }) {
 	return (
-		<StyledResult onClick={onClick}>
+		<StyledResult onClick={onClick} className={classname({playing})}>
 			<ImageHolder search={search}>
 				<img src={url} />
 				<PlayBackground />
@@ -32,7 +32,8 @@ const StyledResult = styled.div`
 	padding: 0.5rem 0.75rem;
 	transition: background-color 0.1s linear;
 
-	&:hover {
+	&:hover,
+	&.playing {
 		background: rgba(54, 54, 54);
 		div {
 			span {
