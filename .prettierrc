@@ -3,3 +3,4 @@ useTabs: true
 singleQuote: true
 bracketSpacing: false
 jsxBracketSameLine: false
+tabWidth: 2
