@@ -17,7 +17,11 @@ export default function Queue({isSearchOpen, tracks, toggleSearch}) {
 						<span> +</span>
 					</AddSong>
 				</CollectionInfo>
-				{isSearchOpen ? <h4>Search for a song on YouTube or Soundcloud</h4> : <h4>{tracks.length} tracks</h4>}
+				{isSearchOpen ? (
+					<h4>Search for a song on YouTube or Soundcloud</h4>
+				) : (
+					<h4>{tracks.length} tracks</h4>
+				)}
 			</QueueHeader>
 			{isSearchOpen && <Search />}
 			<QueueList>

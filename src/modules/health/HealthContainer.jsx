@@ -5,15 +5,15 @@ import * as actions from './health';
 const mapStateToProps = state => ({health: state.health});
 
 const mapDispatchToProps = dispatch => {
-  const checkApiHealth = () => {
-    dispatch(actions.checkApiHealth());
-  };
+	const checkApiHealth = () => {
+		dispatch(actions.checkApiHealth());
+	};
 
-  return {checkApiHealth};
+	return {checkApiHealth};
 };
 
 const HealthContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(HealthComponent);
 export default HealthContainer;

@@ -249,7 +249,15 @@ const Form = styled.form`
 function Input({type, name, autoComplete, onChange, value, className = '', children}) {
 	return (
 		<div className={`input-container ${className}`}>
-			<input autoFocus onChange={onChange} type={type} name={name} id={name} autoComplete={autoComplete} value={value} />
+			<input
+				autoFocus
+				onChange={onChange}
+				type={type}
+				name={name}
+				id={name}
+				autoComplete={autoComplete}
+				value={value}
+			/>
 			<label htmlFor={name}>{name}</label>
 			{children}
 		</div>
@@ -343,7 +351,13 @@ class RegisterForm extends React.Component {
 				value: this.state.password,
 				children: (
 					<CheckBoxWrapper className="password-toggle">
-						<input className="eye-toggle" type="button" name="showPassword" id="showPassword" onClick={this.togglePassword} />
+						<input
+							className="eye-toggle"
+							type="button"
+							name="showPassword"
+							id="showPassword"
+							onClick={this.togglePassword}
+						/>
 					</CheckBoxWrapper>
 				)
 			}
