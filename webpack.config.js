@@ -50,7 +50,7 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(js|jsx)$/,
+					test: /\.(mjs|js|jsx)$/,
 					exclude: /node_modules/,
 					use: {
 						loader: 'babel-loader',
@@ -67,7 +67,7 @@ module.exports = (env, argv) => {
 			]
 		},
 		resolve: {
-			extensions: ['.js', '.jsx'] // load jsx files without including extension
+			extensions: ['.mjs', '.js', '.jsx'] // load jsx files without including extension
 		},
 		externals: {
 			config: JSON.stringify(require('config')) // Allow front-end to import config as "config"

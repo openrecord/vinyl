@@ -3,22 +3,22 @@ import React from 'react';
 
 export default function YoutubeResult({
 	onClick,
+	highRes,
 	search,
-	result: {
+	snippet: {
 		title,
 		description,
 		thumbnails: {
-			default: {url, height, width}
+			default: {url}
 		}
 	}
 }) {
 	return (
 		<StyledResult onClick={onClick}>
 			<ImageHolder search={search}>
-				<img src={url} height={height * 0.5} width={width * 0.5} />
+				<img src={url} />
 				<PlayBackground />
-				{search && <AddPlus />}
-				{!search && <PlayButton />}
+				{search ? <AddPlus /> : <PlayButton />}
 			</ImageHolder>
 			<h4>{title}</h4>
 		</StyledResult>

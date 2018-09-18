@@ -1,27 +1,26 @@
-import {ConnectedRouter} from 'connected-react-router';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import React from 'react';
 
 import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
 import Nav from '../nav/NavContainer';
-import ProfileContainer from '../profile/ProfileContainer';
 import RegisterContainer from '../register/RegisterContainer';
-import UniPlayerContainer from '../uniplayer/UniplayerContainer';
+import UniplayerContainer from '../uniplayer/components/UniplayerContainer';
+import QueueContainer from '../queue/components/QueueContainer';
 
-export default function App({history}) {
+export default function App() {
 	return (
-		<ConnectedRouter history={history}>
+		<BrowserRouter>
 			<div>
 				<Nav />
 				<Switch>
 					<Route exact path={ROUTES.LANDING} component={Landing} />
 					<Route exact path={ROUTES.REGISTER} component={RegisterContainer} />
-					<Route exact path={ROUTES.PROFILE} component={ProfileContainer} />
-					<Route path={ROUTES.PLAYER} component={UniPlayerContainer} />
+					<Route path={ROUTES.PLAYER} component={QueueContainer} />
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
+				<UniplayerContainer />
 			</div>
-		</ConnectedRouter>
+		</BrowserRouter>
 	);
 }

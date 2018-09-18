@@ -1,106 +1,134 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
-import Search from '../../uniplayer/Search/SearchContainer';
-import YoutubeResult from '../../uniplayer/Search/YoutubeResult';
-import queue_img from './images/queue.svg';
-import x_img from './images/x.svg';
+import Search from '../../search/components/SearchContainer';
+import YoutubeResult from '../../search/components/YoutubeResult';
 
-export default function Queue({isQueueOpen, isSearchOpen, queue, toggleQueue, toggleSearch}) {
-	if (isQueueOpen) {
-		return (
-			<Sidebar expand className="sidebar">
-				<h2>Tracklist</h2>
-				<Search />
-				<QueueList>{queue.map(track => <YoutubeResult result={track.content} key={track.id} highRes />)}</QueueList>
-				<QueueButton onClick={toggleQueue} open>
-					<img src={x_img} />
-				</QueueButton>
-			</Sidebar>
-		);
-	}
+export default function Queue({isSearchOpen, tracks, toggleSearch}) {
 	return (
-		<Sidebar className="sidebar">
-			<QueueButton onClick={toggleQueue}>
-				<OButton />
-			</QueueButton>
-		</Sidebar>
+		<StyledQueue>
+			<QueueHeader>
+				<CollectionRecord />
+				<CollectionInfo>
+					<h5>COLLECTION</h5>
+					<h1>/example</h1>
+					<AddSong onClick={toggleSearch}>
+						Add Song
+						<span> +</span>
+					</AddSong>
+				</CollectionInfo>
+				{isSearchOpen ? <h4>Search for a song on YouTube or Soundcloud</h4> : <h4>{tracks.length} tracks</h4>}
+			</QueueHeader>
+			{isSearchOpen && <Search />}
+			<QueueList>
+				{tracks.map(track => (
+					<YoutubeResult snippet={track.snippet} key={track.id.videoId} highRes />
+				))}
+			</QueueList>
+		</StyledQueue>
 	);
 }
 
-const Sidebar = styled.div`
-	background: rgba(29, 29, 29, 0.995);
-	position: absolute;
-	height: 100%;
-	transition: all 0.1s;
-	right: 0;
-	width: ${({expand}) => (expand ? '25rem' : '0rem')};
-
-	h2 {
-		display block;
-		color: #f2f2f2;
-		margin: 1.75rem 0.875rem;
-	}
+const StyledQueue = styled.div`
+	display: block;
+	left: 50%;
+	max-width: 75rem;
+	padding-top: 4rem;
+	position: relative;
+	transform: translateX(-50%);
+	width: 80%;
 `;
 
 const QueueList = styled.div`
-	max-height: calc(100% - 8.75rem);
-	position: relative;
 	overflow: hidden;
 	overflow-y: scroll;
+	width: 100%;
+	max-height: 30rem;
 
 	::-webkit-scrollbar {
 		display: none;
 	}
 `;
 
-const QueueButton = styled.button`
-	background: rgba(255, 255, 255, 0.01);
-	border-radius: 50%;
-	border: 2px solid rgba(255, 255, 255, 1);
-	top: 0.875rem;
-	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-	height: 3.5rem;
-	right: 0.875rem;
-	outline: none;
-	position: fixed;
-	opacity: 0.8;
-	width: 3.5rem;
-	transition: all 0.1s;
+const QueueHeader = styled.div`
+	border-bottom: 1px solid rgba(40, 40, 40, 1);
+	position: relative;
+	padding: 0 0 1rem 0;
 
-	&:hover {
-		opacity: 1;
-
-		img {
-			opacity: 1;
-		}
-	}
-
-	img {
-		opacity: 0.9;
-		position: relative;
-		top: 0.0625rem;
-		transition: all 0.1s;
-		filter: invert(100%);
+	h4 {
+		bottom: 1rem;
+		color: rgba(98, 98, 98, 1);
+		position: absolute;
+		right: 0;
 	}
 `;
 
-const OButton = styled.div`
-	background: rgba(255, 255, 255, 1);
+const CollectionRecord = styled.div`
+	background: rgba(255, 255, 255, 0.01);
 	border-radius: 50%;
-	display: flex;
-	align-content: center;
-	height: 1.5rem;
-	margin: 0 auto;
-	width: 1.5rem;
+	border: 1px solid rgba(150, 150, 150, 1);
+	display: inline-block;
+	height: 7rem;
+	margin-right: 1rem;
+	outline: none;
+	position: relative;
+	transition: all 0.1s;
+	vertical-align: middle;
+	width: 7rem;
 
-	&::after {
+	::after {
 		content: '';
-		background: #9c4d9d;
+		background: transparent;
+		border: 1.25rem solid rgba(150, 150, 150, 1);
 		border-radius: 50%;
-		height: 0.25rem;
-		width: 0.25rem;
-		margin: auto;
+		display: inline-block;
+		height: 0.3125rem;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 0.3125rem;
+	}
+`;
+
+const CollectionInfo = styled.div`
+	display: inline-block;
+	height: 7rem;
+	position: relative;
+	vertical-align: top;
+
+	h5 {
+		color: rgba(60, 60, 60, 1);
+		margin-bottom: 0.25rem;
+	}
+
+	h1 {
+		color: rgba(255, 255, 255, 1);
+	}
+`;
+
+const AddSong = styled.button`
+	background: transparent
+	border: 0.125rem solid #9c4d9d;
+	border-radius: 0.25rem;
+	bottom: 0;
+	color: rgba(255,255,255,0.9);
+	cursor: pointer;
+	display: inline-block;
+	font-size: 0.875rem;
+	line-height: 1rem;
+	outline: none;
+	padding: 0.25rem 0.5rem;
+	position: absolute;
+	transition: all 0.1s;
+
+	span{
+		font-size: 1rem;
+		line-height: 0.875rem;
+	}
+
+	&:hover{
+		color: rgba(255,255,255,1);
+		background: #9c4d9d;
 	}
 `;

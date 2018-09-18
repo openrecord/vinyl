@@ -6,8 +6,6 @@ import {targetValue} from '../../common/utils';
 const StyledSearchBar = styled.input`
 	background: rgba(36, 36, 36);
 	border: 0;
-	border-top: 1px solid rgba(50, 50, 50, 0.1);
-	border-bottom: 1px solid rgba(50, 50, 50, 0.1);
 	border-radius: 0;
 	box-sizing: border-box;
 	color: #f2f2f2;
@@ -23,6 +21,15 @@ const StyledSearchBar = styled.input`
 	}
 `;
 
-export default function SearchBar({search, onChange}) {
-	return <StyledSearchBar className="search-bar" type="text" value={search} placeholder="Add Song..." onChange={targetValue(onChange)} />;
+export default function SearchBar({query, onChange}) {
+	return (
+		<StyledSearchBar
+			className="search-bar"
+			type="text"
+			value={query}
+			autoFocus
+			placeholder="Start typing..."
+			onChange={targetValue(onChange)}
+		/>
+	);
 }

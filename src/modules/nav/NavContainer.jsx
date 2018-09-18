@@ -23,32 +23,6 @@ const LoggedInLinks = () => (
 	</>
 );
 
-const StyledNav = styled.nav`
-	margin: 1.5rem 1.5rem 0 1.5rem;
-	pointer-events: none;
-	position: fixed;
-	text-align: left;
-
-	a {
-		color: white;
-		position: relative;
-		display: inline-block;
-		font-size: 1.25rem;
-		font-weight: 700;
-		margin: 8px;
-		pointer-events: all;
-		position: relative;
-
-		&:hover {
-			text-decoration: underline;
-		}
-
-		&:nth-child(2) {
-			float: right;
-		}
-	}
-`;
-
 export default function Nav({user}) {
 	return <StyledNav className="nav">{user ? <LoggedInLinks /> : <LoggedOutLinks />}</StyledNav>;
 }
@@ -56,3 +30,28 @@ export default function Nav({user}) {
 Nav.propTypes = {
 	user: object
 };
+
+const StyledNav = styled.nav`
+	margin: 1rem auto;
+	position: fixed;
+	width: 100%;
+	text-align: center;
+
+	a {
+		display: inline-block;
+		cursor: pointer;
+
+		color: white;
+		font-size: 1.25rem;
+		letter-spacing: 0.0675rem;
+		position: relative;
+
+		transition: all 0.1s;
+		transition: all 0.1s;
+		vertical-align: middle;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+`;
