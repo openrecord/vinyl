@@ -18,4 +18,6 @@ export const enqueue = updateQL(gql`
 		}
 	}
 	${Youtube.fragments.result}
-`).with(({track}) => updateAll(mod('queue', 'tracks')(cons(track)), mod('player', 'currentlyPlaying')(ifNull(track))));
+`).with(({track}) =>
+	updateAll(mod('queue', 'tracks')(cons(track)), mod('player', 'currentlyPlaying')(ifNull(track)))
+);

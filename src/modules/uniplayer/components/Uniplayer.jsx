@@ -200,7 +200,10 @@ class Uniplayer extends React.Component {
 							<Duration className="duration" seconds={this.state.duration * this.state.played} />
 							<div className="player-slider">
 								<div className="progress-bar-bg">
-									<span className="progress-bar" style={{right: 'calc(100% - ' + playback + '%)'}} />
+									<span
+										className="progress-bar"
+										style={{right: 'calc(100% - ' + playback + '%)'}}
+									/>
 								</div>
 								<input
 									className="player-bar"

@@ -9,7 +9,14 @@ export default function SearchResults({results, enqueue, clearSearch}) {
 			{results.map(result => {
 				switch (result.__typename) {
 					case 'YoutubeResult':
-						return <YoutubeResult search snippet={result.snippet} key={result.id.videoId} onClick={() => enqueue(result)} />;
+						return (
+							<YoutubeResult
+								search
+								snippet={result.snippet}
+								key={result.id.videoId}
+								onClick={() => enqueue(result)}
+							/>
+						);
 					default:
 						return null;
 				}

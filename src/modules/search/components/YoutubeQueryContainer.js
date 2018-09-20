@@ -72,7 +72,8 @@ export default ({search, children}) => {
 			query={YOUTUBE_QUERY}
 			variables={{path: getYoutubeURL(search)}}
 			fetchPolicy="network-only"
-			context={{debounceKey: 'YoutubeSearch'}}>
+			context={{debounceKey: 'YoutubeSearch'}}
+		>
 			{children}
 		</Query>
 	);

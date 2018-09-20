@@ -21,7 +21,14 @@ const Timeout = Composition =>
 		render() {
 			const {timeouts, setTimeout, clearTimeouts} = this;
 
-			return <Composition timeouts={timeouts} setTimeout={setTimeout} clearTimeouts={clearTimeouts} {...this.props} />;
+			return (
+				<Composition
+					timeouts={timeouts}
+					setTimeout={setTimeout}
+					clearTimeouts={clearTimeouts}
+					{...this.props}
+				/>
+			);
 		}
 	};
 
