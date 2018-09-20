@@ -42,20 +42,30 @@ export default new ApolloClient({
 			},
 			cache
 		}),
-		new DebounceLink(500),
+		new DebounceLink(250),
 		new RestLink({
 			endpoints: {
 				youtube: 'https://www.googleapis.com/youtube/v3/search'
 			}
 		}),
-		new HttpLink({uri: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev'})
+		new HttpLink({uri: GRAPHQL_URL})
 	]),
 	cache
 });
+
 function errorHandler({graphQLErrors, networkError}) {
-	if (graphQLErrors)
-		graphQLErrors.map(({message, locations, path}) =>
-			console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+	if (graphQLErrors) {
+		graphQLErrors.map(
+			({message, locations, path, operation = {operationName: 'not provided'}, response}) => {
+				console.error(
+					`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, operation: ${
+						operation.operationName
+					}`
+				);
+				console.log('operation', operation);
+				console.log('response', response);
+			}
 		);
+	}
 	if (networkError) console.log(`[Network error]: ${networkError}`);
 }

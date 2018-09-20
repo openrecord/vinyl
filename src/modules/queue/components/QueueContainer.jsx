@@ -3,64 +3,65 @@ import React from 'react';
 import {Query, Mutation} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
-import {adopt} from 'react-adopt';
-import {Youtube} from '../../search/components/YoutubeQueryContainer';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import TrackFragments from '../../common/fragments/TrackFragments';
+import SpinnerQuery from '../../common/components/SpinnerQuery';
+import {nullToUndefined} from '../../common/utils';
+import adapt from '../../common/components/Adapt';
 
-const TOGGLE_SEARCH = gql`
-	mutation ToggleSearch {
-		toggleSearch @client
-	}
-`;
-
-const QUEUE_QUERY = gql`
-	query Queue {
-		queue @client {
+const query = gql`
+	query Queue($playlist: String!) {
+		playlist(where: {name: $playlist}) {
+			id
+			name
 			tracks {
-				...YoutubeEntry
+				...AllTrack
 			}
 		}
+
 		player @client {
-			currentlyPlaying {
-				...YoutubeEntry
-			}
-		}
-		search @client {
-			isSearchOpen
+			currentlyPlaying
 		}
 	}
-	${Youtube.fragments.result}
+	${TrackFragments.all}
 `;
 
 const UPDATE_PLAYING = gql`
-	mutation UpdatePlaying($track: YoutubeResult!) {
+	mutation UpdatePlaying($track: Track!) {
 		updatePlaying(track: $track) @client
 	}
 `;
 
-const Composed = adopt({
-	data: ({render}) => <Query query={QUEUE_QUERY}>{({data}) => render(data)}</Query>,
-	toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />,
-	updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
-});
-
-export default () => (
-	<Composed>
-		{({
-			data: {
-				queue: {tracks},
-				player: {currentlyPlaying},
-				search: {isSearchOpen}
-			},
-			toggleSearch,
-			updatePlaying
-		}) => (
-			<Queue
-				tracks={tracks}
-				isSearchOpen={isSearchOpen}
-				toggleSearch={toggleSearch}
-				updatePlaying={updatePlaying}
-				currentlyPlayingId={currentlyPlaying && currentlyPlaying.id.videoId}
-			/>
-		)}
-	</Composed>
+const Composed = adapt(
+	{
+		playlist: <WithPlaylistId />,
+		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
+	},
+	{
+		data: ({render, playlist}) => (
+			<SpinnerQuery query={query} variables={{playlist}} postProcess={nullToUndefined}>
+				{({data}) => render(data)}
+			</SpinnerQuery>
+		)
+	}
 );
+
+export default function QueueContainer() {
+	return (
+		<Composed>
+			{({
+				data: {
+					playlist: {tracks} = {tracks: []},
+					player: {currentlyPlaying}
+				},
+				updatePlaying
+			}) => (
+				<Queue
+					tracks={tracks}
+					updatePlaying={updatePlaying}
+					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
+				/>
+			)}
+		</Composed>
+	);
+}

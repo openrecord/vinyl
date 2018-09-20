@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import YoutubeResult from './YoutubeResult';
+import Track from './Track';
 
 export default function SearchResults({results, enqueue, clearSearch}) {
 	return (
@@ -10,9 +10,10 @@ export default function SearchResults({results, enqueue, clearSearch}) {
 				switch (result.__typename) {
 					case 'YoutubeResult':
 						return (
-							<YoutubeResult
+							<Track
 								search
-								snippet={result.snippet}
+								thumbnail={result.snippet.thumbnails.default.url}
+								title={result.snippet.title}
 								key={result.id.videoId}
 								onClick={() => enqueue(result)}
 							/>

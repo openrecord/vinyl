@@ -2,21 +2,11 @@ import styled, {css} from 'styled-components';
 import React from 'react';
 import classname from 'classnames';
 
-export default function YoutubeResult({
-	onClick,
-	playing,
-	search,
-	snippet: {
-		title,
-		thumbnails: {
-			default: {url}
-		}
-	}
-}) {
+export default function Track({onClick, playing, search, thumbnail, title}) {
 	return (
 		<StyledResult onClick={onClick} className={classname({playing})}>
 			<ImageHolder search={search}>
-				<img src={url} />
+				<img src={thumbnail} />
 				<PlayBackground />
 				{search ? <AddPlus /> : <PlayButton />}
 			</ImageHolder>

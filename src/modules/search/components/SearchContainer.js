@@ -4,6 +4,9 @@ import Search from './Search';
 import gql from 'graphql-tag';
 import {Query, Mutation} from 'react-apollo';
 import YoutubeQuery from './YoutubeQueryContainer';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import adapt from '../../common/components/Adapt';
+import TrackFragments from '../../common/fragments/TrackFragments';
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
@@ -18,38 +21,105 @@ const UPDATE_QUERY = gql`
 		updateQuery(query: $query) @client
 	}
 `;
-const ENQUEUE = gql`
-	mutation Enqueue($track: YoutubeResult!) {
-		enqueue(track: $track) @client
+
+const ADD_TO_PLAYLIST = gql`
+	mutation AddToPlaylist($url: String!, $thumbnail: String!, $title: String!, $playlist: String!) {
+		upsertTrackInfo(
+			where: {url: $url}
+			create: {thumbnail: $thumbnail, title: $title, url: $url, source: YOUTUBE}
+			update: {}
+		) {
+			id
+		}
+
+		upsertPlaylist(where: {name: $playlist}, create: {name: $playlist}, update: {}) {
+			id
+		}
+
+		updatePlaylist(
+			where: {name: $playlist}
+			data: {tracks: {create: [{info: {connect: {url: $url}}}]}}
+		) {
+			id
+			name
+			tracks {
+				id
+				info {
+					id
+					title
+					url
+					thumbnail
+					description
+					source
+				}
+			}
+		}
 	}
 `;
 
-export default () => (
-	<Query query={SEARCH_QUERY}>
-		{({
-			data: {
-				search: {query}
+const addToPlaylistUpdate = playlist => (cache, {data: {updatePlaylist}}) => {
+	const query = gql`
+		query Queue($playlist: String!) {
+			playlist(where: {name: $playlist}) {
+				id
+				name
+				tracks {
+					...AllTrack
+				}
 			}
-		}) => (
-			<YoutubeQuery search={query}>
-				{({data: {youtubeResults}}) => (
-					<Mutation mutation={UPDATE_QUERY}>
-						{updateQuery => (
-							<Mutation mutation={ENQUEUE}>
-								{enqueue => (
-									<Search
-										query={query}
-										results={youtubeResults}
-										setSearch={query => updateQuery({variables: {query}})}
-										enqueue={track => enqueue({variables: {track}})}
-										clearSearch={() => updateQuery({variables: {query: ''}})}
-									/>
-								)}
-							</Mutation>
-						)}
-					</Mutation>
-				)}
-			</YoutubeQuery>
-		)}
-	</Query>
+		}
+		${TrackFragments.all}
+	`;
+
+	const data = cache.readQuery({query, variables: {playlist}});
+
+	if (data.playlist === null) {
+		cache.writeQuery({
+			query,
+			data: {playlist: updatePlaylist},
+			variables: {playlist}
+		});
+	}
+};
+
+const Composed = adapt(
+	{
+		playlist: <WithPlaylistId />,
+		updateQuery: <Mutation mutation={UPDATE_QUERY} />,
+		addToPlaylist: <Mutation mutation={ADD_TO_PLAYLIST} />,
+		query: ({render}) => (
+			<Query query={SEARCH_QUERY}>{props => render(props.data.search.query)}</Query>
+		)
+	},
+	{
+		youtubeResults: ({query, render}) => (
+			<YoutubeQuery search={query}>{props => render(props.data.youtubeResults)}</YoutubeQuery>
+		)
+	}
 );
+
+export default function SearchContainer() {
+	return (
+		<Composed>
+			{({query, playlist, youtubeResults, updateQuery, addToPlaylist}) => (
+				<Search
+					query={query}
+					results={youtubeResults}
+					setSearch={query => updateQuery({variables: {query}})}
+					enqueue={track =>
+						addToPlaylist({
+							variables: {
+								url: track.id.videoId,
+								thumbnail: track.snippet.thumbnails.default.url,
+								title: track.snippet.title,
+								playlist
+							},
+							update: addToPlaylistUpdate(playlist)
+						})
+					}
+					clearSearch={() => updateQuery({variables: {query: ''}})}
+				/>
+			)}
+		</Composed>
+	);
+}

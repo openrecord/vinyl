@@ -1,82 +1,53 @@
 import _ from 'lodash';
 import gql from 'graphql-tag';
-import {mod, updateAll, cons, set, findBy, get, has} from 'shades';
-import {ifNull, updateQL} from '../../common/utils';
-import {Youtube} from '../../search/components/YoutubeQueryContainer';
-
-export const enqueue = updateQL(
-	gql`
-		{
-			queue @client {
-				tracks {
-					...YoutubeEntry
-				}
-			}
-
-			player @client {
-				currentlyPlaying {
-					...YoutubeEntry
-				}
-			}
-		}
-		${Youtube.fragments.result}
-	`
-).with(({track}) =>
-	updateAll(mod('queue', 'tracks')(cons(track)), mod('player', 'currentlyPlaying')(ifNull(track)))
-);
+import {set, has} from 'shades';
+import {updateQL} from '../../common/utils';
+import TrackFragments from '../../common/fragments/TrackFragments';
 
 export const updatePlaying = updateQL(
 	gql`
 		query {
-			queue {
-				tracks {
-					...YoutubeEntry
-				}
-			}
-			player {
+			player @client {
 				currentlyPlaying {
-					...YoutubeEntry
+					...AllTrack
 				}
 			}
 		}
-
-		${Youtube.fragments.result}
+		${TrackFragments.all}
 	`
 ).with(({track}) => set('player', 'currentlyPlaying')(track));
 
 export const playNextFromQueue = updateQL(
 	gql`
-		query {
-			queue @client {
+		query PlayNextQuery($playlist: String!) {
+			playlist(where: {name: $playlist}) {
+				id
 				tracks {
-					...YoutubeEntry
+					id
 				}
 			}
 
-			player {
+			player @client {
 				currentlyPlaying {
-					...YoutubeEntry
+					id
 				}
 			}
 		}
-		${Youtube.fragments.result}
 	`
 ).with(() => state => {
 	//prettier-ignore
 	const {
-	  queue: {
+	  playlist: {
 		  tracks
 		}, 
 		player: {
 			currentlyPlaying: {
-				id: {
-					videoId
-				}
+				id
 			}
 		}
 	} = state;
 
-	const track = findNextTrack(tracks, has({id: {videoId}}));
+	const track = findNextTrack(tracks, has({id}));
 	return set('player', 'currentlyPlaying')(track)(state);
 });
 
