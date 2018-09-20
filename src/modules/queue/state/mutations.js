@@ -37,8 +37,8 @@ export const playNextFromQueue = updateQL(
 ).with(() => state => {
 	//prettier-ignore
 	const {
-	  playlist: {
-		  tracks
+		playlist: {
+			tracks
 		}, 
 		player: {
 			currentlyPlaying: {
