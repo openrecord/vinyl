@@ -10,7 +10,7 @@ export default function Queue({tracks, updatePlaying, currentlyPlayingId}) {
 				<Track
 					{...track.info}
 					key={track.id}
-					onClick={() => updatePlaying({variables: {track}})}
+					onClick={() => updatePlaying(track)}
 					playing={currentlyPlayingId === track.id}
 					highRes
 				/>

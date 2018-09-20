@@ -60,7 +60,7 @@ export default function QueueContainer() {
 			}) => (
 				<Queue
 					tracks={tracks}
-					updatePlaying={updatePlaying}
+					updatePlaying={track => updatePlaying({variables: {track}})}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
 				/>
 			)}
