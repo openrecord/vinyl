@@ -10,10 +10,7 @@ export default function Spinner() {
 }
 
 const StyledSpinner = styled.div`
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%) rotateX(180deg);
+	text-align: center;
 
 	svg {
 		animation: spin 1.5s linear infinite;
