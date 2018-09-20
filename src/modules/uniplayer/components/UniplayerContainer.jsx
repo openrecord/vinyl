@@ -8,7 +8,7 @@ import TrackFragments from '../../common/fragments/TrackFragments';
 import adapt from '../../common/components/Adapt';
 
 const query = gql`
-	query UniplayerContainer($playlist: String!) {
+	query UniplayerContainer {
 		player @client {
 			currentlyPlaying {
 				...AllTrack
