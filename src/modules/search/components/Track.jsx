@@ -25,6 +25,9 @@ const StyledResult = styled.div`
 	&:hover,
 	&.playing {
 		background: rgba(54, 54, 54);
+	}
+
+	&:hover {
 		div {
 			span {
 				opacity: 1;

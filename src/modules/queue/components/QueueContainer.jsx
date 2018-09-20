@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Query, Mutation} from 'react-apollo';
+import {Mutation} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
@@ -20,7 +20,9 @@ const query = gql`
 		}
 
 		player @client {
-			currentlyPlaying
+			currentlyPlaying {
+				id
+			}
 		}
 	}
 	${TrackFragments.all}
