@@ -6,7 +6,7 @@ import {Query, Mutation} from 'react-apollo';
 import YoutubeQuery from './YoutubeQueryContainer';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
-import TrackFragments from '../../common/fragments/TrackFragments';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
@@ -40,35 +40,20 @@ const ADD_TO_PLAYLIST = gql`
 			where: {name: $playlist}
 			data: {tracks: {create: [{info: {connect: {url: $url}}}]}}
 		) {
-			id
-			name
-			tracks {
-				id
-				info {
-					id
-					title
-					url
-					thumbnail
-					description
-					source
-				}
-			}
+			...AllPlaylist
 		}
 	}
+	${PlaylistFragments.all}
 `;
 
 const addToPlaylistUpdate = playlist => (cache, {data: {updatePlaylist}}) => {
 	const query = gql`
 		query Queue($playlist: String!) {
 			playlist(where: {name: $playlist}) {
-				id
-				name
-				tracks {
-					...AllTrack
-				}
+				...AllPlaylist
 			}
 		}
-		${TrackFragments.all}
+		${PlaylistFragments.all}
 	`;
 
 	const data = cache.readQuery({query, variables: {playlist}});

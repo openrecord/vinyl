@@ -9,9 +9,11 @@ import {InMemoryCache, defaultDataIdFromObject} from 'apollo-cache-inmemory';
 import {onError} from 'apollo-link-error';
 import {withClientState} from 'apollo-link-state';
 import {HttpLink} from 'apollo-link-http';
-import {ApolloLink} from 'apollo-link';
+import {ApolloLink, split} from 'apollo-link';
 import {RestLink} from 'apollo-link-rest';
 import DebounceLink from 'apollo-link-debounce';
+import {WebSocketLink} from 'apollo-link-ws';
+import {getMainDefinition} from 'apollo-utilities';
 
 const cache = new InMemoryCache({
 	dataIdFromObject: object => {
@@ -48,7 +50,14 @@ export default new ApolloClient({
 				youtube: 'https://www.googleapis.com/youtube/v3/search'
 			}
 		}),
-		new HttpLink({uri: GRAPHQL_URL})
+		split(
+			({query}) => {
+				const {kind, operation} = getMainDefinition(query);
+				return kind === 'OperationDefinition' && operation === 'subscription';
+			},
+			new WebSocketLink({uri: GRAPHQL_URI.WS, options: {reconnect: true}}),
+			new HttpLink({uri: GRAPHQL_URI.HTTP})
+		)
 	]),
 	cache
 });
