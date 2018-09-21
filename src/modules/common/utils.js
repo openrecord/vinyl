@@ -38,3 +38,9 @@ export const nullToUndefined = map(v => {
 
 	return v;
 });
+
+export const ifEnter = f => event => {
+	if (event.key === 'Enter') {
+		f();
+	}
+};
