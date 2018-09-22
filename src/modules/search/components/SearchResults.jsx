@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import YoutubeResult from './YoutubeResult';
+import Track from './Track';
 
 export default function SearchResults({results, enqueue, clearSearch}) {
 	return (
@@ -10,9 +10,10 @@ export default function SearchResults({results, enqueue, clearSearch}) {
 				switch (result.__typename) {
 					case 'YoutubeResult':
 						return (
-							<YoutubeResult
+							<Track
 								search
-								snippet={result.snippet}
+								thumbnail={result.snippet.thumbnails.default.url}
+								title={result.snippet.title}
 								key={result.id.videoId}
 								onClick={() => enqueue(result)}
 							/>
@@ -33,6 +34,7 @@ const StyledSearchResults = styled.div`
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 100%;
+	box-shadow: 0px 8px 12px 8px rgba(0, 0, 0, 0.2);
 
 	::-webkit-scrollbar {
 		display: none;

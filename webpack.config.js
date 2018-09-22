@@ -12,7 +12,14 @@ module.exports = (env, argv) => {
 
 	plugins = [
 		new HtmlWebPackPlugin({title: 'Open Record', hash: true}), // automatically create index.html based on webpack config
-		new ReactRootPlugin() // create react root within generated html file
+		new ReactRootPlugin(), // create react root within generated html file
+		new webpack.DefinePlugin({
+			GRAPHQL_URL: JSON.stringify(
+				isProduction
+					? 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
+					: 'http://localhost:4466'
+			)
+		})
 	];
 
 	if (isProduction) {

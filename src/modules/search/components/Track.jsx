@@ -1,22 +1,12 @@
 import styled, {css} from 'styled-components';
 import React from 'react';
+import classname from 'classnames';
 
-export default function YoutubeResult({
-	onClick,
-	highRes,
-	search,
-	snippet: {
-		title,
-		description,
-		thumbnails: {
-			default: {url}
-		}
-	}
-}) {
+export default function Track({onClick, playing, search, thumbnail, title}) {
 	return (
-		<StyledResult onClick={onClick}>
+		<StyledResult onClick={onClick} className={classname({playing})}>
 			<ImageHolder search={search}>
-				<img src={url} />
+				<img src={thumbnail} />
 				<PlayBackground />
 				{search ? <AddPlus /> : <PlayButton />}
 			</ImageHolder>
@@ -32,8 +22,12 @@ const StyledResult = styled.div`
 	padding: 0.5rem 0.75rem;
 	transition: background-color 0.1s linear;
 
-	&:hover {
+	&:hover,
+	&.playing {
 		background: rgba(54, 54, 54);
+	}
+
+	&:hover {
 		div {
 			span {
 				opacity: 1;

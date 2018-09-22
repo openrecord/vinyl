@@ -1,45 +1,69 @@
 import React from 'react';
 
-import {Query, Mutation} from 'react-apollo';
+import {Mutation} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
-import {adopt} from 'react-adopt';
-import {Youtube} from '../../search/components/YoutubeQueryContainer';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import TrackFragments from '../../common/fragments/TrackFragments';
+import SpinnerQuery from '../../common/components/SpinnerQuery';
+import {nullToUndefined} from '../../common/utils';
+import adapt from '../../common/components/Adapt';
 
-const TOGGLE_SEARCH = gql`
-	mutation ToggleSearch {
-		toggleSearch @client
-	}
-`;
-
-const QUEUE_QUERY = gql`
-	query Queue {
-		queue @client {
+const query = gql`
+	query Queue($playlist: String!) {
+		playlist(where: {name: $playlist}) {
+			id
+			name
 			tracks {
-				...YoutubeEntry
+				...AllTrack
 			}
 		}
 
-		search {
-			isSearchOpen
+		player @client {
+			currentlyPlaying {
+				id
+			}
 		}
 	}
-	${Youtube.fragments.result}
+	${TrackFragments.all}
 `;
 
-const Composed = adopt({
-	data: ({render}) => <Query query={QUEUE_QUERY}>{({data}) => render(data)}</Query>,
-	toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />
-});
+const UPDATE_PLAYING = gql`
+	mutation UpdatePlaying($track: Track!) {
+		updatePlaying(track: $track) @client
+	}
+`;
 
-export default () => (
-	<Composed>
-		{({
-			data: {
-				queue: {tracks},
-				search: {isSearchOpen}
-			},
-			toggleSearch
-		}) => <Queue tracks={tracks} isSearchOpen={isSearchOpen} toggleSearch={toggleSearch} />}
-	</Composed>
+const Composed = adapt(
+	{
+		playlist: <WithPlaylistId />,
+		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
+	},
+	{
+		data: ({render, playlist}) => (
+			<SpinnerQuery query={query} variables={{playlist}} postProcess={nullToUndefined}>
+				{({data}) => render(data)}
+			</SpinnerQuery>
+		)
+	}
 );
+
+export default function QueueContainer() {
+	return (
+		<Composed>
+			{({
+				data: {
+					playlist: {tracks} = {tracks: []},
+					player: {currentlyPlaying}
+				},
+				updatePlaying
+			}) => (
+				<Queue
+					tracks={tracks}
+					updatePlaying={track => updatePlaying({variables: {track}})}
+					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
+				/>
+			)}
+		</Composed>
+	);
+}

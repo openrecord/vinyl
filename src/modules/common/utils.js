@@ -1,3 +1,4 @@
+import {map} from 'shades';
 export const targetValue = f => ({target: {value}}) => f(value);
 
 export const toQueryString = params =>
@@ -10,9 +11,9 @@ export const ifNull = value => maybeValue => maybeValue || value;
 
 export const updateQL = query => ({
 	with: reducer => (_, variables, {cache}) => {
-		const prev = cache.readQuery({query});
+		const prev = cache.readQuery({query, variables});
 
-		cache.writeQuery({query, data: reducer(variables)(prev)});
+		cache.writeQuery({query, variables, data: reducer(variables)(prev)});
 		return null;
 	}
 });
@@ -21,3 +22,19 @@ export function inspect(value) {
 	console.log(value);
 	return value;
 }
+
+export const nullToUndefined = map(v => {
+	if (v === null) {
+		return undefined;
+	}
+
+	if (Array.isArray(v)) {
+		return map(nullToUndefined)(v);
+	}
+
+	if (typeof v === 'object') {
+		return nullToUndefined(v);
+	}
+
+	return v;
+});
