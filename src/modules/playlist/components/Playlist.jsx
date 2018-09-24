@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SearchContainer from '../../search/components/SearchContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 
-export default function Playlist({playlist, isSearchOpen, toggleSearch}) {
+export default function Playlist({playlist, isSearchOpen, toggleSearch, trackCount}) {
 	return (
 		<StyledPlaylist>
 			<Header>
@@ -23,7 +23,14 @@ export default function Playlist({playlist, isSearchOpen, toggleSearch}) {
 						)}
 					</AddSong>
 				</CollectionInfo>
-				{isSearchOpen && <h4>Search for a song on YouTube or Soundcloud</h4>}
+				{isSearchOpen ? (
+					<h4>Search for a song on YouTube or Soundcloud</h4>
+				) : (
+					<h4>
+						{trackCount} track
+						{trackCount !== 1 && 's'}
+					</h4>
+				)}
 			</Header>
 			{isSearchOpen && <SearchContainer />}
 			<QueueContainer />

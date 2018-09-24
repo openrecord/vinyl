@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Track from '../../search/components/Track';
 
-export default function Queue({tracks, updatePlaying, currentlyPlayingId}) {
+export default function Queue({tracks, updatePlaying, currentlyPlayingId, deleteTrack}) {
 	return (
 		<QueueList>
 			{tracks.map(track => (
@@ -11,6 +11,7 @@ export default function Queue({tracks, updatePlaying, currentlyPlayingId}) {
 					{...track.info}
 					key={track.id}
 					onClick={() => updatePlaying(track)}
+					deleteTrack={() => deleteTrack(track)}
 					playing={currentlyPlayingId === track.id}
 					highRes
 				/>

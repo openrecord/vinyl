@@ -34,10 +34,22 @@ const UPDATE_PLAYING = gql`
 	}
 `;
 
+const DELETE_TRACK = gql`
+	mutation DeleteTrack($playlist: String!, $trackId: ID!) {
+		updatePlaylist(where: {name: $playlist}, data: {tracks: {delete: [{id: $trackId}]}}) {
+			id
+			tracks {
+				id
+			}
+		}
+	}
+`;
+
 const Composed = adapt(
 	{
 		playlist: <WithPlaylistId />,
-		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
+		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />,
+		deleteTrack: <Mutation mutation={DELETE_TRACK} />
 	},
 	{
 		data: ({render, playlist}) => (
@@ -56,11 +68,14 @@ export default function QueueContainer() {
 					playlist: {tracks} = {tracks: []},
 					player: {currentlyPlaying}
 				},
-				updatePlaying
+				playlist,
+				updatePlaying,
+				deleteTrack
 			}) => (
 				<Queue
 					tracks={tracks}
 					updatePlaying={track => updatePlaying({variables: {track}})}
+					deleteTrack={track => deleteTrack({variables: {playlist, trackId: track.id}})}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
 				/>
 			)}
