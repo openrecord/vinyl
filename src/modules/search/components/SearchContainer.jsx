@@ -8,7 +8,7 @@ import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import {toast} from 'react-toastify';
-import SongAdded from '../../common/components/SongAdded';
+import Toast from '../../common/components/Toast';
 
 const TOGGLE_SEARCH = gql`
 	mutation ToggleSearch {
@@ -126,7 +126,7 @@ export default function SearchContainer() {
 							},
 							update: addToPlaylistUpdate(playlist)
 						});
-						toast(<SongAdded />);
+						toast(<Toast message="Song Added!" />);
 					}}
 					clearSearch={() => updateQuery({variables: {query: ''}})}
 				/>

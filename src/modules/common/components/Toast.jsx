@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function SongAdded() {
-	return <StyledToast>Song added!</StyledToast>;
+export default function Toast({message}) {
+	return <StyledToast>{message}</StyledToast>;
 }
 const StyledToast = styled.div`
 	background: #9c4d9d;

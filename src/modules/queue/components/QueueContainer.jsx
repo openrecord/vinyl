@@ -1,12 +1,15 @@
+import {toast} from 'react-toastify';
 import React from 'react';
 
 import {Mutation} from 'react-apollo';
-import Queue from './Queue';
 import gql from 'graphql-tag';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
-import TrackFragments from '../../common/fragments/TrackFragments';
-import SpinnerQuery from '../../common/components/SpinnerQuery';
+
 import {nullToUndefined} from '../../common/utils';
+import Queue from './Queue';
+import SpinnerQuery from '../../common/components/SpinnerQuery';
+import Toast from '../../common/components/Toast';
+import TrackFragments from '../../common/fragments/TrackFragments';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 
 const query = gql`
@@ -75,7 +78,10 @@ export default function QueueContainer() {
 				<Queue
 					tracks={tracks}
 					updatePlaying={track => updatePlaying({variables: {track}})}
-					deleteTrack={track => deleteTrack({variables: {playlist, trackId: track.id}})}
+					deleteTrack={track => {
+						deleteTrack({variables: {playlist, trackId: track.id}});
+						toast(<Toast message="Song Deleted" />);
+					}}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
 				/>
 			)}
