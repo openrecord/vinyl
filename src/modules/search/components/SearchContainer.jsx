@@ -7,6 +7,8 @@ import YoutubeQuery from './YoutubeQueryContainer';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 import TrackFragments from '../../common/fragments/TrackFragments';
+import {toast} from 'react-toastify';
+import SongAdded from '../../common/components/SongAdded';
 
 const TOGGLE_SEARCH = gql`
 	mutation ToggleSearch {
@@ -114,7 +116,7 @@ export default function SearchContainer() {
 					query={query}
 					results={youtubeResults}
 					setSearch={query => updateQuery({variables: {query}})}
-					enqueue={track =>
+					enqueue={track => {
 						addToPlaylist({
 							variables: {
 								url: track.id.videoId,
@@ -123,8 +125,9 @@ export default function SearchContainer() {
 								playlist
 							},
 							update: addToPlaylistUpdate(playlist)
-						})
-					}
+						});
+						toast(<SongAdded />);
+					}}
 					clearSearch={() => updateQuery({variables: {query: ''}})}
 				/>
 			)}

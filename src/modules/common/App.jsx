@@ -1,5 +1,8 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import React from 'react';
+import {ToastContainer, toast, Bounce} from 'react-toastify';
 
 import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
@@ -20,6 +23,14 @@ export default function App() {
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
 				<UniplayerContainer />
+				<ToastContainer
+					position={toast.POSITION.TOP_RIGHT}
+					transition={Bounce}
+					className="toast-container"
+					toastClassName="toast"
+					hideProgressBar
+					closeButton={false}
+				/>
 			</div>
 		</BrowserRouter>
 	);
