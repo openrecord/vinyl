@@ -16,7 +16,7 @@ export default class Options extends React.Component {
 
 	render() {
 		return (
-			<MenuTrigger className="menu-trigger">
+			<StyledOptions className="options">
 				<SongDots onClick={this.toggleOpen}>
 					<Dot />
 					<Dot />
@@ -25,12 +25,12 @@ export default class Options extends React.Component {
 						<li onClick={this.props.deleteTrack}>Delete</li>
 					</Menu>
 				</SongDots>
-			</MenuTrigger>
+			</StyledOptions>
 		);
 	}
 }
 
-const MenuTrigger = styled.div`
+const StyledOptions = styled.div`
 	opacity: 0;
 	margin-left: auto;
 
@@ -53,15 +53,15 @@ const Dot = styled.span`
 `;
 
 const Menu = styled.ul`
+	position: absolute;
+	top: 1rem;
 	background: rgba(32, 32, 32);
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
-	display: inline-block;
 	right: 0;
 	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
-	position: absolute;
-	top: 100%;
 	transition: all 0.1s;
+
 	li {
 		border-radius: 0.25rem;
 		color: white;
@@ -70,6 +70,7 @@ const Menu = styled.ul`
 		font-size: 0.875rem;
 		padding: 0.375rem 0.75rem 0.375rem 0.75rem;
 		text-align: left;
+
 		&:hover {
 			background: rgb(64, 64, 64);
 		}

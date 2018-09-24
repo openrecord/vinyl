@@ -41,7 +41,7 @@ const StyledResult = styled.div`
 				opacity: 1;
 			}
 		}
-		.menu-trigger {
+		.options {
 			opacity: 0.5;
 		}
 	}
