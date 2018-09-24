@@ -5,12 +5,22 @@ import classname from 'classnames';
 export default function Track({onClick, playing, search, thumbnail, title}) {
 	return (
 		<StyledResult onClick={onClick} className={classname({playing})}>
-			<ImageHolder search={search}>
+			<ImageHolder className="image-holder" search={search}>
 				<img src={thumbnail} />
-				<PlayBackground />
-				{search ? <AddPlus /> : <PlayButton />}
+				<PlayBackground className="play-background" />
+				{search ? <AddPlus /> : <PlayButton className="play-button" />}
 			</ImageHolder>
 			<h4>{title}</h4>
+			<MenuTrigger className="menu-trigger">
+				<SongDots>
+					<span />
+					<span />
+					<span />
+				</SongDots>
+				<Menu className="menu">
+					<li>Delete</li>
+				</Menu>
+			</MenuTrigger>
 		</StyledResult>
 	);
 }
@@ -20,18 +30,28 @@ const StyledResult = styled.div`
 	align-items: center;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
+	position: relative;
 	transition: background-color 0.1s linear;
 
-	&:hover,
 	&.playing {
-		background: rgba(54, 54, 54);
+		background: rgba(40, 40, 40);
+		.play-background {
+			opacity: 1;
+		}
+		.play-button {
+			opacity: 1;
+		}
 	}
 
 	&:hover {
-		div {
+		background: rgba(40, 40, 40);
+		.image-holder {
 			span {
 				opacity: 1;
 			}
+		}
+		.menu-trigger {
+			opacity: 0.5;
 		}
 	}
 
@@ -106,7 +126,7 @@ const AddPlus = styled.span`
 `;
 
 const PlayBackground = styled.span`
-	background: rgba(16, 16, 16, 0.7);
+	background: rgba(16, 16, 16, 0.8);
 	height: 100%;
 	position: absolute;
 	opacity: 0;
@@ -127,4 +147,65 @@ const PlayButton = styled.span`
 	border-width: 0.75rem 0 0.75rem 1.25rem;
 	border-color: transparent transparent transparent white;
 	border-style: solid;
+`;
+
+const MenuTrigger = styled.div`
+	height: 1.5rem;
+	opacity: 0;
+	position: absolute;
+	right: 1rem;
+	text-align: center;
+	top: 50%;
+	width: 2rem;
+	transform: translateY(-50%);
+	transition: all 0.1s;
+	&:hover {
+		opacity: 1 !important;
+
+		/****** Need to Remove and Replace with Click *****/
+		.menu {
+			opacity: 1;
+		}
+	}
+`;
+const SongDots = styled.div`
+	left: 50%;
+	position: relative;
+	top: 50%;
+	transform: translate(-50%, -50%);
+ 	span {
+		background: white;
+		border-radius: 50%;
+		box-sizing: content-box;
+		display: inline-block;
+		height: 0.25rem;
+		margin: 0.125rem;
+		position: relative;
+		top: -0.0675rem
+		width: 0.25rem;
+	}
+`;
+
+const Menu = styled.ul`
+	background: rgba(32, 32, 32);
+	border-radius: 0.25rem;
+	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+	display: inline-block;
+	right: 0;
+	opacity: 0;
+	position: absolute;
+	top: 100%;
+	transition: all 0.1s;
+	li {
+		border-radius: 0.25rem;
+		color: white;
+		cursor: pointer;
+		display: block;
+		font-size: 0.875rem;
+		padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+		text-align: left;
+		&:hover {
+			background: rgb(64, 64, 64);
+		}
+	}
 `;

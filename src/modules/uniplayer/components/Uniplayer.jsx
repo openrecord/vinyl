@@ -10,7 +10,7 @@ class Uniplayer extends React.Component {
 
 		this.state = {
 			//Player State
-			playing: false,
+			playing: true,
 			volume: 1,
 			muted: false,
 			played: 0,
@@ -79,7 +79,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = (songDuration / barWidth) * mousePosition,
+			scrubTime = songDuration / barWidth * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -185,6 +185,7 @@ class Uniplayer extends React.Component {
 							<h5 className="song-title">{currentlyPlaying.info.title}</h5>
 						</div>
 					)}
+					<div className="song-added">Song added!</div>
 				</div>
 				<div className="uniplayer-middle">
 					<div className="player-controls">

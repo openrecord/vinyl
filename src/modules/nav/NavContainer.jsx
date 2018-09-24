@@ -32,7 +32,8 @@ Nav.propTypes = {
 };
 
 const StyledNav = styled.nav`
-	margin: 1rem auto;
+	background: rgb(25, 25, 25);
+	padding: 1rem 0;
 	position: fixed;
 	width: 100%;
 	text-align: center;

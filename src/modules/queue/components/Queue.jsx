@@ -20,10 +20,9 @@ export default function Queue({tracks, updatePlaying, currentlyPlayingId}) {
 }
 
 const QueueList = styled.div`
-	overflow: hidden;
+	margin-bottom: 5rem;
 	overflow-y: scroll;
 	width: 100%;
-	max-height: 30rem;
 
 	::-webkit-scrollbar {
 		display: none;
