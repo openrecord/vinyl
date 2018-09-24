@@ -11,16 +11,7 @@ export default function Track({onClick, playing, search, thumbnail, title}) {
 				{search ? <AddPlus /> : <PlayButton className="play-button" />}
 			</ImageHolder>
 			<h4>{title}</h4>
-			<MenuTrigger className="menu-trigger">
-				<SongDots>
-					<span />
-					<span />
-					<span />
-				</SongDots>
-				<Menu className="menu">
-					<li>Delete</li>
-				</Menu>
-			</MenuTrigger>
+			{!search && <Options />}
 		</StyledResult>
 	);
 }
@@ -30,7 +21,6 @@ const StyledResult = styled.div`
 	align-items: center;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
-	position: relative;
 	transition: background-color 0.1s linear;
 
 	&.playing {
@@ -102,27 +92,6 @@ const AddPlus = styled.span`
 	top: 50%;
 	transform: translate(-50%, -50%);
 	width: 1.5rem;
-
-	&:before {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		width: 0.25rem;
-		transform: translateX(-50%);
-	}
-
-	&:after {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%, -50%) rotate(90deg);
-		width: 0.25rem;
-	}
 `;
 
 const PlayBackground = styled.span`
@@ -135,55 +104,67 @@ const PlayBackground = styled.span`
 `;
 
 const PlayButton = styled.span`
-	height: 1.5rem;
-	left: 50%;
-	opacity: 0;
 	position: absolute;
 	top: 50%;
+	left: 50%;
+	opacity: 0;
 	transform: translate(-50%, -50%);
 	transition: all 0.1s;
 
-	box-sizing: border-box;
 	border-width: 0.75rem 0 0.75rem 1.25rem;
 	border-color: transparent transparent transparent white;
 	border-style: solid;
 `;
 
+class Options extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isOpen: false
+		};
+	}
+
+	toggleOpen = event => {
+		event.stopPropagation();
+		this.setState({isOpen: !this.state.isOpen});
+	};
+
+	render() {
+		return (
+			<MenuTrigger className="menu-trigger">
+				<SongDots onClick={this.toggleOpen}>
+					<Dot />
+					<Dot />
+					<Dot />
+					<Menu isOpen={this.state.isOpen}>
+						<li>Delete</li>
+					</Menu>
+				</SongDots>
+			</MenuTrigger>
+		);
+	}
+}
+
 const MenuTrigger = styled.div`
-	height: 1.5rem;
 	opacity: 0;
-	position: absolute;
-	right: 1rem;
-	text-align: center;
-	top: 50%;
-	width: 2rem;
-	transform: translateY(-50%);
-	transition: all 0.1s;
+	margin-left: auto;
+
 	&:hover {
 		opacity: 1 !important;
-
-		/****** Need to Remove and Replace with Click *****/
-		.menu {
-			opacity: 1;
-		}
 	}
 `;
+
 const SongDots = styled.div`
-	left: 50%;
+	display: flex;
 	position: relative;
-	top: 50%;
-	transform: translate(-50%, -50%);
- 	span {
-		background: white;
-		border-radius: 50%;
-		box-sizing: content-box;
-		display: inline-block;
-		height: 0.25rem;
-		margin: 0.125rem;
-		position: relative;
-		top: -0.0675rem
-		width: 0.25rem;
-	}
+`;
+
+const Dot = styled.span`
+	background: white;
+	border-radius: 50%;
+	height: 0.25rem;
+	margin: 0.125rem;
+	width: 0.25rem;
 `;
 
 const Menu = styled.ul`
@@ -192,7 +173,7 @@ const Menu = styled.ul`
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 	display: inline-block;
 	right: 0;
-	opacity: 0;
+	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
 	position: absolute;
 	top: 100%;
 	transition: all 0.1s;
