@@ -12,7 +12,7 @@ export default function Playlist({playlist, isSearchOpen, toggleSearch, trackCou
 				<CollectionInfo>
 					<h5>COLLECTION</h5>
 					<h1>/{playlist}</h1>
-					<AddSong onClick={toggleSearch}>
+					<AddSong onClick={toggleSearch} data-id="show-hide-search">
 						{isSearchOpen ? (
 							'Hide Search'
 						) : (

@@ -6,20 +6,15 @@ import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 
 class Search extends React.Component {
-	handleClickOutside() {
-		this.props.toggleSearch();
+	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
+		if (id !== 'show-hide-search') {
+			this.props.toggleSearch();
+		}
 		this.props.clearSearch();
 	}
 
 	render() {
-		const {
-			query,
-			setSearch,
-			toggleSearch,
-			results: {items} = {items: []},
-			clearSearch,
-			enqueue
-		} = this.props;
+		const {query, setSearch, results: {items} = {items: []}, enqueue} = this.props;
 
 		return (
 			<SearchHolder className="search-holder">
