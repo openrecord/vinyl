@@ -44,7 +44,7 @@ module.exports = (env, argv) => {
 					loader: 'import-glob-loader'
 				},
 				{
-					test: /\.scss/,
+					test: /\.s?css/,
 					use: [
 						isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
 						{loader: 'css-loader', options: {importLoaders: 1}}, // translates CSS into CommonJS
