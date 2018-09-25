@@ -9,10 +9,23 @@ module.exports = (env, argv) => {
 	const isProduction = argv.mode === 'production';
 
 	let devtool, devServer, plugins;
+	const URLS = {
+		PROD: {
+			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev',
+			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
+		},
+		DEV: {
+			HTTP: 'http://localhost:4466/',
+			WS: 'ws://localhost:4466/'
+		}
+	};
 
 	plugins = [
 		new HtmlWebPackPlugin({title: 'Open Record', hash: true}), // automatically create index.html based on webpack config
-		new ReactRootPlugin() // create react root within generated html file
+		new ReactRootPlugin(), // create react root within generated html file
+		new webpack.DefinePlugin({
+			GRAPHQL_URI: JSON.stringify(isProduction ? URLS.PROD : URLS.DEV)
+		})
 	];
 
 	if (isProduction) {
@@ -37,7 +50,7 @@ module.exports = (env, argv) => {
 					loader: 'import-glob-loader'
 				},
 				{
-					test: /\.scss/,
+					test: /\.s?css/,
 					use: [
 						isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
 						{loader: 'css-loader', options: {importLoaders: 1}}, // translates CSS into CommonJS

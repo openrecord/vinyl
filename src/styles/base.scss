@@ -58,3 +58,17 @@ h6 {
 main {
 	margin: 0;
 }
+
+ul,
+li {
+	margin: 0;
+	padding: 0;
+}
+
+.toast.toast {
+	background: transparent;
+}
+
+.toast-container.toast-container {
+	width: auto;
+}

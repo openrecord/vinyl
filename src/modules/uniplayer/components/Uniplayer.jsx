@@ -10,7 +10,7 @@ class Uniplayer extends React.Component {
 
 		this.state = {
 			//Player State
-			playing: false,
+			playing: true,
 			volume: 1,
 			muted: false,
 			played: 0,
@@ -51,9 +51,6 @@ class Uniplayer extends React.Component {
 			playing: false,
 			playerActive: true
 		});
-	};
-	onEnded = () => {
-		this.setState({playing: false});
 	};
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
@@ -132,7 +129,7 @@ class Uniplayer extends React.Component {
 
 	renderYT(currentlyPlaying) {
 		var player = {};
-		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.id.videoId;
+		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.info.url;
 		return (
 			<div className="player-inner">
 				<ReactPlayer
@@ -152,7 +149,7 @@ class Uniplayer extends React.Component {
 					onPause={this.onPause}
 					onBuffer={() => console.log('onBuffer')}
 					onSeek={e => console.log('onSeek', e)}
-					onEnded={this.onEnded}
+					onEnded={this.props.playNextFromQueue}
 					onError={e => console.log('onError', e)}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
@@ -162,7 +159,7 @@ class Uniplayer extends React.Component {
 	}
 
 	render() {
-		const {currentlyPlaying, tracks} = this.props;
+		const {currentlyPlaying} = this.props;
 
 		var player = {},
 			playback = this.state.played * 100;
@@ -183,9 +180,9 @@ class Uniplayer extends React.Component {
 					{currentlyPlaying && (
 						<div className="info-box">
 							<div className="image-holder">
-								<img src={currentlyPlaying.snippet.thumbnails.default.url} />
+								<img src={currentlyPlaying.info.thumbnail} />
 							</div>
-							<h5 className="song-title">{currentlyPlaying.snippet.title}</h5>
+							<h5 className="song-title">{currentlyPlaying.info.title}</h5>
 						</div>
 					)}
 				</div>

@@ -1,26 +1,18 @@
 import styled, {css} from 'styled-components';
 import React from 'react';
+import classname from 'classnames';
+import Options from './Options';
 
-export default function YoutubeResult({
-	onClick,
-	highRes,
-	search,
-	snippet: {
-		title,
-		description,
-		thumbnails: {
-			default: {url}
-		}
-	}
-}) {
+export default function Track({onClick, playing, search, thumbnail, title, deleteTrack}) {
 	return (
-		<StyledResult onClick={onClick}>
-			<ImageHolder search={search}>
-				<img src={url} />
-				<PlayBackground />
-				{search ? <AddPlus /> : <PlayButton />}
+		<StyledResult onClick={onClick} className={classname({playing})}>
+			<ImageHolder className="image-holder" search={search}>
+				<img src={thumbnail} />
+				<PlayBackground className="play-background" />
+				{search ? <AddPlus /> : <PlayButton className="play-button" />}
 			</ImageHolder>
 			<h4>{title}</h4>
+			{!search && <Options deleteTrack={deleteTrack} />}
 		</StyledResult>
 	);
 }
@@ -32,12 +24,25 @@ const StyledResult = styled.div`
 	padding: 0.5rem 0.75rem;
 	transition: background-color 0.1s linear;
 
+	&.playing {
+		background: rgba(40, 40, 40);
+		.play-background {
+			opacity: 1;
+		}
+		.play-button {
+			opacity: 1;
+		}
+	}
+
 	&:hover {
-		background: rgba(54, 54, 54);
-		div {
+		background: rgba(40, 40, 40);
+		.image-holder {
 			span {
 				opacity: 1;
 			}
+		}
+		.options {
+			opacity: 0.5;
 		}
 	}
 
@@ -88,31 +93,10 @@ const AddPlus = styled.span`
 	top: 50%;
 	transform: translate(-50%, -50%);
 	width: 1.5rem;
-
-	&:before {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		width: 0.25rem;
-		transform: translateX(-50%);
-	}
-
-	&:after {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%, -50%) rotate(90deg);
-		width: 0.25rem;
-	}
 `;
 
 const PlayBackground = styled.span`
-	background: rgba(16, 16, 16, 0.7);
+	background: rgba(16, 16, 16, 0.8);
 	height: 100%;
 	position: absolute;
 	opacity: 0;
@@ -121,15 +105,13 @@ const PlayBackground = styled.span`
 `;
 
 const PlayButton = styled.span`
-	height: 1.5rem;
-	left: 50%;
-	opacity: 0;
 	position: absolute;
 	top: 50%;
+	left: 50%;
+	opacity: 0;
 	transform: translate(-50%, -50%);
 	transition: all 0.1s;
 
-	box-sizing: border-box;
 	border-width: 0.75rem 0 0.75rem 1.25rem;
 	border-color: transparent transparent transparent white;
 	border-style: solid;

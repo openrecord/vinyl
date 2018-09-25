@@ -9,9 +9,11 @@ import {InMemoryCache, defaultDataIdFromObject} from 'apollo-cache-inmemory';
 import {onError} from 'apollo-link-error';
 import {withClientState} from 'apollo-link-state';
 import {HttpLink} from 'apollo-link-http';
-import {ApolloLink} from 'apollo-link';
+import {ApolloLink, split} from 'apollo-link';
 import {RestLink} from 'apollo-link-rest';
 import DebounceLink from 'apollo-link-debounce';
+import {WebSocketLink} from 'apollo-link-ws';
+import {getMainDefinition} from 'apollo-utilities';
 
 const cache = new InMemoryCache({
 	dataIdFromObject: object => {
@@ -42,20 +44,37 @@ export default new ApolloClient({
 			},
 			cache
 		}),
-		new DebounceLink(500),
+		new DebounceLink(250),
 		new RestLink({
 			endpoints: {
 				youtube: 'https://www.googleapis.com/youtube/v3/search'
 			}
 		}),
-		new HttpLink({uri: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev'})
+		split(
+			({query}) => {
+				const {kind, operation} = getMainDefinition(query);
+				return kind === 'OperationDefinition' && operation === 'subscription';
+			},
+			new WebSocketLink({uri: GRAPHQL_URI.WS, options: {reconnect: true}}),
+			new HttpLink({uri: GRAPHQL_URI.HTTP})
+		)
 	]),
 	cache
 });
+
 function errorHandler({graphQLErrors, networkError}) {
-	if (graphQLErrors)
-		graphQLErrors.map(({message, locations, path}) =>
-			console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+	if (graphQLErrors) {
+		graphQLErrors.map(
+			({message, locations, path, operation = {operationName: 'not provided'}, response}) => {
+				console.error(
+					`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, operation: ${
+						operation.operationName
+					}`
+				);
+				console.log('operation', operation);
+				console.log('response', response);
+			}
 		);
+	}
 	if (networkError) console.log(`[Network error]: ${networkError}`);
 }
