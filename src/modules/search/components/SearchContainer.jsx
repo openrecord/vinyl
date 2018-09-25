@@ -18,7 +18,6 @@ const TOGGLE_SEARCH = gql`
 	}
 `;
 
-
 const SEARCH_QUERY = gql`
 	query SearchContainer {
 		search @client {
@@ -57,27 +56,6 @@ const ADD_TO_PLAYLIST = gql`
 	${PlaylistFragments.all}
 `;
 
-const addToPlaylistUpdate = playlist => (cache, {data: {updatePlaylist}}) => {
-	const query = gql`
-		query Queue($playlist: String!) {
-			playlist(where: {name: $playlist}) {
-				...AllPlaylist
-			}
-		}
-		${PlaylistFragments.all}
-	`;
-
-	const data = cache.readQuery({query, variables: {playlist}});
-
-	if (data.playlist === null) {
-		cache.writeQuery({
-			query,
-			data: {playlist: updatePlaylist},
-			variables: {playlist}
-		});
-	}
-};
-
 const Composed = adapt(
 	{
 		toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />,
@@ -111,8 +89,7 @@ export default function SearchContainer() {
 								thumbnail: track.snippet.thumbnails.default.url,
 								title: track.snippet.title,
 								playlist
-							},
-							update: addToPlaylistUpdate(playlist)
+							}
 						});
 						toast(<Toast message="Song Added!" />);
 					}}

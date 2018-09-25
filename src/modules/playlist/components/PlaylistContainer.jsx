@@ -4,12 +4,35 @@ import WithPlaylistId from '../../common/components/WithPlaylistId';
 import React from 'react';
 import Playlist from './Playlist';
 import adapt from '../../common/components/Adapt';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 
 const TOGGLE_SEARCH = gql`
 	mutation ToggleSearch {
 		toggleSearch @client
 	}
 `;
+
+const CREATE_PLAYLIST = gql`
+	mutation CreatePlaylist($playlist: String!) {
+		upsertPlaylist(where: {name: $playlist}, create: {name: $playlist}, update: {}) {
+			...AllPlaylist
+		}
+	}
+
+	${PlaylistFragments.all}
+`;
+
+const createPlaylistUpdate = playlist => (cache, {data: {upsertPlaylist}}) => {
+	const query = gql`
+		query CreatePlaylistUpdate($playlist: String!) {
+			playlist(where: {name: $playlist}) {
+				...AllPlaylist
+			}
+		}
+		${PlaylistFragments.all}
+	`;
+	cache.writeQuery({query, data: {playlist: upsertPlaylist}, variables: {playlist}});
+};
 
 const query = gql`
 	query PlaylistQuery($playlist: String!) {
@@ -36,6 +59,15 @@ const Composed = adapt(
 			<Query query={query} variables={{playlist}}>
 				{props => render(props.data)}
 			</Query>
+		),
+		createPlaylist: ({render, playlist}) => (
+			<Mutation
+				mutation={CREATE_PLAYLIST}
+				variables={{playlist}}
+				update={createPlaylistUpdate(playlist)}
+			>
+				{render}
+			</Mutation>
 		)
 	}
 );
@@ -46,13 +78,15 @@ export default function PlaylistContainer() {
 			{({
 				data: {search: {isSearchOpen} = {isSearchOpen: false}, playlist: {tracks} = {tracks: []}},
 				toggleSearch,
-				playlist
+				playlist,
+				createPlaylist
 			}) => (
 				<Playlist
 					playlist={playlist}
 					isSearchOpen={isSearchOpen}
 					toggleSearch={toggleSearch}
 					trackCount={tracks.length}
+					createPlaylist={createPlaylist}
 				/>
 			)}
 		</Composed>
