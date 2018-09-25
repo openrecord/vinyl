@@ -10,7 +10,7 @@ class Uniplayer extends React.Component {
 
 		this.state = {
 			//Player State
-			playing: false,
+			playing: true,
 			volume: 1,
 			muted: false,
 			played: 0,

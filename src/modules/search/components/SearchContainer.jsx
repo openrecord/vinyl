@@ -7,6 +7,14 @@ import YoutubeQuery from './YoutubeQueryContainer';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 import TrackFragments from '../../common/fragments/TrackFragments';
+import {toast} from 'react-toastify';
+import Toast from '../../common/components/Toast';
+
+const TOGGLE_SEARCH = gql`
+	mutation ToggleSearch {
+		toggleSearch @client
+	}
+`;
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
@@ -84,6 +92,7 @@ const addToPlaylistUpdate = playlist => (cache, {data: {updatePlaylist}}) => {
 
 const Composed = adapt(
 	{
+		toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />,
 		playlist: <WithPlaylistId />,
 		updateQuery: <Mutation mutation={UPDATE_QUERY} />,
 		addToPlaylist: <Mutation mutation={ADD_TO_PLAYLIST} />,
@@ -101,12 +110,13 @@ const Composed = adapt(
 export default function SearchContainer() {
 	return (
 		<Composed>
-			{({query, playlist, youtubeResults, updateQuery, addToPlaylist}) => (
+			{({query, playlist, youtubeResults, updateQuery, addToPlaylist, toggleSearch}) => (
 				<Search
+					toggleSearch={toggleSearch}
 					query={query}
 					results={youtubeResults}
 					setSearch={query => updateQuery({variables: {query}})}
-					enqueue={track =>
+					enqueue={track => {
 						addToPlaylist({
 							variables: {
 								url: track.id.videoId,
@@ -115,8 +125,9 @@ export default function SearchContainer() {
 								playlist
 							},
 							update: addToPlaylistUpdate(playlist)
-						})
-					}
+						});
+						toast(<Toast message="Song Added!" />);
+					}}
 					clearSearch={() => updateQuery({variables: {query: ''}})}
 				/>
 			)}
