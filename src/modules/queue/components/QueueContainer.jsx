@@ -1,11 +1,19 @@
+import {toast} from 'react-toastify';
 import React from 'react';
+
 
 import {Mutation, Subscription} from 'react-apollo';
 import Queue from './Queue';
 import gql from 'graphql-tag';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import SpinnerQuery from '../../common/components/SpinnerQuery';
+
 import {nullToUndefined} from '../../common/utils';
+import Queue from './Queue';
+import SpinnerQuery from '../../common/components/SpinnerQuery';
+import Toast from '../../common/components/Toast';
+import TrackFragments from '../../common/fragments/TrackFragments';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 
@@ -41,10 +49,22 @@ const UPDATE_PLAYING = gql`
 	}
 `;
 
+const DELETE_TRACK = gql`
+	mutation DeleteTrack($playlist: String!, $trackId: ID!) {
+		updatePlaylist(where: {name: $playlist}, data: {tracks: {delete: [{id: $trackId}]}}) {
+			id
+			tracks {
+				id
+			}
+		}
+	}
+`;
+
 const Composed = adapt(
 	{
 		playlist: <WithPlaylistId />,
-		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />
+		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />,
+		deleteTrack: <Mutation mutation={DELETE_TRACK} />
 	},
 	{
 		_: ({render, playlist}) => (
@@ -68,11 +88,17 @@ export default function QueueContainer() {
 					playlist: {tracks} = {tracks: []},
 					player: {currentlyPlaying}
 				},
-				updatePlaying
+				playlist,
+				updatePlaying,
+				deleteTrack
 			}) => (
 				<Queue
 					tracks={tracks}
 					updatePlaying={track => updatePlaying({variables: {track}})}
+					deleteTrack={track => {
+						deleteTrack({variables: {playlist, trackId: track.id}});
+						toast(<Toast message="Song Deleted" />);
+					}}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
 				/>
 			)}
