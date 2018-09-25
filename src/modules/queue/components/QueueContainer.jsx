@@ -1,8 +1,12 @@
 import {toast} from 'react-toastify';
 import React from 'react';
 
-import {Mutation} from 'react-apollo';
+
+import {Mutation, Subscription} from 'react-apollo';
+import Queue from './Queue';
 import gql from 'graphql-tag';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import SpinnerQuery from '../../common/components/SpinnerQuery';
 
 import {nullToUndefined} from '../../common/utils';
 import Queue from './Queue';
@@ -11,15 +15,12 @@ import Toast from '../../common/components/Toast';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 
 const query = gql`
 	query Queue($playlist: String!) {
 		playlist(where: {name: $playlist}) {
-			id
-			name
-			tracks {
-				...AllTrack
-			}
+			...AllPlaylist
 		}
 
 		player @client {
@@ -28,7 +29,18 @@ const query = gql`
 			}
 		}
 	}
-	${TrackFragments.all}
+	${PlaylistFragments.all}
+`;
+
+const ON_TRACK_ADDED = gql`
+	subscription OnTrackAdded($playlist: String!) {
+		playlist(where: {node: {name: $playlist}}) {
+			node {
+				...AllPlaylist
+			}
+		}
+	}
+	${PlaylistFragments.all}
 `;
 
 const UPDATE_PLAYING = gql`
@@ -55,6 +67,11 @@ const Composed = adapt(
 		deleteTrack: <Mutation mutation={DELETE_TRACK} />
 	},
 	{
+		_: ({render, playlist}) => (
+			<Subscription subscription={ON_TRACK_ADDED} variables={{playlist}}>
+				{render}
+			</Subscription>
+		),
 		data: ({render, playlist}) => (
 			<SpinnerQuery query={query} variables={{playlist}} postProcess={nullToUndefined}>
 				{({data}) => render(data)}
