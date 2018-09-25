@@ -1,21 +1,16 @@
 import {toast} from 'react-toastify';
 import React from 'react';
 
-
 import {Mutation, Subscription} from 'react-apollo';
-import Queue from './Queue';
 import gql from 'graphql-tag';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
-import SpinnerQuery from '../../common/components/SpinnerQuery';
 
 import {nullToUndefined} from '../../common/utils';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 import Queue from './Queue';
 import SpinnerQuery from '../../common/components/SpinnerQuery';
 import Toast from '../../common/components/Toast';
-import TrackFragments from '../../common/fragments/TrackFragments';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
-import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 
 const query = gql`
 	query Queue($playlist: String!) {
