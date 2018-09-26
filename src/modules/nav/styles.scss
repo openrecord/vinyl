@@ -1,3 +1,6 @@
 .nav {
+	&.transparent {
+		background: transparent;
+	}
 	z-index: z-index('nav');
 }

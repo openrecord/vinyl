@@ -1,12 +1,8 @@
 import {toast} from 'react-toastify';
 import React from 'react';
 
-
 import {Mutation, Subscription} from 'react-apollo';
-import Queue from './Queue';
 import gql from 'graphql-tag';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
-import SpinnerQuery from '../../common/components/SpinnerQuery';
 
 import {nullToUndefined} from '../../common/utils';
 import Queue from './Queue';

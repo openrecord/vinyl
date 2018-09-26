@@ -24,7 +24,17 @@ const LoggedInLinks = () => (
 );
 
 export default function Nav({user}) {
-	return <StyledNav className="nav">{user ? <LoggedInLinks /> : <LoggedOutLinks />}</StyledNav>;
+	var page = {};
+	if (location.pathname == '/') {
+		page.landing = ' transparent';
+	} else {
+		page.landing = '';
+	}
+	return (
+		<StyledNav className={'nav' + page.landing}>
+			{user ? <LoggedInLinks /> : <LoggedOutLinks />}
+		</StyledNav>
+	);
 }
 
 Nav.propTypes = {
