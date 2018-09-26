@@ -24,14 +24,8 @@ const LoggedInLinks = () => (
 );
 
 export default function Nav({user}) {
-	var page = {};
-	if (location.pathname == '/') {
-		page.landing = ' transparent';
-	} else {
-		page.landing = '';
-	}
 	return (
-		<StyledNav className={'nav' + page.landing}>
+		<StyledNav transparent={location.pathname === ROUTES.LANDING} className="nav">
 			{user ? <LoggedInLinks /> : <LoggedOutLinks />}
 		</StyledNav>
 	);
@@ -42,7 +36,7 @@ Nav.propTypes = {
 };
 
 const StyledNav = styled.nav`
-	background: rgb(25, 25, 25);
+	background: ${props => (props.transparent ? 'transparent' : 'rgb(25, 25, 25)')};
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;

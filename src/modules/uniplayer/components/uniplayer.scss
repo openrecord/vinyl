@@ -64,6 +64,7 @@
 		flex: auto;
 		max-width: 45rem;
 		width: 40%;
+		z-index: z-index('uniplayer-middle');
 
 		.player-controls {
 			display: -ms-flexbox;
