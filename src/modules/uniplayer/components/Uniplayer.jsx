@@ -149,7 +149,7 @@ class Uniplayer extends React.Component {
 					onPause={this.onPause}
 					onBuffer={() => console.log('onBuffer')}
 					onSeek={e => console.log('onSeek', e)}
-					onEnded={this.props.playNextFromQueue}
+					onEnded={this.props.playNext}
 					onError={e => console.log('onError', e)}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
@@ -189,9 +189,9 @@ class Uniplayer extends React.Component {
 				<div className="uniplayer-middle">
 					<div className="player-controls">
 						<div className="player-buttons">
-							<div className="arrow previous" />
+							<div className="arrow previous" onClick={this.props.playPrev} />
 							<div className={'play-button' + player.status} onClick={this.playToggle} />
-							<div className="arrow next" />
+							<div className="arrow next" onClick={this.props.playNext} />
 						</div>
 						<div className="playback-holder">
 							<Duration className="duration" seconds={this.state.duration * this.state.played} />
