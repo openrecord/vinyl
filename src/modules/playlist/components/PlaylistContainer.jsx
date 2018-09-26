@@ -1,10 +1,13 @@
-import gql from 'graphql-tag';
-import {Query, Mutation} from 'react-apollo';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
 import React from 'react';
+
+import {Query, Mutation} from 'react-apollo';
+import gql from 'graphql-tag';
+
+import {nullToUndefined} from '../../common/utils';
 import Playlist from './Playlist';
-import adapt from '../../common/components/Adapt';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import adapt from '../../common/components/Adapt';
 
 const TOGGLE_SEARCH = gql`
 	mutation ToggleSearch {
@@ -57,7 +60,7 @@ const Composed = adapt(
 	{
 		data: ({render, playlist}) => (
 			<Query query={query} variables={{playlist}}>
-				{props => render(props.data)}
+				{props => render(nullToUndefined(props.data))}
 			</Query>
 		),
 		createPlaylist: ({render, playlist}) => (
