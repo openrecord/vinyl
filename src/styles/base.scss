@@ -35,6 +35,10 @@ p {
 	-webkit-margin-after: 0em;
 }
 
+h1 {
+	font-size: 2rem;
+}
+
 h2 {
 	font-size: 1.5rem;
 }
@@ -73,3 +77,9 @@ li {
 .toast-container.toast-container {
 	width: auto;
 }
+
+//Media Query Variables
+$small: 600px;
+$medium: 900px;
+$large: 1200px;
+$extra-large: 1800px;
