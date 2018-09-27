@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
 	};
 
 	plugins = [
-		new HtmlWebPackPlugin({title: 'Open Record', hash: true}), // automatically create index.html based on webpack config
+		new HtmlWebPackPlugin({hash: true, template: 'public/index.ejs'}), // automatically create index.html based on webpack config
 		new ReactRootPlugin(), // create react root within generated html file
 		new webpack.DefinePlugin({
 			GRAPHQL_URI: JSON.stringify(isProduction ? URLS.PROD : URLS.DEV)
@@ -34,6 +34,7 @@ module.exports = (env, argv) => {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 		devtool = 'inline-source-map'; // enable web browser debugging
 		devServer = {
+			host: '0.0.0.0',
 			port: 8080,
 			hot: true,
 			historyApiFallback: true // Redirect to /index.html for 404s
@@ -65,13 +66,7 @@ module.exports = (env, argv) => {
 				{
 					test: /\.(mjs|js|jsx)$/,
 					exclude: /node_modules/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: ['@babel/plugin-proposal-class-properties', 'react-hot-loader/babel']
-						}
-					}
+					use: ['babel-loader']
 				},
 				{
 					test: /\.(woff|woff2|eot|ttf|otf)$/,
