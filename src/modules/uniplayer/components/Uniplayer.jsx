@@ -79,7 +79,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = (songDuration / barWidth) * mousePosition,
+			scrubTime = songDuration / barWidth * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -223,16 +223,19 @@ class Uniplayer extends React.Component {
 					</div>
 				</div>
 				<div className="uniplayer-right" />
-				<div className={'player-holder' + player.expanded}>
-					<div className="player-outer">
-						<div className="iframeblocker" onClick={this.playToggle} />
-						<div className="size-buttons">
-							<div className="expand-button" onClick={this.expandToggle} />
-							<div className="minimize-button" />
+				{currentlyPlaying && (
+					<div className={'player-holder' + player.expanded}>
+						<div className="player-outer">
+							<div className="iframeblocker" onClick={this.playToggle} />
+							<div className="size-buttons">
+								<div className="expand-button" onClick={this.expandToggle} />
+								<div className="minimize-button" />
+							</div>
+							{currentlyPlaying && this.renderYT(currentlyPlaying)}
 						</div>
-						{currentlyPlaying && this.renderYT(currentlyPlaying)}
 					</div>
-				</div>
+				)}
+
 				{this.state.expanded && <div className="player-background" />}
 			</div>
 		);

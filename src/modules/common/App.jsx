@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import React from 'react';
-import {ToastContainer, toast, Bounce} from 'react-toastify';
+import {ToastContainer, toast, Slide} from 'react-toastify';
 
 import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
@@ -25,11 +25,14 @@ export default function App() {
 				<UniplayerContainer />
 				<ToastContainer
 					position={toast.POSITION.TOP_RIGHT}
-					transition={Bounce}
+					transition={Slide}
 					className="toast-container"
 					toastClassName="toast"
 					hideProgressBar
 					closeButton={false}
+					draggablePercent={60}
+					autoClose={2500}
+					duration={500}
 				/>
 			</div>
 		</BrowserRouter>

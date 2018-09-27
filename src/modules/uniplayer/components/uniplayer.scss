@@ -64,6 +64,7 @@
 		flex: auto;
 		max-width: 45rem;
 		width: 40%;
+		z-index: z-index('uniplayer-middle');
 
 		.player-controls {
 			display: -ms-flexbox;
@@ -465,7 +466,7 @@
 		left: 0;
 		position: fixed;
 		right: 0;
-		top: 3.5rem;
+		top: 3.45rem;
 		z-index: z-index('uniplayer-background');
 	}
 }
