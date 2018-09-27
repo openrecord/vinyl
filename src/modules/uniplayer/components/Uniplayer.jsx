@@ -149,7 +149,7 @@ class Uniplayer extends React.Component {
 					onPause={this.onPause}
 					onBuffer={() => console.log('onBuffer')}
 					onSeek={e => console.log('onSeek', e)}
-					onEnded={this.props.playNextFromQueue}
+					onEnded={this.props.playNext}
 					onError={e => console.log('onError', e)}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
@@ -189,9 +189,9 @@ class Uniplayer extends React.Component {
 				<div className="uniplayer-middle">
 					<div className="player-controls">
 						<div className="player-buttons">
-							<div className="arrow previous" />
+							<div className="arrow previous" onClick={this.props.playPrev} />
 							<div className={'play-button' + player.status} onClick={this.playToggle} />
-							<div className="arrow next" />
+							<div className="arrow next" onClick={this.props.playNext} />
 						</div>
 						<div className="playback-holder">
 							<Duration className="duration" seconds={this.state.duration * this.state.played} />
@@ -223,16 +223,19 @@ class Uniplayer extends React.Component {
 					</div>
 				</div>
 				<div className="uniplayer-right" />
-				<div className={'player-holder' + player.expanded}>
-					<div className="player-outer">
-						<div className="iframeblocker" onClick={this.playToggle} />
-						<div className="size-buttons">
-							<div className="expand-button" onClick={this.expandToggle} />
-							<div className="minimize-button" />
+				{currentlyPlaying && (
+					<div className={'player-holder' + player.expanded}>
+						<div className="player-outer">
+							<div className="iframeblocker" onClick={this.playToggle} />
+							<div className="size-buttons">
+								<div className="expand-button" onClick={this.expandToggle} />
+								<div className="minimize-button" />
+							</div>
+							{currentlyPlaying && this.renderYT(currentlyPlaying)}
 						</div>
-						{currentlyPlaying && this.renderYT(currentlyPlaying)}
 					</div>
-				</div>
+				)}
+
 				{this.state.expanded && <div className="player-background" />}
 			</div>
 		);

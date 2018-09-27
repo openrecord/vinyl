@@ -1,38 +1,21 @@
-import React from 'react';
-import {string, object} from 'prop-types';
 import {Link} from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
+
 import {ROUTES} from '../routes/routes';
 
-const LoggedOutLinks = () => (
-	<>
-		<Link to={ROUTES.LANDING} key={'home'}>
-			OPENRECORD
-		</Link>
-	</>
-);
-
-const LoggedInLinks = () => (
-	<>
-		<Link to={ROUTES.HOME} key={'home'}>
-			OPENRECORD
-		</Link>
-		<Link to={ROUTES.PROFILE} key={'profile'}>
-			PROFILE
-		</Link>
-	</>
-);
-
-export default function Nav({user}) {
-	return <StyledNav className="nav">{user ? <LoggedInLinks /> : <LoggedOutLinks />}</StyledNav>;
+export default function Nav() {
+	return (
+		<StyledNav transparent={location.pathname === ROUTES.LANDING} className="nav">
+			<Link to={ROUTES.LANDING} key={'home'}>
+				OPENRECORD
+			</Link>
+		</StyledNav>
+	);
 }
 
-Nav.propTypes = {
-	user: object
-};
-
 const StyledNav = styled.nav`
-	background: rgb(25, 25, 25);
+	background: ${props => (props.transparent ? 'transparent' : 'rgb(25, 25, 25)')};
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;

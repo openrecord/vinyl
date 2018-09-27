@@ -34,6 +34,7 @@ module.exports = (env, argv) => {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 		devtool = 'inline-source-map'; // enable web browser debugging
 		devServer = {
+			host: '0.0.0.0',
 			port: 8080,
 			hot: true,
 			historyApiFallback: true // Redirect to /index.html for 404s

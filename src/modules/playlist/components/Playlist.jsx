@@ -116,6 +116,7 @@ const AddSong = styled.button`
 	cursor: pointer;
 	font-size: 0.875rem;
 	line-height: 1rem;
+	outline: none;
 	padding: 0.25rem 0.5rem;
 	transition: all 0.1s;
 	margin-top: auto;

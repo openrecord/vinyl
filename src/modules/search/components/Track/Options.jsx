@@ -41,6 +41,7 @@ const StyledOptions = styled.div`
 
 const SongDots = styled.div`
 	display: flex;
+	padding: 0.5rem;
 	position: relative;
 `;
 
@@ -54,7 +55,7 @@ const Dot = styled.span`
 
 const Menu = styled.ul`
 	position: absolute;
-	top: 1rem;
+	top: 1.375rem;
 	background: rgba(32, 32, 32);
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);

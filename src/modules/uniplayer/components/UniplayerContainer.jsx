@@ -18,14 +18,14 @@ const query = gql`
 	${TrackFragments.all}
 `;
 
-const PLAY_NEXT_FROM_QUEUE = gql`
-	mutation playNextFromQueue($playlist: String!) {
-		playNextFromQueue(playlist: $playlist) @client
+const PLAY_NTH_NEXT_FROM_QUEUE = gql`
+	mutation playNthNextFromQueue($playlist: String!, $n: Integer!) {
+		playNthNextFromQueue(playlist: $playlist, n: $n) @client
 	}
 `;
 
 const Composed = adapt({
-	playNextFromQueue: <Mutation mutation={PLAY_NEXT_FROM_QUEUE} />,
+	playNthNextFromQueue: <Mutation mutation={PLAY_NTH_NEXT_FROM_QUEUE} />,
 	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>,
 	playlist: <WithPlaylistId />
 });
@@ -37,12 +37,13 @@ export default function UniplayerContainer() {
 				data: {
 					player: {currentlyPlaying}
 				},
-				playNextFromQueue,
+				playNthNextFromQueue,
 				playlist
 			}) => (
 				<Uniplayer
 					currentlyPlaying={currentlyPlaying}
-					playNextFromQueue={() => playNextFromQueue({variables: {playlist}})}
+					playNext={_ => playNthNextFromQueue({variables: {playlist, n: 1}})}
+					playPrev={_ => playNthNextFromQueue({variables: {playlist, n: -1}})}
 				/>
 			)}
 		</Composed>

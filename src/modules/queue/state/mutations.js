@@ -17,7 +17,7 @@ export const updatePlaying = updateQL(
 	`
 ).with(({track}) => set('player', 'currentlyPlaying')(track));
 
-export const playNextFromQueue = updateQL(
+export const playNthNextFromQueue = updateQL(
 	gql`
 		query PlayNextQuery($playlist: String!) {
 			playlist(where: {name: $playlist}) {
@@ -34,7 +34,7 @@ export const playNextFromQueue = updateQL(
 			}
 		}
 	`
-).with(() => state => {
+).with(({n}) => state => {
 	//prettier-ignore
 	const {
 		playlist: {
@@ -47,19 +47,14 @@ export const playNextFromQueue = updateQL(
 		}
 	} = state;
 
-	const track = findNextTrack(tracks, has({id}));
+	const track = findNthNextTrack(tracks, has({id}), n);
 	return set('player', 'currentlyPlaying')(track)(state);
 });
 
-function findNextTrack(tracks, pred) {
+function findNthNextTrack(tracks, pred, n) {
 	const idx = _.findIndex(tracks, pred);
-	const nextIdx = idx + 1;
-	if (!nextIdx) {
+	if (idx === -1) {
 		return null;
 	}
-	if (nextIdx === tracks.length) {
-		return tracks[0];
-	}
-
-	return tracks[nextIdx];
+	return tracks[(idx + n) % tracks.length];
 }
