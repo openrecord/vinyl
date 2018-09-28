@@ -17,7 +17,7 @@ function getYoutubeURL(query) {
 	});
 }
 
-const YOUTUBE_QUERY = gql`
+const query = gql`
 	query Youtube($path: String!) {
 		youtubeResults @rest(type: "YoutubePayload", endpoint: "youtube", path: $path) {
 			items @type(name: "YoutubeResult") {
@@ -40,41 +40,20 @@ const YOUTUBE_QUERY = gql`
 	}
 `;
 
-export const Youtube = {
-	fragments: {
-		result: gql`
-			fragment YoutubeEntry on YoutubeResult {
-				id {
-					videoId
-				}
-				snippet {
-					title
-					thumbnails {
-						high {
-							url
-						}
-						default {
-							url
-						}
-					}
-				}
-			}
-		`
-	}
-};
-
 export default ({search, children}) => {
 	if (!search) {
 		return children({data: {}});
 	}
 	return (
 		<Query
-			query={YOUTUBE_QUERY}
+			query={query}
 			variables={{path: getYoutubeURL(search)}}
 			fetchPolicy="network-only"
 			context={{debounceKey: 'YoutubeSearch'}}
 		>
-			{children}
+			{({data}) =>
+				children({data: (data && data.youtubeResults && data.youtubeResults.items) || []})
+			}
 		</Query>
 	);
 };

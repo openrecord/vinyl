@@ -128,8 +128,6 @@ class Uniplayer extends React.Component {
 	};
 
 	renderYT(currentlyPlaying) {
-		var player = {};
-		player.id = 'https://www.youtube.com/watch?v=' + currentlyPlaying.info.url;
 		return (
 			<div className="player-inner">
 				<ReactPlayer
@@ -137,7 +135,7 @@ class Uniplayer extends React.Component {
 					className="react-player"
 					width="100%"
 					height="100%"
-					url={player.id}
+					url={getTrackUrl(currentlyPlaying)}
 					playing={this.state.playing}
 					loop={this.state.loop}
 					playbackRate={this.state.playbackRate}
@@ -239,6 +237,16 @@ class Uniplayer extends React.Component {
 				{this.state.expanded && <div className="player-background" />}
 			</div>
 		);
+	}
+}
+
+function getTrackUrl(track) {
+	if (track.info.url.startsWith('http')) {
+		return track.info.url;
+	}
+
+	if (track.info.source === 'YOUTUBE') {
+		return 'https://www.youtube.com/watch?v=' + track.info.url;
 	}
 }
 
