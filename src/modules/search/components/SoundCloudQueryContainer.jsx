@@ -36,6 +36,7 @@ export default ({search, children}) => {
 			query={query}
 			variables={{path: getSoundCloudUrl(search)}}
 			context={{debounceKey: 'SoundCloudSearch'}}
+			fetchPolicy="network-only"
 		>
 			{({data}) => children({data: data ? data.soundCloudResults : []})}
 		</Query>

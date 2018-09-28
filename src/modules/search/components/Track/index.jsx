@@ -5,7 +5,16 @@ import Options from './Options';
 import ytIcon from '../images/youtube.svg';
 import scIcon from '../images/soundcloud.svg';
 
-export default function Track({onClick, playing, search, thumbnail, title, deleteTrack}) {
+export default function Track({
+	onClick,
+	playing,
+	search,
+	thumbnail,
+	title,
+	deleteTrack,
+	youtube,
+	soundcloud
+}) {
 	return (
 		<StyledResult onClick={onClick} className={classname({playing})}>
 			<ImageHolder className="image-holder" search={search}>
@@ -16,7 +25,7 @@ export default function Track({onClick, playing, search, thumbnail, title, delet
 			<h4>{title}</h4>
 			{search && (
 				<SourceIcon>
-					<img src={scIcon} />
+					<img src={soundcloud ? scIcon : ytIcon} />
 				</SourceIcon>
 			)}
 			{!search && <Options deleteTrack={deleteTrack} />}

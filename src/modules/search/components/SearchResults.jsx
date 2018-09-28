@@ -16,6 +16,7 @@ export default function SearchResults({results, enqueue}) {
 								title={result.snippet.title}
 								key={result.id.videoId}
 								onClick={() => enqueue(result)}
+								youtube
 							/>
 						);
 					case 'SoundCloudResult':
@@ -26,6 +27,7 @@ export default function SearchResults({results, enqueue}) {
 								title={result.title}
 								key={result.id}
 								onClick={() => enqueue(result)}
+								soundcloud
 							/>
 						);
 					default:

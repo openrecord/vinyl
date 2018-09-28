@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
-
+import styled, {css} from 'styled-components';
+import {has, find} from 'shades';
 import Timeout from './Timeout';
 import Duration from './Duration';
 
@@ -12,46 +13,33 @@ class Uniplayer extends React.Component {
 			//Player State
 			playing: true,
 			volume: 1,
-			muted: false,
 			played: 0,
 			loaded: 0,
 			duration: 0,
-			playbackRate: 1.0,
-			loop: false,
 			seeking: false,
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			playerActive: true,
 			expanded: false
 		};
 	}
 
+	componentDidUpdate() {
+		const iframes = document.getElementsByTagName('iframe');
+		const sc = find(has({src: src => src.includes('soundcloud')}))(iframes);
+		if (sc) {
+			sc.allow = 'autoplay';
+		}
+	}
+
 	//React Player Functions
-	stop = () => {
-		this.setState({url: null, playing: false});
-	};
-	toggleLoop = () => {
-		this.setState({loop: !this.state.loop});
-	};
-	setVolume = e => {
-		this.setState({volume: parseFloat(e.target.value)});
-	};
-	toggleMuted = () => {
-		this.setState({muted: !this.state.muted});
-	};
-	setPlaybackRate = e => {
-		this.setState({playbackRate: parseFloat(e.target.value)});
-	};
 	onPlay = () => {
 		this.setState({playing: true});
 	};
 	onPause = () => {
-		this.setState({
-			playing: false,
-			playerActive: true
-		});
+		this.setState({playing: false});
 	};
+
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
 		if (!this.state.seeking) {
@@ -92,35 +80,14 @@ class Uniplayer extends React.Component {
 		this.setState({hoverRange: rangeTime});
 	};
 
-	playerActive = () => {
-		this.setState({playerActive: true});
-		this.props.clearTimeouts();
-		if (this.state.playing) {
-			this.props.setTimeout(() => {
-				this.setState({playerActive: false});
-			}, 2500);
-		}
-	};
-
 	//OpenRecord Player Addon Functions
 	playToggle = () => {
-		if (this.state.playing) {
-			this.setState({playing: false});
-		} else {
-			this.setState({playing: true});
-			this.props.setTimeout(() => {
-				this.setState({playerActive: false});
-			}, 2500);
-		}
+		this.setState({playing: !this.state.playing});
 	};
 
 	//OpenRecord Player Addon Functions
 	expandToggle = () => {
-		if (this.state.expanded) {
-			this.setState({expanded: false});
-		} else {
-			this.setState({expanded: true});
-		}
+		this.setState({expanded: !this.state.expanded});
 	};
 
 	setYTPlayer = player => {
@@ -137,18 +104,18 @@ class Uniplayer extends React.Component {
 					height="100%"
 					url={getTrackUrl(currentlyPlaying)}
 					playing={this.state.playing}
-					loop={this.state.loop}
-					playbackRate={this.state.playbackRate}
-					volume={this.state.volume}
-					muted={this.state.muted}
-					onReady={() => console.log('onReady')}
-					onStart={() => console.log('onStart')}
+					loop
+					config={{
+						soundcloud: {
+							options: {
+								auto_play: true
+							},
+							preload: true
+						}
+					}}
 					onPlay={this.onPlay}
 					onPause={this.onPause}
-					onBuffer={() => console.log('onBuffer')}
-					onSeek={e => console.log('onSeek', e)}
 					onEnded={this.props.playNext}
-					onError={e => console.log('onError', e)}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
 				/>
@@ -161,11 +128,7 @@ class Uniplayer extends React.Component {
 
 		var player = {},
 			playback = this.state.played * 100;
-		if (this.state.playing) {
-			player.status = ' playing';
-		} else {
-			player.status = ' paused';
-		}
+
 		if (this.state.expanded) {
 			player.expanded = ' expanded';
 		} else {
@@ -173,7 +136,7 @@ class Uniplayer extends React.Component {
 		}
 
 		return (
-			<div className="uniplayer" onMouseMove={this.playerActive}>
+			<div className="uniplayer">
 				<div className="uniplayer-left">
 					{currentlyPlaying && (
 						<div className="info-box">
@@ -188,7 +151,7 @@ class Uniplayer extends React.Component {
 					<div className="player-controls">
 						<div className="player-buttons">
 							<div className="arrow previous" onClick={this.props.playPrev} />
-							<div className={'play-button' + player.status} onClick={this.playToggle} />
+							<PlayPause play={this.state.playing} onClick={this.playToggle} />
 							<div className="arrow next" onClick={this.props.playNext} />
 						</div>
 						<div className="playback-holder">
@@ -239,6 +202,58 @@ class Uniplayer extends React.Component {
 		);
 	}
 }
+
+const PlayPause = styled.div`
+	border: 1px solid white;
+	border-radius: 50%;
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	height: 1rem;
+	padding: 0.5rem;
+	opacity: 0.8;
+	width: 1rem;
+	vertical-align: top;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	${props =>
+		props.play
+			? css`
+					&:before {
+						background: white;
+						content: '';
+						display: inline-block;
+						height: 0.875rem;
+						margin-left: 0.0625rem;
+						margin-right: 0.125rem;
+						width: 0.25rem;
+					}
+					&:after {
+						background: white;
+						content: '';
+						display: inline-block;
+						height: 0.875rem;
+						margin-left: 0.125rem;
+						margin-right: 0.0625rem;
+						width: 0.25rem;
+					}
+			  `
+			: css`
+					&:before {
+						content: '';
+						border-bottom: 0.425rem solid transparent;
+						border-left: 0.725rem solid white;
+						border-top: 0.425rem solid transparent;
+						display: inline-block;
+						height: 0;
+						width: 0;
+						transform: translateX(0.1rem);
+					}
+			  `};
+`;
 
 function getTrackUrl(track) {
 	if (track.info.url.startsWith('http')) {
