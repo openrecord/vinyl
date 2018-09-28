@@ -2,6 +2,8 @@ import styled, {css} from 'styled-components';
 import React from 'react';
 import classname from 'classnames';
 import Options from './Options';
+import ytIcon from '../images/youtube.svg';
+import scIcon from '../images/soundcloud.svg';
 
 export default function Track({onClick, playing, search, thumbnail, title, deleteTrack}) {
 	return (
@@ -12,6 +14,11 @@ export default function Track({onClick, playing, search, thumbnail, title, delet
 				{search ? <AddPlus /> : <PlayButton className="play-button" />}
 			</ImageHolder>
 			<h4>{title}</h4>
+			{search && (
+				<SourceIcon>
+					<img src={scIcon} />
+				</SourceIcon>
+			)}
 			{!search && <Options deleteTrack={deleteTrack} />}
 		</StyledResult>
 	);
@@ -93,6 +100,27 @@ const AddPlus = styled.span`
 	top: 50%;
 	transform: translate(-50%, -50%);
 	width: 1.5rem;
+
+	&:before {
+		background: white;
+		content: '';
+		height: 1.5rem;
+		left: 50%;
+		position: absolute;
+		width: 0.25rem;
+		transform: translateX(-50%);
+	}
+
+	&:after {
+		background: white;
+		content: '';
+		height: 1.5rem;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%) rotate(90deg);
+		width: 0.25rem;
+	}
 `;
 
 const PlayBackground = styled.span`
@@ -115,4 +143,15 @@ const PlayButton = styled.span`
 	border-width: 0.75rem 0 0.75rem 1.25rem;
 	border-color: transparent transparent transparent white;
 	border-style: solid;
+`;
+
+const SourceIcon = styled.div`
+	display: flex;
+	margin-left: auto;
+	margin-right: 0.5rem;
+	opacity: 0.3;
+
+	img {
+		align-content: center;
+	}
 `;
