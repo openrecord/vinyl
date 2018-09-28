@@ -15,58 +15,58 @@
 		transform: translate(-50%, -50%);
 
 		&.background {
-			width: 102%;
-			padding-top: 102%;
+			width: 105%;
+			padding-top: 105%;
 			background: #0d0d0d;
 			z-index: z-index('landing-background');
 
 			@media screen and (max-width: 1450px) {
-				padding-top: 106%;
-				width: 106%;
+				padding-top: 110%;
+				width: 110%;
 			}
 			@media screen and (max-width: $large) {
-				padding-top: 112%;
-				width: 112%;
+				padding-top: 115%;
+				width: 115%;
 			}
 			@media screen and (max-width: $medium) {
-				padding-top: 125%;
-				width: 125%;
+				padding-top: 130%;
+				width: 130%;
 			}
 			@media screen and (max-width: 750px) {
-				padding-top: 140%;
-				width: 140%;
+				padding-top: 150%;
+				width: 150%;
 			}
 			@media screen and (max-width: $small) {
-				padding-top: 160%;
-				width: 160%;
+				padding-top: 180%;
+				width: 180%;
 			}
 		}
 
 		&.center {
 			background: #ffffff;
-			padding-top: 32%;
-			width: 32%;
+			padding-top: 36%;
+			width: 36%;
 			z-index: z-index('landing-center');
 
 			@media screen and (max-width: 1450px) {
-				padding-top: 36%;
-				width: 36%;
+				padding-top: 40%;
+				width: 40%;
 			}
 			@media screen and (max-width: $large) {
-				padding-top: 42%;
-				width: 42%;
+				padding-top: 48%;
+				width: 48%;
 			}
 			@media screen and (max-width: $medium) {
-				padding-top: 52%;
-				width: 52%;
+				padding-top: 58%;
+				width: 58%;
 			}
 			@media screen and (max-width: 750px) {
-				padding-top: 65%;
-				width: 65%;
+				padding-top: 70%;
+				width: 70%;
 			}
 			@media screen and (max-width: $small) {
-				padding-top: 75%;
-				width: 75%;
+				padding-top: 90%;
+				width: 90%;
 			}
 		}
 
@@ -74,29 +74,29 @@
 			border: 1px solid black;
 			box-sizing: border-box;
 			background: transparent;
-			padding-top: calc(102% - 20px);
-			width: calc(102% - 20px);
+			padding-top: calc(105% - 20px);
+			width: calc(105% - 20px);
 			z-index: z-index('landing-outer');
 
 			@media screen and (max-width: 1450px) {
-				padding-top: calc(106% - 18px);
-				width: calc(106% - 18px);
+				padding-top: calc(110% - 18px);
+				width: calc(110% - 18px);
 			}
 			@media screen and (max-width: $large) {
-				padding-top: calc(112% -16px);
-				width: calc(112% - 16px);
+				padding-top: calc(115% -16px);
+				width: calc(115% - 16px);
 			}
 			@media screen and (max-width: $medium) {
-				padding-top: calc(125% - 14px);
-				width: calc(125% - 14px);
+				padding-top: calc(130% - 14px);
+				width: calc(130% - 14px);
 			}
 			@media screen and (max-width: 750px) {
-				padding-top: calc(140% - 12px);
-				width: calc(140% - 12px);
+				padding-top: calc(150% - 12px);
+				width: calc(150% - 12px);
 			}
 			@media screen and (max-width: $small) {
-				padding-top: calc(160% - 10px);
-				width: calc(160% - 10px);
+				padding-top: calc(180% - 10px);
+				width: calc(180% - 10px);
 			}
 		}
 
@@ -143,6 +143,7 @@
 		text-align: center;
 		top: calc(50% - 5rem);
 		transform: translate(-50%, -50%);
+		white-space: nowrap;
 		z-index: z-index('landing-hero');
 
 		@media screen and (max-width: $large) {
@@ -249,27 +250,27 @@
 
 @for $i from 1 through 100 {
 	.ring:nth-of-type(#{$i}) {
-		padding-top: calc(102% - #{(20 * $i) + 'px'});
-		width: calc(102% - #{(20 * $i) + 'px'});
+		padding-top: calc(105% - #{(20 * $i) + 'px'});
+		width: calc(105% - #{(20 * $i) + 'px'});
 		@media screen and (max-width: 1450px) {
-			padding-top: calc(106% - #{(18 * $i) + 'px'});
-			width: calc(106% - #{(18 * $i) + 'px'});
+			padding-top: calc(110% - #{(18 * $i) + 'px'});
+			width: calc(110% - #{(18 * $i) + 'px'});
 		}
 		@media screen and (max-width: $large) {
-			padding-top: calc(112% - #{(16 * $i) + 'px'});
-			width: calc(112% - #{(16 * $i) + 'px'});
+			padding-top: calc(115% - #{(16 * $i) + 'px'});
+			width: calc(115% - #{(16 * $i) + 'px'});
 		}
 		@media screen and (max-width: $medium) {
-			padding-top: calc(125% - #{(14 * $i) + 'px'});
-			width: calc(125% - #{(14 * $i) + 'px'});
+			padding-top: calc(130% - #{(14 * $i) + 'px'});
+			width: calc(130% - #{(14 * $i) + 'px'});
 		}
 		@media screen and (max-width: 750px) {
-			padding-top: calc(140% - #{(12 * $i) + 'px'});
-			width: calc(140% - #{(12 * $i) + 'px'});
+			padding-top: calc(150% - #{(12 * $i) + 'px'});
+			width: calc(150% - #{(12 * $i) + 'px'});
 		}
 		@media screen and (max-width: $small) {
-			padding-top: calc(160% - #{(10 * $i) + 'px'});
-			width: calc(160% - #{(10 * $i) + 'px'});
+			padding-top: calc(180% - #{(10 * $i) + 'px'});
+			width: calc(180% - #{(10 * $i) + 'px'});
 		}
 	}
 }
