@@ -14,12 +14,12 @@ class Search extends React.Component {
 	}
 
 	render() {
-		const {query, setSearch, results: {items} = {items: []}, enqueue} = this.props;
+		const {query, setSearch, results, enqueue} = this.props;
 
 		return (
 			<SearchHolder className="search-holder">
 				<SearchBar query={query} onChange={setSearch} />
-				{items.length > 0 && <SearchResults results={items} enqueue={enqueue} />}
+				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
 			</SearchHolder>
 		);
 	}

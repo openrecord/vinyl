@@ -87,66 +87,6 @@
 				flex-flow: row nowrap;
 				align-items: center;
 
-				.play-button {
-					border: 1px solid white;
-					border-radius: 50%;
-					cursor: pointer;
-					display: inline-block;
-					position: relative;
-					height: 1rem;
-					padding: 0.5rem;
-					opacity: 0.8;
-					width: 1rem;
-					vertical-align: top;
-
-					&:hover {
-						opacity: 1;
-					}
-
-					&.playing {
-						&:before {
-							background: white;
-							content: '';
-							display: inline-block;
-							height: 0.875rem;
-							margin-left: 0.0625rem;
-							margin-right: 0.125rem;
-							position: relative;
-							top: 50%;
-							transform: translateY(calc(-50% - 0.0675rem));
-							width: 0.25rem;
-						}
-						&:after {
-							background: white;
-							content: '';
-							display: inline-block;
-							height: 0.875rem;
-							margin-left: 0.125rem;
-							margin-right: 0.0625rem;
-							position: relative;
-							top: 50%;
-							transform: translateY(calc(-50% - 0.0675rem));
-							width: 0.25rem;
-						}
-					}
-
-					&.paused {
-						&:before {
-							content: '';
-							border-bottom: 0.425rem solid transparent;
-							border-left: 0.725rem solid white;
-							border-top: 0.425rem solid transparent;
-							display: inline-block;
-							height: 0;
-							position: relative;
-							left: 0.0625rem;
-							top: 50%;
-							transform: translateY(calc(-50% - 0.0675rem));
-							width: 0;
-						}
-					}
-				}
-
 				.arrow {
 					cursor: pointer;
 					display: inline-block;

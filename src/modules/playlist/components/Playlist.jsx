@@ -4,38 +4,45 @@ import styled from 'styled-components';
 import SearchContainer from '../../search/components/SearchContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 
-export default function Playlist({playlist, isSearchOpen, toggleSearch, trackCount}) {
-	return (
-		<StyledPlaylist>
-			<Header>
-				<CollectionRecord />
-				<CollectionInfo>
-					<h5>COLLECTION</h5>
-					<h1>/{playlist}</h1>
-					<AddSong onClick={toggleSearch} data-id="show-hide-search">
-						{isSearchOpen ? (
-							'Hide Search'
-						) : (
-							<>
-								Add Song
-								<span> +</span>
-							</>
-						)}
-					</AddSong>
-				</CollectionInfo>
-				{isSearchOpen ? (
-					<h4>Search for a song on YouTube</h4>
-				) : (
-					<h4>
-						{trackCount} track
-						{trackCount !== 1 && 's'}
-					</h4>
-				)}
-			</Header>
-			{isSearchOpen && <SearchContainer />}
-			<QueueContainer />
-		</StyledPlaylist>
-	);
+export default class Playlist extends React.Component {
+	componentDidMount() {
+		this.props.createPlaylist();
+	}
+
+	render() {
+		const {playlist, isSearchOpen, toggleSearch, trackCount} = this.props;
+		return (
+			<StyledPlaylist>
+				<Header>
+					<CollectionRecord />
+					<CollectionInfo>
+						<h5>COLLECTION</h5>
+						<h1>/{playlist}</h1>
+						<AddSong onClick={toggleSearch} data-id="show-hide-search">
+							{isSearchOpen ? (
+								'Hide Search'
+							) : (
+								<>
+									Add Song
+									<span> +</span>
+								</>
+							)}
+						</AddSong>
+					</CollectionInfo>
+					{isSearchOpen ? (
+						<h4>Search for a song on YouTube or Soundcloud</h4>
+					) : (
+						<h4>
+							{trackCount} track
+							{trackCount !== 1 && 's'}
+						</h4>
+					)}
+				</Header>
+				{isSearchOpen && <SearchContainer />}
+				<QueueContainer />
+			</StyledPlaylist>
+		);
+	}
 }
 
 const StyledPlaylist = styled.div`
