@@ -47,7 +47,8 @@ export default new ApolloClient({
 		new DebounceLink(250),
 		new RestLink({
 			endpoints: {
-				youtube: 'https://www.googleapis.com/youtube/v3/search'
+				youtube: 'https://www.googleapis.com/youtube/v3/search',
+				soundcloud: 'https://api.soundcloud.com/tracks'
 			}
 		}),
 		split(

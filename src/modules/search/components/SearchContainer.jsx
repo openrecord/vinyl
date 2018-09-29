@@ -1,16 +1,15 @@
+import {toast} from 'react-toastify';
 import React from 'react';
 
-import Search from './Search';
-import gql from 'graphql-tag';
 import {Query, Mutation} from 'react-apollo';
+import gql from 'graphql-tag';
 
-import YoutubeQuery from './YoutubeQueryContainer';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
+import Search from './Search';
+import Toast from '../../common/components/Toast';
+import TrackSearchContainer from './TrackSearchContainer';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
-import PlaylistFragments from '../../common/fragments/PlaylistFragments';
-import TrackFragments from '../../common/fragments/TrackFragments';
-import {toast} from 'react-toastify';
-import Toast from '../../common/components/Toast';
 
 const TOGGLE_SEARCH = gql`
 	mutation ToggleSearch {
@@ -33,10 +32,16 @@ const UPDATE_QUERY = gql`
 `;
 
 const ADD_TO_PLAYLIST = gql`
-	mutation AddToPlaylist($url: String!, $thumbnail: String!, $title: String!, $playlist: String!) {
+	mutation AddToPlaylist(
+		$url: String!
+		$thumbnail: String!
+		$title: String!
+		$playlist: String!
+		$source: TrackSource!
+	) {
 		upsertTrackInfo(
 			where: {url: $url}
-			create: {thumbnail: $thumbnail, title: $title, url: $url, source: YOUTUBE}
+			create: {thumbnail: $thumbnail, title: $title, url: $url, source: $source}
 			update: {}
 		) {
 			id
@@ -56,6 +61,25 @@ const ADD_TO_PLAYLIST = gql`
 	${PlaylistFragments.all}
 `;
 
+function variablesForAddToPlaylist(track, playlist) {
+	switch (track.__typename) {
+		case 'YoutubeResult':
+			return {
+				url: 'https://www.youtube.com/watch?v=' + track.id.videoId,
+				thumbnail: track.snippet.thumbnails.default.url,
+				title: track.snippet.title,
+				source: 'YOUTUBE',
+				playlist
+			};
+		case 'SoundCloudResult':
+			return {
+				...track,
+				source: 'SOUNDCLOUD',
+				playlist
+			};
+	}
+}
+
 const Composed = adapt(
 	{
 		toggleSearch: <Mutation mutation={TOGGLE_SEARCH} />,
@@ -67,8 +91,10 @@ const Composed = adapt(
 		)
 	},
 	{
-		youtubeResults: ({query, render}) => (
-			<YoutubeQuery search={query}>{props => render(props.data.youtubeResults)}</YoutubeQuery>
+		results: ({query, render}) => (
+			<TrackSearchContainer search={query}>
+				{props => render(props.data.results)}
+			</TrackSearchContainer>
 		)
 	}
 );
@@ -76,21 +102,14 @@ const Composed = adapt(
 export default function SearchContainer() {
 	return (
 		<Composed>
-			{({query, playlist, youtubeResults, updateQuery, addToPlaylist, toggleSearch}) => (
+			{({query, playlist, results, updateQuery, addToPlaylist, toggleSearch}) => (
 				<Search
 					toggleSearch={toggleSearch}
 					query={query}
-					results={youtubeResults}
+					results={results}
 					setSearch={query => updateQuery({variables: {query}})}
 					enqueue={track => {
-						addToPlaylist({
-							variables: {
-								url: track.id.videoId,
-								thumbnail: track.snippet.thumbnails.default.url,
-								title: track.snippet.title,
-								playlist
-							}
-						});
+						addToPlaylist({variables: variablesForAddToPlaylist(track, playlist)});
 						toast(<Toast message="Song Added!" />);
 					}}
 					clearSearch={() => updateQuery({variables: {query: ''}})}
