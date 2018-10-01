@@ -1,12 +1,13 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
+import {device} from '../../styles/utilities/device';
 
 import {ROUTES} from '../routes/routes';
 
 export default function Nav() {
 	return (
-		<StyledNav transparent={location.pathname === ROUTES.LANDING} className="nav">
+		<StyledNav landing={location.pathname === ROUTES.LANDING} className="nav">
 			<Link to={ROUTES.LANDING} key={'home'}>
 				OPENRECORD
 			</Link>
@@ -15,7 +16,7 @@ export default function Nav() {
 }
 
 const StyledNav = styled.nav`
-	background: ${props => (props.transparent ? 'transparent' : 'rgb(25, 25, 25)')};
+	background: ${props => (props.landing ? 'transparent' : 'rgb(25, 25, 25)')};
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;
@@ -37,5 +38,9 @@ const StyledNav = styled.nav`
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+
+	@media ${device.small} {
+		display: ${props => (props.landing ? 'inherit' : 'none')};
 	}
 `;

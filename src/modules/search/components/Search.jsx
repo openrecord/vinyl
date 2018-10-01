@@ -1,6 +1,7 @@
 import React from 'react';
 import onClickOutside from 'react-onclickoutside';
 import styled from 'styled-components';
+import {device} from '../../../styles/utilities/device';
 
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
@@ -40,6 +41,12 @@ const SearchHolder = styled.div`
 		position: fixed;
 		top: 12.125rem;
 		width: 100%;
+		@media ${device.small} {
+			top: 4.675rem;
+		}
+	}
+	@media ${device.small} {
+		top: 4.675rem;
 	}
 `;
 
