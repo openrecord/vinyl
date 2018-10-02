@@ -39,6 +39,10 @@ class Uniplayer extends React.Component {
 	onPause = () => {
 		this.setState({playing: false});
 	};
+	onEnded = () => {
+		console.log(this.props);
+		this.props.playNext;
+	};
 
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
@@ -67,7 +71,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = (songDuration / barWidth) * mousePosition,
+			scrubTime = songDuration / barWidth * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -115,7 +119,7 @@ class Uniplayer extends React.Component {
 					}}
 					onPlay={this.onPlay}
 					onPause={this.onPause}
-					onEnded={this.props.playNext}
+					onEnded={this.onEnded}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
 				/>
