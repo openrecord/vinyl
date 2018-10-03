@@ -20,7 +20,8 @@ class Uniplayer extends React.Component {
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			expanded: false
+			expanded: false,
+			minimize: false
 		};
 	}
 
@@ -91,7 +92,13 @@ class Uniplayer extends React.Component {
 
 	//OpenRecord Player Addon Functions
 	expandToggle = () => {
+		this.setState({minimize: false});
 		this.setState({expanded: !this.state.expanded});
+	};
+
+	minimizeToggle = () => {
+		this.setState({expanded: false});
+		this.setState({minimize: !this.state.minimize});
 	};
 
 	setYTPlayer = player => {
@@ -137,6 +144,11 @@ class Uniplayer extends React.Component {
 			player.expanded = ' expanded';
 		} else {
 			player.expanded = '';
+		}
+		if (this.state.minimize) {
+			player.minimize = ' minimize';
+		} else {
+			player.minimize = '';
 		}
 
 		return (
@@ -187,14 +199,17 @@ class Uniplayer extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="uniplayer-right" />
+				<div className="uniplayer-right">
+					{this.state.minimize && <button className="unminimize" onClick={this.minimizeToggle} />}
+					{this.state.expanded && <button className="unexpand" onClick={this.expandToggle} />}
+				</div>
 				{currentlyPlaying && (
-					<div className={'player-holder' + player.expanded}>
+					<div className={'player-holder' + player.expanded + player.minimize}>
 						<div className="player-outer">
 							<div className="iframeblocker" onClick={this.playToggle} />
 							<div className="size-buttons">
-								<div className="expand-button" onClick={this.expandToggle} />
-								<div className="minimize-button" />
+								<button className="minimize-button" onClick={this.minimizeToggle} />
+								<button className="expand-button" onClick={this.expandToggle} />
 							</div>
 							{currentlyPlaying && this.renderYT(currentlyPlaying)}
 						</div>
