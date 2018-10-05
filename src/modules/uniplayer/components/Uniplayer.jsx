@@ -20,8 +20,7 @@ class Uniplayer extends React.Component {
 			hoverTime: '',
 			hoverRange: '',
 			mousePosition: '',
-			expanded: false,
-			minimize: false
+			expanded: false
 		};
 	}
 
@@ -96,11 +95,6 @@ class Uniplayer extends React.Component {
 		this.setState({expanded: !this.state.expanded});
 	};
 
-	minimizeToggle = () => {
-		this.setState({expanded: false});
-		this.setState({minimize: !this.state.minimize});
-	};
-
 	setYTPlayer = player => {
 		this.YTPlayer = player;
 	};
@@ -142,23 +136,16 @@ class Uniplayer extends React.Component {
 
 		if (this.state.expanded) {
 			player.expanded = ' expanded';
+			player.iframeAction = this.playToggle;
 		} else {
 			player.expanded = '';
+			player.iframeAction = this.expandToggle;
 		}
-		if (this.state.minimize) {
-			player.minimize = ' minimize';
-		} else {
-			player.minimize = '';
-		}
-
 		return (
 			<div className="uniplayer">
-				<div className="uniplayer-left">
+				<div className={'uniplayer-left' + player.expanded}>
 					{currentlyPlaying && (
 						<div className="info-box">
-							<div className="image-holder">
-								<img src={currentlyPlaying.info.thumbnail} />
-							</div>
 							<h5 className="song-title">{currentlyPlaying.info.title}</h5>
 						</div>
 					)}
@@ -199,18 +186,16 @@ class Uniplayer extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="uniplayer-right">
-					{this.state.minimize && <button className="unminimize" onClick={this.minimizeToggle} />}
-					{this.state.expanded && <button className="unexpand" onClick={this.expandToggle} />}
+				<div className={'uniplayer-right' + player.expanded} onClick={this.expandToggle}>
+					<div className="image-holder">
+						{currentlyPlaying && <img src={currentlyPlaying.info.thumbnail} />}
+					</div>
+					<button className="expand-toggle" onClick={this.expandToggle} />
 				</div>
 				{currentlyPlaying && (
-					<div className={'player-holder' + player.expanded + player.minimize}>
+					<div className={'player-holder' + player.expanded}>
 						<div className="player-outer">
-							<div className="iframeblocker" onClick={this.playToggle} />
-							<div className="size-buttons">
-								<button className="minimize-button" onClick={this.minimizeToggle} />
-								<button className="expand-button" onClick={this.expandToggle} />
-							</div>
+							<div className="iframeblocker" onClick={player.iframeAction} />
 							{currentlyPlaying && this.renderYT(currentlyPlaying)}
 						</div>
 					</div>
