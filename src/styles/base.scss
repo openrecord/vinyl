@@ -105,5 +105,9 @@ li {
 }
 
 .toast-container.toast-container {
+	bottom: 3.5rem;
+	margin-left: 0;
 	width: auto;
+	transform: translateX(-50%);
+	z-index: z-index('toast');
 }
