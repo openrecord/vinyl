@@ -25,6 +25,10 @@ jobs:
           command: docker-compose up turntable-deploy
 
       - run:
+          name: Start vinyl container
+          command: docker-compose up -d vinyl
+
+      - run:
           name: Run end-to-end tests in a new vinyl container.
           command: |
             docker rm test-run || echo "Test contaner does not exist."
