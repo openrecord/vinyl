@@ -29,6 +29,7 @@ jobs:
           command: |
             docker rm test-run || echo "Test contaner does not exist."
             docker-compose run --name test-run vinyl npm run test:ci
+
       - run:
           name: Copy test artifacts from the test-run container into the job space.
           when: always

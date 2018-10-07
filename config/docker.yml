@@ -1,0 +1,4 @@
+puppeteer:
+  useRemoteChrome: true
+  remoteChromeEndpoint: http://chrome-headless:9222
+  baseUrl: http://vinyl:8080

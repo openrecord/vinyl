@@ -1,3 +1,9 @@
----
 api:
   port: API_PORT
+
+puppeteer:
+  useRemoteChrome:
+    __name: PUPPETEER_USE_REMOTE_CHROME
+    __format: json # parse as a boolean
+  remoteChromeEndpoint: PUPPETEER_REMOTE_CHROME_ENDPOINT
+  baseUrl: PUPPETEER_BASEURL

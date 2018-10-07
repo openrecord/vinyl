@@ -6,6 +6,9 @@ services:
       dockerfile: docker/vinyl/Dockerfile
     ports:
       - 8080:8080
+    environment:
+      HOST: docker
+    networks: [main]
 
   #TODO: wait on prisma healthcheck
   turntable-deploy:
@@ -14,6 +17,7 @@ services:
     command: npx prisma deploy
     environment:
       ENDPOINT: http://prisma:4466
+    networks: [main]
 
   #TODO: Add healthcheck
   prisma:
@@ -31,6 +35,7 @@ services:
             password: prisma
             migrations: true
     depends_on: [postgres]
+    networks: [main]
 
   #TODO: Add healthcheck
   postgres:
@@ -39,6 +44,7 @@ services:
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
+    networks: [main]
 
   chrome-headless:
     image: openrecord/chrome-headless
@@ -47,3 +53,8 @@ services:
       context: .
     ports:
       - 9222:9222
+    networks: [main]
+
+networks:
+  main:
+    driver: bridge
