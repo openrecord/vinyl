@@ -12,12 +12,12 @@ jobs:
       - checkout
 
       - run:
-          name: Start postgres and prisma server.
-          command: docker-compose up prisma
+          name: Start postgres, prisma server, and chrome-headless.
+          command: docker-compose up prisma chrome-headless
 
-      - ? run
-        name: Build test image.
-        command: docker-compose build vinyl
+      - run:
+          name: Build test image.
+          command: docker-compose build vinyl
 
       #TODO: Come up with better way to start turntable. Ideally we can package it as its own docker image.
       - run:
