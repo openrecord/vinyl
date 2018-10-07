@@ -3,7 +3,7 @@ const config = require('config');
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra');
 
-const tutil = require('./tools/testUtils');
+const tutil = require('../tools/testUtils');
 
 module.exports = async function() {
 	await tutil.ensureScreenshotsDir();

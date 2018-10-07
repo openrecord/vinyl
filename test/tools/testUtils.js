@@ -56,8 +56,11 @@ module.exports.cleanWebsocketFile = () => {
 	fs.removeSync(WEBSOCKET_DIR);
 };
 
-module.exports.page = async () => {
-	return global.__BROWSER__.newPage();
+module.exports.newHomepage = async () => {
+	const page = await global.__BROWSER__.newPage();
+	await page.goto(config.puppeteer.baseUrl);
+	await page.waitForSelector('html');
+	return page;
 };
 
 module.exports.ensureScreenshotsDir = async () => {

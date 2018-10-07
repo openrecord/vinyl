@@ -1,7 +1,7 @@
 const NodeEnvironment = require('jest-environment-node');
 const puppeteer = require('puppeteer');
 
-const tutil = require('./tools/testUtils');
+const tutil = require('../tools/testUtils');
 
 class PuppeteerEnvironment extends NodeEnvironment {
 	async setup() {

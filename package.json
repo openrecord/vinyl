@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build:prod": "webpack --mode production",
-    "config": "node bin/printConfig.js"
+    "config": "node bin/printConfig.js",
+    "test:ci": "jest --ci --testResultsProcessor='jest-junit'"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "husky": "^1.0.0-rc.13",
     "import-glob-loader": "^1.1.0",
     "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "postcss-cssnext": "^3.1.0",
@@ -122,5 +124,8 @@
     "globalSetup": "./test/setup/jest-setup.js",
     "globalTeardown": "./test/setup/jest-teardown.js",
     "testEnvironment": "./test/setup/puppeteer_environment.js"
+  },
+  "jest-junit": {
+    "output": "test-reports/junit.xml"
   }
 }
