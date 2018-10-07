@@ -1,24 +1,27 @@
 FROM node:8-slim
 
-# Create our core app & src folders
+# Create app dir.
 RUN mkdir /app
 WORKDIR /app
 
+# Install http-server so we can serve locally after building via webpack.
 RUN npm install http-server
 
-# Copy over package.json so we can later run npm install
+# Install node libs.
 COPY package.json .
-
-# Install ALL dependencies
 RUN npm i --loglevel warn --no-progress
 
-# Copy over all of our code - note for local dev we'll mount over this from docker-compose
-# DO THIS AFTER npm install so we get benefits of caching for npm install which takes a while
+# Copy sources.
 COPY ./config config
+COPY ./docs docs
+COPY ./bin bin
+COPY ./test test
+COPY ./public public
 COPY ./src src
-COPY favicon.ico webpack.config.js .babelrc .importjs.js postcss.config.js ./
+COPY webpack.config.js .importjs.js postcss.config.js .babelrc ./
 
-RUN npm run build
+# Build web image.
+RUN npm run build:prod
 
 # The fallback for http-server missed routes: https://github.com/indexzero/http-server
 RUN cp dist/index.html dist/404.html
