@@ -8,7 +8,7 @@ WORKDIR /app
 RUN npm install http-server
 
 # Install node libs.
-COPY package.json .
+COPY package.json .npmrc ./
 RUN npm i --loglevel warn --no-progress
 
 # Copy sources.
