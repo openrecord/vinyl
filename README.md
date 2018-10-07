@@ -24,7 +24,7 @@ docker-compose up -d      # Starts an instance of the openrecord api and a mysql
 
 Configuration is managed using [node-config](https://github.com/lorenwest/node-config). _All_ configuration options should go in the _config/_ directory.
 
-Configs are inherited from _default.yml_ initially. When NODE*ENV is set, a file matching *[NODE_ENV].yml\_ will be loaded (i.e. staging and production).
+Configs are inherited from _default.yml_ initially. When NODE_ENV is set, a file matching _NODE_ENV.yml_ will be loaded (i.e. staging and production).
 
 To override any configuration, add a file called _local.yml_ (git-ignored) or map an environment variable to a configuration option in _custom-environment-variables.yml_.
 
