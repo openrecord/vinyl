@@ -1,20 +1,49 @@
 version: '2.1'
 services:
-  turntable:
-    image: openrecord/turntable:latest
+  vinyl:
+    build:
+      context: .
+      dockerfile: docker/vinyl/Dockerfile
     ports:
-      - 4466:4466
-    depends_on:
-      - postgres
+      - 8080:8080
 
+  #TODO: wait on prisma healthcheck
+  turntable-deploy:
+    image: openrecord/turntable:prisma-cli
+    depends_on: [prisma]
+    command: npx prisma deploy
+    environment:
+      ENDPOINT: http://prisma:4466
+
+  #TODO: Add healthcheck
+  prisma:
+    image: prismagraphql/prisma:1.15
+    restart: always
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: prisma
+            password: prisma
+            migrations: true
+    depends_on: [postgres]
+
+  #TODO: Add healthcheck
   postgres:
     image: postgres
+    restart: always
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
 
   chrome-headless:
-    image: videoblocks/chrome-headless
-    depends_on: [developer-portal]
+    image: openrecord/chrome-headless
+    build:
+      dockerfile: docker/chrome-headless/Dockerfile
+      context: .
     ports:
       - 9222:9222
