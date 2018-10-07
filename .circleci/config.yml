@@ -13,7 +13,7 @@ jobs:
 
       - run:
           name: Start postgres, prisma server, and chrome-headless.
-          command: docker-compose up prisma chrome-headless
+          command: docker-compose up -d prisma chrome-headless
 
       - run:
           name: Build test image.
