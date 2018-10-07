@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+      - image: openrecord/chrome-headless
+      - image: postgres
+      - image: openrecord/turntable:latest
+
+    steps:
+      - checkout
+
+      - run:
+          name: Run end-to-end tests.
+          command: npm run test
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+      - store_artifacts:
+          path: test-screenshots
+          destination: test-screenshots
