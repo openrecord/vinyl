@@ -34,6 +34,8 @@ services:
             user: prisma
             password: prisma
             migrations: true
+    ports:
+      - 4466:4466
     depends_on: [postgres]
     networks: [main]
 
