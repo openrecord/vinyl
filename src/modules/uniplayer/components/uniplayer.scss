@@ -48,6 +48,11 @@
 						margin: 0;
 					}
 				}
+				&:after {
+					@media screen and (max-width: $small) {
+						background-image: linear-gradient(to right, transparent, rgb(25, 25, 25));
+					}
+				}
 			}
 		}
 
