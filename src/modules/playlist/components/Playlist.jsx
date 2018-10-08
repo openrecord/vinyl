@@ -14,7 +14,7 @@ export default class Playlist extends React.Component {
 		const {playlist, isSearchOpen, toggleSearch, trackCount} = this.props;
 		return (
 			<StyledPlaylist>
-				<Header>
+				<Header className="header">
 					<CollectionRecord />
 					<CollectionInfo>
 						<h5>COLLECTION</h5>
@@ -54,11 +54,10 @@ export default class Playlist extends React.Component {
 
 const StyledPlaylist = styled.div`
 	display: block;
-	left: 50%;
 	max-width: 75rem;
+	margin: 0 auto;
 	padding-top: 4rem;
 	position: relative;
-	transform: translateX(-50%);
 	width: 80%;
 	transition: all 0.1s;
 	@media ${device.small} {
@@ -73,8 +72,12 @@ const Header = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
+	position: relative;
 	@media ${device.small} {
+		background: rgb(25, 25, 25);
 		padding: 0;
+		position: fixed;
+		width: 100%;
 	}
 
 	h4 {

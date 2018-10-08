@@ -1,6 +1,7 @@
 .search-holder {
 	z-index: z-index('search-holder');
 }
+
 .search-bar {
 	z-index: z-index('search-bar');
 	caret-color: rgb(156, 77, 157);
@@ -8,4 +9,8 @@
 
 .search-results {
 	z-index: z-index('search-results');
+}
+
+.search-background {
+	z-index: z-index('search-background');
 }

@@ -21,6 +21,7 @@ class Search extends React.Component {
 			<SearchHolder className="search-holder">
 				<SearchBar query={query} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
+				<SearchBackground className="search-background" onClick={this.props.toggleSearch} />
 			</SearchHolder>
 		);
 	}
@@ -30,21 +31,22 @@ const SearchHolder = styled.div`
 	background: rgba(36, 36, 36);
 	box-shadow: 0px 4px 6px 4px rgba(0, 0, 0, 0.1);
 	display: block;
-	position: fixed;
+	position: absolute;
 	top: 12.125rem;
 	width: 100%;
-
-	&:before {
-		background: rgba(25, 25, 25, 0.97);
-		bottom: 0;
-		content: '';
-		position: fixed;
-		top: 12.125rem;
-		width: 100%;
-		@media ${device.small} {
-			top: 4.675rem;
-		}
+	@media ${device.small} {
+		top: 4.675rem;
 	}
+`;
+
+const SearchBackground = styled.div`
+	background: rgba(25, 25, 25, 0.97);
+	bottom: 0;
+	content: '';
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
 	@media ${device.small} {
 		top: 4.675rem;
 	}

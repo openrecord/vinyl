@@ -32,7 +32,8 @@
 
 		&.expanded {
 			@media screen and (max-width: $small) {
-				width: 100%;
+				align-self: center;
+				width: calc(100% - 8rem);
 			}
 			.info-box {
 				@media screen and (max-width: $small) {
@@ -44,6 +45,7 @@
 				h5 {
 					@media screen and (max-width: $small) {
 						font-size: 1rem;
+						margin: 0;
 					}
 				}
 			}
@@ -66,11 +68,11 @@
 			transition: opacity 0.2s;
 
 			@media screen and (max-width: $small) {
-				margin: auto 0.75rem auto 0.75rem;
+				margin: auto 1rem auto 0.75rem;
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
-				width: calc(70% - 3rem);
+				width: calc(100% - 1.75rem);
 			}
 
 			&:after {
@@ -79,6 +81,7 @@
 				height: 100%;
 				position: absolute;
 				right: 0;
+				top: 0;
 				width: 0.75rem;
 			}
 

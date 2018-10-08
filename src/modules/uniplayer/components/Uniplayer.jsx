@@ -143,13 +143,13 @@ class Uniplayer extends React.Component {
 		}
 		return (
 			<div className="uniplayer">
-				<div className={'uniplayer-left' + player.expanded}>
-					{currentlyPlaying && (
+				{currentlyPlaying && (
+					<div className={'uniplayer-left' + player.expanded}>
 						<div className="info-box">
 							<h5 className="song-title">{currentlyPlaying.info.title}</h5>
 						</div>
-					)}
-				</div>
+					</div>
+				)}
 				<div className="uniplayer-middle">
 					<div className="player-controls">
 						<div className="player-buttons">
@@ -186,12 +186,14 @@ class Uniplayer extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className={'uniplayer-right' + player.expanded} onClick={this.expandToggle}>
-					<div className="image-holder">
-						{currentlyPlaying && <img src={currentlyPlaying.info.thumbnail} />}
+				{currentlyPlaying && (
+					<div className={'uniplayer-right' + player.expanded} onClick={this.expandToggle}>
+						<div className="image-holder">
+							<img src={currentlyPlaying.info.thumbnail} />
+						</div>
+						<button className="expand-toggle" onClick={this.expandToggle} />
 					</div>
-					<button className="expand-toggle" onClick={this.expandToggle} />
-				</div>
+				)}
 				{currentlyPlaying && (
 					<div className={'player-holder' + player.expanded}>
 						<div className="player-outer">

@@ -106,8 +106,13 @@ li {
 
 .toast-container.toast-container {
 	bottom: 3.5rem;
+	left: 50% !important;
 	margin-left: 0;
 	width: auto;
 	transform: translateX(-50%);
 	z-index: z-index('toast');
+
+	@media screen and (max-width: $small) {
+		bottom: 8.5rem;
+	}
 }
