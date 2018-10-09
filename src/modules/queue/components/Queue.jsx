@@ -23,11 +23,9 @@ export default function Queue({tracks, updatePlaying, currentlyPlayingId, delete
 
 const QueueList = styled.div`
 	margin-bottom: 5rem;
-	width: 100%;
+
 	@media ${device.small} {
 		margin-bottom: 10.25rem;
-		position: relative;
-		top: 4.675rem;
 	}
 
 	::-webkit-scrollbar {

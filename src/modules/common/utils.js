@@ -44,3 +44,5 @@ export const ifEnter = f => event => {
 		f();
 	}
 };
+
+export const ifElse = (t, f) => c => (c ? t : f);

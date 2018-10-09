@@ -18,7 +18,7 @@ class Search extends React.Component {
 		const {query, setSearch, results, enqueue} = this.props;
 
 		return (
-			<SearchHolder className="search-holder">
+			<SearchHolder>
 				<SearchBar query={query} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
 				<SearchBackground className="search-background" onClick={this.props.toggleSearch} />
@@ -30,26 +30,13 @@ class Search extends React.Component {
 const SearchHolder = styled.div`
 	background: rgba(36, 36, 36);
 	box-shadow: 0px 4px 6px 4px rgba(0, 0, 0, 0.1);
-	display: block;
-	position: absolute;
-	top: 12.125rem;
-	width: 100%;
-	@media ${device.small} {
-		top: 4.675rem;
-	}
 `;
 
 const SearchBackground = styled.div`
 	background: rgba(25, 25, 25, 0.97);
-	bottom: 0;
-	content: '';
-	left: 0;
-	position: fixed;
-	top: 0;
 	width: 100%;
-	@media ${device.small} {
-		top: 4.675rem;
-	}
+	height: 100vh;
+	position: absolute;
 `;
 
 export default onClickOutside(Search);
