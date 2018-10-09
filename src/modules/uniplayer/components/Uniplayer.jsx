@@ -39,10 +39,6 @@ class Uniplayer extends React.Component {
 	onPause = () => {
 		this.setState({playing: false});
 	};
-	onEnded = () => {
-		console.log(this.props);
-		this.props.playNext;
-	};
 
 	onProgress = state => {
 		// We only want to update time slider if we are not currently seeking
@@ -120,7 +116,7 @@ class Uniplayer extends React.Component {
 					}}
 					onPlay={this.onPlay}
 					onPause={this.onPause}
-					onEnded={this.onEnded}
+					onEnded={this.props.playNext}
 					onProgress={this.onProgress}
 					onDuration={this.onDuration}
 				/>
