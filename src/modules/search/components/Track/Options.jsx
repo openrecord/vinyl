@@ -34,6 +34,7 @@ export default class Options extends React.Component {
 const StyledOptions = styled.div`
 	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
 	margin-left: auto;
+
 	@media ${device.small} {
 		opacity: ${({isOpen}) => (isOpen ? '1 !important' : '0.5 !important')};
 	}
@@ -55,6 +56,7 @@ const Dot = styled.span`
 	height: 0.25rem;
 	margin: 0.125rem;
 	width: 0.25rem;
+
 	@media ${device.small} {
 		height: 0.1875rem;
 		margin: 0.0625rem;
