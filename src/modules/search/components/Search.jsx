@@ -35,7 +35,7 @@ const SearchHolder = styled.div`
 const SearchBackground = styled.div`
 	background: rgba(25, 25, 25, 0.97);
 	width: 100%;
-	height: 100vh;
+	height: ${_ => Math.max(document.querySelector('#queue').offsetHeight, 200) + 'px'};
 	position: absolute;
 `;
 

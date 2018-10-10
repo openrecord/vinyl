@@ -6,7 +6,7 @@ import Track from '../../search/components/Track';
 
 export default function Queue({tracks, updatePlaying, currentlyPlayingId, deleteTrack}) {
 	return (
-		<QueueList>
+		<QueueList id="queue">
 			{tracks.map(track => (
 				<Track
 					{...track.info}
