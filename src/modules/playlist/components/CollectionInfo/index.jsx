@@ -35,11 +35,16 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 const StyledCollectionInfo = styled.div`
 	display: flex;
 	justify-content: space-between;
+	position: relative;
 	width: 100%;
 
 	h5 {
 		color: rgba(60, 60, 60, 1);
 		margin-bottom: 0.25rem;
+
+		@media ${device.small} {
+			display: none;
+		}
 	}
 `;
 
@@ -61,8 +66,11 @@ const Stack = styled.div`
 	flex-direction: column;
 
 	@media ${device.small} {
-		align-items: flex-end;
-		margin: 0.75rem;
+		align-items: center;
+		flex-direction: row;
+		justify-content: space-between;
+		margin: 0.75rem 0.75rem 0.75rem 0;
+		width: 100%;
 
 		${StyledMessage} {
 			text-align: right;
@@ -71,5 +79,8 @@ const Stack = styled.div`
 
 	${StyledAddSong} {
 		margin-top: auto;
+		@media ${device.small} {
+			margin: 0 0 auto 0;
+		}
 	}
 `;

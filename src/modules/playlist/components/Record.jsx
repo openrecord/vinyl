@@ -13,7 +13,7 @@ export default styled.div`
 
 	@media ${device.small} {
 		height: 3rem;
-		margin: 0.75rem 0.5rem;
+		margin: 0.75rem 0.5rem 0.75rem 0.75rem;
 		width: 3rem;
 		min-width: 3rem;
 	}

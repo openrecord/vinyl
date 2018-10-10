@@ -24,4 +24,10 @@ export default function Message({isSearchOpen, trackCount}) {
 export const StyledMessage = styled.h4`
 	color: rgba(98, 98, 98, 1);
 	margin-top: auto;
+
+	@media ${device.small} {
+		bottom: 0.75rem;
+		right: 0.875rem;
+		position: absolute;
+	}
 `;
