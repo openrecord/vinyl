@@ -24,7 +24,7 @@ export default function App() {
 				</Switch>
 				<UniplayerContainer />
 				<ToastContainer
-					position={toast.POSITION.TOP_RIGHT}
+					position={toast.POSITION.BOTTOM_CENTER}
 					transition={Slide}
 					className="toast-container"
 					toastClassName="toast"

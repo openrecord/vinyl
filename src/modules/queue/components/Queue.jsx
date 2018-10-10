@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {device} from '../../../styles/utilities/device';
 
 import Track from '../../search/components/Track';
 
@@ -22,8 +23,10 @@ export default function Queue({tracks, updatePlaying, currentlyPlayingId, delete
 
 const QueueList = styled.div`
 	margin-bottom: 5rem;
-	overflow-y: scroll;
-	width: 100%;
+
+	@media ${device.small} {
+		margin-bottom: 10.25rem;
+	}
 
 	::-webkit-scrollbar {
 		display: none;
