@@ -11,7 +11,6 @@ class Uniplayer extends React.Component {
 
 		this.state = {
 			//Player State
-			playing: true,
 			volume: 1,
 			played: 0,
 			loaded: 0,
@@ -19,8 +18,7 @@ class Uniplayer extends React.Component {
 			seeking: false,
 			hoverTime: '',
 			hoverRange: '',
-			mousePosition: '',
-			expanded: false
+			mousePosition: ''
 		};
 	}
 
@@ -34,10 +32,10 @@ class Uniplayer extends React.Component {
 
 	//React Player Functions
 	onPlay = () => {
-		this.setState({playing: true});
+		this.props.togglePlaying(true);
 	};
 	onPause = () => {
-		this.setState({playing: false});
+		this.props.togglePlaying(false);
 	};
 
 	onProgress = state => {
@@ -67,7 +65,7 @@ class Uniplayer extends React.Component {
 		var barWidth = this.refs.playerBar.offsetWidth,
 			songDuration = this.state.duration,
 			mousePosition = e.nativeEvent.offsetX,
-			scrubTime = songDuration / barWidth * mousePosition,
+			scrubTime = (songDuration / barWidth) * mousePosition,
 			rangeTime = mousePosition / barWidth,
 			minutes = Math.floor(scrubTime / 60),
 			seconds = Math.round(scrubTime - minutes * 60);
@@ -82,13 +80,12 @@ class Uniplayer extends React.Component {
 
 	//OpenRecord Player Addon Functions
 	playToggle = () => {
-		this.setState({playing: !this.state.playing});
+		this.props.togglePlaying();
 	};
 
 	//OpenRecord Player Addon Functions
-	expandToggle = () => {
-		this.setState({minimize: false});
-		this.setState({expanded: !this.state.expanded});
+	expandToggle = event => {
+		this.props.toggleExpanded();
 	};
 
 	setYTPlayer = player => {
@@ -104,13 +101,16 @@ class Uniplayer extends React.Component {
 					width="100%"
 					height="100%"
 					url={getTrackUrl(currentlyPlaying)}
-					playing={this.state.playing}
+					playing={this.props.playing}
 					loop
 					config={{
 						soundcloud: {
 							options: {
 								auto_play: true
 							},
+							preload: true
+						},
+						youtube: {
 							preload: true
 						}
 					}}
@@ -130,7 +130,7 @@ class Uniplayer extends React.Component {
 		var player = {},
 			playback = this.state.played * 100;
 
-		if (this.state.expanded) {
+		if (this.props.expanded) {
 			player.expanded = ' expanded';
 			player.iframeAction = this.playToggle;
 		} else {
@@ -150,7 +150,7 @@ class Uniplayer extends React.Component {
 					<div className="player-controls">
 						<div className="player-buttons">
 							<div className="arrow previous" onClick={this.props.playPrev} />
-							<PlayPause play={this.state.playing} onClick={this.playToggle} />
+							<PlayPause play={this.props.playing} onClick={this.playToggle} />
 							<div className="arrow next" onClick={this.props.playNext} />
 						</div>
 						<div className="playback-holder">
@@ -170,9 +170,7 @@ class Uniplayer extends React.Component {
 									max={1}
 									step="any"
 									value={this.state.played}
-									onMouseEnter={this.onMouseEnter}
 									onMouseMove={this.onMouseMove}
-									onMouseLeave={this.onMouseLeave}
 									onMouseDown={this.onSeekMouseDown}
 									onChange={this.onSeekChange}
 									onMouseUp={this.onSeekMouseUp}
@@ -183,7 +181,7 @@ class Uniplayer extends React.Component {
 					</div>
 				</div>
 				{currentlyPlaying && (
-					<div className={'uniplayer-right' + player.expanded} onClick={this.expandToggle}>
+					<div className={'uniplayer-right' + player.expanded}>
 						<div className="image-holder">
 							<img src={currentlyPlaying.info.thumbnail} />
 						</div>
@@ -199,7 +197,7 @@ class Uniplayer extends React.Component {
 					</div>
 				)}
 
-				{this.state.expanded && <div className="player-background" />}
+				{this.props.expanded && <div className="player-background" />}
 			</div>
 		);
 	}
