@@ -2,13 +2,13 @@ import MediaQuery from 'react-responsive';
 import React from 'react';
 import styled, {css} from 'styled-components';
 
-import {device} from '../../../../styles/utilities/device';
-import {ifElse} from '../../../common/utils';
+import {device} from '../../../styles/utilities/device';
+import {ifElse} from '../../common/utils';
 import PlayerBox from './PlayerBox';
 import Slider from './Slider';
 import SongControls from './SongControls';
 
-export default function Uniplayer({
+export default function Controls({
 	playing,
 	expanded,
 	togglePlaying,

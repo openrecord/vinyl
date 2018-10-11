@@ -8,12 +8,12 @@ import SetPlayed from '../mutations/SetPlayed';
 import ToggleExpanded from '../mutations/ToggleExpanded';
 import TogglePlaying from '../mutations/TogglePlaying';
 import TrackFragments from '../../common/fragments/TrackFragments';
-import Uniplayer from './Uniplayer/index';
+import Controls from './Controls';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
 
 const query = gql`
-	query UniplayerContainer {
+	query ControlsContainer {
 		player @client {
 			currentlyPlaying {
 				...AllTrack
@@ -37,7 +37,7 @@ const Composed = adapt({
 	playlist: <WithPlaylistId />
 });
 
-export default function UniplayerContainer() {
+export default function ControlsContainer() {
 	return (
 		<Composed>
 			{({
@@ -51,7 +51,7 @@ export default function UniplayerContainer() {
 				setDuration,
 				playlist
 			}) => (
-				<Uniplayer
+				<Controls
 					currentlyPlaying={currentlyPlaying}
 					playing={playing}
 					played={played}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Duration from '../Duration';
+import Duration from './Duration';
 
 export default function Slider({played, duration, setPlayed}) {
 	return (

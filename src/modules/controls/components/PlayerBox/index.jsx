@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {device} from '../../../../../styles/utilities/device';
+import {device} from '../../../../styles/utilities/device';
 import Player from './Player';
 import ExpandButton from '../ExpandButton';
 

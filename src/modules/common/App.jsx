@@ -8,7 +8,7 @@ import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
 import Nav from '../nav/NavContainer';
 import RegisterContainer from '../register/RegisterContainer';
-import UniplayerContainer from '../uniplayer/components/UniplayerContainer';
+import ControlsContainer from '../controls/components/ControlsContainer';
 import PlaylistContainer from '../playlist/components/PlaylistContainer';
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
 					<Route path={ROUTES.PLAYER} component={PlaylistContainer} />
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
-				<UniplayerContainer />
+				<ControlsContainer />
 				<ToastContainer
 					position={toast.POSITION.BOTTOM_CENTER}
 					transition={Slide}
