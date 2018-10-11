@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
+import {has, find} from 'shades';
+
 export default class Player extends React.Component {
 	constructor(props) {
 		super(props);
@@ -11,6 +13,12 @@ export default class Player extends React.Component {
 		const secondsElapsed = (this.props.played - oldProps.played) * this.props.duration;
 		if (secondsElapsed > 1.5 || secondsElapsed < 0) {
 			this.playerRef.current.seekTo(this.props.played);
+		}
+
+		const iframes = document.getElementsByTagName('iframe');
+		const sc = find(has({src: src => src.includes('soundcloud')}))(iframes);
+		if (sc) {
+			sc.allow = 'autoplay';
 		}
 	}
 

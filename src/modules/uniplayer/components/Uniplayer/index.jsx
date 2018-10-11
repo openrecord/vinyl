@@ -1,84 +1,101 @@
 import React from 'react';
+import MediaQuery from 'react-responsive';
 import styled from 'styled-components';
 
-import {has, find} from 'shades';
-
 import {device} from '../../../../styles/utilities/device';
+import {ifElse} from '../../../common/utils';
 import PlayerBox from './PlayerBox';
 import Slider from './Slider';
 import SongControls from './SongControls';
 
-class Uniplayer extends React.Component {
-	componentDidUpdate() {
-		const iframes = document.getElementsByTagName('iframe');
-		const sc = find(has({src: src => src.includes('soundcloud')}))(iframes);
-		if (sc) {
-			sc.allow = 'autoplay';
-		}
-	}
+export default function Uniplayer({
+	playing,
+	togglePlaying,
+	playNext,
+	playPrev,
+	played,
+	duration,
+	currentlyPlaying,
+	setDuration,
+	setPlayed
+}) {
+	const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
-	render() {
-		const {
-			playing,
-			togglePlaying,
-			playNext,
-			playPrev,
-			played,
-			duration,
-			currentlyPlaying,
-			setDuration,
-			setPlayed
-		} = this.props;
+	const controls = (
+		<MediaControls>
+			<SongControls
+				playing={playing}
+				togglePlaying={togglePlaying}
+				playNext={playNext}
+				playPrev={playPrev}
+			/>
+			<Slider played={played} duration={duration} setPlayed={setPlayed} />
+		</MediaControls>
+	);
 
-		return (
-			<Footer className="uniplayer2">
-				{currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
-				<MediaControls>
-					<SongControls
-						playing={playing}
-						togglePlaying={togglePlaying}
-						playNext={playNext}
-						playPrev={playPrev}
-					/>
-					<Slider played={played} duration={duration} setPlayed={setPlayed} />
-				</MediaControls>
-				{currentlyPlaying && (
-					<PlayerBox
-						currentlyPlaying={currentlyPlaying}
-						onPlay={() => togglePlaying(true)}
-						onPause={() => togglePlaying(false)}
-						playNext={playNext}
-						playing={playing}
-						played={played}
-						duration={duration}
-						setDuration={setDuration}
-						setPlayed={setPlayed}
-					/>
-				)}
-			</Footer>
-		);
-	}
+	const player = currentlyPlaying && (
+		<PlayerBox
+			currentlyPlaying={currentlyPlaying}
+			onPlay={() => togglePlaying(true)}
+			onPause={() => togglePlaying(false)}
+			playNext={playNext}
+			playing={playing}
+			played={played}
+			duration={duration}
+			setDuration={setDuration}
+			setPlayed={setPlayed}
+		/>
+	);
+	const desktop = (
+		<Footer className="uniplayer2">
+			<Row>
+				{title}
+				{controls}
+				{player}
+			</Row>
+		</Footer>
+	);
+
+	const mobile = (
+		<Footer className="uniplayer2">
+			{currentlyPlaying && (
+				<Row top>
+					{title}
+					{player}
+				</Row>
+			)}
+			<Row>{controls}</Row>
+		</Footer>
+	);
+
+	return <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
 }
 
 const Footer = styled.div`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	height: 5rem;
 	background: rgb(36, 36, 36);
+`;
+
+const Row = styled.div`
+	height: 5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-bottom: ${props => props.top && '0.0625rem solid rgb(64, 64, 64)'};
 
 	@media ${device.small} {
-		flex-direction: column;
 		height: 4.5rem;
-		border-top: 0.0625rem solid rgba(64, 64, 64, 1);
 	}
 `;
 
 const MediaControls = styled.div`
-	min-width: 35%;
+	min-width: 40%;
+
+	@media ${device.small} {
+		width: 100%;
+	}
 `;
 
 const Title = styled.h5`
@@ -90,15 +107,14 @@ const Title = styled.h5`
 	max-width: 25%;
 	overflow: hidden;
 	white-space: nowrap;
+	text-overflow: ellipsis;
 
-	:after {
-		content: '';
-		background-image: linear-gradient(to right, transparent, rgb(36, 36, 36));
-		height: 100%;
-		position: absolute;
-		right: 0;
-		width: 0.75rem;
+	@media ${device.small} {
+		position: static;
+		transform: none;
+		margin-right: auto;
+		margin-left: 0.75rem;
+		max-width: 60%;
+		font-size: 0.845rem;
 	}
 `;
-
-export default Uniplayer;

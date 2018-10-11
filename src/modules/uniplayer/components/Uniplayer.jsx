@@ -181,7 +181,7 @@ class Uniplayer extends React.Component {
 					</div>
 				</div>
 				{currentlyPlaying && (
-					<div className={'uniplayer-right' + player.expanded}>
+					<div className={'uniplayer-right' + player.expanded} onClick={this.toggleExpanded}>
 						<div className="image-holder">
 							<img src={currentlyPlaying.info.thumbnail} />
 						</div>

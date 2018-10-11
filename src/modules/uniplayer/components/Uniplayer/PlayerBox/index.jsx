@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {device} from '../../../../../styles/utilities/device';
 import Player from './Player';
 
 export default function PlayerBox(props) {
@@ -34,5 +35,9 @@ const StyledPlayerBox = styled.div`
 		height: 250% !important;
 		position: relative;
 		top: -75%;
+	}
+
+	@media ${device.small} {
+		height: 4.5rem;
 	}
 `;
