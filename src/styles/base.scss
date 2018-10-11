@@ -12,6 +12,12 @@
 		url('./utilities/fonts/NHaasGroteskDSW02-65Md.woff') format('woff');
 }
 
+//Media Query Variables
+$small: 600px;
+$medium: 900px;
+$large: 1200px;
+$extra-large: 1800px;
+
 body {
 	background: rgb(25, 25, 25);
 	font-family: 'Haas Reg', Arial, sans-serif;
@@ -37,26 +43,50 @@ p {
 
 h1 {
 	font-size: 2rem;
+	@media screen and (max-width: $small) {
+		font-size: 1.5rem;
+	}
 }
 
 h2 {
 	font-size: 1.5rem;
+	@media screen and (max-width: $small) {
+		font-size: 1.25rem;
+	}
 }
 
 h3 {
 	font-size: 1.25rem;
+	@media screen and (max-width: $small) {
+		font-size: 1rem;
+	}
 }
 
 h4 {
 	font-size: 1rem;
+	@media screen and (max-width: $small) {
+		font-size: 0.875rem;
+	}
 }
 
 h5 {
 	font-size: 0.875rem;
+	@media screen and (max-width: $small) {
+		font-size: 0.75rem;
+	}
 }
 
 h6 {
 	font-size: 0.75rem;
+	@media screen and (max-width: $small) {
+		font-size: 0.675rem;
+	}
+}
+
+button {
+	background: transparent;
+	border: 0;
+	outline: none;
 }
 
 main {
@@ -75,11 +105,14 @@ li {
 }
 
 .toast-container.toast-container {
+	bottom: 3.5rem;
+	left: 50% !important;
+	margin-left: 0;
 	width: auto;
-}
+	transform: translateX(-50%);
+	z-index: z-index('toast');
 
-//Media Query Variables
-$small: 600px;
-$medium: 900px;
-$large: 1200px;
-$extra-large: 1800px;
+	@media screen and (max-width: $small) {
+		bottom: 8.5rem;
+	}
+}

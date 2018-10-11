@@ -15,6 +15,7 @@ const StyledSearchBar = styled.input`
 	padding: 1rem 1rem;
 	position: relative;
 	width: 100%;
+	caret-color: rgb(156, 77, 157);
 
 	&::placeholder {
 		color: rgba(255, 255, 255, 0.6);
@@ -41,7 +42,6 @@ export default class SearchBar extends React.Component {
 	render() {
 		return (
 			<StyledSearchBar
-				className="search-bar"
 				type="text"
 				value={this.state.query}
 				autoFocus

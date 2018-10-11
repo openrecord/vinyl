@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {device} from '../../../../styles/utilities/device';
 
 export default class Options extends React.Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ export default class Options extends React.Component {
 
 	render() {
 		return (
-			<StyledOptions className="options">
+			<StyledOptions className="options" isOpen={this.state.isOpen}>
 				<SongDots onClick={this.toggleOpen}>
 					<Dot />
 					<Dot />
@@ -31,8 +32,12 @@ export default class Options extends React.Component {
 }
 
 const StyledOptions = styled.div`
-	opacity: 0;
+	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
 	margin-left: auto;
+
+	@media ${device.small} {
+		opacity: ${({isOpen}) => (isOpen ? '1 !important' : '0.5 !important')};
+	}
 
 	&:hover {
 		opacity: 1 !important;
@@ -51,6 +56,12 @@ const Dot = styled.span`
 	height: 0.25rem;
 	margin: 0.125rem;
 	width: 0.25rem;
+
+	@media ${device.small} {
+		height: 0.1875rem;
+		margin: 0.0625rem;
+		width: 0.1875rem;
+	}
 `;
 
 const Menu = styled.ul`
