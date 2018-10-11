@@ -11,7 +11,7 @@ export default class Player extends React.Component {
 
 	componentDidUpdate(oldProps) {
 		const secondsElapsed = (this.props.played - oldProps.played) * this.props.duration;
-		if (secondsElapsed > 1.5 || secondsElapsed < 0) {
+		if (secondsElapsed > 2.5 || secondsElapsed < 0) {
 			this.playerRef.current.seekTo(this.props.played);
 		}
 
@@ -35,6 +35,7 @@ export default class Player extends React.Component {
 
 		return (
 			<ReactPlayer
+				data-style-id="react-player"
 				width="100%"
 				height="100%"
 				ref={this.playerRef}

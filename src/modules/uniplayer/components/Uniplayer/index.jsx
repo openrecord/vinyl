@@ -1,6 +1,6 @@
-import React from 'react';
 import MediaQuery from 'react-responsive';
-import styled from 'styled-components';
+import React from 'react';
+import styled, {css} from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
 import {ifElse} from '../../../common/utils';
@@ -10,7 +10,9 @@ import SongControls from './SongControls';
 
 export default function Uniplayer({
 	playing,
+	expanded,
 	togglePlaying,
+	toggleExpanded,
 	playNext,
 	playPrev,
 	played,
@@ -19,7 +21,9 @@ export default function Uniplayer({
 	setDuration,
 	setPlayed
 }) {
-	const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
+	const title = currentlyPlaying && (
+		<Title centered={expanded}>{currentlyPlaying.info.title}</Title>
+	);
 
 	const controls = (
 		<MediaControls>
@@ -35,7 +39,9 @@ export default function Uniplayer({
 
 	const player = currentlyPlaying && (
 		<PlayerBox
+			expanded={expanded}
 			currentlyPlaying={currentlyPlaying}
+			toggleExpanded={toggleExpanded}
 			onPlay={() => togglePlaying(true)}
 			onPause={() => togglePlaying(false)}
 			playNext={playNext}
@@ -47,7 +53,7 @@ export default function Uniplayer({
 		/>
 	);
 	const desktop = (
-		<Footer className="uniplayer2">
+		<Footer>
 			<Row>
 				{title}
 				{controls}
@@ -57,9 +63,9 @@ export default function Uniplayer({
 	);
 
 	const mobile = (
-		<Footer className="uniplayer2">
+		<Footer>
 			{currentlyPlaying && (
-				<Row top>
+				<Row top transparent={expanded}>
 					{title}
 					{player}
 				</Row>
@@ -71,11 +77,10 @@ export default function Uniplayer({
 	return <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
 }
 
-const Footer = styled.div`
+const Footer = styled.div.attrs({className: 'uniplayer2'})`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background: rgb(36, 36, 36);
 `;
 
 const Row = styled.div`
@@ -83,7 +88,8 @@ const Row = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-bottom: ${props => props.top && '0.0625rem solid rgb(64, 64, 64)'};
+	border-bottom: ${props => props.top && !props.transparent && '0.0625rem solid rgb(64, 64, 64)'};
+	background: ${props => !props.transparent && 'rgb(36, 36, 36)'};
 
 	@media ${device.small} {
 		height: 4.5rem;
@@ -116,5 +122,12 @@ const Title = styled.h5`
 		margin-left: 0.75rem;
 		max-width: 60%;
 		font-size: 0.845rem;
+
+		${props =>
+			props.centered &&
+			css`
+				margin: auto;
+				font-size: 1rem;
+			`};
 	}
 `;

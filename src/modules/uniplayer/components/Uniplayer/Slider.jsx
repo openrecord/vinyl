@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Duration from '../Duration';
-import {targetValue} from '../../../common/utils';
 
 export default function Slider({played, duration, setPlayed}) {
 	return (
@@ -17,7 +16,7 @@ export default function Slider({played, duration, setPlayed}) {
 					max={1}
 					step="any"
 					value={played}
-					onChange={targetValue(value => setPlayed(parseFloat(value)))}
+					onChange={({target: {value}}) => setPlayed(parseFloat(value))}
 				/>
 				;
 			</StyledSlider>

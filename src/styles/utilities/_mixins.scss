@@ -1,15 +1,16 @@
-$base-z-index-list: 'queue', 'search-background', 'search-results', 'toast', 'uniplayer-background',
-	'uniplayer', 'uniplayer-holder', 'uniplayer-inner', 'uniplayer-iframe-blocker',
-	'uniplayer-size-buttons', 'uniplayer-middle', 'uniplayer-info-box', 'uniplayer-playback-box',
-	'uniplayer-bar', 'uniplayer-slider', 'uniplayer-mobile-expand', 'landing', 'landing-background',
-	'landing-outer', 'landing-rings', 'landing-center', 'landing-hole', 'landing-hero', 'register',
-	'register-x', 'nav';
+$base-z-index-list: 'fullscreen-player', 0, 'queue', 'search-background', 'search-results', 'toast',
+	'uniplayer-background', 'uniplayer', 'uniplayer-holder', 'uniplayer-inner',
+	'uniplayer-iframe-blocker', 'uniplayer-size-buttons', 'uniplayer-middle', 'uniplayer-info-box',
+	'uniplayer-playback-box', 'uniplayer-bar', 'uniplayer-slider', 'uniplayer-mobile-expand',
+	'landing', 'landing-background', 'landing-outer', 'landing-rings', 'landing-center',
+	'landing-hole', 'landing-hero', 'register', 'register-x', 'nav';
 
 @function z-index($element, $list: $base-z-index-list) {
 	$z-index: index($list, $element);
+	$zero: index($list, 0);
 
 	@if $z-index {
-		@return $z-index;
+		@return $z-index - ($zero or 0);
 	}
 
 	@warn 'There is no item "#{$element}" in this list; choose one of: #{$list}';
