@@ -6,13 +6,17 @@ import {device, size} from '../../../../styles/utilities/device';
 import {ifElse} from '../../../common/utils';
 import AddSong, {StyledAddSong} from './AddSong';
 import Message, {StyledMessage} from './Message';
+import link from './images/copy-link.svg';
 
 export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}) {
 	const desktop = (
 		<StyledCollectionInfo>
 			<Stack>
 				<h5>COLLECTION</h5>
-				<PlaylistName>/{playlist}</PlaylistName>
+				<PlaylistLink>
+					<PlaylistName>/{playlist}</PlaylistName>
+					<img src={link} />
+				</PlaylistLink>
 				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 			</Stack>
 			<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
@@ -43,8 +47,23 @@ const StyledCollectionInfo = styled.div`
 	}
 `;
 
+const PlaylistLink = styled.a`
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+
+	img {
+		align-self: bottom;
+		height: 1rem;
+		margin-top: 0.375rem;
+		margin-left: 0.675rem;
+		width: 1rem;
+	}
+`;
+
 const PlaylistName = styled.h1`
-	color: rgba(255, 255, 255, 1);
+	color: white;
 	max-width: 15rem;
 	text-overflow: ellipsis;
 	overflow: hidden;
