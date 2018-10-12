@@ -2,9 +2,10 @@ import MediaQuery from 'react-responsive';
 import React from 'react';
 import styled, {css} from 'styled-components';
 
+import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';
 import {device} from '../../../styles/utilities/device';
 import {ifElse} from '../../common/utils';
-import PlayerBox from './PlayerBox';
+import ExpandButton from './ExpandButton';
 import Slider from './Slider';
 import SongControls from './SongControls';
 
@@ -18,7 +19,6 @@ export default function Controls({
 	played,
 	duration,
 	currentlyPlaying,
-	setDuration,
 	setPlayed
 }) {
 	const title = currentlyPlaying && (
@@ -37,27 +37,18 @@ export default function Controls({
 		</MediaControls>
 	);
 
-	const player = currentlyPlaying && (
-		<PlayerBox
-			expanded={expanded}
-			currentlyPlaying={currentlyPlaying}
-			toggleExpanded={toggleExpanded}
-			onPlay={() => togglePlaying(true)}
-			onPause={() => togglePlaying(false)}
-			playNext={playNext}
-			playing={playing}
-			played={played}
-			duration={duration}
-			setDuration={setDuration}
-			setPlayed={setPlayed}
-		/>
+	const expandButton = expanded && (
+		<RightCenter>
+			<ExpandButton onClick={toggleExpanded} />
+		</RightCenter>
 	);
+
 	const desktop = (
 		<Footer>
 			<Row>
 				{title}
 				{controls}
-				{player}
+				{expandButton}
 			</Row>
 		</Footer>
 	);
@@ -65,9 +56,9 @@ export default function Controls({
 	const mobile = (
 		<Footer>
 			{currentlyPlaying && (
-				<Row top transparent={expanded}>
+				<Row transparent={expanded}>
 					{title}
-					{player}
+					{expandButton}
 				</Row>
 			)}
 			<Row>{controls}</Row>
@@ -77,22 +68,27 @@ export default function Controls({
 	return <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
 }
 
-const Footer = styled.div.attrs({className: 'uniplayer2'})`
+const Footer = styled.div.attrs({className: 'controls'})`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 `;
 
 const Row = styled.div`
-	height: 5rem;
+	height: ${FOOTER_HEIGHT_DESKTOP};
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-bottom: ${props => props.top && !props.transparent && '0.0625rem solid rgb(64, 64, 64)'};
 	background: ${props => !props.transparent && 'rgb(36, 36, 36)'};
+	border-top: 0.0625rem solid rgb(64, 64, 64);
+	box-sizing: border-box;
+
+	:first-child {
+		border-top: none;
+	}
 
 	@media ${device.small} {
-		height: 4.5rem;
+		height: ${FOOTER_HEIGHT_MOBILE};
 	}
 `;
 
@@ -129,5 +125,14 @@ const Title = styled.h5`
 				margin: auto;
 				font-size: 1rem;
 			`};
+	}
+`;
+
+const RightCenter = styled.div`
+	position: absolute;
+	right: 0;
+
+	${ExpandButton} {
+		margin-right: 1.5rem;
 	}
 `;

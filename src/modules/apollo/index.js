@@ -1,9 +1,9 @@
 import * as queueMutations from '../queue/state/mutations';
 import * as searchMutations from '../search/state/mutations';
-import * as controlsMutations from '../controls/state/mutations';
+import * as playerMutations from '../player/state/mutations';
 import {queue} from '../queue/state';
 import {search} from '../search/state';
-import {player} from '../controls/state';
+import {player} from '../player/state';
 import {ApolloClient} from 'apollo-client';
 import {InMemoryCache, defaultDataIdFromObject} from 'apollo-cache-inmemory';
 import {onError} from 'apollo-link-error';
@@ -39,7 +39,7 @@ export default new ApolloClient({
 				Mutation: {
 					...queueMutations,
 					...searchMutations,
-					...controlsMutations
+					...playerMutations
 				}
 			},
 			cache

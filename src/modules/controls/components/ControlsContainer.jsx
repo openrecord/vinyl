@@ -3,15 +3,14 @@ import React from 'react';
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 
+import {PlayNext, PlayPrev} from '../../common/mutations/ChangeSong';
+import Controls from './Controls';
 import SetDuration from '../../common/mutations/SetDuration';
 import SetPlayed from '../../common/mutations/SetPlayed';
-import ToggleExpanded from '../mutations/ToggleExpanded';
+import ToggleExpanded from '../../common/mutations/ToggleExpanded';
 import TogglePlaying from '../../common/mutations/TogglePlaying';
 import TrackFragments from '../../common/fragments/TrackFragments';
-import Controls from './Controls';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
-import {PlayNext, PlayPrev} from '../../common/mutations/ChangeSong';
 
 const query = gql`
 	query ControlsContainer {
@@ -35,8 +34,7 @@ const Composed = adapt({
 	toggleExpanded: <ToggleExpanded toggle />,
 	setPlayed: <SetPlayed variable="played" />,
 	setDuration: <SetDuration variable="duration" />,
-	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>,
-	playlist: <WithPlaylistId />
+	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>
 });
 
 export default function ControlsContainer() {
@@ -51,8 +49,7 @@ export default function ControlsContainer() {
 				toggleExpanded,
 				togglePlaying,
 				setPlayed,
-				setDuration,
-				playlist
+				setDuration
 			}) => (
 				<Controls
 					currentlyPlaying={currentlyPlaying}

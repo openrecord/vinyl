@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ReactPlayer from 'react-player';
 
 import {has, find} from 'shades';
@@ -26,11 +25,11 @@ export default class Player extends React.Component {
 	render() {
 		const {currentlyPlaying, playing, togglePlaying, playNext, setDuration, setPlayed} = this.props;
 
-		if (!currentlyPlaying || !window.playerPortal) {
+		if (!currentlyPlaying) {
 			return null;
 		}
 
-		return ReactDOM.createPortal(
+		return (
 			<ReactPlayer
 				data-style-id="react-player"
 				key="react-player"
@@ -56,8 +55,7 @@ export default class Player extends React.Component {
 				onEnded={playNext}
 				onDuration={setDuration}
 				onProgress={({played}) => setPlayed(played)}
-			/>,
-			window.playerPortal
+			/>
 		);
 	}
 }
