@@ -8,6 +8,7 @@ import {ifElse} from '../../common/utils';
 import ExpandButton from './ExpandButton';
 import Slider from './Slider';
 import SongControls from './SongControls';
+import zindex from '../../common/zindex';
 
 export default function Controls({
 	playing,
@@ -68,10 +69,11 @@ export default function Controls({
 	return <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
 }
 
-const Footer = styled.div.attrs({className: 'controls'})`
+const Footer = styled.div`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
+	z-index: ${zindex('controls')};
 `;
 
 const Row = styled.div`

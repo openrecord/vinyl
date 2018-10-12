@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components';
 import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
 import {device} from '../../../styles/utilities/device';
 import Player from './Player';
+import zindex from '../../common/zindex';
 
 export default function PlayerBox({expanded, toggleExpanded, togglePlaying, ...props}) {
 	return (
@@ -16,7 +17,7 @@ export default function PlayerBox({expanded, toggleExpanded, togglePlaying, ...p
 	);
 }
 
-const Positioning = styled.div.attrs({className: 'player'})`
+const Positioning = styled.div`
 	position: fixed;
 
 	[data-style-id='react-player'] > div {
@@ -31,11 +32,13 @@ const Positioning = styled.div.attrs({className: 'player'})`
 					left: 0;
 					right: 0;
 					top: 0;
+					z-index: ${zindex('player-expanded')};
 					background: rgb(25, 25, 25);
 			  `
 			: css`
 					bottom: 0;
 					right: 0;
+					z-index: ${zindex('player')};
 					height: ${FOOTER_HEIGHT_DESKTOP};
 					width: 8.875rem;
 					overflow: hidden;
@@ -47,13 +50,14 @@ const Positioning = styled.div.attrs({className: 'player'})`
 			  `};
 `;
 
-const IFrameBlocker = styled.div.attrs({className: 'iframeblocker'})`
+const IFrameBlocker = styled.div`
 	background: rgba(0, 0, 0, 0);
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	top: 0;
+	z-index: ${zindex('iframeblocker')};
 	transition: all 0.1s;
 `;
 

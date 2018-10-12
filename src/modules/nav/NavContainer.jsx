@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import {device} from '../../styles/utilities/device';
 
 import {ROUTES} from '../routes/routes';
+import zindex from '../common/zindex';
 
 export default function Nav() {
 	return (
-		<StyledNav landing={location.pathname === ROUTES.LANDING} className="nav">
+		<StyledNav landing={location.pathname === ROUTES.LANDING}>
 			<Link to={ROUTES.LANDING} key={'home'}>
 				OPENRECORD
 			</Link>
@@ -21,6 +22,7 @@ const StyledNav = styled.nav`
 	position: fixed;
 	width: 100%;
 	text-align: center;
+	z-index: ${zindex('nav')};
 
 	a {
 		display: inline-block;
