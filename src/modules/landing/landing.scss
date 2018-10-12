@@ -1,12 +1,4 @@
 .landing-inner {
-	background: #9c4d9d;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	position: fixed;
-	z-index: z-index('landing');
-
 	.circle {
 		border-radius: 50%;
 		left: 50%;
@@ -15,108 +7,15 @@
 		transform: translate(-50%, -50%);
 
 		&.background {
-			width: 105%;
-			padding-top: 105%;
-			background: #0d0d0d;
-			z-index: z-index('landing-background');
-
-			@media screen and (max-width: 1450px) {
-				padding-top: 110%;
-				width: 110%;
-			}
-			@media screen and (max-width: $large) {
-				padding-top: 115%;
-				width: 115%;
-			}
-			@media screen and (max-width: $medium) {
-				padding-top: 130%;
-				width: 130%;
-			}
-			@media screen and (max-width: 750px) {
-				padding-top: 150%;
-				width: 150%;
-			}
-			@media screen and (max-width: $small) {
-				padding-top: 180%;
-				width: 180%;
-			}
 		}
 
 		&.center {
-			background: #ffffff;
-			padding-top: 36%;
-			width: 36%;
-			z-index: z-index('landing-center');
-
-			@media screen and (max-width: 1450px) {
-				padding-top: 40%;
-				width: 40%;
-			}
-			@media screen and (max-width: $large) {
-				padding-top: 48%;
-				width: 48%;
-			}
-			@media screen and (max-width: $medium) {
-				padding-top: 58%;
-				width: 58%;
-			}
-			@media screen and (max-width: 750px) {
-				padding-top: 70%;
-				width: 70%;
-			}
-			@media screen and (max-width: $small) {
-				padding-top: 90%;
-				width: 90%;
-			}
 		}
 
 		&.outer {
-			border: 1px solid black;
-			box-sizing: border-box;
-			background: transparent;
-			padding-top: calc(105% - 20px);
-			width: calc(105% - 20px);
-			z-index: z-index('landing-outer');
-
-			@media screen and (max-width: 1450px) {
-				padding-top: calc(110% - 18px);
-				width: calc(110% - 18px);
-			}
-			@media screen and (max-width: $large) {
-				padding-top: calc(115% -16px);
-				width: calc(115% - 16px);
-			}
-			@media screen and (max-width: $medium) {
-				padding-top: calc(130% - 14px);
-				width: calc(130% - 14px);
-			}
-			@media screen and (max-width: 750px) {
-				padding-top: calc(150% - 12px);
-				width: calc(150% - 12px);
-			}
-			@media screen and (max-width: $small) {
-				padding-top: calc(180% - 10px);
-				width: calc(180% - 10px);
-			}
 		}
 
 		&.hole {
-			background: #9c4d9d;
-			padding-top: 24px;
-			width: 24px;
-			z-index: z-index('landing-hole');
-			@media screen and (max-width: $large) {
-				padding-top: 22px;
-				width: 22px;
-			}
-			@media screen and (max-width: $medium) {
-				padding-top: 20px;
-				width: 20px;
-			}
-			@media screen and (max-width: $small) {
-				padding-top: 18px;
-				width: 18px;
-			}
 		}
 	}
 
