@@ -34,7 +34,7 @@ const UPDATE_QUERY = gql`
 const ADD_TO_PLAYLIST = gql`
 	mutation AddToPlaylist(
 		$url: String!
-		$thumbnail: String!
+		$thumbnail: String
 		$title: String!
 		$playlist: String!
 		$source: TrackSource!

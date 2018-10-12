@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ReactRootPlugin = require('html-webpack-root-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -23,6 +24,7 @@ module.exports = (env, argv) => {
 	plugins = [
 		new HtmlWebPackPlugin({hash: true, template: 'public/index.ejs'}), // automatically create index.html based on webpack config
 		new ReactRootPlugin(), // create react root within generated html file
+		new CopyWebpackPlugin([{from: './public/_redirects', to: './'}]),
 		new webpack.DefinePlugin({
 			GRAPHQL_URI: JSON.stringify(isProduction ? URLS.PROD : URLS.DEV)
 		})
