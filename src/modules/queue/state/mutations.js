@@ -56,5 +56,7 @@ function findNthNextTrack(tracks, pred, n) {
 	if (idx === -1) {
 		return null;
 	}
-	return tracks[(idx + n) % tracks.length];
+	return tracks[mod(idx + n, tracks.length)];
 }
+
+const mod = (n, m) => ((n % m) + m) % m;

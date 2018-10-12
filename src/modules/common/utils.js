@@ -1,4 +1,8 @@
+import React from 'react';
+import {Mutation} from 'react-apollo';
+
 import {map} from 'shades';
+
 export const targetValue = f => ({target: {value}}) => f(value);
 
 export const toQueryString = params =>
@@ -46,3 +50,37 @@ export const ifEnter = f => event => {
 };
 
 export const ifElse = (t, f) => c => (c ? t : f);
+
+export const mutation = mutationString => ({
+	children,
+	simple = false,
+	thunk = false,
+	toggle = false,
+	variable = null,
+	...props
+}) => (
+	<Mutation {...props} mutation={mutationString}>
+		{(mutationFunc, args) => {
+			if (simple) {
+				return children(variables => mutationFunc({variables}), args);
+			}
+
+			if (variable) {
+				return children(value => mutationFunc({variables: {[variable]: value}}), args);
+			}
+
+			if (thunk) {
+				return children(() => mutationFunc(), args);
+			}
+
+			if (toggle) {
+				return children(maybeValue =>
+					mutationFunc({
+						variables: {maybeValue: typeof maybeValue === 'boolean' ? maybeValue : undefined}
+					})
+				);
+			}
+			return children(mutationFunc, args);
+		}}
+	</Mutation>
+);

@@ -5,7 +5,6 @@
 	top: 0;
 	bottom: 0;
 	position: fixed;
-	z-index: z-index('landing');
 
 	.circle {
 		border-radius: 50%;
@@ -18,7 +17,6 @@
 			width: 105%;
 			padding-top: 105%;
 			background: #0d0d0d;
-			z-index: z-index('landing-background');
 
 			@media screen and (max-width: 1450px) {
 				padding-top: 110%;
@@ -46,7 +44,6 @@
 			background: #ffffff;
 			padding-top: 36%;
 			width: 36%;
-			z-index: z-index('landing-center');
 
 			@media screen and (max-width: 1450px) {
 				padding-top: 40%;
@@ -76,7 +73,6 @@
 			background: transparent;
 			padding-top: calc(105% - 20px);
 			width: calc(105% - 20px);
-			z-index: z-index('landing-outer');
 
 			@media screen and (max-width: 1450px) {
 				padding-top: calc(110% - 18px);
@@ -104,7 +100,6 @@
 			background: #9c4d9d;
 			padding-top: 24px;
 			width: 24px;
-			z-index: z-index('landing-hole');
 			@media screen and (max-width: $large) {
 				padding-top: 22px;
 				width: 22px;
@@ -129,7 +124,6 @@
 		border: 1px solid black;
 		box-sizing: border-box;
 		background: transparent;
-		z-index: z-index('landing-rings');
 	}
 
 	.hero-headline {
@@ -144,7 +138,6 @@
 		top: calc(50% - 5rem);
 		transform: translate(-50%, -50%);
 		white-space: nowrap;
-		z-index: z-index('landing-hero');
 
 		@media screen and (max-width: $large) {
 			font-size: 1.875rem;
@@ -169,7 +162,7 @@
 		text-align: center;
 		top: calc(50% + 6.5rem);
 		transform: translate(-50%, -50%);
-		z-index: z-index('landing-hero');
+
 		@media screen and (max-width: $large) {
 			top: calc(50% + 6rem);
 		}

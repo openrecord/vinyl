@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Track from './Track';
+import zindex from '../../common/zindex';
 
 export default function SearchResults({results, enqueue}) {
 	return (
-		<StyledSearchResults className="search-results">
+		<StyledSearchResults>
 			{results.map(result => {
 				switch (result.__typename) {
 					case 'YoutubeResult':
@@ -40,6 +41,7 @@ export default function SearchResults({results, enqueue}) {
 
 const StyledSearchResults = styled.div`
 	position: absolute;
+	z-index: ${zindex('search-results')};
 	background: rgba(25, 25, 25);
 	display: block;
 	max-height: 30rem;

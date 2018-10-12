@@ -26,10 +26,10 @@ class Landing extends React.Component {
 	render() {
 		return (
 			<div className="landing-inner">
-				<div className="circle center" />
-				{rings}
-				<div className="circle outer" />
 				<div className="circle background" />
+				<div className="circle outer" />
+				{rings}
+				<div className="circle center" />
 				<div className="circle hole" />
 				<h1 className="hero-headline">Open music collections</h1>
 				<div className="hero-action">

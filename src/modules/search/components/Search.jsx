@@ -1,10 +1,10 @@
 import React from 'react';
-import onClickOutside from 'react-onclickoutside';
 import styled from 'styled-components';
-import {device} from '../../../styles/utilities/device';
+import onClickOutside from 'react-onclickoutside';
 
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
+import zindex from '../../common/zindex';
 
 class Search extends React.Component {
 	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
@@ -21,7 +21,7 @@ class Search extends React.Component {
 			<SearchHolder>
 				<SearchBar query={query} onChange={setSearch} />
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
-				<SearchBackground className="search-background" onClick={this.props.toggleSearch} />
+				<SearchBackground onClick={this.props.toggleSearch} />
 			</SearchHolder>
 		);
 	}
@@ -37,6 +37,7 @@ const SearchBackground = styled.div`
 	width: 100%;
 	height: ${_ => Math.max(document.querySelector('#queue').offsetHeight, 200) + 'px'};
 	position: absolute;
+	z-index: ${zindex('search-background')};
 `;
 
 export default onClickOutside(Search);
