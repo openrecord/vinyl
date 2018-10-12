@@ -78,6 +78,8 @@ export default function QueueContainer() {
 			}) => (
 				<Queue
 					tracks={tracks}
+					playing={playing}
+					togglePlaying={togglePlaying}
 					updatePlaying={track => {
 						// Need to check if it's already playing, otherwise it actually
 						// stops playback

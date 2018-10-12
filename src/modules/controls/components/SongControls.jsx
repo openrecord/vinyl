@@ -1,11 +1,15 @@
-import styled, {css} from 'styled-components';
 import React from 'react';
+import styled, {css} from 'styled-components';
+
+import PlayPause from '../../common/components/PlayPause';
 
 export default function SongControls({playing, playPrev, playNext, togglePlaying}) {
 	return (
 		<StyledControls>
 			<PrevArrow onClick={playPrev} />
-			<PlayPause play={playing} onClick={togglePlaying} />
+			<Circle>
+				<PlayPause play={playing} onClick={togglePlaying} />
+			</Circle>
 			<NextArrow onClick={playNext} />
 		</StyledControls>
 	);
@@ -16,58 +20,6 @@ const StyledControls = styled.div`
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-`;
-
-const PlayPause = styled.div`
-	border: 1px solid white;
-	border-radius: 50%;
-	cursor: pointer;
-	display: inline-block;
-	position: relative;
-	height: 1rem;
-	padding: 0.5rem;
-	opacity: 0.8;
-	width: 1rem;
-	vertical-align: top;
-
-	&:hover {
-		opacity: 1;
-	}
-
-	${props =>
-		props.play
-			? css`
-					&:before {
-						background: white;
-						content: '';
-						display: inline-block;
-						height: 0.875rem;
-						margin-left: 0.0625rem;
-						margin-right: 0.125rem;
-						width: 0.25rem;
-					}
-					&:after {
-						background: white;
-						content: '';
-						display: inline-block;
-						height: 0.875rem;
-						margin-left: 0.125rem;
-						margin-right: 0.0625rem;
-						width: 0.25rem;
-					}
-			  `
-			: css`
-					&:before {
-						content: '';
-						border-bottom: 0.425rem solid transparent;
-						border-left: 0.725rem solid white;
-						border-top: 0.425rem solid transparent;
-						display: inline-block;
-						height: 0;
-						width: 0;
-						transform: translateX(0.1rem);
-					}
-			  `};
 `;
 
 const Arrow = styled.div`
@@ -126,5 +78,27 @@ const NextArrow = styled(Arrow)`
 		top: -0.1875rem;
 		position: relative;
 		width: 0.125rem;
+	}
+`;
+
+const Circle = styled.div`
+	border: 1px solid white;
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
+	height: 1rem;
+	padding: 0.5rem;
+	opacity: 0.8;
+	width: 1rem;
+
+	:hover {
+		opacity: 1;
+	}
+
+	svg {
+		fill: white;
+		position: absolute;
+		left: 0;
+		transform: translateX(50%);
 	}
 `;
