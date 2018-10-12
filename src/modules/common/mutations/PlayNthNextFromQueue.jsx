@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import {mutation} from '../../common/utils';
+import {mutation} from '../utils';
 
 export default mutation(gql`
 	mutation playNthNextFromQueue($playlist: String!, $n: Integer!) {

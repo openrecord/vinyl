@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
-import Player from './Player';
 import ExpandButton from '../ExpandButton';
 
 export default function PlayerBox({expanded, toggleExpanded, ...props}) {
@@ -13,7 +12,7 @@ export default function PlayerBox({expanded, toggleExpanded, ...props}) {
 				<FullScreen>
 					<IFrameBlocker />
 					<SizingHack>
-						<Player {...props} />
+						<div ref={r => (window.playerPortal = r)} />
 					</SizingHack>
 				</FullScreen>
 			</RightCenter>
@@ -22,7 +21,7 @@ export default function PlayerBox({expanded, toggleExpanded, ...props}) {
 	return (
 		<Inline>
 			<IFrameBlocker onClick={toggleExpanded} />
-			<Player {...props} />
+			<div ref={r => (window.playerPortal = r)} />
 		</Inline>
 	);
 }
@@ -98,3 +97,5 @@ const RightCenter = styled.div`
 		margin-right: 1.5rem;
 	}
 `;
+
+const PlayerPortal = styled.div``;

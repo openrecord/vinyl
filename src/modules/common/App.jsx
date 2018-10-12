@@ -10,6 +10,7 @@ import Nav from '../nav/NavContainer';
 import RegisterContainer from '../register/RegisterContainer';
 import ControlsContainer from '../controls/components/ControlsContainer';
 import PlaylistContainer from '../playlist/components/PlaylistContainer';
+import PlayerContainer from '../player/components/PlayerContainer';
 
 export default function App() {
 	return (
@@ -23,6 +24,7 @@ export default function App() {
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>
 				<ControlsContainer />
+				<PlayerContainer />
 				<ToastContainer
 					position={toast.POSITION.BOTTOM_CENTER}
 					transition={Slide}

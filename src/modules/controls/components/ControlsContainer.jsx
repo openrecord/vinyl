@@ -1,16 +1,17 @@
 import React from 'react';
+
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 
-import PlayNthNextFromQueue from '../mutations/PlayNthNextFromQueue';
-import SetDuration from '../mutations/SetDuration';
-import SetPlayed from '../mutations/SetPlayed';
+import SetDuration from '../../common/mutations/SetDuration';
+import SetPlayed from '../../common/mutations/SetPlayed';
 import ToggleExpanded from '../mutations/ToggleExpanded';
-import TogglePlaying from '../mutations/TogglePlaying';
+import TogglePlaying from '../../common/mutations/TogglePlaying';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import Controls from './Controls';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
+import {PlayNext, PlayPrev} from '../../common/mutations/ChangeSong';
 
 const query = gql`
 	query ControlsContainer {
@@ -28,7 +29,8 @@ const query = gql`
 `;
 
 const Composed = adapt({
-	playNthNextFromQueue: <PlayNthNextFromQueue simple />,
+	playNext: <PlayNext />,
+	playPrev: <PlayPrev />,
 	togglePlaying: <TogglePlaying toggle />,
 	toggleExpanded: <ToggleExpanded toggle />,
 	setPlayed: <SetPlayed variable="played" />,
@@ -44,7 +46,8 @@ export default function ControlsContainer() {
 				data: {
 					player: {currentlyPlaying, playing, expanded, played, duration}
 				},
-				playNthNextFromQueue,
+				playNext,
+				playPrev,
 				toggleExpanded,
 				togglePlaying,
 				setPlayed,
@@ -59,8 +62,8 @@ export default function ControlsContainer() {
 					togglePlaying={togglePlaying}
 					expanded={expanded}
 					toggleExpanded={toggleExpanded}
-					playNext={_ => playNthNextFromQueue({playlist, n: 1})}
-					playPrev={_ => playNthNextFromQueue({playlist, n: -1})}
+					playNext={playNext}
+					playPrev={playPrev}
 					setPlayed={setPlayed}
 					setDuration={setDuration}
 				/>
