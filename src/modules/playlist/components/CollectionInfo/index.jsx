@@ -82,6 +82,7 @@ const PlaylistLink = styled.div`
 
 const PlaylistName = styled.h1`
 	color: white;
+	cursor: pointer;
 	max-width: 15rem;
 	text-overflow: ellipsis;
 	overflow: hidden;
