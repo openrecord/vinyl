@@ -1,16 +1,19 @@
 import {toast} from 'react-toastify';
 import React from 'react';
 
-import {Mutation, Subscription} from 'react-apollo';
+import {Subscription} from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {nullToUndefined} from '../../common/utils';
+import DeleteTrack from '../mutations/DeleteTrack';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 import Queue from './Queue';
 import SpinnerQuery from '../../common/components/SpinnerQuery';
 import Toast from '../../common/components/Toast';
+import TogglePlaying from '../../common/mutations/TogglePlaying';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
+import UpdatePlaying from '../mutations/UpdatePlaying';
 
 const query = gql`
 	query Queue($playlist: String!) {
@@ -22,6 +25,7 @@ const query = gql`
 			currentlyPlaying {
 				id
 			}
+			playing
 		}
 	}
 	${PlaylistFragments.all}
@@ -38,28 +42,12 @@ const ON_TRACK_ADDED = gql`
 	${PlaylistFragments.all}
 `;
 
-const UPDATE_PLAYING = gql`
-	mutation UpdatePlaying($track: Track!) {
-		updatePlaying(track: $track) @client
-	}
-`;
-
-const DELETE_TRACK = gql`
-	mutation DeleteTrack($playlist: String!, $trackId: ID!) {
-		updatePlaylist(where: {name: $playlist}, data: {tracks: {delete: [{id: $trackId}]}}) {
-			id
-			tracks {
-				id
-			}
-		}
-	}
-`;
-
 const Composed = adapt(
 	{
 		playlist: <WithPlaylistId />,
-		updatePlaying: <Mutation mutation={UPDATE_PLAYING} />,
-		deleteTrack: <Mutation mutation={DELETE_TRACK} />
+		updatePlaying: <UpdatePlaying variable="track" />,
+		deleteTrack: <DeleteTrack simple />,
+		togglePlaying: <TogglePlaying variable="played" />
 	},
 	{
 		_: ({render, playlist}) => (
@@ -81,15 +69,25 @@ export default function QueueContainer() {
 			{({
 				data: {
 					playlist: {tracks} = {tracks: []},
-					player: {currentlyPlaying}
+					player: {currentlyPlaying, playing}
 				},
 				playlist,
 				updatePlaying,
-				deleteTrack
+				deleteTrack,
+				togglePlaying
 			}) => (
 				<Queue
 					tracks={tracks}
-					updatePlaying={track => updatePlaying({variables: {track}})}
+					playing={playing}
+					togglePlaying={togglePlaying}
+					updatePlaying={track => {
+						// Need to check if it's already playing, otherwise it actually
+						// stops playback
+						if (!playing) {
+							togglePlaying(true);
+						}
+						updatePlaying(track);
+					}}
 					deleteTrack={track => {
 						deleteTrack({variables: {playlist, trackId: track.id}});
 						toast(<Toast message="Song Deleted" />);

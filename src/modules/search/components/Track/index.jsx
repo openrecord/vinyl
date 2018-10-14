@@ -1,14 +1,17 @@
 import styled, {css} from 'styled-components';
 import React from 'react';
 import classname from 'classnames';
-import Options from './Options';
-import ytIcon from '../images/youtube.svg';
-import scIcon from '../images/soundcloud.svg';
+
 import {device} from '../../../../styles/utilities/device';
+import Options from './Options';
+import PlayPause from '../../../common/components/PlayPause';
+import scIcon from '../images/soundcloud.svg';
+import ytIcon from '../images/youtube.svg';
 
 export default function Track({
 	onClick,
 	playing,
+	isCurrentSong,
 	search,
 	thumbnail,
 	title,
@@ -17,11 +20,17 @@ export default function Track({
 	soundcloud
 }) {
 	return (
-		<StyledResult onClick={onClick} className={classname({playing})}>
+		<StyledResult onClick={onClick} className={classname({'is-current-song': isCurrentSong})}>
 			<ImageHolder className="image-holder" search={search}>
 				<img src={thumbnail} />
 				<PlayBackground className="play-background" />
-				{search ? <AddPlus /> : <PlayButton className="play-button" />}
+				{search ? (
+					<AddPlus />
+				) : (
+					<PlayPauseContainer>
+						<PlayPause play={!playing || !isCurrentSong} />
+					</PlayPauseContainer>
+				)}
 			</ImageHolder>
 			<h4>{title}</h4>
 			{search && (
@@ -34,6 +43,19 @@ export default function Track({
 	);
 }
 
+const PlayPauseContainer = styled.span`
+	opacity: 0;
+
+	svg {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 40%;
+		fill: white;
+	}
+`;
+
 const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
@@ -41,25 +63,15 @@ const StyledResult = styled.div`
 	padding: 0.5rem 0.75rem;
 	transition: background-color 0.1s linear;
 
-	&.playing {
+	&.is-current-song,
+	:hover {
 		background: rgba(40, 40, 40);
+
 		.play-background {
 			opacity: 1;
 		}
-		.play-button {
+		${PlayPauseContainer} {
 			opacity: 1;
-		}
-	}
-
-	&:hover {
-		background: rgba(40, 40, 40);
-		.image-holder {
-			span {
-				opacity: 1;
-			}
-		}
-		.options {
-			opacity: 0.5;
 		}
 	}
 
@@ -182,22 +194,6 @@ const PlayBackground = styled.span`
 	opacity: 0;
 	width: 100%;
 	transition: all 0.1s;
-`;
-
-const PlayButton = styled.span`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	opacity: 0;
-	transform: translate(-50%, -50%);
-	transition: all 0.1s;
-	border-width: 0.75rem 0 0.75rem 1.25rem;
-	border-color: transparent transparent transparent white;
-	border-style: solid;
-
-	@media ${device.small} {
-		border-width: 0.6rem 0 0.6rem 1rem;
-	}
 `;
 
 const SourceIcon = styled.div`
