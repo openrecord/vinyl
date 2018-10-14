@@ -39,8 +39,8 @@ export default function Controls({
 	);
 
 	const expandButton = expanded && (
-		<RightCenter>
-			<ExpandButton onClick={toggleExpanded} />
+		<RightCenter onClick={toggleExpanded}>
+			<ExpandButton />
 		</RightCenter>
 	);
 
@@ -57,9 +57,9 @@ export default function Controls({
 	const mobile = (
 		<Footer>
 			{currentlyPlaying && (
-				<Row transparent={expanded}>
+				<Row transparent={expanded} onClick={toggleExpanded}>
 					{title}
-					{expandButton}
+					<ExpandButton />
 				</Row>
 			)}
 			<Row>{controls}</Row>
@@ -117,7 +117,7 @@ const Title = styled.h5`
 		position: static;
 		transform: none;
 		margin-right: auto;
-		margin-left: 0.75rem;
+		margin-left: 0.5rem;
 		max-width: 60%;
 		font-size: 0.845rem;
 
@@ -126,15 +126,21 @@ const Title = styled.h5`
 			css`
 				margin: auto;
 				font-size: 1rem;
+				max-width: calc(100% - 5.5rem);
 			`};
 	}
 `;
 
 const RightCenter = styled.div`
+	cursor: pointer;
+	height: 100%;
 	position: absolute;
 	right: 0;
+	margin-right: 0.5rem;
 
-	${ExpandButton} {
-		margin-right: 1.5rem;
+	:hover {
+		${ExpandButton} {
+			opacity: 1;
+		}
 	}
 `;

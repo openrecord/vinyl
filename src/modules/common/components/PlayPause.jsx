@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function PlayPause({play, onClick}) {
 	if (play) {
-		return <Play onClick={onClick} />;
+		return <Play className="play-pause" onClick={onClick} />;
 	} else {
-		return <Pause onClick={onClick} />;
+		return <Pause className="play-pause" onClick={onClick} />;
 	}
 }
 

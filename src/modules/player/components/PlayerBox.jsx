@@ -52,6 +52,7 @@ const Positioning = styled.div`
 
 const IFrameBlocker = styled.div`
 	background: rgba(0, 0, 0, 0);
+	cursor: pointer;
 	position: absolute;
 	bottom: 0;
 	left: 0;

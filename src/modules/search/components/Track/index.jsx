@@ -7,6 +7,7 @@ import Options from './Options';
 import PlayPause from '../../../common/components/PlayPause';
 import scIcon from '../images/soundcloud.svg';
 import ytIcon from '../images/youtube.svg';
+import speaker from '../../../controls/components/images/speaker.svg';
 
 export default function Track({
 	onClick,
@@ -22,13 +23,14 @@ export default function Track({
 	return (
 		<StyledResult onClick={onClick} className={classname({'is-current-song': isCurrentSong})}>
 			<ImageHolder className="image-holder" search={search}>
-				{thumbnail && <img src={thumbnail} />}
-				{!thumbnail && <NoArtwork src={thumbnail} />}
+				{thumbnail && <Thumbnail src={thumbnail} search={search} />}
+				{!thumbnail && <NoArtwork />}
 				<PlayBackground className="play-background" />
 				{search ? (
 					<AddPlus />
 				) : (
-					<PlayPauseContainer>
+					<PlayPauseContainer className="play-pause-container">
+						{isCurrentSong && <Speaker src={speaker} className="speaker" />}
 						<PlayPause play={!playing || !isCurrentSong} />
 					</PlayPauseContainer>
 				)}
@@ -71,8 +73,32 @@ const StyledResult = styled.div`
 		.play-background {
 			opacity: 1;
 		}
-		${PlayPauseContainer} {
+
+		.play-pause-container {
 			opacity: 1;
+		}
+	}
+
+	&.is-current-song {
+		.image-holder {
+			.play-pause {
+				opacity: 0;
+			}
+			.speaker {
+				opacity: 1;
+			}
+		}
+	}
+
+	&:hover {
+		.image-holder {
+			.play-pause {
+				opacity: 1;
+			}
+
+			.speaker {
+				opacity: 0;
+			}
 		}
 	}
 
@@ -104,19 +130,6 @@ const ImageHolder = styled.div`
 		min-width: 5rem;
 	}
 
-	img {
-		height: 5.625rem;
-		position: absolute;
-		top: -0.75rem;
-		width: 7.5rem;
-
-		@media ${device.small} {
-			height: 3.75rem;
-			top: -0.5rem;
-			width: 5rem;
-		}
-	}
-
 	${({search}) =>
 		search &&
 		css`
@@ -128,18 +141,6 @@ const ImageHolder = styled.div`
 				min-width: 5rem;
 			}
 
-			img {
-				height: 4.5rem;
-				top: -0.6rem;
-				width: 6rem;
-
-				@media ${device.small} {
-					height: 3.75rem;
-					top: -0.5rem;
-					width: 5rem;
-				}
-			}
-
 			div {
 				height: 3.3rem;
 				min-width: 6rem;
@@ -149,6 +150,33 @@ const ImageHolder = styled.div`
 				}
 			}
 		`};
+`;
+
+const Thumbnail = styled.img`
+	height: 5.625rem;
+	position: absolute;
+	top: -0.75rem;
+	width: 7.5rem;
+
+	${({search}) =>
+		search &&
+		css`
+			height: 4.5rem;
+			top: -0.6rem;
+			width: 6rem;
+
+			@media ${device.small} {
+				height: 3.75rem;
+				top: -0.5rem;
+				width: 5rem;
+			}
+		`}
+
+	@media ${device.small} {
+		height: 3.75rem;
+		top: -0.5rem;
+		width: 5rem;
+	}
 `;
 
 const NoArtwork = styled.div`
@@ -214,6 +242,20 @@ const PlayBackground = styled.span`
 	opacity: 0;
 	width: 100%;
 	transition: all 0.1s;
+`;
+
+const Speaker = styled.img`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 1.625rem;
+	width: 2rem;
+	transform: translate(-50%, -50%);
+
+	@media ${device.small} {
+		height: 1.25rem;
+		width: 1.5rem;
+	}
 `;
 
 const SourceIcon = styled.div`
