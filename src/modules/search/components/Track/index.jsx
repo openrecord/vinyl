@@ -22,7 +22,8 @@ export default function Track({
 	return (
 		<StyledResult onClick={onClick} className={classname({'is-current-song': isCurrentSong})}>
 			<ImageHolder className="image-holder" search={search}>
-				<img src={thumbnail} />
+				{thumbnail && <img src={thumbnail} />}
+				{!thumbnail && <NoArtwork src={thumbnail} />}
 				<PlayBackground className="play-background" />
 				{search ? (
 					<AddPlus />
@@ -138,7 +139,26 @@ const ImageHolder = styled.div`
 					width: 5rem;
 				}
 			}
+
+			div {
+				height: 3.3rem;
+				min-width: 6rem;
+				@media ${device.small} {
+					height: 2.75rem;
+					min-width: 5rem;
+				}
+			}
 		`};
+`;
+
+const NoArtwork = styled.div`
+	background-image: linear-gradient(135deg, #846170, #e6846e);
+	height: 4.125rem;
+	min-width: 7.5rem;
+	@media ${device.small} {
+		height: 2.75rem;
+		min-width: 5rem;
+	}
 `;
 
 const AddPlus = styled.span`
