@@ -89,7 +89,7 @@ export default function QueueContainer() {
 						updatePlaying(track);
 					}}
 					deleteTrack={track => {
-						deleteTrack({variables: {playlist, trackId: track.id}});
+						deleteTrack({playlist, trackId: track.id});
 						toast(<Toast message="Song Deleted" />);
 					}}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
