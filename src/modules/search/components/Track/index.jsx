@@ -7,6 +7,7 @@ import Options from './Options';
 import PlayPause from '../../../common/components/PlayPause';
 import scIcon from '../images/soundcloud.svg';
 import ytIcon from '../images/youtube.svg';
+import {ifEnter} from '../../../common/utils';
 import speaker from '../../../controls/components/images/speaker.svg';
 
 export default function Track({
@@ -21,7 +22,12 @@ export default function Track({
 	soundcloud
 }) {
 	return (
-		<StyledResult onClick={onClick} className={classname({'is-current-song': isCurrentSong})}>
+		<StyledResult
+			onClick={onClick}
+			className={classname({'is-current-song': isCurrentSong})}
+			onKeyPress={ifEnter(onClick)}
+			tabIndex={0}
+		>
 			<ImageHolder search={search}>
 				{thumbnail ? <Thumbnail src={thumbnail} search={search} /> : <NoArtwork />}
 				<PlayBackground>
@@ -201,6 +207,16 @@ const NoArtwork = styled.div`
 	}
 `;
 
+const SourceIcon = styled.div`
+	display: flex;
+	margin-left: auto;
+	margin-right: 0.5rem;
+	opacity: 0.3;
+	img {
+		align-content: center;
+	}
+`;
+
 const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
@@ -209,7 +225,8 @@ const StyledResult = styled.div`
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,
-	:hover {
+	:hover,
+	:focus {
 		background: rgba(40, 40, 40);
 
 		${PlayBackground} {

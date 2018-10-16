@@ -9,12 +9,14 @@ import ExpandButton from './ExpandButton';
 import Slider from './Slider';
 import SongControls from './SongControls';
 import zindex from '../../common/zindex';
+import KeyboardControls from './KeyboardControls';
 
 export default function Controls({
 	playing,
 	expanded,
 	togglePlaying,
 	toggleExpanded,
+	toggleSearch,
 	playNext,
 	playPrev,
 	played,
@@ -66,7 +68,15 @@ export default function Controls({
 		</Footer>
 	);
 
-	return <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
+	return (
+		<KeyboardControls
+			togglePlaying={togglePlaying}
+			toggleExpanded={toggleExpanded}
+			toggleSearch={toggleSearch}
+		>
+			<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
+		</KeyboardControls>
+	);
 }
 
 const Footer = styled.div`

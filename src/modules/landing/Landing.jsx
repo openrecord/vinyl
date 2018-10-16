@@ -8,12 +8,9 @@ for (var i = 0; i < 80; i++) {
 }
 
 class Landing extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			room: ''
-		};
-	}
+	state = {
+		room: ''
+	};
 
 	updateRoom = ({target: {value}}) => {
 		this.setState({room: value});

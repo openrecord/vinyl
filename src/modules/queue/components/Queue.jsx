@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {has} from 'shades';
+import ArrowNavigation from '../../common/components/ArrowNavigation';
 
 import {device} from '../../../styles/utilities/device';
 import Track from '../../search/components/Track';
@@ -17,17 +18,19 @@ export default function Queue({
 
 	return (
 		<QueueList id="queue">
-			{tracks.map(track => (
-				<Track
-					{...track.info}
-					key={track.id}
-					onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
-					deleteTrack={() => deleteTrack(track)}
-					playing={playing}
-					isCurrentSong={isCurrentSong(track)}
-					highRes
-				/>
-			))}
+			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE}>
+				{tracks.map(track => (
+					<Track
+						{...track.info}
+						key={track.id}
+						onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
+						deleteTrack={() => deleteTrack(track)}
+						playing={playing}
+						isCurrentSong={isCurrentSong(track)}
+						highRes
+					/>
+				))}
+			</ArrowNavigation>
 		</QueueList>
 	);
 }

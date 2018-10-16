@@ -27,12 +27,9 @@ const StyledSearchBar = styled.input`
 // Would be nice to do some performance auditing and find exactly why the update is so slow
 // but this is fine for now (and likely forever)
 export default class SearchBar extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			query: props.query
-		};
-	}
+	state = {
+		query: this.props.query
+	};
 
 	updateQuery = ({target: {value: query}}) => {
 		this.setState({query});

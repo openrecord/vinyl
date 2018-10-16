@@ -11,6 +11,7 @@ import ToggleExpanded from '../../common/mutations/ToggleExpanded';
 import TogglePlaying from '../../common/mutations/TogglePlaying';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import adapt from '../../common/components/Adapt';
+import ToggleSearch from '../../common/mutations/ToggleSearch';
 
 const query = gql`
 	query ControlsContainer {
@@ -32,6 +33,7 @@ const Composed = adapt({
 	playPrev: <PlayPrev />,
 	togglePlaying: <TogglePlaying toggle="maybeValue" />,
 	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
+	toggleSearch: <ToggleSearch nullary />,
 	setPlayed: <SetPlayed variable="played" />,
 	setDuration: <SetDuration variable="duration" />,
 	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>
@@ -48,6 +50,7 @@ export default function ControlsContainer() {
 				playPrev,
 				toggleExpanded,
 				togglePlaying,
+				toggleSearch,
 				setPlayed,
 				setDuration
 			}) => (
@@ -59,6 +62,7 @@ export default function ControlsContainer() {
 					togglePlaying={togglePlaying}
 					expanded={expanded}
 					toggleExpanded={toggleExpanded}
+					toggleSearch={toggleSearch}
 					playNext={playNext}
 					playPrev={playPrev}
 					setPlayed={setPlayed}
