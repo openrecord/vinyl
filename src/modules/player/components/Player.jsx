@@ -4,10 +4,7 @@ import ReactPlayer from 'react-player';
 import {has, find} from 'shades';
 
 export default class Player extends React.Component {
-	constructor(props) {
-		super(props);
-		this.playerRef = React.createRef();
-	}
+	playerRef = React.createRef();
 
 	componentDidUpdate(oldProps) {
 		const secondsElapsed = (this.props.played - oldProps.played) * this.props.duration;
@@ -50,10 +47,16 @@ export default class Player extends React.Component {
 						preload: true
 					}
 				}}
-				onPlay={() => togglePlaying(true)}
-				onPause={() => togglePlaying(false)}
-				onEnded={playNext}
-				onDuration={setDuration}
+				onPlay={() => {}} //togglePlaying(true)}
+				onPause={() => {}}
+				onEnded={() => {
+					playNext();
+					togglePlaying(false);
+					togglePlaying(true);
+				}}
+				onDuration={duration => {
+					setDuration(duration);
+				}}
 				onProgress={({played}) => setPlayed(played)}
 			/>
 		);
