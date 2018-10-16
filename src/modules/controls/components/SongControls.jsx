@@ -8,7 +8,7 @@ export default function SongControls({playing, playPrev, playNext, togglePlaying
 		<StyledControls>
 			<PrevArrow onClick={playPrev} />
 			<Circle>
-				<PlayPause play={playing} onClick={togglePlaying} />
+				<PlayPause play={!playing} onClick={togglePlaying} />
 			</Circle>
 			<NextArrow onClick={playNext} />
 		</StyledControls>

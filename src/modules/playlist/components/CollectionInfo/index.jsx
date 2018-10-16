@@ -29,7 +29,7 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 		</StyledCollectionInfo>
 	);
 
-	return <MediaQuery maxWidth={size.medium}>{ifElse(mobile, desktop)}</MediaQuery>;
+	return <MediaQuery maxWidth={size.small}>{ifElse(mobile, desktop)}</MediaQuery>;
 }
 
 const StyledCollectionInfo = styled.div`

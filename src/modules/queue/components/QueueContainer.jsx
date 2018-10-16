@@ -47,7 +47,7 @@ const Composed = adapt(
 		playlist: <WithPlaylistId />,
 		updatePlaying: <UpdatePlaying variable="track" />,
 		deleteTrack: <DeleteTrack simple />,
-		togglePlaying: <TogglePlaying variable="played" />
+		togglePlaying: <TogglePlaying toggle="played" />
 	},
 	{
 		_: ({render, playlist}) => (
@@ -89,7 +89,7 @@ export default function QueueContainer() {
 						updatePlaying(track);
 					}}
 					deleteTrack={track => {
-						deleteTrack({variables: {playlist, trackId: track.id}});
+						deleteTrack({playlist, trackId: track.id});
 						toast(<Toast message="Song Deleted" />);
 					}}
 					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}

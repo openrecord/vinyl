@@ -55,7 +55,7 @@ export const mutation = mutationString => ({
 	children,
 	simple = false,
 	thunk = false,
-	toggle = false,
+	toggle = null,
 	variable = null,
 	...props
 }) => (
@@ -76,7 +76,7 @@ export const mutation = mutationString => ({
 			if (toggle) {
 				return children(maybeValue =>
 					mutationFunc({
-						variables: {maybeValue: typeof maybeValue === 'boolean' ? maybeValue : undefined}
+						variables: {[toggle]: typeof maybeValue === 'boolean' ? maybeValue : undefined}
 					})
 				);
 			}
