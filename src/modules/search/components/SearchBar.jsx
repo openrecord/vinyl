@@ -28,7 +28,7 @@ const StyledSearchBar = styled.input`
 // but this is fine for now (and likely forever)
 export default class SearchBar extends React.Component {
 	state = {
-		query: props.query
+		query: this.props.query
 	};
 
 	updateQuery = ({target: {value: query}}) => {
