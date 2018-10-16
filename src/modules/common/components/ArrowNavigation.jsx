@@ -57,7 +57,7 @@ export default class ArrowNavigation extends React.PureComponent {
 		const priorities = activeArrowComponents.map(get('dataset', 'priorityIndex')).map(Number);
 		const maxPriority = Math.max(...priorities);
 
-		return maxPriority == this.props.priority;
+		return maxPriority === this.props.priority;
 	}
 
 	handleKeyDown = event => {
