@@ -47,7 +47,7 @@ const Composed = adapt(
 		playlist: <WithPlaylistId />,
 		updatePlaying: <UpdatePlaying variable="track" />,
 		deleteTrack: <DeleteTrack simple />,
-		togglePlaying: <TogglePlaying variable="played" />
+		togglePlaying: <TogglePlaying toggle="played" />
 	},
 	{
 		_: ({render, playlist}) => (
