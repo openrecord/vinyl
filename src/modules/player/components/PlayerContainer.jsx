@@ -29,8 +29,8 @@ const query = gql`
 
 const Composed = adapt({
 	playNext: <PlayNext />,
-	togglePlaying: <TogglePlaying toggle />,
-	toggleExpanded: <ToggleExpanded toggle />,
+	togglePlaying: <TogglePlaying toggle="maybeValue" />,
+	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
 	setPlayed: <SetPlayed variable="played" />,
 	setDuration: <SetDuration variable="duration" />,
 	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>
