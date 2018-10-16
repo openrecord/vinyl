@@ -1,12 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 
-export default function PlayPause({play, onClick}) {
+function PlayPause({play, ...props}) {
 	if (play) {
-		return <Play className="play-pause" onClick={onClick} />;
+		return <Play {...props} />;
 	} else {
-		return <Pause className="play-pause" onClick={onClick} />;
+		return <Pause {...props} />;
 	}
 }
+
+export default styled(PlayPause)``;
 
 const Play = props => (
 	<svg viewBox="0 0 100 100" {...props}>

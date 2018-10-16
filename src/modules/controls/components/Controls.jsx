@@ -126,7 +126,8 @@ const Title = styled.h5`
 			css`
 				margin: auto;
 				font-size: 1rem;
-				max-width: calc(100% - 5.5rem);
+				padding: 0 0.75rem;
+				max-width: 100%;
 			`};
 	}
 `;
