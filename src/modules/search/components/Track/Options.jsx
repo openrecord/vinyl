@@ -3,12 +3,9 @@ import styled from 'styled-components';
 import {device} from '../../../../styles/utilities/device';
 
 export default class Options extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isOpen: false
-		};
-	}
+	state = {
+		isOpen: false
+	};
 
 	toggleOpen = event => {
 		event.stopPropagation();

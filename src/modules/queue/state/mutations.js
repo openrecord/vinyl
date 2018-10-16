@@ -1,7 +1,9 @@
 import _ from 'lodash';
-import gql from 'graphql-tag';
+
 import {set, has} from 'shades';
-import {updateQL} from '../../common/utils';
+import gql from 'graphql-tag';
+
+import {updateQL, mod} from '../../common/utils';
 import TrackFragments from '../../common/fragments/TrackFragments';
 
 export const updatePlaying = updateQL(
@@ -58,5 +60,3 @@ function findNthNextTrack(tracks, pred, n) {
 	}
 	return tracks[mod(idx + n, tracks.length)];
 }
-
-const mod = (n, m) => ((n % m) + m) % m;

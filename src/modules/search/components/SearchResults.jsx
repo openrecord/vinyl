@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ArrowNavigation from '../../common/components/ArrowNavigation';
 
 import Track from './Track';
 import zindex from '../../common/zindex';
@@ -7,34 +8,36 @@ import zindex from '../../common/zindex';
 export default function SearchResults({results, enqueue}) {
 	return (
 		<StyledSearchResults>
-			{results.map(result => {
-				switch (result.__typename) {
-					case 'YoutubeResult':
-						return (
-							<Track
-								search
-								thumbnail={result.snippet.thumbnails.default.url}
-								title={result.snippet.title}
-								key={result.id.videoId}
-								onClick={() => enqueue(result)}
-								youtube
-							/>
-						);
-					case 'SoundCloudResult':
-						return (
-							<Track
-								search
-								thumbnail={result.thumbnail}
-								title={result.title}
-								key={result.id}
-								onClick={() => enqueue(result)}
-								soundcloud
-							/>
-						);
-					default:
-						return null;
-				}
-			})}
+			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.SEARCH}>
+				{results.map(result => {
+					switch (result.__typename) {
+						case 'YoutubeResult':
+							return (
+								<Track
+									search
+									thumbnail={result.snippet.thumbnails.default.url}
+									title={result.snippet.title}
+									key={result.id.videoId}
+									onClick={() => enqueue(result)}
+									youtube
+								/>
+							);
+						case 'SoundCloudResult':
+							return (
+								<Track
+									search
+									thumbnail={result.thumbnail}
+									title={result.title}
+									key={result.id}
+									onClick={() => enqueue(result)}
+									soundcloud
+								/>
+							);
+						default:
+							return null;
+					}
+				})}
+			</ArrowNavigation>
 		</StyledSearchResults>
 	);
 }

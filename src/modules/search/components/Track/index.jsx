@@ -7,6 +7,7 @@ import Options from './Options';
 import PlayPause from '../../../common/components/PlayPause';
 import scIcon from '../images/soundcloud.svg';
 import ytIcon from '../images/youtube.svg';
+import {ifEnter} from '../../../common/utils';
 
 export default function Track({
 	onClick,
@@ -20,7 +21,12 @@ export default function Track({
 	soundcloud
 }) {
 	return (
-		<StyledResult onClick={onClick} className={classname({'is-current-song': isCurrentSong})}>
+		<StyledResult
+			onClick={onClick}
+			onKeyPress={ifEnter(onClick)}
+			className={classname({'is-current-song': isCurrentSong})}
+			tabIndex={0}
+		>
 			<ImageHolder className="image-holder" search={search}>
 				<img src={thumbnail} />
 				<PlayBackground className="play-background" />
@@ -64,7 +70,8 @@ const StyledResult = styled.div`
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,
-	:hover {
+	:hover,
+	:focus {
 		background: rgba(40, 40, 40);
 
 		.play-background {

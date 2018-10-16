@@ -84,3 +84,5 @@ export const mutation = mutationString => ({
 		}}
 	</Mutation>
 );
+
+export const mod = (n, m) => ((n % m) + m) % m;
