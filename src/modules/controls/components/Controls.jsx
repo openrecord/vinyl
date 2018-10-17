@@ -1,4 +1,3 @@
-import {VelocityTransitionGroup} from 'velocity-react';
 import MediaQuery from 'react-responsive';
 import React from 'react';
 import styled, {css} from 'styled-components';
@@ -7,11 +6,11 @@ import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';
 import {device} from '../../../styles/utilities/device';
 import {ifElse} from '../../common/utils';
 import ExpandButton from './ExpandButton';
+import KeyboardControls from './KeyboardControls';
+import Rows from './Rows';
 import Slider from './Slider';
 import SongControls from './SongControls';
 import zindex from '../../common/zindex';
-import KeyboardControls from './KeyboardControls';
-import * as animations from '../../common/animations';
 
 export default function Controls({
 	playing,
@@ -50,40 +49,38 @@ export default function Controls({
 
 	const desktop = (
 		<Footer>
-			<Row>
-				{title}
-				{controls}
-				{expandButton}
-			</Row>
+			<Rows>
+				<Row>
+					{title}
+					{controls}
+					{expandButton}
+				</Row>
+			</Rows>
 		</Footer>
 	);
 
 	const mobile = (
 		<Footer>
-			{currentlyPlaying && (
-				<Row transparent={expanded} onClick={toggleExpanded}>
-					{title}
-					<ExpandButton />
-				</Row>
-			)}
-			<Row>{controls}</Row>
+			<Rows>
+				{currentlyPlaying && (
+					<Row transparent={expanded} onClick={toggleExpanded}>
+						{title}
+						<ExpandButton />
+					</Row>
+				)}
+				<Row>{controls}</Row>
+			</Rows>
 		</Footer>
 	);
 
 	return (
-		<VelocityTransitionGroup
-			enter={{animation: animations.slideUpExpand.in, delay: 900, duration: 400}}
-			leave={{animation: animations.slideUpExpand.out}}
-			runOnMount
+		<KeyboardControls
+			togglePlaying={togglePlaying}
+			toggleExpanded={toggleExpanded}
+			toggleSearch={toggleSearch}
 		>
-			<KeyboardControls
-				togglePlaying={togglePlaying}
-				toggleExpanded={toggleExpanded}
-				toggleSearch={toggleSearch}
-			>
-				<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-			</KeyboardControls>
-		</VelocityTransitionGroup>
+			<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+		</KeyboardControls>
 	);
 }
 
@@ -92,6 +89,7 @@ const Footer = styled.div`
 	bottom: 0;
 	width: 100%;
 	z-index: ${zindex('controls')};
+	overflow: hidden;
 `;
 
 const Row = styled.div`
