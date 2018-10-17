@@ -20,7 +20,7 @@ export default class Player extends React.Component {
 	}
 
 	render() {
-		const {currentlyPlaying, playing, togglePlaying, playNext, setDuration, setPlayed} = this.props;
+		const {currentlyPlaying, playing, playNext, setDuration, setPlayed} = this.props;
 
 		if (!currentlyPlaying) {
 			return null;
@@ -47,16 +47,10 @@ export default class Player extends React.Component {
 						preload: true
 					}
 				}}
-				onPlay={() => {}} //togglePlaying(true)}
+				onPlay={() => {}}
 				onPause={() => {}}
-				onEnded={() => {
-					playNext();
-					togglePlaying(false);
-					togglePlaying(true);
-				}}
-				onDuration={duration => {
-					setDuration(duration);
-				}}
+				onEnded={playNext}
+				onDuration={setDuration}
 				onProgress={({played}) => setPlayed(played)}
 			/>
 		);
