@@ -1,18 +1,30 @@
 import MediaQuery from 'react-responsive';
+import {toast} from 'react-toastify';
 import React from 'react';
 import styled from 'styled-components';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import {device, size} from '../../../../styles/utilities/device';
 import {ifElse} from '../../../common/utils';
 import AddSong, {StyledAddSong} from './AddSong';
 import Message, {StyledMessage} from './Message';
+import Toast from '../../../common/components/Toast';
+import link from './images/copy-link.svg';
 
 export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}) {
 	const desktop = (
 		<StyledCollectionInfo>
 			<Stack>
 				<h5>COLLECTION</h5>
-				<PlaylistName>/{playlist}</PlaylistName>
+				<CopyToClipboard
+					onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
+					text={'https://openrecord.co/' + playlist}
+				>
+					<PlaylistLink>
+						<PlaylistName>/{playlist}</PlaylistName>
+						<img src={link} />
+					</PlaylistLink>
+				</CopyToClipboard>
 				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 			</Stack>
 			<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
@@ -21,7 +33,12 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 
 	const mobile = (
 		<StyledCollectionInfo>
-			<PlaylistName>/{playlist}</PlaylistName>
+			<CopyToClipboard
+				onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
+				text={'https://openrecord.co/' + playlist}
+			>
+				<PlaylistName>/{playlist}</PlaylistName>
+			</CopyToClipboard>
 			<Stack>
 				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
@@ -43,8 +60,29 @@ const StyledCollectionInfo = styled.div`
 	}
 `;
 
+const PlaylistLink = styled.div`
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+
+	&:hover {
+		img {
+			opacity: 1;
+		}
+	}
+
+	img {
+		height: 1rem;
+		margin: 0.5rem 0 0 0.625rem;
+		opacity: 0.3;
+		width: 1rem;
+	}
+`;
+
 const PlaylistName = styled.h1`
-	color: rgba(255, 255, 255, 1);
+	color: white;
+	cursor: pointer;
 	max-width: 15rem;
 	text-overflow: ellipsis;
 	overflow: hidden;
