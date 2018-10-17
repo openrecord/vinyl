@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 const StyledSearchBar = styled.input`
+	background-color: rgb(36, 36, 36);
 	border: 0;
 	border-radius: 0;
 	box-sizing: border-box;
@@ -13,7 +14,6 @@ const StyledSearchBar = styled.input`
 	position: relative;
 	width: 100%;
 	caret-color: rgb(156, 77, 157);
-	background-color: rgba(36, 36, 36) !important;
 
 	&::placeholder {
 		color: rgba(255, 255, 255, 0.6);
