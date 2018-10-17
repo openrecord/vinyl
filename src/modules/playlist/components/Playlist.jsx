@@ -1,3 +1,4 @@
+import {VelocityTransitionGroup} from 'velocity-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,16 +17,22 @@ export default class Playlist extends React.Component {
 		const {playlist, isSearchOpen, toggleSearch, trackCount} = this.props;
 		return (
 			<StyledPlaylist>
-				<Header>
-					<Record />
-					<CollectionInfo
-						toggleSearch={toggleSearch}
-						trackCount={trackCount}
-						playlist={playlist}
-						isSearchOpen={isSearchOpen}
-					/>
-				</Header>
-				{isSearchOpen && <SearchContainer />}
+				<VelocityTransitionGroup
+					enter={{animation: 'fadeIn', display: 'flex'}}
+					leave={{animation: 'fadeOut', display: 'flex'}}
+					runOnMount
+				>
+					<Header>
+						<Record />
+						<CollectionInfo
+							toggleSearch={toggleSearch}
+							trackCount={trackCount}
+							playlist={playlist}
+							isSearchOpen={isSearchOpen}
+						/>
+					</Header>
+				</VelocityTransitionGroup>
+				<SearchContainer isSearchOpen={isSearchOpen} />
 				{trackCount === 0 && (
 					<EmptyCollection>
 						<h2>This collection is currently empty</h2>

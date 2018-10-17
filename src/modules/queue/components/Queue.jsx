@@ -1,10 +1,13 @@
+import {VelocityTransitionGroup} from 'velocity-react';
 import React from 'react';
 import styled from 'styled-components';
+
 import {has} from 'shades';
-import ArrowNavigation from '../../common/components/ArrowNavigation';
 
 import {device} from '../../../styles/utilities/device';
+import ArrowNavigation from '../../common/components/ArrowNavigation';
 import Track from '../../search/components/Track';
+import * as animations from '../../common/animations';
 
 export default function Queue({
 	tracks,
@@ -18,18 +21,29 @@ export default function Queue({
 
 	return (
 		<QueueList id="queue">
-			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE}>
-				{tracks.map(track => (
-					<Track
-						{...track.info}
-						key={track.id}
-						onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
-						deleteTrack={() => deleteTrack(track)}
-						playing={playing}
-						isCurrentSong={isCurrentSong(track)}
-						highRes
-					/>
-				))}
+			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
+				<VelocityTransitionGroup
+					enter={{
+						animation: animations.rotate3d.in,
+						display: 'flex',
+						stagger: 90,
+						duration: 850
+					}}
+					leave={{animation: animations.rotate3d.out, display: 'flex'}}
+					runOnMount
+				>
+					{tracks.map(track => (
+						<Track
+							{...track.info}
+							key={track.id}
+							onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
+							deleteTrack={() => deleteTrack(track)}
+							playing={playing}
+							isCurrentSong={isCurrentSong(track)}
+							highRes
+						/>
+					))}
+				</VelocityTransitionGroup>
 			</ArrowNavigation>
 		</QueueList>
 	);

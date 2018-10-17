@@ -1,3 +1,4 @@
+import {VelocityTransitionGroup} from 'velocity-react';
 import MediaQuery from 'react-responsive';
 import React from 'react';
 import styled, {css} from 'styled-components';
@@ -10,6 +11,7 @@ import Slider from './Slider';
 import SongControls from './SongControls';
 import zindex from '../../common/zindex';
 import KeyboardControls from './KeyboardControls';
+import * as animations from '../../common/animations';
 
 export default function Controls({
 	playing,
@@ -69,13 +71,19 @@ export default function Controls({
 	);
 
 	return (
-		<KeyboardControls
-			togglePlaying={togglePlaying}
-			toggleExpanded={toggleExpanded}
-			toggleSearch={toggleSearch}
+		<VelocityTransitionGroup
+			enter={{animation: animations.slideUpExpand.in, delay: 900, duration: 400}}
+			leave={{animation: animations.slideUpExpand.out}}
+			runOnMount
 		>
-			<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>;
-		</KeyboardControls>
+			<KeyboardControls
+				togglePlaying={togglePlaying}
+				toggleExpanded={toggleExpanded}
+				toggleSearch={toggleSearch}
+			>
+				<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+			</KeyboardControls>
+		</VelocityTransitionGroup>
 	);
 }
 
