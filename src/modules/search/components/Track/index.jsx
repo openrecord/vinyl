@@ -227,7 +227,7 @@ const StyledResult = styled.div`
 	&.is-current-song,
 	:hover,
 	:focus {
-		background: rgba(40, 40, 40);
+		background: rgb(40, 40, 40);
 
 		${PlayBackground} {
 			opacity: 1;
