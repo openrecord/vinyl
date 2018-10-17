@@ -1,10 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import {targetValue} from '../../common/utils';
-
 const StyledSearchBar = styled.input`
-	background: rgba(36, 36, 36);
+	background-color: rgb(36, 36, 36);
 	border: 0;
 	border-radius: 0;
 	box-sizing: border-box;

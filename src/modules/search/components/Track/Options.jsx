@@ -64,7 +64,7 @@ const Dot = styled.span`
 const Menu = styled.ul`
 	position: absolute;
 	top: 1.375rem;
-	background: rgba(32, 32, 32);
+	background: rgb(32, 32, 32);
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 	right: 0;

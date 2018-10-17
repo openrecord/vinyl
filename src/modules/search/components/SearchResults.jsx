@@ -45,7 +45,7 @@ export default function SearchResults({results, enqueue}) {
 const StyledSearchResults = styled.div`
 	position: absolute;
 	z-index: ${zindex('search-results')};
-	background: rgba(25, 25, 25);
+	background: rgb(25, 25, 25);
 	display: block;
 	max-height: 30rem;
 	overflow: hidden;
