@@ -17,7 +17,7 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 			<Stack>
 				<h5>COLLECTION</h5>
 				<CopyToClipboard
-					onClick={toast(<Toast message="Link Copied" />)}
+					onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
 					text={'https://openrecord.co/' + playlist}
 				>
 					<PlaylistLink>
@@ -34,7 +34,7 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 	const mobile = (
 		<StyledCollectionInfo>
 			<CopyToClipboard
-				onClick={toast(<Toast message="Link Copied" />)}
+				onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
 				text={'https://openrecord.co/' + playlist}
 			>
 				<PlaylistName>/{playlist}</PlaylistName>
