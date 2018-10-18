@@ -12,6 +12,14 @@ export default class Player extends React.Component {
 			this.playerRef.current.seekTo(this.props.played);
 		}
 
+		// Very long youtube tracks (1hr+) cause a bug where if the next
+		if (this.playerRef.current) {
+			const duration = this.playerRef.current.getDuration();
+			if (duration && duration != this.props.duration) {
+				this.props.setDuration(duration);
+			}
+		}
+
 		const iframes = document.getElementsByTagName('iframe');
 		const sc = find(has({src: src => src.includes('soundcloud')}))(iframes);
 		if (sc) {
@@ -47,8 +55,6 @@ export default class Player extends React.Component {
 						preload: true
 					}
 				}}
-				onPlay={() => {}}
-				onPause={() => {}}
 				onEnded={playNext}
 				onDuration={setDuration}
 				onProgress={({played}) => setPlayed(played)}
