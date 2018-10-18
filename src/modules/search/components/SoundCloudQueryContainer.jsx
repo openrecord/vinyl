@@ -10,7 +10,7 @@ const SOUNDCLOUD_API_KEY = '32eb3539260715fa1251fcf9989263f2';
 function getSoundCloudUrl(query) {
 	return toQueryString({
 		q: query,
-		limit: 25,
+		limit: 10,
 		client_id: SOUNDCLOUD_API_KEY
 	});
 }

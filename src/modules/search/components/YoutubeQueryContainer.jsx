@@ -12,7 +12,7 @@ function getYoutubeURL(query) {
 		part: 'snippet',
 		type: 'video',
 		videoEmbeddable: true,
-		maxResults: 25,
+		maxResults: 10,
 		fields: 'items(snippet,id)'
 	});
 }

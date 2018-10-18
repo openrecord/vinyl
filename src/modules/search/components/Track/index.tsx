@@ -249,7 +249,7 @@ const StyledResult = styled.div`
 	:focus {
 		background: rgb(40, 40, 40);
 
-		${PlayBackground} {
+		${PlayBackground}, ${AddPlus} {
 			opacity: 1;
 		}
 	}
@@ -264,13 +264,17 @@ const StyledResult = styled.div`
 	}
 
 	:hover {
-		${PlayPause}, ${AddPlus} {
+		${PlayPause} {
 			opacity: 1;
 		}
 
 		${Speaker} {
 			opacity: 0;
 		}
+	}
+
+	:focus {
+		outline: 1px solid rgb(80, 80, 80);
 	}
 
 	h4 {

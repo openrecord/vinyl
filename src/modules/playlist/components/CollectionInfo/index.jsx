@@ -9,7 +9,7 @@ import {ifElse} from '../../../common/utils';
 import AddSong, {StyledAddSong} from './AddSong';
 import Message, {StyledMessage} from './Message';
 import Toast from '../../../common/components/Toast';
-import link from './images/copy-link.svg';
+const link = require('./images/copy-link.svg');
 
 export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}) {
 	const desktop = (

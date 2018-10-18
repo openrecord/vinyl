@@ -33,7 +33,7 @@ const Composed = adapt({
 	playPrev: <PlayPrev />,
 	togglePlaying: <TogglePlaying toggle="maybeValue" />,
 	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
-	toggleSearch: <ToggleSearch nullary />,
+	toggleSearch: <ToggleSearch toggle="isOpen" />,
 	setPlayed: <SetPlayed variable="played" />,
 	setDuration: <SetDuration variable="duration" />,
 	data: ({render}) => <Query query={query}>{({data}) => render(data)}</Query>

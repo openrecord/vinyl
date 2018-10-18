@@ -1,9 +1,7 @@
-import {updateQL} from '../../common/utils';
-import gql from 'graphql-tag';
 import {mod, set} from 'shades';
+import gql from 'graphql-tag';
 
-const toggleOr = maybeValue => oldValue =>
-	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
+import {updateQL, toggleOr} from '../../common/utils';
 
 export const toggleExpanded = updateQL(gql`
 	query {

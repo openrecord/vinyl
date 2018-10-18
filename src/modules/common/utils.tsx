@@ -94,3 +94,6 @@ export const mutation = mutationString => <Vars, Data = any>({
 );
 
 export const mod = (n: number, m: number): number => ((n % m) + m) % m;
+
+export const toggleOr = (maybeValue: boolean | undefined) => (oldValue: boolean): boolean =>
+	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
