@@ -71,6 +71,10 @@ module.exports = (env, argv) => {
 					use: ['babel-loader']
 				},
 				{
+					test: /\.mjs$/,
+					type: 'javascript/auto'
+				},
+				{
 					test: /\.(woff|woff2|eot|ttf|otf)$/,
 					use: ['file-loader']
 				}
