@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {Mutation} from 'react-apollo';
+import {Mutation, MutationProps} from 'react-apollo';
 
 import {map} from 'shades';
 
-export const targetValue = f => ({target: {value}}) => f(value);
+export const targetValue = (f: (value: string) => any) => ({target: {value}}) => f(value);
 
-export const toQueryString = params =>
+export const toQueryString = (params: {[paramName: string]: string}): string =>
 	'?' +
 	Object.entries(params)
 		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -22,7 +22,7 @@ export const updateQL = query => ({
 	}
 });
 
-export function inspect(value) {
+export function inspect<T>(value: T): T {
 	console.log(value);
 	return value;
 }
@@ -51,14 +51,22 @@ export const ifEnter = f => event => {
 
 export const ifElse = (t, f) => c => (c ? t : f);
 
-export const mutation = mutationString => ({
+interface $MutationProps<V> {
+	simple: boolean | undefined;
+	thunk: boolean | undefined;
+	toggle: string | null;
+	variable: string | null;
+	children: (f: (input: V) => any) => JSX.Element;
+}
+
+export const mutation = mutationString => <Vars, Data = any>({
 	children,
 	simple = false,
 	thunk = false,
 	toggle = null,
 	variable = null,
 	...props
-}) => (
+}: $MutationProps<Vars> & MutationProps<Data, any>) => (
 	<Mutation {...props} mutation={mutationString}>
 		{(mutationFunc, args) => {
 			if (simple) {
@@ -85,4 +93,4 @@ export const mutation = mutationString => ({
 	</Mutation>
 );
 
-export const mod = (n, m) => ((n % m) + m) % m;
+export const mod = (n: number, m: number): number => ((n % m) + m) % m;

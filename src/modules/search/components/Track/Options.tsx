@@ -2,12 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import {device} from '../../../../styles/utilities/device';
 
-interface $Props {
-	deleteTrack(): any;
-}
-
 interface $State {
 	isOpen: boolean;
+}
+
+interface $Props {
+	deleteTrack(): any;
 }
 
 export default class Options extends React.Component<$Props, $State> {
