@@ -253,6 +253,10 @@ const StyledResult = styled.div`
 		}
 	}
 
+	:focus {
+		outline: 1px solid rgb(80, 80, 80);
+	}
+
 	h4 {
 		overflow: hidden;
 		color: rgba(255, 255, 255, 0.8);
