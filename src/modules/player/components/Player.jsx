@@ -12,7 +12,9 @@ export default class Player extends React.Component {
 			this.playerRef.current.seekTo(this.props.played);
 		}
 
-		// Very long youtube tracks (1hr+) cause a bug where if the next
+		// Very long youtube tracks (1hr+) cause a bug where if the song finishes naturally
+		// onDuration fires too early for the next track and it will keep the old duration
+		// causing it to skip through the next song
 		if (this.playerRef.current) {
 			const duration = this.playerRef.current.getDuration();
 			if (duration && duration != this.props.duration) {
