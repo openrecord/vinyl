@@ -5,22 +5,34 @@ import classname from 'classnames';
 import {device} from '../../../../styles/utilities/device';
 import Options from './Options';
 import PlayPause from '../../../common/components/PlayPause';
-import scIcon from '../images/soundcloud.svg';
-import ytIcon from '../images/youtube.svg';
 import {ifEnter} from '../../../common/utils';
-import speaker from '../../../controls/components/images/speaker.svg';
+const speaker = require('../../../controls/components/images/speaker.svg');
+const scIcon = require('../images/soundcloud.svg');
+const ytIcon = require('../images/youtube.svg');
+
+interface $Props {
+	search: boolean;
+	thumbnail: string | null;
+	title: string;
+	onClick(): any;
+	deleteTrack?: () => any;
+	playing?: boolean;
+	isCurrentSong?: boolean;
+	youtube?: boolean;
+	soundcloud?: boolean;
+}
 
 export default function Track({
-	onClick,
-	playing,
-	isCurrentSong,
 	search,
 	thumbnail,
 	title,
+	onClick,
 	deleteTrack,
-	youtube,
-	soundcloud
-}) {
+	playing = false,
+	isCurrentSong = false,
+	youtube = false,
+	soundcloud = false
+}: $Props) {
 	return (
 		<StyledResult
 			onClick={onClick}
@@ -50,7 +62,7 @@ export default function Track({
 					<img src={soundcloud ? scIcon : ytIcon} />
 				</SourceIcon>
 			)}
-			{!search && <Options deleteTrack={deleteTrack} />}
+			{!search && deleteTrack && <Options deleteTrack={deleteTrack} />}
 		</StyledResult>
 	);
 }
@@ -135,6 +147,10 @@ const AddPlus = styled.span`
 	}
 `;
 
+interface $ImageHolderProps {
+	search: boolean;
+}
+
 const ImageHolder = styled.div`
 	display: inline-block;
 	position: relative;
@@ -148,7 +164,7 @@ const ImageHolder = styled.div`
 		min-width: 5rem;
 	}
 
-	${({search}) =>
+	${({search}: $ImageHolderProps) =>
 		search &&
 		css`
 			height: 3.3rem;
@@ -170,13 +186,17 @@ const ImageHolder = styled.div`
 		`};
 `;
 
+interface $ThumbnailProps {
+	search: boolean;
+}
+
 const Thumbnail = styled.img`
 	height: 5.625rem;
 	position: absolute;
 	top: -0.75rem;
 	width: 7.5rem;
 
-	${({search}) =>
+	${({search}: $ThumbnailProps) =>
 		search &&
 		css`
 			height: 4.5rem;

@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
 		plugins.push(new UglifyJSPlugin(), new MiniCssExtractPlugin());
 	} else {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
-		devtool = 'source-map'; // enable web browser debugging
+		devtool = 'inline-source-map'; // enable web browser debugging
 		devServer = {
 			host: '0.0.0.0',
 			port: 8080,

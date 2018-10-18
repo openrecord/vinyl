@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+
 import onClickOutside from 'react-onclickoutside';
 
 import SearchBar from './SearchBar';
