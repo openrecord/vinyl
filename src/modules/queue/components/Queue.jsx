@@ -20,7 +20,7 @@ export default function Queue({
 	const isCurrentSong = has({id: currentlyPlayingId});
 
 	return (
-		<QueueList id="queue">
+		<QueueList>
 			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
 				<VelocityTransitionGroup
 					enter={{

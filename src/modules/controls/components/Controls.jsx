@@ -71,19 +71,21 @@ export default function Controls({
 	);
 
 	return (
-		<VelocityTransitionGroup
-			enter={{animation: animations.slideUpExpand.in, delay: 900, duration: 400}}
-			leave={{animation: animations.slideUpExpand.out}}
-			runOnMount
+		<KeyboardControls
+			isPlayerOpen={!!currentlyPlaying}
+			togglePlaying={togglePlaying}
+			toggleExpanded={toggleExpanded}
+			toggleSearch={toggleSearch}
 		>
-			<KeyboardControls
-				togglePlaying={togglePlaying}
-				toggleExpanded={toggleExpanded}
-				toggleSearch={toggleSearch}
+			<VelocityTransitionGroup
+				enter={{animation: animations.slideUpExpand.in, duration: 400}}
+				leave={{animation: animations.slideUpExpand.out}}
 			>
-				<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-			</KeyboardControls>
-		</VelocityTransitionGroup>
+				{currentlyPlaying && (
+					<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+				)}
+			</VelocityTransitionGroup>
+		</KeyboardControls>
 	);
 }
 

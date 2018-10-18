@@ -33,18 +33,22 @@ export default class Playlist extends React.Component {
 					</Header>
 				</VelocityTransitionGroup>
 				<SearchContainer isSearchOpen={isSearchOpen} />
-				{trackCount === 0 && (
-					<EmptyCollection>
-						<h2>This collection is currently empty</h2>
-						<h4>Click 'Add Song' button to start collecting</h4>
-					</EmptyCollection>
-				)}
-				<QueueContainer />
+				<SearchResultsTarget id="search-results-target">
+					{trackCount === 0 && (
+						<EmptyCollection>
+							<h2>This collection is currently empty</h2>
+							<h4>Click 'Add Song' button to start collecting</h4>
+						</EmptyCollection>
+					)}
+					<QueueContainer />
+				</SearchResultsTarget>
 			</StyledPlaylist>
 		);
 	}
 }
-
+const SearchResultsTarget = styled.div`
+	position: relative;
+`;
 const StyledPlaylist = styled.div`
 	display: block;
 	max-width: 75rem;

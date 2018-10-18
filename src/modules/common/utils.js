@@ -86,3 +86,6 @@ export const mutation = mutationString => ({
 );
 
 export const mod = (n, m) => ((n % m) + m) % m;
+
+export const toggleOr = maybeValue => oldValue =>
+	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
