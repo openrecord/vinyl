@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import React from 'react';
+import * as React from 'react';
 import classname from 'classnames';
 
 import {device} from '../../../../styles/utilities/device';

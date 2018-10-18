@@ -1,8 +1,16 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {device} from '../../../../styles/utilities/device';
 
-export default class Options extends React.Component {
+interface $Props {
+	deleteTrack(): any;
+}
+
+interface $State {
+	isOpen: boolean;
+}
+
+export default class Options extends React.Component<$Props, $State> {
 	state = {
 		isOpen: false
 	};
@@ -29,7 +37,7 @@ export default class Options extends React.Component {
 }
 
 const StyledOptions = styled.div`
-	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $State) => (isOpen ? '1' : '0')};
 	margin-left: auto;
 
 	@media ${device.small} {
@@ -68,7 +76,7 @@ const Menu = styled.ul`
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 	right: 0;
-	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $State) => (isOpen ? '1' : '0')};
 	transition: all 0.1s;
 
 	li {

@@ -1,6 +1,6 @@
 import MediaQuery from 'react-responsive';
 import {toast} from 'react-toastify';
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 

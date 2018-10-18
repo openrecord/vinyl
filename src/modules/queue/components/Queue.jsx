@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {has} from 'shades';
 import ArrowNavigation from '../../common/components/ArrowNavigation';

@@ -1,5 +1,5 @@
-import React from 'react';
-import _f from 'lodash/fp';
+import * as React from 'react';
+import * as _f from 'lodash/fp';
 
 import SoundCloudQueryContainer from './SoundCloudQueryContainer';
 import YoutubeQueryContainer from './YoutubeQueryContainer';

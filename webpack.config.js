@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
 		plugins.push(new UglifyJSPlugin(), new MiniCssExtractPlugin());
 	} else {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
-		devtool = 'inline-source-map'; // enable web browser debugging
+		devtool = 'source-map'; // enable web browser debugging
 		devServer = {
 			host: '0.0.0.0',
 			port: 8080,
@@ -66,9 +66,16 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(mjs|js|jsx)$/,
+					test: /\.(t|j)sx?$/,
 					exclude: /node_modules/,
-					use: ['babel-loader']
+					use: {
+						loader: 'ts-loader'
+					}
+				},
+				{
+					test: /\.mjs$/,
+					include: /node_modules/,
+					type: 'javascript/auto'
 				},
 				{
 					test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -77,7 +84,7 @@ module.exports = (env, argv) => {
 			]
 		},
 		resolve: {
-			extensions: ['.mjs', '.js', '.jsx'] // load jsx files without including extension
+			extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'] // load jsx files without including extension
 		},
 		externals: {
 			config: JSON.stringify(require('config')) // Allow front-end to import config as "config"
