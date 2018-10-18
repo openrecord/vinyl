@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import {set, mod, toggle} from 'shades';
+import {set, mod} from 'shades';
 import gql from 'graphql-tag';
-import {updateQL} from '../../common/utils';
+
+import {updateQL, toggleOr} from '../../common/utils';
 
 export const updateQuery = updateQL(gql`
 	query {
@@ -17,4 +17,4 @@ export const toggleSearch = updateQL(gql`
 			isSearchOpen
 		}
 	}
-`).with(() => mod('search', 'isSearchOpen')(toggle));
+`).with(({isOpen}) => mod('search', 'isSearchOpen')(toggleOr(isOpen)));

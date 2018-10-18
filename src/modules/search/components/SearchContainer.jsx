@@ -40,11 +40,12 @@ const Composed = adapt(
 	}
 );
 
-export default function SearchContainer() {
+export default function SearchContainer(ownProps) {
 	return (
 		<Composed>
 			{({query, playlist, results, setSearch, addToPlaylist, toggleSearch}) => (
 				<Search
+					{...ownProps}
 					toggleSearch={toggleSearch}
 					query={query}
 					results={results}

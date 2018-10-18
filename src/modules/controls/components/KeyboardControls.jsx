@@ -13,15 +13,18 @@ export default class KeyboardControls extends React.PureComponent {
 		if (document.activeElement instanceof HTMLInputElement && event.key != 'Escape') {
 			return;
 		}
-		const {toggleExpanded, togglePlaying, toggleSearch} = this.props;
+		const {toggleExpanded, togglePlaying, toggleSearch, isPlayerOpen} = this.props;
 
 		switch (event.key) {
 			case ' ':
 				event.preventDefault();
 				return togglePlaying();
 			case 'f':
-				event.preventDefault();
-				return toggleExpanded();
+				if (isPlayerOpen) {
+					event.preventDefault();
+					toggleExpanded();
+				}
+				break;
 			case 's':
 				event.preventDefault();
 				return toggleSearch();

@@ -26,11 +26,22 @@ export default class ArrowNavigation extends React.PureComponent {
 		if (this.isHighestPriority()) this.findNodeToFocus(dir).focus();
 	}
 
+	getChildren() {
+		if (this.$wrapper.current) {
+			const children = this.$wrapper.current.children;
+			if (this.props.childIsWrapped) {
+				return children[0].children;
+			}
+			return children;
+		}
+		return [];
+	}
+
 	findNodeToFocus(dir) {
 		const goingUp = dir === DIR.UP;
 		const goingDown = dir === DIR.DOWN;
 		const activeElement = document.activeElement;
-		const children = this.$wrapper.current ? this.$wrapper.current.children : [];
+		const children = this.getChildren();
 		const childInFocus = Array.prototype.includes.call(children, activeElement);
 
 		const wrappingDown = activeElement && activeElement === children[0] && goingUp;
@@ -73,7 +84,7 @@ export default class ArrowNavigation extends React.PureComponent {
 	};
 
 	render() {
-		const {priority, ...wrapperProps} = this.props;
+		const {priority, childIsWrapped, ...wrapperProps} = this.props;
 		return (
 			<div
 				{...wrapperProps}

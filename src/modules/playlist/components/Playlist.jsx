@@ -1,3 +1,4 @@
+import {VelocityTransitionGroup} from 'velocity-react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,28 +17,38 @@ export default class Playlist extends React.Component {
 		const {playlist, isSearchOpen, toggleSearch, trackCount} = this.props;
 		return (
 			<StyledPlaylist>
-				<Header>
-					<Record />
-					<CollectionInfo
-						toggleSearch={toggleSearch}
-						trackCount={trackCount}
-						playlist={playlist}
-						isSearchOpen={isSearchOpen}
-					/>
-				</Header>
-				{isSearchOpen && <SearchContainer />}
-				{trackCount === 0 && (
-					<EmptyCollection>
-						<h2>This collection is currently empty</h2>
-						<h4>Click 'Add Song' button to start collecting</h4>
-					</EmptyCollection>
-				)}
-				<QueueContainer />
+				<VelocityTransitionGroup
+					enter={{animation: 'fadeIn', display: 'flex'}}
+					leave={{animation: 'fadeOut', display: 'flex'}}
+					runOnMount
+				>
+					<Header>
+						<Record />
+						<CollectionInfo
+							toggleSearch={toggleSearch}
+							trackCount={trackCount}
+							playlist={playlist}
+							isSearchOpen={isSearchOpen}
+						/>
+					</Header>
+				</VelocityTransitionGroup>
+				<SearchContainer isSearchOpen={isSearchOpen} />
+				<SearchResultsTarget id="search-results-target">
+					{trackCount === 0 && (
+						<EmptyCollection>
+							<h2>This collection is currently empty</h2>
+							<h4>Click 'Add Song' button to start collecting</h4>
+						</EmptyCollection>
+					)}
+					<QueueContainer />
+				</SearchResultsTarget>
 			</StyledPlaylist>
 		);
 	}
 }
-
+const SearchResultsTarget = styled.div`
+	position: relative;
+`;
 const StyledPlaylist = styled.div`
 	display: block;
 	max-width: 75rem;
