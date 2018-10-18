@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import {device} from '../../../../styles/utilities/device';
+import onClickOutside from 'react-onclickoutside';
 
-export default class Options extends React.Component {
+class Options extends React.Component {
 	state = {
 		isOpen: false
 	};
+
+	handleClickOutside() {
+		this.setState({isOpen: false});
+	}
 
 	toggleOpen = event => {
 		event.stopPropagation();
@@ -27,6 +32,8 @@ export default class Options extends React.Component {
 		);
 	}
 }
+
+export default onClickOutside(Options);
 
 const StyledOptions = styled.div`
 	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};

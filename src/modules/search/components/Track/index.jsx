@@ -251,6 +251,10 @@ const StyledResult = styled.div`
 		${Speaker} {
 			opacity: 0;
 		}
+
+		.options {
+			opacity: 0.8;
+		}
 	}
 
 	h4 {
