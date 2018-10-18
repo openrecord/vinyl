@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
-import {set, has} from 'shades';
+import {set, has, mod, updateAll} from 'shades';
 import gql from 'graphql-tag';
 
-import {updateQL, mod} from '../../common/utils';
+import {updateQL, mod as modulo} from '../../common/utils';
 import TrackFragments from '../../common/fragments/TrackFragments';
 
 export const updatePlaying = updateQL(
@@ -33,6 +33,8 @@ export const playNthNextFromQueue = updateQL(
 				currentlyPlaying {
 					id
 				}
+				duration
+				played
 			}
 		}
 	`
@@ -50,7 +52,14 @@ export const playNthNextFromQueue = updateQL(
 	} = state;
 
 	const track = findNthNextTrack(tracks, has({id}), n);
-	return set('player', 'currentlyPlaying')(track)(state);
+
+	// prettier-ignore
+	return mod('player')(
+		updateAll(
+			set('played')(0), 
+			set('duration')(0), 
+			set('currentlyPlaying')(track))
+	)(state);
 });
 
 function findNthNextTrack(tracks, pred, n) {
@@ -58,5 +67,5 @@ function findNthNextTrack(tracks, pred, n) {
 	if (idx === -1) {
 		return null;
 	}
-	return tracks[mod(idx + n, tracks.length)];
+	return tracks[modulo(idx + n, tracks.length)];
 }

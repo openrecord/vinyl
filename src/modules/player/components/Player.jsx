@@ -4,15 +4,22 @@ import ReactPlayer from 'react-player';
 import {has, find} from 'shades';
 
 export default class Player extends React.Component {
-	constructor(props) {
-		super(props);
-		this.playerRef = React.createRef();
-	}
+	playerRef = React.createRef();
 
 	componentDidUpdate(oldProps) {
 		const secondsElapsed = (this.props.played - oldProps.played) * this.props.duration;
 		if (secondsElapsed > 2.5 || secondsElapsed < 0) {
 			this.playerRef.current.seekTo(this.props.played);
+		}
+
+		// Very long youtube tracks (1hr+) cause a bug where if the song finishes naturally
+		// onDuration fires too early for the next track and it will keep the old duration
+		// causing it to skip through the next song
+		if (this.playerRef.current) {
+			const duration = this.playerRef.current.getDuration();
+			if (duration && duration != this.props.duration) {
+				this.props.setDuration(duration);
+			}
 		}
 
 		const iframes = document.getElementsByTagName('iframe');
@@ -23,7 +30,7 @@ export default class Player extends React.Component {
 	}
 
 	render() {
-		const {currentlyPlaying, playing, togglePlaying, playNext, setDuration, setPlayed} = this.props;
+		const {currentlyPlaying, playing, playNext, setDuration, setPlayed} = this.props;
 
 		if (!currentlyPlaying) {
 			return null;
@@ -50,8 +57,6 @@ export default class Player extends React.Component {
 						preload: true
 					}
 				}}
-				onPlay={() => togglePlaying(true)}
-				onPause={() => togglePlaying(false)}
 				onEnded={playNext}
 				onDuration={setDuration}
 				onProgress={({played}) => setPlayed(played)}
