@@ -1,11 +1,12 @@
-import styled, {css} from 'styled-components';
-import * as React from 'react';
 import classname from 'classnames';
+import * as React from 'react';
+import styled, {css} from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
-import Options from './Options';
 import PlayPause from '../../../common/components/PlayPause';
 import {ifEnter} from '../../../common/utils';
+import Options from './Options';
+
 const speaker = require('../../../controls/components/images/speaker.svg');
 const scIcon = require('../images/soundcloud.svg');
 const ytIcon = require('../images/youtube.svg');
@@ -61,7 +62,7 @@ export default function Track({
 					<img src={soundcloud ? scIcon : ytIcon} />
 				</SourceIcon>
 			)}
-			{!search && deleteTrack && <Options deleteTrack={deleteTrack} />}
+			{!search && !!deleteTrack && <Options deleteTrack={deleteTrack} />}
 		</StyledResult>
 	);
 }

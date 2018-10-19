@@ -4,15 +4,11 @@ import styled from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
 
-interface $State {
-	isOpen: boolean;
-}
-
 interface $Props {
-	deleteTrack(): any;
+	deleteTrack(): void;
 }
 
-class Options extends React.Component<$Props, $State> {
+class Options extends React.Component<$Props> {
 	state = {
 		isOpen: false
 	};
@@ -44,8 +40,11 @@ class Options extends React.Component<$Props, $State> {
 
 export default styled(onClickOutside(Options))``;
 
+interface $OptionsProps {
+	isOpen: boolean;
+}
 const StyledOptions = styled.div`
-	opacity: ${({isOpen}: $State) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $OptionsProps) => (isOpen ? '1' : '0')};
 	margin-left: auto;
 
 	@media ${device.small} {
@@ -77,6 +76,10 @@ const Dot = styled.span`
 	}
 `;
 
+interface $MenuProps {
+	isOpen: boolean;
+}
+
 const Menu = styled.ul`
 	position: absolute;
 	top: 1.375rem;
@@ -84,7 +87,7 @@ const Menu = styled.ul`
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 	right: 0;
-	opacity: ${({isOpen}: $State) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $MenuProps) => (isOpen ? '1' : '0')};
 	transition: all 0.1s;
 
 	li {

@@ -1,9 +1,8 @@
-import {VelocityTransitionGroup} from 'velocity-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import styled from 'styled-components';
-
 import onClickOutside from 'react-onclickoutside';
+import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
 
 import zindex from '../../common/zindex';
 
@@ -49,14 +48,14 @@ interface $OnClickOutsideBackgroundProps {
 	toggleSearch(isOpen?: boolean): any;
 	clearSearch(): any;
 	children: React.ReactNode;
-	style: Object;
-	className: string;
+	style?: Object;
+	className?: string;
 }
 
 class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackgroundProps> {
-	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
-		if (this.props.isSearchOpen) {
-			if (!['show-hide-search', 'search-bar-target'].includes(id)) {
+	handleClickOutside({target}: React.MouseEvent<HTMLElement>) {
+		if (this.props.isSearchOpen && target instanceof HTMLElement) {
+			if (!['show-hide-search', 'search-bar-target'].includes(target.dataset.id || '')) {
 				this.props.toggleSearch();
 			}
 			this.props.clearSearch();
