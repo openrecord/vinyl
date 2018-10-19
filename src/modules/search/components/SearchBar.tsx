@@ -46,6 +46,7 @@ export default class SearchBar extends React.Component<$Props, $State> {
 	render() {
 		return (
 			<StyledSearchBar
+				data-id="search-bar-target"
 				type="text"
 				value={this.state.query}
 				autoFocus

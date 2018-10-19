@@ -1,5 +1,7 @@
 import * as React from 'react';
+import onClickOutside from 'react-onclickoutside';
 import styled from 'styled-components';
+
 import {device} from '../../../../styles/utilities/device';
 
 interface $State {
@@ -10,10 +12,14 @@ interface $Props {
 	deleteTrack(): any;
 }
 
-export default class Options extends React.Component<$Props, $State> {
+class Options extends React.Component<$Props, $State> {
 	state = {
 		isOpen: false
 	};
+
+	handleClickOutside() {
+		this.setState({isOpen: false});
+	}
 
 	toggleOpen = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
@@ -35,6 +41,8 @@ export default class Options extends React.Component<$Props, $State> {
 		);
 	}
 }
+
+export default styled(onClickOutside(Options))``;
 
 const StyledOptions = styled.div`
 	opacity: ${({isOpen}: $State) => (isOpen ? '1' : '0')};

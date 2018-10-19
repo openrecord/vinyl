@@ -270,6 +270,10 @@ const StyledResult = styled.div`
 		${Speaker} {
 			opacity: 0;
 		}
+
+		${Options} {
+			opacity: 0.8;
+		}
 	}
 
 	:focus {
