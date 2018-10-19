@@ -1,9 +1,8 @@
-import * as React from 'react';
-import {Mutation, MutationProps} from 'react-apollo';
-
-import {map} from 'shades';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {DocumentNode} from 'graphql';
+import * as React from 'react';
+import {Mutation, MutationProps} from 'react-apollo';
+import {map} from 'shades';
 
 export type $Nullable<T> = T | null | undefined;
 export type $Undef<T> = T | undefined;
