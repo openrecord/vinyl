@@ -34,7 +34,7 @@ export default function SearchBackground({isSearchOpen, toggleSearch, clearSearc
 class OnClickOutsideBackground extends React.Component {
 	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
 		if (this.props.isSearchOpen) {
-			if (id !== 'show-hide-search') {
+			if (!['show-hide-search', 'search-bar-target'].includes(id)) {
 				this.props.toggleSearch();
 			}
 			this.props.clearSearch();
