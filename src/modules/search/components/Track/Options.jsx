@@ -33,7 +33,7 @@ class Options extends React.Component {
 	}
 }
 
-export default onClickOutside(Options);
+export default styled(onClickOutside(Options))``;
 
 const StyledOptions = styled.div`
 	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
