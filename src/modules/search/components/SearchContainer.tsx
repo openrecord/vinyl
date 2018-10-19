@@ -1,18 +1,17 @@
-import {toast} from 'react-toastify';
+import gql from 'graphql-tag';
 import * as React from 'react';
 import {Query} from 'react-apollo';
+import {toast} from 'react-toastify';
 
-import gql from 'graphql-tag';
-
-import AddToPlaylist, {variablesForAddToPlaylist} from '../mutations/AddToPlaylist';
-import Search from './Search';
-import SetSearch from '../mutations/SetSearch';
-import Toast from '../../common/components/Toast';
-import ToggleSearch from '../../common/mutations/ToggleSearch';
-import TrackSearchContainer from './TrackSearchContainer';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
-import {$Result, $Track} from './types';
+import Toast from '../../common/components/Toast';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
+import ToggleSearch from '../../common/mutations/ToggleSearch';
+import AddToPlaylist, {$TrackInput, variablesForAddToPlaylist} from '../mutations/AddToPlaylist';
+import SetSearch from '../mutations/SetSearch';
+import Search from './Search';
+import TrackSearchContainer from './TrackSearchContainer';
+import {$Result} from './types';
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
@@ -52,7 +51,7 @@ interface $Props {
 	playlist: string;
 	toggleSearch(): any;
 	setSearch(query: string): any;
-	addToPlaylist(track: $Track): any;
+	addToPlaylist(track: $TrackInput): any;
 }
 
 export default function SearchContainer() {

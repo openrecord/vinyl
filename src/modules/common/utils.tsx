@@ -6,6 +6,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import {DocumentNode} from 'graphql';
 
 export type $Nullable<T> = T | null | undefined;
+export type $Undef<T> = T | undefined;
 
 interface $InputEvent {
 	target: {
@@ -117,5 +118,5 @@ export const mutation = (mutationString: DocumentNode) => <Vars, Data = any>({
 
 export const mod = (n: number, m: number): number => ((n % m) + m) % m;
 
-export const toggleOr = (maybeValue: boolean | undefined) => (oldValue: boolean): boolean =>
+export const toggleOr = (maybeValue: $Undef<boolean>) => (oldValue: boolean): boolean =>
 	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
