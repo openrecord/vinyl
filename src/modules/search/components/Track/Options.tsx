@@ -15,7 +15,7 @@ export default class Options extends React.Component<$Props, $State> {
 		isOpen: false
 	};
 
-	toggleOpen = event => {
+	toggleOpen = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 		this.setState({isOpen: !this.state.isOpen});
 	};

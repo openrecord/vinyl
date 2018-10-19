@@ -30,7 +30,6 @@ export default function Track({
 	deleteTrack,
 	playing = false,
 	isCurrentSong = false,
-	youtube = false,
 	soundcloud = false
 }: $Props) {
 	return (

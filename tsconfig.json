@@ -7,7 +7,13 @@
 		"jsx": "react", // use typescript to transpile jsx to js
 		"target": "es5", // specify ECMAScript target version
 		"allowJs": true, // allow a partial TypeScript and JavaScript codebase
-		"lib": ["esnext", "dom"]
+		"lib": ["esnext", "dom"],
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
 	},
 	"include": ["./src/"]
 }

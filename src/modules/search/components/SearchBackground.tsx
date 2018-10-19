@@ -7,7 +7,19 @@ import onClickOutside from 'react-onclickoutside';
 
 import zindex from '../../common/zindex';
 
-export default function SearchBackground({isSearchOpen, toggleSearch, clearSearch, children}) {
+interface $Props {
+	isSearchOpen: boolean;
+	toggleSearch(isOpen?: boolean): any;
+	clearSearch(): any;
+	children: React.ReactNode;
+}
+
+export default function SearchBackground({
+	isSearchOpen,
+	toggleSearch,
+	clearSearch,
+	children
+}: $Props) {
 	const target = document.getElementById('search-results-target');
 	if (target) {
 		return ReactDOM.createPortal(
@@ -32,7 +44,16 @@ export default function SearchBackground({isSearchOpen, toggleSearch, clearSearc
 	return null;
 }
 
-class OnClickOutsideBackground extends React.Component {
+interface $OnClickOutsideBackgroundProps {
+	isSearchOpen: boolean;
+	toggleSearch(isOpen?: boolean): any;
+	clearSearch(): any;
+	children: React.ReactNode;
+	style: Object;
+	className: string;
+}
+
+class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackgroundProps> {
 	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
 		if (this.props.isSearchOpen) {
 			if (id !== 'show-hide-search') {

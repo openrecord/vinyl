@@ -12,40 +12,62 @@ import ToggleSearch from '../../common/mutations/ToggleSearch';
 import TrackSearchContainer from './TrackSearchContainer';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import adapt from '../../common/components/Adapt';
+import {$Result, $Track} from './types';
 
 const SEARCH_QUERY = gql`
 	query SearchContainer {
 		search @client {
 			query
+			isSearchOpen
 		}
 	}
 `;
 
+interface $Renderer {
+	render(args: any): JSX.Element;
+}
 const Composed = adapt(
 	{
-		toggleSearch: <ToggleSearch nullary />,
+		toggleSearch: <ToggleSearch thunk />,
 		playlist: <WithPlaylistId />,
 		setSearch: <SetSearch variable="query" />,
 		addToPlaylist: <AddToPlaylist simple />,
-		query: ({render}) => (
-			<Query query={SEARCH_QUERY}>{props => render(props.data.search.query)}</Query>
+		data: ({render}: $Renderer) => (
+			<Query query={SEARCH_QUERY}>{props => render(props.data.search)}</Query>
 		)
 	},
 	{
-		results: ({query, render}) => (
-			<TrackSearchContainer search={query}>
-				{props => render(props.data.results)}
-			</TrackSearchContainer>
+		results: ({query, render}: $Renderer & {query: string}) => (
+			<TrackSearchContainer search={query}>{render}</TrackSearchContainer>
 		)
 	}
 );
 
-export default function SearchContainer(ownProps) {
+interface $Props {
+	data: {
+		isSearchOpen: boolean;
+		query: string;
+	};
+	results: $Result[];
+	playlist: string;
+	toggleSearch(): any;
+	setSearch(query: string): any;
+	addToPlaylist(track: $Track): any;
+}
+
+export default function SearchContainer() {
 	return (
 		<Composed>
-			{({query, playlist, results, setSearch, addToPlaylist, toggleSearch}) => (
+			{({
+				data: {query, isSearchOpen},
+				playlist,
+				results,
+				setSearch,
+				addToPlaylist,
+				toggleSearch
+			}: $Props) => (
 				<Search
-					{...ownProps}
+					isSearchOpen={isSearchOpen}
 					toggleSearch={toggleSearch}
 					query={query}
 					results={results}

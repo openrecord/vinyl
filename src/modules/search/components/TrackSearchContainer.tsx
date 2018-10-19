@@ -3,24 +3,28 @@ import * as _f from 'lodash/fp';
 
 import SoundCloudQueryContainer from './SoundCloudQueryContainer';
 import YoutubeQueryContainer from './YoutubeQueryContainer';
+import {$Result} from './types';
 
 const interleave = _f.pipe(
 	_f.zip,
 	_f.flatMap(_f.identity),
-	_f.filter(_f.identity)
+	_f.filter<$Result>(Boolean)
 );
 
-export default ({search, children}) => {
+interface $Props {
+	search: string;
+	children(results: $Result[]): JSX.Element;
+}
+
+export default ({search, children}: $Props) => {
 	if (!search) {
-		return children({data: {results: []}});
+		return children([]);
 	}
 	return (
 		<YoutubeQueryContainer search={search}>
-			{({data: youtubeResults}) => (
+			{youtubeResults => (
 				<SoundCloudQueryContainer search={search}>
-					{({data: soundcloudResults}) =>
-						children({data: {results: interleave(youtubeResults, soundcloudResults)}})
-					}
+					{soundcloudResults => children(interleave(youtubeResults, soundcloudResults))}
 				</SoundCloudQueryContainer>
 			)}
 		</YoutubeQueryContainer>

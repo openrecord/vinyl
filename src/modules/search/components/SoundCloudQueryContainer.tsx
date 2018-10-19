@@ -4,10 +4,11 @@ import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {toQueryString} from '../../common/utils';
+import {DocumentNode} from 'graphql';
 
 const SOUNDCLOUD_API_KEY = '32eb3539260715fa1251fcf9989263f2';
 
-function getSoundCloudUrl(query) {
+function getSoundCloudUrl(query: string) {
 	return toQueryString({
 		q: query,
 		limit: 10,
@@ -15,7 +16,7 @@ function getSoundCloudUrl(query) {
 	});
 }
 
-const query = gql`
+const query: DocumentNode = gql`
 	query SOUNDCLOUD_API_KEY($path: String!) {
 		soundCloudResults @rest(type: "SoundCloudResult", endpoint: "soundcloud", path: $path) {
 			id
@@ -26,10 +27,23 @@ const query = gql`
 		}
 	}
 `;
+export interface $SoundCloudResult {
+	__typename: 'SoundCloudResult';
+	id: number;
+	title: string;
+	description: string;
+	thumbnail: string | null;
+	url: string;
+}
 
-export default ({search, children}) => {
+interface $Props {
+	search: string;
+	children(data: $SoundCloudResult[]): JSX.Element;
+}
+
+export default ({search, children}: $Props) => {
 	if (!search) {
-		return children({data: {}});
+		return children([]);
 	}
 	return (
 		<Query
@@ -38,7 +52,7 @@ export default ({search, children}) => {
 			context={{debounceKey: 'SoundCloudSearch'}}
 			fetchPolicy="network-only"
 		>
-			{({data}) => children({data: data ? data.soundCloudResults : []})}
+			{({data}) => children(data ? data.soundCloudResults : [])}
 		</Query>
 	);
 };

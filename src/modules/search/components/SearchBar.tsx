@@ -38,7 +38,7 @@ export default class SearchBar extends React.Component<$Props, $State> {
 		query: this.props.query
 	};
 
-	updateQuery = ({target: {value: query}}) => {
+	updateQuery = ({target: {value: query}}: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({query});
 		setTimeout(() => this.props.onChange(query), 0);
 	};
