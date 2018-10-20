@@ -1,13 +1,12 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
-import React from 'react';
+import * as React from 'react';
 import {ToastContainer, toast, Slide} from 'react-toastify';
 
 import {ROUTES} from '../routes/routes';
 import Landing from '../landing/Landing';
 import Nav from '../nav/NavContainer';
-import RegisterContainer from '../register/RegisterContainer';
 import ControlsContainer from '../controls/components/ControlsContainer';
 import PlaylistContainer from '../playlist/components/PlaylistContainer';
 import PlayerContainer from '../player/components/PlayerContainer';
@@ -19,7 +18,6 @@ export default function App() {
 				<Nav />
 				<Switch>
 					<Route exact path={ROUTES.LANDING} component={Landing} />
-					<Route exact path={ROUTES.REGISTER} component={RegisterContainer} />
 					<Route path={ROUTES.PLAYER} component={PlaylistContainer} />
 					<Route render={() => <div>Route does not exist!</div>} />
 				</Switch>

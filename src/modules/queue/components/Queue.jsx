@@ -1,5 +1,5 @@
+import * as React from 'react';
 import {VelocityTransitionGroup} from 'velocity-react';
-import React from 'react';
 import styled from 'styled-components';
 
 import {has} from 'shades';

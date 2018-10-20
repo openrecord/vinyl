@@ -1,8 +1,8 @@
 import './styles/boot.scss';
 
-import React from 'react';
+import * as React from 'react';
 import {ApolloProvider} from 'react-apollo';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 
 import App from './modules/common/App';
 import client from './modules/apollo';

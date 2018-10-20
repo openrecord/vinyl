@@ -1,10 +1,10 @@
-import _ from 'lodash';
-
-import {set, has, mod, updateAll} from 'shades';
 import gql from 'graphql-tag';
+import * as _ from 'lodash';
+import {has, mod, set, updateAll} from 'shades';
 
-import {updateQL, mod as modulo} from '../../common/utils';
 import TrackFragments from '../../common/fragments/TrackFragments';
+import {mod as modulo, updateQL} from '../../common/utils';
+import {$Track} from '../../search/components/types';
 
 export const updatePlaying = updateQL(
 	gql`
@@ -18,6 +18,20 @@ export const updatePlaying = updateQL(
 		${TrackFragments.all}
 	`
 ).with(({track}) => set('player', 'currentlyPlaying')(track));
+
+interface $PlayNextFromQueueVariables {
+	n: number;
+}
+interface $PlayNextFromQueueState {
+	playlist: {
+		tracks: $Track[];
+	};
+	player: {
+		currentlyPlaying: {
+			id: string;
+		};
+	};
+}
 
 export const playNthNextFromQueue = updateQL(
 	gql`
@@ -38,7 +52,7 @@ export const playNthNextFromQueue = updateQL(
 			}
 		}
 	`
-).with(({n}) => state => {
+).with(({n}: $PlayNextFromQueueVariables) => (state: $PlayNextFromQueueState) => {
 	//prettier-ignore
 	const {
 		playlist: {
@@ -51,7 +65,7 @@ export const playNthNextFromQueue = updateQL(
 		}
 	} = state;
 
-	const track = findNthNextTrack(tracks, has({id}), n);
+	const track = findNthNextTrack(tracks, id, n);
 
 	// prettier-ignore
 	return mod('player')(
@@ -62,8 +76,8 @@ export const playNthNextFromQueue = updateQL(
 	)(state);
 });
 
-function findNthNextTrack(tracks, pred, n) {
-	const idx = _.findIndex(tracks, pred);
+function findNthNextTrack(tracks: $Track[], id: string, n: number) {
+	const idx = _.findIndex(tracks, has({id}));
 	if (idx === -1) {
 		return null;
 	}

@@ -1,11 +1,22 @@
 import {VelocityTransitionGroup} from 'velocity-react';
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
 import SearchBackground from './SearchBackground';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import * as animations from '../../common/animations';
+import {$Result} from './types';
+
+interface $Props {
+	query: string;
+	results: $Result[];
+	isSearchOpen: boolean;
+	enqueue(song: $Result): any;
+	setSearch(query: string): any;
+	toggleSearch(value?: boolean): any;
+	clearSearch(): any;
+}
 
 export default function Search({
 	query,
@@ -15,7 +26,7 @@ export default function Search({
 	isSearchOpen,
 	toggleSearch,
 	clearSearch
-}) {
+}: $Props) {
 	return (
 		<SearchHolder>
 			<VelocityTransitionGroup

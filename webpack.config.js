@@ -94,12 +94,15 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(mjs|js|jsx)$/,
+					test: /\.(t|j)sx?$/,
 					exclude: /node_modules/,
-					use: ['babel-loader']
+					use: {
+						loader: 'ts-loader'
+					}
 				},
 				{
 					test: /\.mjs$/,
+					include: /node_modules/,
 					type: 'javascript/auto'
 				},
 				{
@@ -109,7 +112,7 @@ module.exports = (env, argv) => {
 			]
 		},
 		resolve: {
-			extensions: ['.mjs', '.js', '.jsx'] // load jsx files without including extension
+			extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'] // load jsx files without including extension
 		},
 		externals: {
 			config: JSON.stringify(require('config')) // Allow front-end to import config as "config"
