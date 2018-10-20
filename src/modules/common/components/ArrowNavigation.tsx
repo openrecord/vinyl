@@ -1,18 +1,23 @@
 import * as React from 'react';
 import {get} from 'shades';
 
-const DIR = {
-	UP: 'up',
-	DOWN: 'down'
-};
+const enum DIR {
+	UP,
+	DOWN
+}
 
-export default class ArrowNavigation extends React.PureComponent {
+interface $Props {
+	childIsWrapped?: boolean;
+	priority: number;
+}
+
+export default class ArrowNavigation extends React.PureComponent<$Props> {
 	static PRIORITY_MAP = {
 		QUEUE: 0,
 		SEARCH: 1
 	};
 
-	$wrapper = React.createRef();
+	$wrapper: React.RefObject<HTMLDivElement> = React.createRef();
 
 	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyDown);
@@ -22,8 +27,11 @@ export default class ArrowNavigation extends React.PureComponent {
 		document.removeEventListener('keydown', this.handleKeyDown);
 	}
 
-	moveFocus(dir) {
-		if (this.isHighestPriority()) this.findNodeToFocus(dir).focus();
+	moveFocus(dir: DIR) {
+		if (this.isHighestPriority()) {
+			const toFocus = this.findNodeToFocus(dir) as HTMLElement | null;
+			toFocus && toFocus.focus();
+		}
 	}
 
 	getChildren() {
@@ -34,10 +42,10 @@ export default class ArrowNavigation extends React.PureComponent {
 			}
 			return children;
 		}
-		return [];
+		return new HTMLCollection();
 	}
 
-	findNodeToFocus(dir) {
+	findNodeToFocus(dir: DIR): Element | null {
 		const goingUp = dir === DIR.UP;
 		const goingDown = dir === DIR.DOWN;
 		const activeElement = document.activeElement;
@@ -64,14 +72,16 @@ export default class ArrowNavigation extends React.PureComponent {
 	}
 
 	isHighestPriority() {
-		const activeArrowComponents = Array(...document.querySelectorAll('.arrow-key'));
-		const priorities = activeArrowComponents.map(get('dataset', 'priorityIndex')).map(Number);
+		const activeArrowComponents = document.querySelectorAll('.arrow-key');
+		const priorities = Array.prototype.map
+			.call(activeArrowComponents, get('dataset', 'priorityIndex'))
+			.map(Number);
 		const maxPriority = Math.max(...priorities);
 
 		return maxPriority === this.props.priority;
 	}
 
-	handleKeyDown = event => {
+	handleKeyDown = (event: KeyboardEvent) => {
 		switch (event.key) {
 			case 'ArrowUp':
 				event.preventDefault();

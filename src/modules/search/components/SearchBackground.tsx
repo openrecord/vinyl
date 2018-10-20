@@ -1,12 +1,24 @@
-import {VelocityTransitionGroup} from 'velocity-react';
-import styled from 'styled-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import onClickOutside from 'react-onclickoutside';
+import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
 
 import zindex from '../../common/zindex';
 
-export default function SearchBackground({isSearchOpen, toggleSearch, clearSearch, children}) {
+interface $Props {
+	isSearchOpen: boolean;
+	toggleSearch(isOpen?: boolean): any;
+	clearSearch(): any;
+	children: React.ReactNode;
+}
+
+export default function SearchBackground({
+	isSearchOpen,
+	toggleSearch,
+	clearSearch,
+	children
+}: $Props) {
 	const target = document.getElementById('search-results-target');
 	if (target) {
 		return ReactDOM.createPortal(
@@ -31,10 +43,19 @@ export default function SearchBackground({isSearchOpen, toggleSearch, clearSearc
 	return null;
 }
 
-class OnClickOutsideBackground extends React.Component {
-	handleClickOutside({target: {dataset: {id} = {id: null}}}) {
-		if (this.props.isSearchOpen) {
-			if (!['show-hide-search', 'search-bar-target'].includes(id)) {
+interface $OnClickOutsideBackgroundProps {
+	isSearchOpen: boolean;
+	toggleSearch(isOpen?: boolean): any;
+	clearSearch(): any;
+	children: React.ReactNode;
+	style?: Object;
+	className?: string;
+}
+
+class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackgroundProps> {
+	handleClickOutside({target}: React.MouseEvent<HTMLElement>) {
+		if (this.props.isSearchOpen && target instanceof HTMLElement) {
+			if (!['show-hide-search', 'search-bar-target'].includes(target.dataset.id || '')) {
 				this.props.toggleSearch();
 			}
 			this.props.clearSearch();

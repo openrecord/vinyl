@@ -4,12 +4,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ReactRootPlugin = require('html-webpack-root-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = (env, argv) => {
 	console.info('Building webpack...', {mode: argv.mode});
 	const isProduction = argv.mode === 'production';
 
-	let devtool, devServer, plugins;
+	let devtool, devServer, plugins, optimization;
 	const URLS = {
 		PROD: {
 			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev',
@@ -31,7 +32,34 @@ module.exports = (env, argv) => {
 	];
 
 	if (isProduction) {
-		plugins.push(new UglifyJSPlugin(), new MiniCssExtractPlugin());
+		plugins.push(
+			new UglifyJSPlugin(),
+			new MiniCssExtractPlugin(),
+			new CompressionPlugin({filename: '[path].gz[query]', test: /\.js/, algorithm: 'gzip'})
+		);
+		optimization = {
+			runtimeChunk: 'single',
+			splitChunks: {
+				cacheGroups: {
+					react: {
+						test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+						name: 'react',
+						chunks: 'all'
+					},
+					vendor: {
+						test(module) {
+							const context = module.context || '';
+							return (
+								context.includes('node_modules') &&
+								!(context.includes('/react/') || context.includes('/react-dom/'))
+							);
+						},
+						name: 'vendor',
+						chunks: 'all'
+					}
+				}
+			}
+		};
 	} else {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 		devtool = 'inline-source-map'; // enable web browser debugging
@@ -66,12 +94,15 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(mjs|js|jsx)$/,
+					test: /\.(t|j)sx?$/,
 					exclude: /node_modules/,
-					use: ['babel-loader']
+					use: {
+						loader: 'ts-loader'
+					}
 				},
 				{
 					test: /\.mjs$/,
+					include: /node_modules/,
 					type: 'javascript/auto'
 				},
 				{
@@ -81,13 +112,14 @@ module.exports = (env, argv) => {
 			]
 		},
 		resolve: {
-			extensions: ['.mjs', '.js', '.jsx'] // load jsx files without including extension
+			extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'] // load jsx files without including extension
 		},
 		externals: {
 			config: JSON.stringify(require('config')) // Allow front-end to import config as "config"
 		},
 		plugins,
 		devtool,
-		devServer
+		devServer,
+		optimization
 	};
 };

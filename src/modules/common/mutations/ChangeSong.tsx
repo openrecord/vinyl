@@ -1,11 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 
-import PlayNthNextFromQueue from './PlayNthNextFromQueue';
 import WithPlaylistId from '../components/WithPlaylistId';
+import PlayNthNextFromQueue from './PlayNthNextFromQueue';
 
-const changer = n => ({children, ...props}) => (
+interface $Props {
+	children(mutation: (inp: {}) => any): React.ReactNode;
+}
+
+const changer = (n: number) => ({children, ...props}: $Props) => (
 	<WithPlaylistId>
-		{playlist => (
+		{(playlist: string) => (
 			<PlayNthNextFromQueue variables={{playlist, n}} {...props}>
 				{children}
 			</PlayNthNextFromQueue>

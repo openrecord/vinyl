@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {set} from 'shades';
 
 function adaptReducer(Component, [propName, Instance]) {

@@ -1,5 +1,5 @@
+import * as React from 'react';
 import {VelocityComponent} from 'velocity-react';
-import React from 'react';
 import styled, {css} from 'styled-components';
 
 import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';

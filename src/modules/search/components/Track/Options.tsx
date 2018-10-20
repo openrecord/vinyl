@@ -1,9 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import {device} from '../../../../styles/utilities/device';
+import * as React from 'react';
 import onClickOutside from 'react-onclickoutside';
+import styled from 'styled-components';
 
-class Options extends React.Component {
+import {device} from '../../../../styles/utilities/device';
+
+interface $Props {
+	deleteTrack(): void;
+}
+
+class Options extends React.Component<$Props> {
 	state = {
 		isOpen: false
 	};
@@ -12,7 +17,7 @@ class Options extends React.Component {
 		this.setState({isOpen: false});
 	}
 
-	toggleOpen = event => {
+	toggleOpen = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 		this.setState({isOpen: !this.state.isOpen});
 	};
@@ -35,8 +40,11 @@ class Options extends React.Component {
 
 export default styled(onClickOutside(Options))``;
 
+interface $OptionsProps {
+	isOpen: boolean;
+}
 const StyledOptions = styled.div`
-	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $OptionsProps) => (isOpen ? '1' : '0')};
 	margin-left: auto;
 
 	@media ${device.small} {
@@ -68,6 +76,10 @@ const Dot = styled.span`
 	}
 `;
 
+interface $MenuProps {
+	isOpen: boolean;
+}
+
 const Menu = styled.ul`
 	position: absolute;
 	top: 1.375rem;
@@ -75,7 +87,7 @@ const Menu = styled.ul`
 	border-radius: 0.25rem;
 	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 	right: 0;
-	opacity: ${({isOpen}) => (isOpen ? '1' : '0')};
+	opacity: ${({isOpen}: $MenuProps) => (isOpen ? '1' : '0')};
 	transition: all 0.1s;
 
 	li {

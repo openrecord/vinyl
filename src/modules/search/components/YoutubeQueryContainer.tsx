@@ -1,11 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import {toQueryString} from '../../common/utils';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import {DocumentNode} from 'graphql';
 
 const YOUTUBE_API_KEY = 'AIzaSyCum4fCWhpcRNIh8VzD3Fhny5nxYYJrlTI';
 
-function getYoutubeURL(query) {
+function getYoutubeURL(query: string) {
 	return toQueryString({
 		q: query,
 		key: YOUTUBE_API_KEY,
@@ -17,7 +18,7 @@ function getYoutubeURL(query) {
 	});
 }
 
-const query = gql`
+const query: DocumentNode = gql`
 	query Youtube($path: String!) {
 		youtubeResults @rest(type: "YoutubePayload", endpoint: "youtube", path: $path) {
 			items @type(name: "YoutubeResult") {
@@ -40,9 +41,31 @@ const query = gql`
 	}
 `;
 
-export default ({search, children}) => {
+export interface $YoutubeResult {
+	__typename: 'YoutubeResult';
+	id: {
+		videoId: string;
+	};
+	snippet: {
+		title: string;
+		thumbnails: {
+			default: {
+				url: string;
+			};
+			high: {
+				url: string;
+			};
+		};
+	};
+}
+interface $Props {
+	search: string;
+	children(data: $YoutubeResult[]): JSX.Element;
+}
+
+export default ({search, children}: $Props) => {
 	if (!search) {
-		return children({data: {}});
+		return children([]);
 	}
 	return (
 		<Query
@@ -51,9 +74,7 @@ export default ({search, children}) => {
 			fetchPolicy="network-only"
 			context={{debounceKey: 'YoutubeSearch'}}
 		>
-			{({data}) =>
-				children({data: (data && data.youtubeResults && data.youtubeResults.items) || []})
-			}
+			{({data}) => children((data && data.youtubeResults && data.youtubeResults.items) || [])}
 		</Query>
 	);
 };

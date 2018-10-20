@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 
-import {mutation} from '../../common/utils';
+import {mutation, $Nullable} from '../../common/utils';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
+import {$Result, $TrackSource} from '../components/types';
 
-export function variablesForAddToPlaylist(track, playlist) {
+export function variablesForAddToPlaylist(track: $Result, playlist: string): $TrackInput {
 	switch (track.__typename) {
 		case 'YoutubeResult':
 			return {
@@ -20,6 +21,14 @@ export function variablesForAddToPlaylist(track, playlist) {
 				playlist
 			};
 	}
+}
+
+export interface $TrackInput {
+	url: string;
+	thumbnail: $Nullable<string>;
+	title: string;
+	source: $TrackSource;
+	playlist: string;
 }
 
 export default mutation(gql`

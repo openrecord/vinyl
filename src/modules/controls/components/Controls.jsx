@@ -1,6 +1,6 @@
 import {VelocityTransitionGroup} from 'velocity-react';
 import MediaQuery from 'react-responsive';
-import React from 'react';
+import * as React from 'react';
 import styled, {css} from 'styled-components';
 
 import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';

@@ -1,12 +1,12 @@
-import {VelocityTransitionGroup} from 'velocity-react';
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
-import CollectionInfo from './CollectionInfo';
 import QueueContainer from '../../queue/components/QueueContainer';
-import Record from './Record';
 import SearchContainer from '../../search/components/SearchContainer';
+import CollectionInfo from './CollectionInfo';
+import Record from './Record';
 
 export default class Playlist extends React.Component {
 	componentDidMount() {

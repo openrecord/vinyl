@@ -1,13 +1,19 @@
+import * as React from 'react';
 import {VelocityTransitionGroup} from 'velocity-react';
-import React from 'react';
 import styled from 'styled-components';
-import ArrowNavigation from '../../common/components/ArrowNavigation';
 
+import ArrowNavigation from '../../common/components/ArrowNavigation';
 import Track from './Track';
+import {$Result} from './types';
 import zindex from '../../common/zindex';
 import * as animations from '../../common/animations';
 
-export default function SearchResults({results, enqueue}) {
+interface $Props {
+	results: $Result[];
+	enqueue(song: $Result): any;
+}
+
+export default function SearchResults({results, enqueue}: $Props) {
 	return (
 		<StyledSearchResults>
 			<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.SEARCH} childIsWrapped>
