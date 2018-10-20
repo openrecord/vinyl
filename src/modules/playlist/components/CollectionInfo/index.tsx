@@ -1,17 +1,25 @@
+import * as React from 'react';
+import * as CopyToClipboard from 'react-copy-to-clipboard';
 import MediaQuery from 'react-responsive';
 import {toast} from 'react-toastify';
-import * as React from 'react';
 import styled from 'styled-components';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import {device, size} from '../../../../styles/utilities/device';
+import Toast from '../../../common/components/Toast';
 import {ifElse} from '../../../common/utils';
 import AddSong, {StyledAddSong} from './AddSong';
 import Message, {StyledMessage} from './Message';
-import Toast from '../../../common/components/Toast';
+
 const link = require('./images/copy-link.svg');
 
-export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}) {
+interface $Props {
+	playlist: string;
+	isSearchOpen: boolean;
+	toggleSearch: (arg?: boolean) => void;
+	trackCount: number;
+}
+
+export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}: $Props) {
 	const desktop = (
 		<StyledCollectionInfo>
 			<Stack>

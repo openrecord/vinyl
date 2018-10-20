@@ -1,7 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-export default function AddSong({onClick, isSearchOpen}) {
+interface $Props {
+	onClick: () => void;
+	isSearchOpen: boolean;
+}
+
+export default function AddSong({onClick, isSearchOpen}: $Props) {
 	return (
 		<StyledAddSong onClick={onClick} data-id="show-hide-search">
 			{isSearchOpen ? (
