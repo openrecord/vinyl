@@ -36,8 +36,8 @@ const Composed = adapt(
 		)
 	},
 	{
-		results: ({query, render}: $Renderer & {query: string}) => (
-			<TrackSearchContainer search={query}>{render}</TrackSearchContainer>
+		results: ({data, render}: $Renderer & {data: {query: string}}) => (
+			<TrackSearchContainer search={data.query}>{render}</TrackSearchContainer>
 		)
 	}
 );
