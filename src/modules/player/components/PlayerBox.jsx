@@ -6,6 +6,7 @@ import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/compon
 import {device} from '../../../styles/utilities/device';
 import Player from './Player';
 import zindex from '../../common/zindex';
+import TogglePlaying from '../../common/mutations/TogglePlaying';
 
 export default class PlayerBox extends React.Component {
 	render() {
@@ -18,8 +19,8 @@ export default class PlayerBox extends React.Component {
 		return (
 			<VelocityComponent
 				animation={{backgroundColorAlpha: expanded ? 1 : 0}}
-				delay={50}
-				duration={200}
+				delay={20}
+				duration={100}
 			>
 				<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
 					<IFrameBlocker />
