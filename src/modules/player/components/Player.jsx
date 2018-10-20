@@ -38,6 +38,7 @@ export default class Player extends React.Component {
 
 		return (
 			<ReactPlayer
+				className={currentlyPlaying.info.source === 'SOUNDCLOUD' ? 'sc-hide' : null}
 				data-style-id="react-player"
 				key="react-player"
 				width="100%"

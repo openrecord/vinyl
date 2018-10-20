@@ -7,21 +7,39 @@ import {device} from '../../../styles/utilities/device';
 import Player from './Player';
 import zindex from '../../common/zindex';
 
-export default function PlayerBox({expanded, toggleExpanded, togglePlaying, ...props}) {
-	return (
-		<VelocityComponent
-			animation={{backgroundColorAlpha: expanded ? 1 : 0}}
-			delay={50}
-			duration={200}
-		>
-			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
-				<IFrameBlocker />
-				<SizingHack expanded={expanded}>
-					<Player {...props} togglePlaying={togglePlaying} />
-				</SizingHack>
-			</Positioning>
-		</VelocityComponent>
-	);
+export default class PlayerBox extends React.Component {
+	render() {
+		const {currentlyPlaying, expanded, toggleExpanded, togglePlaying, ...props} = this.props;
+
+		if (!currentlyPlaying) {
+			return null;
+		}
+
+		return (
+			<VelocityComponent
+				animation={{backgroundColorAlpha: expanded ? 1 : 0}}
+				delay={50}
+				duration={200}
+			>
+				<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
+					<IFrameBlocker />
+					<SizingHack expanded={expanded}>
+						{currentlyPlaying.info.source === 'SOUNDCLOUD' ? (
+							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+						) : null}
+						<Player currentlyPlaying={currentlyPlaying} {...props} togglePlaying={togglePlaying} />
+					</SizingHack>
+				</Positioning>
+			</VelocityComponent>
+		);
+	}
+}
+
+function getTrackThumbnail(track) {
+	var trackID = track.info.thumbnail.split('large.jpg')[0];
+	if (track.info.source === 'SOUNDCLOUD') {
+		return '' + trackID + 't500x500.jpg';
+	}
 }
 
 const Positioning = styled.div`
@@ -43,6 +61,10 @@ const Positioning = styled.div`
 					width: 100%;
 					height: 100%;
 					z-index: ${zindex('player-expanded')};
+
+					${IFrameBlocker} {
+						display: none;
+					}
 			  `
 			: css`
 					z-index: ${zindex('player')};
@@ -69,8 +91,33 @@ const IFrameBlocker = styled.div`
 	transition: all linear 0.3s;
 `;
 
+const SoundCloudArt = styled.img`
+	height: 100%;
+	width: 56.25%;
+
+	${props =>
+		props.expanded
+			? css`
+					position: absolute;
+					overflow: hidden;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					max-width: 40rem;
+					max-height: 40rem;
+			  `
+			: css`
+					float: right;
+			  `};
+`;
+
 const SizingHack = styled.div`
 	transition: all linear 0.3s;
+
+	/* For hiding SC Embeds in favor of Thumbnails*/
+	.sc-hide {
+		display: none;
+	}
 	${props =>
 		props.expanded
 			? css`
@@ -99,3 +146,9 @@ const SizingHack = styled.div`
 					transform: none;
 			  `};
 `;
+
+function getTrackUrl(track) {
+	if (track.info.source === 'YOUTUBE') {
+		return 'https://www.youtube.com/watch?v=' + track.info.url;
+	}
+}
