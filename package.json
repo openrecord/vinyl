@@ -78,6 +78,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
+    "compression-webpack-plugin": "^2.0.0",
     "connected-react-router": "^4.3.0",
     "history": "^4.7.2",
     "lodash": "^4.17.10",
