@@ -36,9 +36,12 @@ export default function PlayerBox({
 			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
 				<IFrameBlocker />
 				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-					{isSoundCloud && (
-						<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-					)}
+					{isSoundCloud &&
+						getTrackThumbnail(currentlyPlaying) !== '' && (
+							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+						)}
+					{isSoundCloud &&
+						getTrackThumbnail(currentlyPlaying) === '' && <NoArtwork expanded={expanded} />}
 					<Player currentlyPlaying={currentlyPlaying} {...props} />
 				</SizingHack>
 			</Positioning>
@@ -47,9 +50,12 @@ export default function PlayerBox({
 }
 
 function getTrackThumbnail(track: $Track) {
-	var trackID = track.info.thumbnail.split('large.jpg')[0];
-	if (track.info.source === 'SOUNDCLOUD') {
-		return '' + trackID + 't500x500.jpg';
+	var trackID;
+	if (track.info.thumbnail !== null) {
+		trackID = track.info.thumbnail.split('large.jpg')[0];
+		if (track.info.source === 'SOUNDCLOUD') {
+			return '' + trackID + 't500x500.jpg';
+		}
 	}
 	return '';
 }
@@ -108,6 +114,27 @@ const IFrameBlocker = styled.div`
 `;
 
 const SoundCloudArt = styled.img`
+	height: 100%;
+	width: 56.25%;
+
+	${(props: $IsExpanded) =>
+		props.expanded
+			? css`
+					position: absolute;
+					overflow: hidden;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					max-width: 40rem;
+					max-height: 40rem;
+			  `
+			: css`
+					float: right;
+			  `};
+`;
+
+const NoArtwork = styled.div`
+	background-image: linear-gradient(135deg, #846170, #e6846e);
 	height: 100%;
 	width: 56.25%;
 
