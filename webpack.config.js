@@ -5,6 +5,7 @@ const ReactRootPlugin = require('html-webpack-root-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const StyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 module.exports = (env, argv) => {
 	console.info('Building webpack...', {mode: argv.mode});
@@ -72,7 +73,13 @@ module.exports = (env, argv) => {
 	}
 
 	return {
-		entry: ['babel-polyfill', './src/index.jsx'],
+		entry: [
+			'babel-polyfill',
+			'react-hot-loader/patch',
+			'webpack-dev-server/client?http://localhost:8080',
+			'webpack/hot/only-dev-server',
+			'./src/index.jsx'
+		],
 		module: {
 			rules: [
 				{
@@ -97,7 +104,11 @@ module.exports = (env, argv) => {
 					test: /\.(t|j)sx?$/,
 					exclude: /node_modules/,
 					use: {
-						loader: 'ts-loader'
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+							getCustomTransformers: () => ({before: [StyledComponentsTransformer()]})
+						}
 					}
 				},
 				{
