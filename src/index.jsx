@@ -4,8 +4,8 @@ import * as React from 'react';
 import {ApolloProvider} from 'react-apollo';
 import * as ReactDOM from 'react-dom';
 
-import client from './modules/apollo';
 import App from './modules/common/App';
+import client from './modules/apollo';
 
 // -------------------
 // Load the Redux App
