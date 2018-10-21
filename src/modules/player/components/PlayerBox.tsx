@@ -1,46 +1,65 @@
 import * as React from 'react';
-import {VelocityComponent} from 'velocity-react';
 import styled, {css} from 'styled-components';
+import {VelocityComponent} from 'velocity-react';
 
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
 import {device} from '../../../styles/utilities/device';
-import Player from './Player';
 import zindex from '../../common/zindex';
-import TogglePlaying from '../../common/mutations/TogglePlaying';
+import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
+import {$Track} from '../../search/components/types';
+import Player, {$PlayerProps} from './Player';
 
-export default class PlayerBox extends React.Component {
-	render() {
-		const {currentlyPlaying, expanded, toggleExpanded, togglePlaying, ...props} = this.props;
-
-		if (!currentlyPlaying) {
-			return null;
-		}
-
-		return (
-			<VelocityComponent
-				animation={{backgroundColorAlpha: expanded ? 1 : 0}}
-				delay={20}
-				duration={100}
-			>
-				<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
-					<IFrameBlocker />
-					<SizingHack expanded={expanded}>
-						{currentlyPlaying.info.source === 'SOUNDCLOUD' ? (
-							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-						) : null}
-						<Player currentlyPlaying={currentlyPlaying} {...props} togglePlaying={togglePlaying} />
-					</SizingHack>
-				</Positioning>
-			</VelocityComponent>
-		);
-	}
+interface $Props {
+	currentlyPlaying: $Track | null;
+	expanded: boolean;
+	toggleExpanded(): void;
+	togglePlaying(): void;
 }
 
-function getTrackThumbnail(track) {
+export default function PlayerBox({
+	currentlyPlaying,
+	expanded,
+	toggleExpanded,
+	togglePlaying,
+	...props
+}: $Props & $PlayerProps) {
+	if (!currentlyPlaying) {
+		return null;
+	}
+
+	const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
+	return (
+		<VelocityComponent
+			animation={{backgroundColorAlpha: expanded ? 1 : 0}}
+			delay={20}
+			duration={100}
+		>
+			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
+				<IFrameBlocker />
+				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
+					{isSoundCloud && (
+						<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+					)}
+					<Player currentlyPlaying={currentlyPlaying} {...props} />
+				</SizingHack>
+			</Positioning>
+		</VelocityComponent>
+	);
+}
+
+function getTrackThumbnail(track: $Track) {
 	var trackID = track.info.thumbnail.split('large.jpg')[0];
 	if (track.info.source === 'SOUNDCLOUD') {
 		return '' + trackID + 't500x500.jpg';
 	}
+	return '';
+}
+
+interface $IsExpanded {
+	expanded: boolean;
+}
+
+interface $IsSoundCloud {
+	isSoundCloud: boolean;
 }
 
 const Positioning = styled.div`
@@ -56,16 +75,12 @@ const Positioning = styled.div`
 		transform: translateY(-30%);
 	}
 
-	${props =>
+	${(props: $IsExpanded) =>
 		props.expanded
 			? css`
 					width: 100%;
 					height: 100%;
 					z-index: ${zindex('player-expanded')};
-
-					${IFrameBlocker} {
-						display: none;
-					}
 			  `
 			: css`
 					z-index: ${zindex('player')};
@@ -96,7 +111,7 @@ const SoundCloudArt = styled.img`
 	height: 100%;
 	width: 56.25%;
 
-	${props =>
+	${(props: $IsExpanded) =>
 		props.expanded
 			? css`
 					position: absolute;
@@ -116,10 +131,13 @@ const SizingHack = styled.div`
 	transition: all linear 0.3s;
 
 	/* For hiding SC Embeds in favor of Thumbnails*/
-	.sc-hide {
-		display: none;
-	}
-	${props =>
+	${(props: $IsSoundCloud & $IsExpanded) =>
+		props.isSoundCloud &&
+		css`
+			${Player} {
+				display: none;
+			}
+		`} ${props =>
 		props.expanded
 			? css`
 					padding-bottom: 50.5%;
@@ -147,9 +165,3 @@ const SizingHack = styled.div`
 					transform: none;
 			  `};
 `;
-
-function getTrackUrl(track) {
-	if (track.info.source === 'YOUTUBE') {
-		return 'https://www.youtube.com/watch?v=' + track.info.url;
-	}
-}

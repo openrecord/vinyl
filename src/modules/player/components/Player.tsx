@@ -1,15 +1,28 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
+import {find, has} from 'shades';
+import styled from 'styled-components';
 
-import {has, find} from 'shades';
+import {$Track} from '../../search/components/types';
 
-export default class Player extends React.Component {
-	playerRef = React.createRef();
+export interface $PlayerProps {
+	played: number;
+	setPlayed(played: number): void;
+	duration: number;
+	setDuration(duration: number): void;
+	currentlyPlaying: $Track | null;
+	playing: boolean;
+	playNext(): void;
+	className?: string;
+}
 
-	componentDidUpdate(oldProps) {
+class Player extends React.Component<$PlayerProps> {
+	playerRef: React.RefObject<ReactPlayer> = React.createRef();
+
+	componentDidUpdate(oldProps: $PlayerProps) {
 		const secondsElapsed = (this.props.played - oldProps.played) * this.props.duration;
 		if (secondsElapsed > 2.5 || secondsElapsed < 0) {
-			this.playerRef.current.seekTo(this.props.played);
+			this.playerRef.current && this.playerRef.current.seekTo(this.props.played);
 		}
 
 		// Very long youtube tracks (1hr+) cause a bug where if the song finishes naturally
@@ -23,22 +36,21 @@ export default class Player extends React.Component {
 		}
 
 		const iframes = document.getElementsByTagName('iframe');
-		const sc = find(has({src: src => src.includes('soundcloud')}))(iframes);
+		const sc = find(has({src: (src: string) => src.includes('soundcloud')}))(iframes);
 		if (sc) {
 			sc.allow = 'autoplay';
 		}
 	}
 
 	render() {
-		const {currentlyPlaying, playing, playNext, setDuration, setPlayed} = this.props;
-
+		const {currentlyPlaying, playing, playNext, setDuration, setPlayed, className} = this.props;
 		if (!currentlyPlaying) {
 			return null;
 		}
 
 		return (
 			<ReactPlayer
-				className={currentlyPlaying.info.source === 'SOUNDCLOUD' ? 'sc-hide' : null}
+				className={className}
 				data-style-id="react-player"
 				key="react-player"
 				width="100%"
@@ -52,6 +64,7 @@ export default class Player extends React.Component {
 						options: {
 							auto_play: true
 						},
+						// @ts-ignore: they forgot to put this in the types, but it works
 						preload: true
 					},
 					youtube: {
@@ -66,7 +79,9 @@ export default class Player extends React.Component {
 	}
 }
 
-function getTrackUrl(track) {
+export default styled(Player)``;
+
+function getTrackUrl(track: $Track) {
 	if (track.info.url.startsWith('http')) {
 		return track.info.url;
 	}
@@ -74,4 +89,6 @@ function getTrackUrl(track) {
 	if (track.info.source === 'YOUTUBE') {
 		return 'https://www.youtube.com/watch?v=' + track.info.url;
 	}
+
+	throw new Error(`Can't format URL of ${track.info.title}`);
 }
