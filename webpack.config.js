@@ -73,9 +73,7 @@ module.exports = (env, argv) => {
 	}
 
 	return {
-		entry: isProduction
-			? ['babel-polyfill', 'react-hot-loader/patch', './src/index.jsx']
-			: ['babel-polyfill', './src/index.jsx'],
+		entry: ['babel-polyfill', './src/index.jsx'],
 		module: {
 			rules: [
 				{
