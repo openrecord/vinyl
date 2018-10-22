@@ -67,7 +67,6 @@
     }
   },
   "dependencies": {
-   
     "@types/classnames": "^2.2.6",
     "@types/graphql": "^0.13.4",
     "@types/lodash": "^4.14.117",
