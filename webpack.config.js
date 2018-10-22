@@ -5,7 +5,6 @@ const ReactRootPlugin = require('html-webpack-root-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const StyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 module.exports = (env, argv) => {
 	console.info('Building webpack...', {mode: argv.mode});
