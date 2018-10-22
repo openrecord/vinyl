@@ -73,13 +73,9 @@ module.exports = (env, argv) => {
 	}
 
 	return {
-		entry: [
-			'babel-polyfill',
-			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://localhost:8080',
-			'webpack/hot/only-dev-server',
-			'./src/index.jsx'
-		],
+		entry: isProduction
+			? ['babel-polyfill', 'react-hot-loader/patch', './src/index.jsx']
+			: ['babel-polyfill', './src/index.jsx'],
 		module: {
 			rules: [
 				{
@@ -101,16 +97,11 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(t|j)sx?$/,
+					test: /\.(mjs|js|jsx|ts|tsx)$/,
 					exclude: /node_modules/,
-					use: {
-						loader: 'ts-loader',
-						options: {
-							transpileOnly: true,
-							getCustomTransformers: () => ({before: [StyledComponentsTransformer()]})
-						}
-					}
+					use: ['babel-loader']
 				},
+
 				{
 					test: /\.mjs$/,
 					include: /node_modules/,
