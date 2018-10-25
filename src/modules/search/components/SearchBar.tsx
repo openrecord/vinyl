@@ -20,16 +20,22 @@ const StyledSearchBar = styled.input`
 	}
 `;
 
+interface $Props {
+	query: string;
+	onChange(query: string): void;
+}
+
 // Hack to make typing feel faster. Having the query flow through the whole mutation process
 // takes almost 120ms, but doing a local state update takes 5ms
 // Would be nice to do some performance auditing and find exactly why the update is so slow
 // but this is fine for now (and likely forever)
-export default class SearchBar extends React.Component {
-	props: {
-		query: string;
-		onChange(query: string): void;
-	};
-
+export default class SearchBar extends React.Component<$Props> {
+	constructor(props: $Props) {
+		super(props);
+		this.state = {
+			query: props.query
+		};
+	}
 	state = {
 		query: this.props.query
 	};
