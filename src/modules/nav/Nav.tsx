@@ -5,24 +5,18 @@ import {device} from '../../styles/utilities/device';
 
 import {ROUTES} from '../routes/routes';
 import zindex from '../common/zindex';
+import ToggleExpanded from '../common/mutations/ToggleExpanded';
 
-import {Query} from 'react-apollo';
-import gql from 'graphql-tag';
-import TrackFragments from '../common/fragments/TrackFragments';
+interface $Props {
+	expanded: boolean;
+}
 
-const query = gql`
-	query PlayerContainer {
-		player @client {
-			currentlyPlaying {
-				...AllTrack
-			}
-			expanded
-		}
-	}
-	${TrackFragments.all}
-`;
+interface $StyledNavProps {
+	expanded: boolean;
+	landing: boolean;
+}
 
-export default function Nav(expanded) {
+export default function Nav({expanded}: $Props) {
 	return (
 		<StyledNav expanded={expanded} landing={location.pathname === ROUTES.LANDING}>
 			<Link to={ROUTES.LANDING} key={'home'}>
@@ -33,22 +27,13 @@ export default function Nav(expanded) {
 }
 
 const StyledNav = styled.nav`
-	background: red;
+	background: ${(props: $StyledNavProps) =>
+		props.expanded || props.landing ? 'transparent' : 'rgb(25,25,25)'};
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;
 	text-align: center;
 	z-index: ${zindex('nav')};
-
-	${props =>
-		props.expanded &&
-		css`
-			background: none;
-		`} ${props =>
-		props.landing &&
-		css`
-			background: none;
-		`}
 
 	a {
 		display: inline-block;

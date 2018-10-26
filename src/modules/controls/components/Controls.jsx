@@ -50,7 +50,7 @@ export default function Controls({
 
 	const desktop = (
 		<Footer>
-			<Row>
+			<Row transparent={expanded}>
 				{title}
 				{controls}
 				{expandButton}
