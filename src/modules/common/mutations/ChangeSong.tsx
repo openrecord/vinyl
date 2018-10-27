@@ -4,7 +4,7 @@ import WithPlaylistId from '../components/WithPlaylistId';
 import PlayNthNextFromQueue from './PlayNthNextFromQueue';
 
 interface $Props {
-	children(mutation: (inp: {}) => any): React.ReactNode;
+	children?: (mutation: (inp: {}) => any) => React.ReactNode;
 }
 
 const changer = (n: number) => ({children, ...props}: $Props) => (

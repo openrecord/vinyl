@@ -94,12 +94,11 @@ module.exports = (env, argv) => {
 					loader: 'file-loader'
 				},
 				{
-					test: /\.(t|j)sx?$/,
+					test: /\.(mjs|js|jsx|ts|tsx)$/,
 					exclude: /node_modules/,
-					use: {
-						loader: 'ts-loader'
-					}
+					use: ['babel-loader']
 				},
+
 				{
 					test: /\.mjs$/,
 					include: /node_modules/,

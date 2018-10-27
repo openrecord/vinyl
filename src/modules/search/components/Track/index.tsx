@@ -53,7 +53,6 @@ export default function Track({
 							</>
 						)}
 					</IconContainer>
-					)}
 				</PlayBackground>
 			</ImageHolder>
 			<h4>{title}</h4>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {get} from 'shades';
 
-const enum DIR {
+enum DIR {
 	UP,
 	DOWN
 }
