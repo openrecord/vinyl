@@ -1,14 +1,24 @@
 import {Link} from 'react-router-dom';
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {device} from '../../styles/utilities/device';
 
 import {ROUTES} from '../routes/routes';
 import zindex from '../common/zindex';
+import ToggleExpanded from '../common/mutations/ToggleExpanded';
 
-export default function Nav() {
+interface $Props {
+	expanded: boolean;
+}
+
+interface $StyledNavProps {
+	expanded: boolean;
+	landing: boolean;
+}
+
+export default function Nav({expanded}: $Props) {
 	return (
-		<StyledNav landing={location.pathname === ROUTES.LANDING}>
+		<StyledNav expanded={expanded} landing={location.pathname === ROUTES.LANDING}>
 			<Link to={ROUTES.LANDING} key={'home'}>
 				OPENRECORD
 			</Link>
@@ -17,7 +27,8 @@ export default function Nav() {
 }
 
 const StyledNav = styled.nav`
-	background: ${props => (props.landing ? 'transparent' : 'rgb(25, 25, 25)')};
+	background: ${(props: $StyledNavProps) =>
+		props.expanded || props.landing ? 'transparent' : 'rgb(25,25,25)'};
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;
