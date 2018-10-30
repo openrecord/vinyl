@@ -50,7 +50,7 @@ export default function Controls({
 
 	const desktop = (
 		<Footer>
-			<Row>
+			<Row transparent={expanded}>
 				{title}
 				{controls}
 				{expandButton}
@@ -94,6 +94,9 @@ const Footer = styled.div`
 	bottom: 0;
 	width: 100%;
 	z-index: ${zindex('controls')};
+	@media ${device.small} {
+		height: 9rem;
+	}
 `;
 
 const Row = styled.div`
