@@ -271,7 +271,7 @@ const StyledResult = styled.div`
 			opacity: 0;
 		}
 
-		${Options} {
+		.options {
 			opacity: 0.8;
 		}
 	}

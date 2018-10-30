@@ -48,5 +48,6 @@ export default function Search({
 
 const SearchHolder = styled.div`
 	background: rgb(36, 36, 36);
-	box-shadow: 0px 4px 6px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: ${(props: $Props) =>
+		props.isSearchOpen ? '	0px 4px 6px 4px rgba(0, 0, 0, 0.1)' : 'none'};
 `;
