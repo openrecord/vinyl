@@ -42,13 +42,10 @@ export default class SearchResults extends React.Component {
 						>
 							{results
 								.filter(result => {
-									if (this.state.filterFor === 'both') {
-										return result;
-									} else if (result.__typename === this.state.filterFor) {
-										return result;
-									} else {
-										return null;
-									}
+									return this.state.filterFor === 'both' ||
+										result.__typename === this.state.filterFor
+										? result
+										: null;
 								})
 								.map(result => {
 									switch (result.__typename) {

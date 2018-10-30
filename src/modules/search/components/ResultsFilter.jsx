@@ -11,21 +11,19 @@ export default function ResultsFilter(props) {
 	];
 	return (
 		<Filter>
-			{choices.map(choice => {
-				return (
-					<Option>
-						<StyledRadio
-							type="radio"
-							name="filter"
-							onClick={props.handleFilter}
-							id={choice.name}
-							defaultChecked={choice.name === 'both' ? true : false}
-						/>
-						{choice.icon && <img src={choice.icon} />}
-						{choice.name === 'both' && <h5>Both</h5>}
-					</Option>
-				);
-			})}
+			{choices.map(choice => (
+				<Option key={choice.name}>
+					<StyledRadio
+						type="radio"
+						name="filter"
+						onClick={props.handleFilter}
+						id={choice.name}
+						defaultChecked={choice.name === 'both' ? true : false}
+					/>
+					{choice.icon && <img src={choice.icon} />}
+					{choice.name === 'both' && <h5>Both</h5>}
+				</Option>
+			))}
 		</Filter>
 	);
 }
