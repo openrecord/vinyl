@@ -36,12 +36,11 @@ export default function PlayerBox({
 			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
 				<IFrameBlocker />
 				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-					{isSoundCloud &&
-						getTrackThumbnail(currentlyPlaying) !== '' && (
-							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-						)}
-					{isSoundCloud &&
-						getTrackThumbnail(currentlyPlaying) === '' && <NoArtwork expanded={expanded} />}
+					{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
+						<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+					) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
+						<NoArtwork expanded={expanded} />
+					) : null}
 					<Player currentlyPlaying={currentlyPlaying} {...props} />
 				</SizingHack>
 			</Positioning>
