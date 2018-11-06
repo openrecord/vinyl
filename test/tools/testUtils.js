@@ -56,9 +56,17 @@ module.exports.cleanWebsocketFile = () => {
 	fs.removeSync(WEBSOCKET_DIR);
 };
 
+module.exports.page = async () => {
+	return global.__BROWSER__.newPage();
+};
+
+module.exports.baseUrl = () => {
+	return config.puppeteer.baseUrl;
+};
+
 module.exports.newHomepage = async () => {
-	const page = await global.__BROWSER__.newPage();
-	await page.goto(config.puppeteer.baseUrl);
+	const page = await module.exports.page();
+	await page.goto(module.exports.baseUrl());
 	await page.waitForSelector('html');
 	return page;
 };

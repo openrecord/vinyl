@@ -24,7 +24,8 @@ describe('Home Page', () => {
 		await page.waitForSelector('.hero-action');
 		await page.type('#open-collection', collection);
 
-		await Promise.all([page.click('.hero-button'), page.waitForNavigation()]);
+		page.click('.hero-button');
+		await page.waitForNavigation();
 
 		const regex = new RegExp('/' + collection + '$');
 		expect(page.url()).toMatch(regex);
