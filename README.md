@@ -46,12 +46,11 @@ npm run test    # Run tests with jest.
 
 #### Remote Headless Chrome
 
-Start headless chrome
-`docker-compose up -d chrome-headless`
-Run vinyl container
-`docker-compose up -d vinyl`
-Run tests in vinyl container
-`docker-compose run vinyl npm run test`
+```
+docker-compose up -d chrome-headless    # Start headless chrome
+docker-compose up -d vinyl              # Run vinyl container
+docker-compose run vinyl npm run test   # Run tests in vinyl container
+```
 
 ## Tech
 
