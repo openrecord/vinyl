@@ -14,3 +14,7 @@ dist
 config/**/*local*.yml
 yarn.lock
 .vscode
+
+# Test output
+test-screenshots
+test-reports

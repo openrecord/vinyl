@@ -1,19 +1,62 @@
-version: '3'
+version: '2.1'
 services:
-  api:
-    image: openrecord/turntable:latest
+  vinyl:
+    build:
+      context: .
+      dockerfile: docker/vinyl/Dockerfile
     ports:
-      - 7001:7001
+      - 8080:8080
     environment:
-      PORT:     # Optionally specify a port for the API here.
-      DB_HOST: mysql
-    depends_on:
-      - mysql
-  mysql:
-    image: mysql:5.7
-    volumes:
-      - ./docker/mysql/mount:/var/lib/mysql # Add a mount for all mysql files, so you can persist across container tear-downs.
+      HOST: docker
+    networks: [main]
+
+  #TODO: wait on prisma healthcheck
+  turntable-deploy:
+    image: openrecord/turntable:prisma-cli
+    depends_on: [prisma]
+    command: npx prisma deploy
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      ENDPOINT: http://prisma:4466
+    networks: [main]
+
+  #TODO: Add healthcheck
+  prisma:
+    image: prismagraphql/prisma:1.15
+    restart: always
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: prisma
+            password: prisma
+            migrations: true
     ports:
-      - 3306:3306
+      - 4466:4466
+    depends_on: [postgres]
+    networks: [main]
+
+  #TODO: Add healthcheck
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    networks: [main]
+
+  chrome-headless:
+    image: openrecord/chrome-headless
+    build:
+      dockerfile: docker/chrome-headless/Dockerfile
+      context: .
+    ports:
+      - 9222:9222
+    networks: [main]
+
+networks:
+  main:
+    driver: bridge

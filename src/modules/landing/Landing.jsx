@@ -33,6 +33,7 @@ class Landing extends React.Component {
 					<div className="link-holder">
 						<h3 className="link-base">openrecord.co/</h3>
 						<input
+							id="open-collection"
 							type="text"
 							placeholder="smoothvibes"
 							value={this.state.room}

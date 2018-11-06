@@ -1,0 +1,53 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: videoblocks/circleci-docker-base:latest
+
+    steps:
+      - setup_remote_docker: # try to allow docker layer caching: https://circleci.com/docs/2.0/docker-layer-caching/
+          reusable: true
+          exclusive: true
+
+      - checkout
+
+      - run:
+          name: Start postgres, prisma server, and chrome-headless.
+          command: docker-compose up -d prisma chrome-headless
+
+      - run:
+          name: Build test image.
+          command: docker-compose build vinyl
+
+      #TODO: Come up with better way to start turntable. Ideally we can package it as its own docker image.
+      - run:
+          name: Deploy turntable schema to prisma server.
+          command: docker-compose up turntable-deploy
+
+      - run:
+          name: Start vinyl container
+          command: docker-compose up -d vinyl
+
+      - run:
+          name: Run end-to-end tests in a new vinyl container.
+          command: |
+            docker rm test-run || echo "Test contaner does not exist."
+            docker-compose run --name test-run vinyl npm run test:ci
+
+      - run:
+          name: Copy test artifacts from the test-run container into the job space.
+          when: always
+          command: |
+            docker cp test-run:/app/test-screenshots .
+            docker cp test-run:/app/test-reports .
+
+      - store_test_results:
+          path: test-reports
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+      - store_artifacts:
+          path: test-screenshots
+          destination: test-screenshots
