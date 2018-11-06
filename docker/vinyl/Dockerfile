@@ -13,7 +13,6 @@ RUN npm i --loglevel warn --no-progress
 
 # Copy sources.
 COPY ./config config
-COPY ./docs docs
 COPY ./bin bin
 COPY ./test test
 COPY ./public public
