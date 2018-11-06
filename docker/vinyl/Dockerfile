@@ -18,7 +18,7 @@ COPY ./bin bin
 COPY ./test test
 COPY ./public public
 COPY ./src src
-COPY webpack.config.js .importjs.js postcss.config.js .babelrc ./
+COPY webpack.config.js .importjs.js postcss.config.js tsconfig.json .babelrc ./
 
 # Build web image.
 RUN npm run build

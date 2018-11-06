@@ -1,2 +1,28 @@
+# Docker config files
+.dockerignore
+docker
+docker-compose*.yml
+
+# node_modules
 node_modules
 
+# Misc files/folders in the project root
+.nvmrc
+.prettier*
+.git
+.gitignore
+.idea
+npm-debug.log
+README.md
+docs
+.circleci
+
+# Local overrides node-config
+config/**/local*
+
+# Test results
+test_results
+coverage
+
+# Compiled code
+dist
