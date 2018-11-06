@@ -1,3 +1,5 @@
+const config = require('config');
+
 const NodeEnvironment = require('jest-environment-node');
 const puppeteer = require('puppeteer');
 
@@ -11,7 +13,8 @@ class PuppeteerEnvironment extends NodeEnvironment {
 
 		console.log(`Connecting to Chrome browser via websocket: ${wsEndpoint}`);
 		this.global.__BROWSER__ = await puppeteer.connect({
-			browserWSEndpoint: wsEndpoint
+			browserWSEndpoint: wsEndpoint,
+			slowMo: config.puppeteer.slowMoMillis
 		});
 	}
 
