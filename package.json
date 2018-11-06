@@ -5,6 +5,7 @@
   "main": "TODO",
   "scripts": {
     "start": "webpack-dev-server --mode development",
+    "build:prod": "npm run build",
     "build": "webpack --mode production",
     "test": "jest",
     "test:ci": "jest --ci",
