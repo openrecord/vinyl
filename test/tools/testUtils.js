@@ -70,3 +70,7 @@ module.exports.ensureScreenshotsDir = async () => {
 		// ignore
 	}
 };
+
+module.exports.screenshot = async (page, filename) => {
+	return page.screenshot({path: `test-screenshots/${filename}.png`});
+};

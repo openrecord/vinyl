@@ -1,15 +1,5 @@
-aws:
-  cloudFront:
-    distribution: null
-  s3:
-    bucket: null
-    bucketPath: null
-
-api:
-  baseUrl: http://localhost:7001
-  timeout: 1000
-
 puppeteer:
+  headless: false
   useRemoteChrome: false
   remoteChromeEndpoint: http://0.0.0.0:9222
   baseUrl: http://0.0.0.0:8080

@@ -33,6 +33,7 @@
     "copy-webpack-plugin": "^4.5.3",
     "css-loader": "^0.28.11",
     "dns": "^0.2.2",
+    "faker": "^4.1.0",
     "file-loader": "^1.1.11",
     "fs-extra": "^7.0.0",
     "graphql": "^14.0.2",
