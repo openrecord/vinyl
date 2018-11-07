@@ -1,17 +1,16 @@
-import * as React from 'react';
-
-import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import * as React from 'react';
+import {Query} from 'react-apollo';
 
+import adapt from '../../common/components/Adapt';
+import TrackFragments from '../../common/fragments/TrackFragments';
 import {PlayNext, PlayPrev} from '../../common/mutations/ChangeSong';
-import Controls from './Controls';
 import SetDuration from '../../common/mutations/SetDuration';
 import SetPlayed from '../../common/mutations/SetPlayed';
 import ToggleExpanded from '../../common/mutations/ToggleExpanded';
 import TogglePlaying from '../../common/mutations/TogglePlaying';
-import TrackFragments from '../../common/fragments/TrackFragments';
-import adapt from '../../common/components/Adapt';
 import ToggleSearch from '../../common/mutations/ToggleSearch';
+import Controls from './Controls';
 
 const query = gql`
 	query ControlsContainer {
@@ -31,7 +30,7 @@ const query = gql`
 const Composed = adapt({
 	playNext: <PlayNext />,
 	playPrev: <PlayPrev />,
-	togglePlaying: <TogglePlaying toggle="maybeValue" />,
+	togglePlaying: <TogglePlaying />,
 	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
 	toggleSearch: <ToggleSearch toggle="isOpen" />,
 	setPlayed: <SetPlayed variable="played" />,
