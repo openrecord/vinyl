@@ -4,6 +4,7 @@ import {Query} from 'react-apollo';
 
 import adapt from '../components/Adapt';
 import {mutation, nullToUndefined} from '../utils';
+import LocalTogglePlaying from './LocalTogglePlaying';
 
 const QUERY = gql`
 	query TogglePlaying {
@@ -24,27 +25,13 @@ interface $QueryData {
 	};
 }
 
-const LocalTogglePlaying = mutation(gql`
-	mutation togglePlayingLocal($nowPlaying: Boolean) {
-		togglePlaying(nowPlaying: $nowPlaying) @client
-	}
-`);
-
 const RemoteTogglePlaying = mutation(gql`
 	mutation togglePlaying($action: ControlAction!, $id: ID!) {
 		createRemoteControl(data: {action: $action, song: {connect: {id: $id}}}) {
 			id
-			action
-			song {
-				id
-			}
 		}
 	}
 `);
-
-interface $Props {
-	children(mutation: (playing?: boolean) => void): React.ReactNode;
-}
 
 interface $Renderer {
 	render(data?: $QueryData): React.ReactNode;
@@ -64,6 +51,10 @@ interface $ComposedProps {
 	remoteTogglePlaying(vars: {action: string; id: string}): void;
 }
 
+interface $Props {
+	children?(mutation: (playing?: boolean) => void): React.ReactNode;
+}
+
 export default function TogglePlaying({children}: $Props) {
 	return (
 		<Composed>
@@ -74,6 +65,7 @@ export default function TogglePlaying({children}: $Props) {
 				localTogglePlaying,
 				remoteTogglePlaying
 			}: $ComposedProps) =>
+				children &&
 				children(isPlaying => {
 					const nowPlaying = typeof isPlaying === 'boolean' ? isPlaying : !playing;
 					const action = nowPlaying ? 'PLAY' : 'PAUSE';

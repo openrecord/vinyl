@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Query} from 'react-apollo';
 
 import adapt from '../../common/components/Adapt';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import {PlayNext} from '../../common/mutations/ChangeSong';
 import SetDuration from '../../common/mutations/SetDuration';
@@ -10,6 +11,7 @@ import SetPlayed from '../../common/mutations/SetPlayed';
 import ToggleExpanded from '../../common/mutations/ToggleExpanded';
 import TogglePlaying from '../../common/mutations/TogglePlaying';
 import {$Track} from '../../search/components/types';
+import OnRemoteControl from '../subscriptions/OnRemoteControl';
 import PlayerBox from './PlayerBox';
 
 const query = gql`
@@ -26,18 +28,27 @@ const query = gql`
 	}
 	${TrackFragments.all}
 `;
+
 interface $Renderer {
-	render(args: any): JSX.Element;
+	render(args?: any): JSX.Element;
 }
 
-const Composed = adapt({
-	playNext: <PlayNext />,
-	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
-	togglePlaying: <TogglePlaying toggle="maybeValue" />,
-	setPlayed: <SetPlayed variable="played" />,
-	setDuration: <SetDuration variable="duration" />,
-	data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
-});
+const Composed = adapt(
+	{
+		playNext: <PlayNext />,
+		toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
+		togglePlaying: <TogglePlaying />,
+		setPlayed: <SetPlayed variable="played" />,
+		setDuration: <SetDuration variable="duration" />,
+		playlist: <WithPlaylistId />,
+		data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
+	},
+	{
+		_: ({render, playlist}: $Renderer & $Props) => (
+			<OnRemoteControl playlist={playlist}>{render}</OnRemoteControl>
+		)
+	}
+);
 
 interface $Props {
 	data: {
@@ -49,6 +60,7 @@ interface $Props {
 			expanded: boolean;
 		};
 	};
+	playlist: string;
 	playNext(): void;
 	toggleExpanded(): void;
 	togglePlaying(): void;
