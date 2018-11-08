@@ -28,6 +28,15 @@ const query = gql`
 	}
 	${TrackFragments.all}
 `;
+interface $QueryData {
+	player: {
+		currentlyPlaying: $Track | null;
+		playing: boolean;
+		played: number;
+		duration: number;
+		expanded: boolean;
+	};
+}
 
 interface $Renderer {
 	render(args?: any): JSX.Element;
@@ -44,22 +53,19 @@ const Composed = adapt(
 		data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
 	},
 	{
-		_: ({render, playlist}: $Renderer & $Props) => (
-			<OnRemoteControl playlist={playlist}>{render}</OnRemoteControl>
+		_: ({render, playlist, data}: $Renderer & $Props & $QueryData) => (
+			<OnRemoteControl
+				playlist={playlist}
+				currentlyPlaying={data && data.player && data.player.currentlyPlaying}
+			>
+				{render}
+			</OnRemoteControl>
 		)
 	}
 );
 
 interface $Props {
-	data: {
-		player: {
-			currentlyPlaying: $Track | null;
-			playing: boolean;
-			played: number;
-			duration: number;
-			expanded: boolean;
-		};
-	};
+	data: $QueryData;
 	playlist: string;
 	playNext(): void;
 	toggleExpanded(): void;

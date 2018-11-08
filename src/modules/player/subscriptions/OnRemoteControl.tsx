@@ -2,8 +2,10 @@ import gql from 'graphql-tag';
 import * as React from 'react';
 import {OnSubscriptionDataOptions, Subscription} from 'react-apollo';
 
+import adapt from '../../common/components/Adapt';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import LocalTogglePlaying from '../../common/mutations/LocalTogglePlaying';
+import LocalUpdatePlaying from '../../common/mutations/LocalUpdatePlaying';
 import {$Track} from '../../search/components/types';
 
 const ON_REMOTE_CONTROL = gql`
@@ -29,32 +31,60 @@ interface $SubscriptionData {
 	};
 }
 
-type $TogglePlaying = (nowPlaying: boolean) => void;
-
-const handleRemoteControl = (togglePlaying: $TogglePlaying) => ({
+const handleRemoteControl = ({
+	localTogglePlaying,
+	localUpdatePlaying,
+	currentlyPlaying
+}: $ComposedProps & {currentlyPlaying: $Track | null}) => ({
 	subscriptionData: {data}
 }: OnSubscriptionDataOptions<$SubscriptionData>) => {
 	if (data) {
-		togglePlaying(data.remoteControl.node.action === 'PLAY');
+		switch (data.remoteControl.node.action) {
+			case 'PLAY':
+				return localTogglePlaying(true);
+
+			case 'PAUSE':
+				return localTogglePlaying(false);
+			case 'SET':
+				if (currentlyPlaying && currentlyPlaying.id === data.remoteControl.node.song.id) {
+					return;
+				}
+				return localUpdatePlaying(data.remoteControl.node.song);
+		}
 	}
 };
 
 interface $Props {
 	playlist: string;
+	currentlyPlaying: $Track | null;
 	children(): JSX.Element;
 }
 
-export default ({playlist, children}: $Props) => (
+const Composed = adapt({
+	localTogglePlaying: <LocalTogglePlaying toggle="nowPlaying" />,
+	localUpdatePlaying: <LocalUpdatePlaying variable="track" />
+});
+
+interface $ComposedProps {
+	localTogglePlaying(playing: boolean): void;
+	localUpdatePlaying(song: $Track): void;
+}
+
+export default ({playlist, currentlyPlaying, children}: $Props) => (
 	// @ts-ignore: This typing issue will be resolved in another PR I'm working on
-	<LocalTogglePlaying toggle="nowPlaying">
-		{(togglePlaying: $TogglePlaying) => (
+	<Composed>
+		{({localTogglePlaying, localUpdatePlaying}: $ComposedProps) => (
 			<Subscription<$SubscriptionData>
 				subscription={ON_REMOTE_CONTROL}
 				variables={{playlist}}
-				onSubscriptionData={handleRemoteControl(togglePlaying)}
+				onSubscriptionData={handleRemoteControl({
+					localTogglePlaying,
+					localUpdatePlaying,
+					currentlyPlaying
+				})}
 			>
 				{children}
 			</Subscription>
 		)}
-	</LocalTogglePlaying>
+	</Composed>
 );
