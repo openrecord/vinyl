@@ -1,19 +1,18 @@
-import {toast} from 'react-toastify';
-import * as React from 'react';
-
-import {Subscription} from 'react-apollo';
 import gql from 'graphql-tag';
+import * as React from 'react';
+import {Subscription} from 'react-apollo';
+import {toast} from 'react-toastify';
 
-import {nullToUndefined} from '../../common/utils';
-import DeleteTrack from '../mutations/DeleteTrack';
-import PlaylistFragments from '../../common/fragments/PlaylistFragments';
-import Queue from './Queue';
+import adapt from '../../common/components/Adapt';
 import SpinnerQuery from '../../common/components/SpinnerQuery';
 import Toast from '../../common/components/Toast';
-import TogglePlaying from '../../common/mutations/TogglePlaying';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
-import adapt from '../../common/components/Adapt';
-import UpdatePlaying from '../mutations/UpdatePlaying';
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
+import TogglePlaying from '../../common/mutations/TogglePlaying';
+import UpdatePlaying from '../../common/mutations/UpdatePlaying';
+import {nullToUndefined} from '../../common/utils';
+import DeleteTrack from '../mutations/DeleteTrack';
+import Queue from './Queue';
 
 const query = gql`
 	query Queue($playlist: String!) {

@@ -102,6 +102,7 @@
     "compression-webpack-plugin": "^2.0.0",
     "connected-react-router": "^4.3.0",
     "create-react-class": "^15.6.3",
+    "deepmerge": "^2.2.1",
     "history": "^4.7.2",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",

@@ -1,19 +1,20 @@
-import * as queueMutations from '../queue/state/mutations';
-import * as searchMutations from '../search/state/mutations';
-import * as playerMutations from '../player/state/mutations';
-import {queue} from '../queue/state';
-import {search} from '../search/state';
-import {player} from '../player/state';
+import {defaultDataIdFromObject, InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloClient} from 'apollo-client';
-import {InMemoryCache, defaultDataIdFromObject} from 'apollo-cache-inmemory';
-import {onError} from 'apollo-link-error';
-import {withClientState} from 'apollo-link-state';
-import {HttpLink} from 'apollo-link-http';
 import {ApolloLink, split} from 'apollo-link';
-import {RestLink} from 'apollo-link-rest';
 import DebounceLink from 'apollo-link-debounce';
+import {onError} from 'apollo-link-error';
+import {HttpLink} from 'apollo-link-http';
+import {RestLink} from 'apollo-link-rest';
+import {withClientState} from 'apollo-link-state';
 import {WebSocketLink} from 'apollo-link-ws';
 import {getMainDefinition} from 'apollo-utilities';
+
+import {player} from '../player/state';
+import * as playerMutations from '../player/state/mutations';
+import {queue} from '../queue/state';
+import * as queueMutations from '../queue/state/mutations';
+import {search} from '../search/state';
+import * as searchMutations from '../search/state/mutations';
 
 const cache = new InMemoryCache({
 	dataIdFromObject: object => {
@@ -27,6 +28,7 @@ const cache = new InMemoryCache({
 });
 
 export default new ApolloClient({
+	addTypename: true,
 	link: ApolloLink.from([
 		onError(errorHandler),
 		withClientState({

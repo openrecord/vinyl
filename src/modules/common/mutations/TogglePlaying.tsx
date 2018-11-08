@@ -3,7 +3,8 @@ import * as React from 'react';
 import {Query} from 'react-apollo';
 
 import adapt from '../components/Adapt';
-import {mutation, nullToUndefined} from '../utils';
+import {nullToUndefined} from '../utils';
+import CreateRemoteControl from './CreateRemoteControl';
 import LocalTogglePlaying from './LocalTogglePlaying';
 
 const QUERY = gql`
@@ -25,14 +26,6 @@ interface $QueryData {
 	};
 }
 
-const RemoteTogglePlaying = mutation(gql`
-	mutation togglePlaying($action: ControlAction!, $id: ID!) {
-		createRemoteControl(data: {action: $action, song: {connect: {id: $id}}}) {
-			id
-		}
-	}
-`);
-
 interface $Renderer {
 	render(data?: $QueryData): React.ReactNode;
 }
@@ -42,13 +35,13 @@ const Composed = adapt({
 		<Query<$QueryData> query={QUERY}>{({data}) => render(nullToUndefined(data))}</Query>
 	),
 	localTogglePlaying: <LocalTogglePlaying toggle="nowPlaying" />,
-	remoteTogglePlaying: <RemoteTogglePlaying simple />
+	createRemoteControl: <CreateRemoteControl simple />
 });
 
 interface $ComposedProps {
 	data: $QueryData;
 	localTogglePlaying(nowPlaying: boolean): void;
-	remoteTogglePlaying(vars: {action: string; id: string}): void;
+	createRemoteControl(vars: {action: string; id: string}): void;
 }
 
 interface $Props {
@@ -63,14 +56,14 @@ export default function TogglePlaying({children}: $Props) {
 					player: {currentlyPlaying: {id} = {id: ''}, playing}
 				},
 				localTogglePlaying,
-				remoteTogglePlaying
+				createRemoteControl
 			}: $ComposedProps) =>
 				children &&
 				children(isPlaying => {
 					const nowPlaying = typeof isPlaying === 'boolean' ? isPlaying : !playing;
 					const action = nowPlaying ? 'PLAY' : 'PAUSE';
 					localTogglePlaying(nowPlaying);
-					remoteTogglePlaying({action, id});
+					createRemoteControl({action, id});
 				})
 			}
 		</Composed>

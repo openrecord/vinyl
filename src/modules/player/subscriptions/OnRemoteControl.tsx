@@ -45,7 +45,7 @@ interface $Props {
 }
 
 export default ({playlist, children}: $Props) => (
-	// @ts-ignore: This typing issue will be in another PR I'm working on
+	// @ts-ignore: This typing issue will be resolved in another PR I'm working on
 	<LocalTogglePlaying toggle="nowPlaying">
 		{(togglePlaying: $TogglePlaying) => (
 			<Subscription<$SubscriptionData>
