@@ -58,7 +58,9 @@ class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackground
 			if (!['show-hide-search', 'search-bar-target'].includes(target.dataset.id || '')) {
 				this.props.toggleSearch();
 			}
-			this.props.clearSearch();
+			if (target.dataset.id !== 'search-bar-target') {
+				this.props.clearSearch();
+			}
 		}
 	}
 
