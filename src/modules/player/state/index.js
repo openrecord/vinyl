@@ -4,5 +4,6 @@ export const player = {
 	playing: true,
 	expanded: false,
 	played: 0,
-	duration: 0
+	duration: 0,
+	live: true
 };

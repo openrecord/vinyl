@@ -34,17 +34,19 @@ interface $SubscriptionData {
 const handleRemoteControl = ({
 	localTogglePlaying,
 	localUpdatePlaying,
-	currentlyPlaying
-}: $ComposedProps & {currentlyPlaying: $Track | null}) => ({
+	currentlyPlaying,
+	live
+}: $ComposedProps & {currentlyPlaying: $Track | null; live: boolean}) => ({
 	subscriptionData: {data}
 }: OnSubscriptionDataOptions<$SubscriptionData>) => {
-	if (data) {
+	if (data && live) {
 		switch (data.remoteControl.node.action) {
 			case 'PLAY':
 				return localTogglePlaying(true);
 
 			case 'PAUSE':
 				return localTogglePlaying(false);
+
 			case 'SET':
 				if (currentlyPlaying && currentlyPlaying.id === data.remoteControl.node.song.id) {
 					return;
@@ -57,6 +59,7 @@ const handleRemoteControl = ({
 interface $Props {
 	playlist: string;
 	currentlyPlaying: $Track | null;
+	live: boolean;
 	children(): JSX.Element;
 }
 
@@ -70,7 +73,7 @@ interface $ComposedProps {
 	localUpdatePlaying(song: $Track): void;
 }
 
-export default ({playlist, currentlyPlaying, children}: $Props) => (
+export default ({playlist, currentlyPlaying, live, children}: $Props) => (
 	// @ts-ignore: This typing issue will be resolved in another PR I'm working on
 	<Composed>
 		{({localTogglePlaying, localUpdatePlaying}: $ComposedProps) => (
@@ -78,6 +81,7 @@ export default ({playlist, currentlyPlaying, children}: $Props) => (
 				subscription={ON_REMOTE_CONTROL}
 				variables={{playlist}}
 				onSubscriptionData={handleRemoteControl({
+					live,
 					localTogglePlaying,
 					localUpdatePlaying,
 					currentlyPlaying

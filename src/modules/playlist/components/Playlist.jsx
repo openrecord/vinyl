@@ -14,7 +14,7 @@ export default class Playlist extends React.Component {
 	}
 
 	render() {
-		const {playlist, isSearchOpen, toggleSearch, trackCount} = this.props;
+		const {playlist, isSearchOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
 		return (
 			<StyledPlaylist>
 				<VelocityTransitionGroup
@@ -25,7 +25,9 @@ export default class Playlist extends React.Component {
 					<Header>
 						<Record />
 						<CollectionInfo
+							live={live}
 							toggleSearch={toggleSearch}
+							toggleLive={toggleLive}
 							trackCount={trackCount}
 							playlist={playlist}
 							isSearchOpen={isSearchOpen}

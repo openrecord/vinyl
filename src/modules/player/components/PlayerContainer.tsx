@@ -24,6 +24,7 @@ const query = gql`
 			played
 			duration
 			expanded
+			live
 		}
 	}
 	${TrackFragments.all}
@@ -35,6 +36,7 @@ interface $QueryData {
 		played: number;
 		duration: number;
 		expanded: boolean;
+		live: boolean;
 	};
 }
 
@@ -57,6 +59,7 @@ const Composed = adapt(
 			<OnRemoteControl
 				playlist={playlist}
 				currentlyPlaying={data && data.player && data.player.currentlyPlaying}
+				live={data.player.live}
 			>
 				{render}
 			</OnRemoteControl>

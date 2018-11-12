@@ -19,6 +19,14 @@ export const togglePlaying = updateQL(gql`
 	}
 `).with(({nowPlaying}) => set('player', 'playing')(nowPlaying));
 
+export const toggleLive = updateQL(gql`
+	query {
+		player @client {
+			live
+		}
+	}
+`).with(({live}) => mod('player', 'live')(toggleOr(live)));
+
 export const setPlayed = updateQL(gql`
 	query {
 		player @client {
