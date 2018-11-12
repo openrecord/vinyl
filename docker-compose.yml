@@ -22,7 +22,7 @@ services:
   #TODO: Add healthcheck
   prisma:
     image: prismagraphql/prisma:1.15
-    restart: always
+    restart: unless-stopped
     environment:
       PRISMA_CONFIG: |
         port: 4466
@@ -42,7 +42,7 @@ services:
   #TODO: Add healthcheck
   postgres:
     image: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
