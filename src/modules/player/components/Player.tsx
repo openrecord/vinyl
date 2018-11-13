@@ -12,7 +12,7 @@ export interface $PlayerProps {
 	setDuration(duration: number): void;
 	currentlyPlaying: $Track | null;
 	playing: boolean;
-	playNext(): void;
+	playNext(options: {local: boolean}): void;
 	className?: string;
 }
 
@@ -71,7 +71,7 @@ class Player extends React.Component<$PlayerProps> {
 						preload: true
 					}
 				}}
-				onEnded={playNext}
+				onEnded={() => playNext({local: true})}
 				onDuration={setDuration}
 				onProgress={({played}) => setPlayed(played)}
 			/>

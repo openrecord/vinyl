@@ -1,7 +1,7 @@
-import {mod, set} from 'shades';
 import gql from 'graphql-tag';
+import {mod, set} from 'shades';
 
-import {updateQL, toggleOr} from '../../common/utils';
+import {toggleOr, updateQL} from '../../common/utils';
 
 export const toggleExpanded = updateQL(gql`
 	query {
@@ -17,7 +17,15 @@ export const togglePlaying = updateQL(gql`
 			playing
 		}
 	}
-`).with(({maybeValue}) => mod('player', 'playing')(toggleOr(maybeValue)));
+`).with(({nowPlaying}) => set('player', 'playing')(nowPlaying));
+
+export const toggleLive = updateQL(gql`
+	query {
+		player @client {
+			live
+		}
+	}
+`).with(({live}) => mod('player', 'live')(toggleOr(live)));
 
 export const setPlayed = updateQL(gql`
 	query {

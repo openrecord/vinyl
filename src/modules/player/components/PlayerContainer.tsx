@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Query} from 'react-apollo';
 
 import adapt from '../../common/components/Adapt';
+import WithPlaylistId from '../../common/components/WithPlaylistId';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import {PlayNext} from '../../common/mutations/ChangeSong';
 import SetDuration from '../../common/mutations/SetDuration';
@@ -10,6 +11,7 @@ import SetPlayed from '../../common/mutations/SetPlayed';
 import ToggleExpanded from '../../common/mutations/ToggleExpanded';
 import TogglePlaying from '../../common/mutations/TogglePlaying';
 import {$Track} from '../../search/components/types';
+import OnRemoteControl from '../subscriptions/OnRemoteControl';
 import PlayerBox from './PlayerBox';
 
 const query = gql`
@@ -22,33 +24,52 @@ const query = gql`
 			played
 			duration
 			expanded
+			live
 		}
 	}
 	${TrackFragments.all}
 `;
-interface $Renderer {
-	render(args: any): JSX.Element;
+interface $QueryData {
+	player: {
+		currentlyPlaying: $Track | null;
+		playing: boolean;
+		played: number;
+		duration: number;
+		expanded: boolean;
+		live: boolean;
+	};
 }
 
-const Composed = adapt({
-	playNext: <PlayNext />,
-	toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
-	togglePlaying: <TogglePlaying toggle="maybeValue" />,
-	setPlayed: <SetPlayed variable="played" />,
-	setDuration: <SetDuration variable="duration" />,
-	data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
-});
+interface $Renderer {
+	render(args?: any): JSX.Element;
+}
+
+const Composed = adapt(
+	{
+		playNext: <PlayNext />,
+		toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
+		togglePlaying: <TogglePlaying />,
+		setPlayed: <SetPlayed variable="played" />,
+		setDuration: <SetDuration variable="duration" />,
+		playlist: <WithPlaylistId />,
+		data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
+	},
+	{
+		_: ({render, playlist, data}: $Renderer & $Props & $QueryData) => (
+			<OnRemoteControl
+				playlist={playlist}
+				currentlyPlaying={data && data.player && data.player.currentlyPlaying}
+				live={data.player.live}
+			>
+				{render}
+			</OnRemoteControl>
+		)
+	}
+);
 
 interface $Props {
-	data: {
-		player: {
-			currentlyPlaying: $Track | null;
-			playing: boolean;
-			played: number;
-			duration: number;
-			expanded: boolean;
-		};
-	};
+	data: $QueryData;
+	playlist: string;
 	playNext(): void;
 	toggleExpanded(): void;
 	togglePlaying(): void;

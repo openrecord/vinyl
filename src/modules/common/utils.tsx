@@ -44,13 +44,21 @@ export const updateQL = (query: DocumentNode) => ({
 	}
 });
 
-export function inspect<T>(value: T): T {
-	console.log(value);
+export function inspect<T>(value: T, ...args: any[]): T {
+	console.log(value, ...args);
 	return value;
 }
 
-export const nullToUndefined = map((v: any) => {
-	if (v === null) {
+// prettier-ignore
+type NullToUndefined<T> = 
+	T extends undefined ? undefined : 
+	T extends null ? undefined : 
+	T extends object ? {[P in keyof T]: NullToUndefined<T>}  :
+	T;
+
+// prettier-ignore
+export const nullToUndefined = <T,>(v: T): NullToUndefined<T> | undefined => {
+	if (v === null || v === undefined) {
 		return undefined;
 	}
 
@@ -59,11 +67,12 @@ export const nullToUndefined = map((v: any) => {
 	}
 
 	if (typeof v === 'object') {
-		return nullToUndefined(v);
+		return map(nullToUndefined)(v);
 	}
 
+	// @ts-ignore
 	return v;
-});
+};
 
 export const ifEnter = (f: () => any) => (event: React.KeyboardEvent) => {
 	if (event.key === 'Enter') {
@@ -115,7 +124,7 @@ export const mutation = (mutationString: DocumentNode) => <Vars, Data = any>({
 	</Mutation>
 );
 
-export const mod = (n: number, m: number): number => ((n % m) + m) % m;
+export const modulo = (n: number, m: number): number => ((n % m) + m) % m;
 
 export const toggleOr = (maybeValue: $Undef<boolean>) => (oldValue: boolean): boolean =>
 	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;

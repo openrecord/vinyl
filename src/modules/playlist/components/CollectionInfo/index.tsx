@@ -7,7 +7,8 @@ import styled from 'styled-components';
 import {device, size} from '../../../../styles/utilities/device';
 import Toast from '../../../common/components/Toast';
 import {ifElse} from '../../../common/utils';
-import AddSong, {StyledAddSong} from './AddSong';
+import AddSong from './AddSong';
+import Button from './Button';
 import Message, {StyledMessage} from './Message';
 
 const link = require('./images/copy-link.svg');
@@ -16,10 +17,19 @@ interface $Props {
 	playlist: string;
 	isSearchOpen: boolean;
 	toggleSearch: (arg?: boolean) => void;
+	toggleLive: (arg?: boolean) => void;
 	trackCount: number;
+	live: boolean;
 }
 
-export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, trackCount}: $Props) {
+export default function CollectionInfo({
+	playlist,
+	toggleSearch,
+	isSearchOpen,
+	trackCount,
+	toggleLive,
+	live
+}: $Props) {
 	const desktop = (
 		<StyledCollectionInfo>
 			<Stack>
@@ -35,7 +45,12 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 				</CopyToClipboard>
 				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 			</Stack>
-			<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
+			<Stack>
+				<Button active={live} onClick={() => toggleLive()}>
+					*LIVE
+				</Button>
+				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
+			</Stack>
 		</StyledCollectionInfo>
 	);
 
@@ -47,6 +62,11 @@ export default function CollectionInfo({playlist, toggleSearch, isSearchOpen, tr
 			>
 				<PlaylistName>/{playlist}</PlaylistName>
 			</CopyToClipboard>
+			<Stack>
+				<Button active={live} onClick={() => toggleLive()}>
+					*LIVE
+				</Button>
+			</Stack>
 			<Stack>
 				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
@@ -115,7 +135,7 @@ const Stack = styled.div`
 		}
 	}
 
-	${StyledAddSong} {
-		margin-top: auto;
+	${Button} {
+		margin: auto;
 	}
 `;
