@@ -58,7 +58,7 @@ const Flex1 = styled.div`
 	flex: 1;
 `;
 
-const StyledReactSlider = styled(ReactSlider)`
+export const StyledReactSlider = styled(ReactSlider)`
 	background: rgb(80, 80, 80);
 	margin: 0.75rem 0;
 

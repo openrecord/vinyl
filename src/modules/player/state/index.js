@@ -5,5 +5,5 @@ export const player = {
 	expanded: false,
 	played: 0,
 	duration: 0,
-	live: true
+	live: false
 };
