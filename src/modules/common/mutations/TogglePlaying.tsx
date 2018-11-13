@@ -1,11 +1,13 @@
+import merge from 'deepmerge';
 import gql from 'graphql-tag';
 import * as React from 'react';
 import {Query} from 'react-apollo';
+import {useQuery} from 'react-apollo-hooks';
 
 import adapt from '../components/Adapt';
 import {nullToUndefined} from '../utils';
-import CreateRemoteControl from './CreateRemoteControl';
-import LocalTogglePlaying from './LocalTogglePlaying';
+import CreateRemoteControl, {useCreateRemoteControl} from './CreateRemoteControl';
+import LocalTogglePlaying, {useTogglePlayingLocal} from './LocalTogglePlaying';
 
 const QUERY = gql`
 	query TogglePlaying {
@@ -17,6 +19,7 @@ const QUERY = gql`
 		}
 	}
 `;
+
 interface $QueryData {
 	player: {
 		currentlyPlaying?: {
@@ -68,4 +71,25 @@ export default function TogglePlaying({children}: $Props) {
 			}
 		</Composed>
 	);
+}
+
+export function useTogglePlaying(): (isPlaying?: boolean) => void {
+	const {
+		data: {
+			player: {currentlyPlaying: {id} = {id: ''}, playing}
+		}
+	} = merge(
+		{data: {player: {currentlyPlaying: {}, playing: false}}},
+		nullToUndefined(useQuery<$QueryData>(QUERY))
+	);
+
+	const togglePlayingLocal = useTogglePlayingLocal();
+	const createRemoteControl = useCreateRemoteControl();
+
+	return isPlaying => {
+		const nowPlaying = typeof isPlaying === 'boolean' ? isPlaying : !playing;
+		const action = nowPlaying ? 'PLAY' : 'PAUSE';
+		togglePlayingLocal(nowPlaying);
+		createRemoteControl({action, id});
+	};
 }

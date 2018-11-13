@@ -6,10 +6,10 @@ import adapt from '../../common/components/Adapt';
 import WithPlaylistId from '../../common/components/WithPlaylistId';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import {PlayNext} from '../../common/mutations/ChangeSong';
-import SetDuration from '../../common/mutations/SetDuration';
-import SetPlayed from '../../common/mutations/SetPlayed';
-import ToggleExpanded from '../../common/mutations/ToggleExpanded';
-import TogglePlaying from '../../common/mutations/TogglePlaying';
+import {useSetDuration} from '../../common/mutations/SetDuration';
+import {useSetPlayed} from '../../common/mutations/SetPlayed';
+import {useToggleExpanded} from '../../common/mutations/ToggleExpanded';
+import {useTogglePlaying} from '../../common/mutations/TogglePlaying';
 import {$Track} from '../../search/components/types';
 import OnRemoteControl from '../subscriptions/OnRemoteControl';
 import PlayerBox from './PlayerBox';
@@ -47,10 +47,6 @@ interface $Renderer {
 const Composed = adapt(
 	{
 		playNext: <PlayNext />,
-		toggleExpanded: <ToggleExpanded toggle="maybeValue" />,
-		togglePlaying: <TogglePlaying />,
-		setPlayed: <SetPlayed variable="played" />,
-		setDuration: <SetDuration variable="duration" />,
 		playlist: <WithPlaylistId />,
 		data: ({render}: $Renderer) => <Query query={query}>{({data}) => render(data)}</Query>
 	},
@@ -71,23 +67,20 @@ interface $Props {
 	data: $QueryData;
 	playlist: string;
 	playNext(): void;
-	toggleExpanded(): void;
-	togglePlaying(): void;
-	setPlayed(played: number): void;
-	setDuration(duration: number): void;
 }
 export default function PlayerContainer() {
+	const toggleExpanded = useToggleExpanded();
+	const setPlayed = useSetPlayed();
+	const setDuration = useSetDuration();
+	const togglePlaying = useTogglePlaying();
+
 	return (
 		<Composed>
 			{({
 				data: {
 					player: {currentlyPlaying, playing, played, duration, expanded}
 				},
-				playNext,
-				toggleExpanded,
-				togglePlaying,
-				setPlayed,
-				setDuration
+				playNext
 			}: $Props) => (
 				<PlayerBox
 					expanded={expanded}
