@@ -6,7 +6,6 @@ import {device} from '../../../styles/utilities/device';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
 import CollectionInfo from './CollectionInfo';
-import Record from './Record';
 
 export default class Playlist extends React.Component {
 	componentDidMount() {
@@ -22,17 +21,14 @@ export default class Playlist extends React.Component {
 					leave={{animation: 'fadeOut', display: 'flex'}}
 					runOnMount
 				>
-					<Header>
-						<Record />
-						<CollectionInfo
-							live={live}
-							toggleSearch={toggleSearch}
-							toggleLive={toggleLive}
-							trackCount={trackCount}
-							playlist={playlist}
-							isSearchOpen={isSearchOpen}
-						/>
-					</Header>
+					<CollectionInfo
+						live={live}
+						toggleSearch={toggleSearch}
+						toggleLive={toggleLive}
+						trackCount={trackCount}
+						playlist={playlist}
+						isSearchOpen={isSearchOpen}
+					/>
 				</VelocityTransitionGroup>
 				<SearchContainer isSearchOpen={isSearchOpen} />
 				<SearchResultsTarget id="search-results-target">
@@ -54,10 +50,8 @@ const SearchResultsTarget = styled.div`
 const StyledPlaylist = styled.div`
 	display: block;
 	max-width: 75rem;
-	margin: 0 auto;
-	padding-top: 4rem;
-	position: relative;
-	width: 80%;
+	padding: 1.25rem 0.75rem 0.75rem 0.75rem;
+	width: 40%;
 	transition: all 0.1s;
 
 	@media ${device.small} {
@@ -67,11 +61,10 @@ const StyledPlaylist = styled.div`
 `;
 
 const Header = styled.div`
-	border-bottom: 1px solid rgba(40, 40, 40, 1);
 	padding: 0 0 1rem 0;
 	display: flex;
 	flex-direction: row;
-	align-items: stretch;
+	align-items: center;
 
 	@media ${device.small} {
 		padding: 0;

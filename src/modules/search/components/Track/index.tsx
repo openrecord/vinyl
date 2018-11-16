@@ -40,8 +40,12 @@ export default function Track({
 			onKeyPress={ifEnter(onClick)}
 			tabIndex={0}
 		>
-			<ImageHolder search={search}>
-				{thumbnail ? <Thumbnail src={thumbnail} search={search} /> : <NoArtwork />}
+			<ImageHolder>
+				{thumbnail ? (
+					<Thumbnail src={thumbnail} search={search} soundcloud={soundcloud} />
+				) : (
+					<NoArtwork />
+				)}
 				<PlayBackground>
 					<IconContainer>
 						{search ? (
@@ -55,7 +59,7 @@ export default function Track({
 					</IconContainer>
 				</PlayBackground>
 			</ImageHolder>
-			<h4>{title}</h4>
+			<h5>{title}</h5>
 			{search && (
 				<SourceIcon>
 					<img src={soundcloud ? scIcon : ytIcon} />
@@ -146,84 +150,39 @@ const AddPlus = styled.span`
 	}
 `;
 
-interface $ImageHolderProps {
-	search: boolean;
-}
-
 const ImageHolder = styled.div`
 	display: inline-block;
 	position: relative;
-	height: 4.125rem;
+	height: 3rem;
 	overflow: hidden;
-	margin-right: 0.75rem;
-	min-width: 7.5rem;
-
-	@media ${device.small} {
-		height: 2.75rem;
-		min-width: 5rem;
-	}
-
-	${({search}: $ImageHolderProps) =>
-		search &&
-		css`
-			height: 3.3rem;
-			min-width: 6rem;
-
-			@media ${device.small} {
-				height: 2.75rem;
-				min-width: 5rem;
-			}
-
-			div {
-				height: 3.3rem;
-				min-width: 6rem;
-				@media ${device.small} {
-					height: 2.75rem;
-					min-width: 5rem;
-				}
-			}
-		`};
+	margin-right: 0.5rem;
+	min-width: 3rem;
 `;
 
 interface $ThumbnailProps {
 	search: boolean;
+	soundcloud: boolean;
 }
 
 const Thumbnail = styled.img`
-	height: 5.625rem;
+	height: 4.2rem;
 	position: absolute;
-	top: -0.75rem;
-	width: 7.5rem;
-
-	${({search}: $ThumbnailProps) =>
-		search &&
+	left: -1.25rem;
+	top: -0.6rem;
+	width: 5.604rem;
+	${({soundcloud}: $ThumbnailProps) =>
+		soundcloud &&
 		css`
-			height: 4.5rem;
-			top: -0.6rem;
-			width: 6rem;
-
-			@media ${device.small} {
-				height: 3.75rem;
-				top: -0.5rem;
-				width: 5rem;
-			}
-		`}
-
-	@media ${device.small} {
-		height: 3.75rem;
-		top: -0.5rem;
-		width: 5rem;
-	}
+			left: 0;
+			top: 0;
+			width: 4.2rem;
+		`};
 `;
 
 const NoArtwork = styled.div`
 	background-image: linear-gradient(135deg, #846170, #e6846e);
-	height: 4.125rem;
-	min-width: 7.5rem;
-	@media ${device.small} {
-		height: 2.75rem;
-		min-width: 5rem;
-	}
+	height: 3rem;
+	width: 3rem;
 `;
 
 const SourceIcon = styled.div`
@@ -240,7 +199,7 @@ const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	padding: 0.5rem 0.75rem;
+	padding: 0.75rem;
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,
@@ -280,7 +239,7 @@ const StyledResult = styled.div`
 		outline: 1px solid rgb(80, 80, 80);
 	}
 
-	h4 {
+	h5 {
 		overflow: hidden;
 		color: rgba(255, 255, 255, 0.8);
 		display: -webkit-box;

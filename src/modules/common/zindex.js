@@ -1,5 +1,6 @@
 const baseZIndexList = [
 	0,
+	'add-container',
 	'search-background',
 	'search-results',
 	'toast',

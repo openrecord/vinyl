@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as CopyToClipboard from 'react-copy-to-clipboard';
 import MediaQuery from 'react-responsive';
 import {toast} from 'react-toastify';
 import styled from 'styled-components';
@@ -33,44 +32,22 @@ export default function CollectionInfo({
 	const desktop = (
 		<StyledCollectionInfo>
 			<Stack>
-				<h5>COLLECTION</h5>
-				<CopyToClipboard
-					onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
-					text={'https://openrecord.co/' + playlist}
-				>
-					<PlaylistLink>
-						<PlaylistName>/{playlist}</PlaylistName>
-						<img src={link} />
-					</PlaylistLink>
-				</CopyToClipboard>
-				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
-			</Stack>
-			<Stack>
 				<Button active={live} onClick={() => toggleLive()}>
 					*LIVE
 				</Button>
-				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
 			</Stack>
+			<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 		</StyledCollectionInfo>
 	);
 
 	const mobile = (
 		<StyledCollectionInfo>
-			<CopyToClipboard
-				onCopy={() => toast(<Toast message="Link copied to clipboard" />)}
-				text={'https://openrecord.co/' + playlist}
-			>
-				<PlaylistName>/{playlist}</PlaylistName>
-			</CopyToClipboard>
 			<Stack>
 				<Button active={live} onClick={() => toggleLive()}>
 					*LIVE
 				</Button>
 			</Stack>
-			<Stack>
-				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
-				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
-			</Stack>
+			<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 		</StyledCollectionInfo>
 	);
 
@@ -79,47 +56,9 @@ export default function CollectionInfo({
 
 const StyledCollectionInfo = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	width: 100%;
-
-	h5 {
-		color: rgba(60, 60, 60, 1);
-		margin-bottom: 0.25rem;
-	}
-`;
-
-const PlaylistLink = styled.div`
-	align-items: center;
-	cursor: pointer;
-	display: flex;
-	flex-direction: row;
-
-	&:hover {
-		img {
-			opacity: 1;
-		}
-	}
-
-	img {
-		height: 1rem;
-		margin: 0.5rem 0 0 0.625rem;
-		opacity: 0.3;
-		width: 1rem;
-	}
-`;
-
-const PlaylistName = styled.h1`
-	color: white;
-	cursor: pointer;
-	max-width: 15rem;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-
-	@media ${device.small} {
-		margin: auto 0;
-		max-width: 8rem;
-	}
+	margin-top: 3rem;
 `;
 
 const Stack = styled.div`
