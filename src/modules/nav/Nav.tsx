@@ -30,7 +30,7 @@ export default function Nav({expanded}: $Props) {
 
 const StyledNav = styled.nav`
 	background: ${(props: $StyledNavProps) =>
-		props.expanded || props.landing ? 'transparent' : 'rgb(25,25,25)'};
+		props.expanded || props.landing ? 'transparent' : 'rgb(20,20,20)'};
 	padding: 1rem 1.5rem;
 	position: fixed;
 	width: 100%;

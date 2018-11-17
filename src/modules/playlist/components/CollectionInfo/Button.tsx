@@ -9,15 +9,14 @@ const FILL = '#9c4d9d';
 export default styled.button`
 	background: ${({active}: $Props) => (active ? FILL : 'transparent')};
 	border: 0.125rem solid #9c4d9d;
-	border-radius: 0.25rem;
-	color: rgba(255, 255, 255, 0.9);
+	border-radius: 1.125rem;
+	color: #9c4d9d;
 	cursor: pointer;
-	font-size: 0.875rem;
+	font-size: 1.125rem;
 	line-height: 1rem;
 	outline: none;
-	padding: 0.25rem 0.5rem;
+	padding: 0.5rem 3rem;
 	transition: all 0.1s;
-	max-width: 6.5rem;
 
 	span {
 		font-size: 1rem;

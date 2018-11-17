@@ -8,7 +8,6 @@ import Toast from '../../../common/components/Toast';
 import {ifElse} from '../../../common/utils';
 import AddSong from './AddSong';
 import Button from './Button';
-import Message, {StyledMessage} from './Message';
 
 const link = require('./images/copy-link.svg');
 
@@ -31,22 +30,20 @@ export default function CollectionInfo({
 }: $Props) {
 	const desktop = (
 		<StyledCollectionInfo>
-			<Stack>
-				<Button active={live} onClick={() => toggleLive()}>
-					*LIVE
-				</Button>
-			</Stack>
+			<h6>NOW PLAYING</h6>
+			<Button active={live} onClick={() => toggleLive()}>
+				*LIVE
+			</Button>
 			<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 		</StyledCollectionInfo>
 	);
 
 	const mobile = (
 		<StyledCollectionInfo>
-			<Stack>
-				<Button active={live} onClick={() => toggleLive()}>
-					*LIVE
-				</Button>
-			</Stack>
+			<Button active={live} onClick={() => toggleLive()}>
+				*LIVE
+			</Button>
+
 			<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
 		</StyledCollectionInfo>
 	);
@@ -59,22 +56,15 @@ const StyledCollectionInfo = styled.div`
 	justify-content: flex-start;
 	width: 100%;
 	margin-top: 3rem;
-`;
 
-const Stack = styled.div`
-	display: flex;
-	flex-direction: column;
-
-	@media ${device.small} {
-		align-items: flex-end;
-		margin: 0.75rem;
-
-		${StyledMessage} {
-			text-align: right;
-		}
+	h6 {
+		color: #3d3d3d;
+		margin-left: 0.75rem;
 	}
 
+	//REMOVE THIS CODE
 	${Button} {
-		margin: auto;
+		right: 0;
+		position: absolute;
 	}
 `;

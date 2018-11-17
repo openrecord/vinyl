@@ -50,7 +50,7 @@ export default function Queue({
 }
 
 const QueueList = styled.div`
-	margin-bottom: 5rem;
+	margin-bottom: 3.5rem;
 
 	@media ${device.small} {
 		margin-bottom: 10.25rem;

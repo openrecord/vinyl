@@ -58,7 +58,7 @@ const StyledOptions = styled.div`
 
 const SongDots = styled.div`
 	display: flex;
-	padding: 0.5rem;
+	padding: 0.75rem;
 	position: relative;
 `;
 
@@ -66,7 +66,7 @@ const Dot = styled.span`
 	background: white;
 	border-radius: 50%;
 	height: 0.25rem;
-	margin: 0.125rem;
+	margin: 0.0675rem;
 	width: 0.25rem;
 
 	@media ${device.small} {

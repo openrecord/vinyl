@@ -29,7 +29,7 @@ export default function ResultsFilter(props) {
 }
 
 const Filter = styled.div`
-	display: flex;
+	display: none;
 	justify-content: flex-end;
 	align-items: center;
 	padding: 0.5rem 1rem 0.5rem;

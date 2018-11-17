@@ -1,12 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {VelocityTransitionGroup} from 'velocity-react';
+import zindex from '../../common/zindex';
 
 import * as animations from '../../common/animations';
 import SearchBackground from './SearchBackground';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import {$Result} from './types';
+const searchIcon = require('./images/search.svg');
+const closeIcon = require('./images/close.svg');
 
 interface $Props {
 	query: string;
@@ -16,6 +19,10 @@ interface $Props {
 	setSearch(query: string): void;
 	toggleSearch(value?: boolean): void;
 	clearSearch(): void;
+}
+
+interface $SearchHolderProps {
+	isSearchOpen: boolean;
 }
 
 export default function Search({
@@ -28,26 +35,72 @@ export default function Search({
 	clearSearch
 }: $Props) {
 	return (
-		<SearchHolder>
+		<SearchHolder isSearchOpen={isSearchOpen}>
 			<VelocityTransitionGroup
-				enter={{animation: animations.slideDownExpand.in, duration: 200}}
+				enter={{animation: animations.slideUpExpand.in, duration: 0}}
 				leave={animations.slideDownExpand.out}
 			>
+				<SearchIcon src={searchIcon} />
 				{isSearchOpen && <SearchBar query={query} onChange={setSearch} />}
+				<CloseButton>
+					<img src={closeIcon} />
+				</CloseButton>
 			</VelocityTransitionGroup>
 			<SearchBackground
 				isSearchOpen={isSearchOpen}
 				toggleSearch={toggleSearch}
 				clearSearch={clearSearch}
 			>
-				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
+				<SearchResults results={results} enqueue={enqueue} />
 			</SearchBackground>
 		</SearchHolder>
 	);
 }
 
 const SearchHolder = styled.div`
-	background: rgb(36, 36, 36);
-	box-shadow: ${(props: $Props) =>
-		props.isSearchOpen ? '	0px 4px 6px 4px rgba(0, 0, 0, 0.1)' : 'none'};
+	background: rgb(30, 24, 31);
+	border: ${(props: $SearchHolderProps) => (props.isSearchOpen ? '2px solid #9c4d9d' : 'none')};
+	box-sizing: border-box;
+	bottom: 1rem;
+	margin: 0 0.75rem;
+	min-width: 22.5rem;
+	position: fixed;
+	width: calc(30% - 0.75rem);
+	z-index: ${zindex('search-holder')};
+
+	div {
+		display: flex;
+		width: 100%;
+
+		img,
+		button {
+			display: ${(props: $SearchHolderProps) =>
+				props.isSearchOpen ? 'inline-block !important' : 'none'};
+		}
+	}
+`;
+
+//This weirdness is so that you can still click on the Search Icon without closing Search
+const SearchIcon = styled.img`
+	margin-left: 0.75rem;
+	pointer-events: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: ${zindex('search-icon')};
+`;
+
+const CloseButton = styled.button`
+	padding-right: 1rem;
+	cursor: pointer;
+	height: auto !important;
+	opacity: 0.5;
+
+	img {
+		margin-top: 2px;
+	}
+
+	:hover {
+		opacity: 1;
+	}
 `;

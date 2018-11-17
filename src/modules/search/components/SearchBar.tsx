@@ -1,25 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const StyledSearchBar = styled.input`
-	background-color: rgb(36, 36, 36);
-	border: 0;
-	border-radius: 0;
-	box-sizing: border-box;
-	color: #f2f2f2;
-	display: block;
-	font-size: 1.25rem;
-	outline: none;
-	padding: 1rem 1rem;
-	position: relative;
-	width: 100%;
-	caret-color: rgb(156, 77, 157);
-
-	&::placeholder {
-		color: rgba(255, 255, 255, 0.6);
-	}
-`;
-
 interface $Props {
 	query: string;
 	onChange(query: string): void;
@@ -52,3 +33,22 @@ export default class SearchBar extends React.Component<$Props> {
 		);
 	}
 }
+
+const StyledSearchBar = styled.input`
+	background-color: rgb(30, 24, 31);
+	border: 0;
+	border-radius: 0;
+	box-sizing: border-box;
+	color: #f2f2f2;
+	display: block;
+	font-size: 1.25rem;
+	outline: none;
+	padding: 1rem 0.5rem 1rem 2.25rem;
+	position: relative;
+	width: 100%;
+	caret-color: rgb(156, 77, 157);
+
+	&::placeholder {
+		color: rgb(163, 163, 163);
+	}
+`;

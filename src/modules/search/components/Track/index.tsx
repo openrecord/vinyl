@@ -23,6 +23,11 @@ interface $Props {
 	soundcloud?: boolean;
 }
 
+interface $StyledResultProps {
+	youtube?: boolean;
+	soundcloud?: boolean;
+}
+
 export default function Track({
 	search,
 	thumbnail,
@@ -46,26 +51,25 @@ export default function Track({
 				) : (
 					<NoArtwork />
 				)}
-				<PlayBackground>
-					<IconContainer>
-						{search ? (
-							<AddPlus />
-						) : (
-							<>
-								{isCurrentSong && <Speaker src={speaker} />}
-								<PlayPause play={!playing || !isCurrentSong} />
-							</>
-						)}
-					</IconContainer>
-				</PlayBackground>
+				{!search && (
+					<PlayBackground>
+						<IconContainer>
+							{isCurrentSong && <Speaker src={speaker} />}
+							<PlayPause play={!playing || !isCurrentSong} />
+						</IconContainer>
+					</PlayBackground>
+				)}
 			</ImageHolder>
-			<h5>{title}</h5>
-			{search && (
-				<SourceIcon>
-					<img src={soundcloud ? scIcon : ytIcon} />
-				</SourceIcon>
-			)}
-			{!search && !!deleteTrack && <Options deleteTrack={deleteTrack} />}
+			<SongInfo>
+				<h5>{title}</h5>
+				<Group>
+					<Source>
+						<img src={soundcloud ? scIcon : ytIcon} />
+					</Source>
+					{search && <AddSong>Add</AddSong>}
+					{!search && !!deleteTrack && <Options deleteTrack={deleteTrack} />}
+				</Group>
+			</SongInfo>
 		</StyledResult>
 	);
 }
@@ -104,52 +108,6 @@ const Speaker = styled.img`
 	}
 `;
 
-const AddPlus = styled.span`
-	height: 1.5rem;
-	left: 50%;
-	opacity: 0;
-	position: absolute;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	width: 1.5rem;
-
-	@media ${device.small} {
-		height: 1rem;
-		width: 1rem;
-	}
-
-	&:before {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		width: 0.25rem;
-		transform: translateX(-50%);
-
-		@media ${device.small} {
-			height: 1rem;
-			width: 0.165rem;
-		}
-	}
-
-	&:after {
-		background: white;
-		content: '';
-		height: 1.5rem;
-		left: 50%;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%, -50%) rotate(90deg);
-		width: 0.25rem;
-
-		@media ${device.small} {
-			height: 1rem;
-			width: 0.165rem;
-		}
-	}
-`;
-
 const ImageHolder = styled.div`
 	display: inline-block;
 	position: relative;
@@ -185,29 +143,56 @@ const NoArtwork = styled.div`
 	width: 3rem;
 `;
 
-const SourceIcon = styled.div`
+const SongInfo = styled.div`
 	display: flex;
-	margin-left: auto;
-	margin-right: 0.5rem;
-	opacity: 0.3;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+`;
+
+const Group = styled.div`
+	align-items: center;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: row;
+`;
+
+const Source = styled.div`
 	img {
+		opacity: 0.2;
 		align-content: center;
+	}
+`;
+
+const AddSong = styled.button`
+	background: rgb(104, 104, 104);
+	border-radius: 1rem;
+	box-sizing: content-box;
+	font-size: 0.875rem;
+	color: white;
+	height: 1rem;
+	margin: 0 0.5rem 0 0.75rem;
+	padding: 0.25rem 0.75rem;
+	cursor: pointer;
+
+	&:hover {
+		background: #9c4d9d;
 	}
 `;
 
 const StyledResult = styled.div`
 	display: flex;
+	justify-content: flex-start;
 	align-items: center;
 	cursor: pointer;
-	padding: 0.75rem;
+	padding: 0.75rem 0.25rem 0.75rem 0.75rem;
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,
-	:hover,
-	:focus {
-		background: rgb(40, 40, 40);
+	:hover {
+		background: rgb(32, 32, 32);
 
-		${PlayBackground}, ${AddPlus} {
+		${PlayBackground} {
 			opacity: 1;
 		}
 	}
@@ -231,19 +216,19 @@ const StyledResult = styled.div`
 		}
 
 		.options {
-			opacity: 0.8;
+			opacity: 0.5;
 		}
 	}
 
 	:focus {
-		outline: 1px solid rgb(80, 80, 80);
+		outline: none;
 	}
 
 	h5 {
 		overflow: hidden;
 		color: rgba(255, 255, 255, 0.8);
 		display: -webkit-box;
-		margin-right: 0.5rem;
+		margin: 0 1rem 0.25rem 0;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		transition: color 0.1s linear;

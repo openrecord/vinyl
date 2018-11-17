@@ -51,7 +51,8 @@ const StyledPlaylist = styled.div`
 	display: block;
 	max-width: 75rem;
 	padding: 1.25rem 0.75rem 0.75rem 0.75rem;
-	width: 40%;
+	min-width: 22.5rem;
+	width: 30%;
 	transition: all 0.1s;
 
 	@media ${device.small} {

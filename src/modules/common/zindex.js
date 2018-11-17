@@ -2,6 +2,8 @@ const baseZIndexList = [
 	0,
 	'add-container',
 	'search-background',
+	`search-holder`,
+	'search-icon',
 	'search-results',
 	'toast',
 	'player-expanded',
