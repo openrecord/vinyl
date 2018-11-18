@@ -90,14 +90,16 @@ export default function Controls({
 }
 
 const ControlsOuter = styled.div`
-	position: absolute;
-	bottom: 0;
+	position: relative;
+	padding-top: 56.25%;
 	width: 100%;
 `;
 
 const ControlsHolder = styled.div`
 	position: relative;
 	width: 100%;
+	top: -1.35rem;
+	transform: translateY(50%);
 	z-index: ${zindex('controls')};
 `;
 
@@ -126,7 +128,7 @@ const Title = styled.h5`
 	font-size: 0.845rem;
 	font-size: 1rem;
 	text-align: center;
-	margin: 1rem 0;
+	margin: 0.5rem 0 1rem 0;
 `;
 
 const RightCenter = styled.div`

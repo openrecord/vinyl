@@ -10,6 +10,8 @@ const baseZIndexList = [
 	'controls',
 	'iframeblocker',
 	'player',
+	'slider-track',
+	'slider-handle',
 	'nav'
 ];
 

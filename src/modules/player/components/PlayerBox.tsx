@@ -29,18 +29,19 @@ export default function PlayerBox({currentlyPlaying, expanded, ...props}: $Props
 		>
 			<Positioning>
 				<IFrameBlocker />
-
-				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-					<PlayerHolder>
-						{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
-							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-						) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
-							<NoArtwork expanded={expanded} />
-						) : null}
-						<Player currentlyPlaying={currentlyPlaying} {...props} />
-					</PlayerHolder>
+				<ActiveMediaBox>
+					<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
+						<PlayerHolder>
+							{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
+								<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+							) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
+								<NoArtwork expanded={expanded} />
+							) : null}
+							<Player currentlyPlaying={currentlyPlaying} {...props} />
+						</PlayerHolder>
+					</SizingHack>
 					<ControlsContainer />
-				</SizingHack>
+				</ActiveMediaBox>
 			</Positioning>
 		</VelocityComponent>
 	);
@@ -94,7 +95,10 @@ const IFrameBlocker = styled.div`
 
 const SoundCloudArt = styled.img`
 	height: 100%;
+	position: absolute;
 	width: 56.25%;
+	left: 50%;
+	transform: translateX(-50%);
 
 	${(props: $IsExpanded) =>
 		props.expanded
@@ -107,15 +111,16 @@ const SoundCloudArt = styled.img`
 					max-width: 40rem;
 					max-height: 40rem;
 			  `
-			: css`
-					float: right;
-			  `};
+			: css``};
 `;
 
 const NoArtwork = styled.div`
 	background-image: linear-gradient(135deg, #846170, #e6846e);
 	height: 100%;
+	position: absolute;
 	width: 56.25%;
+	left: 50%;
+	transform: translateX(-50%);
 
 	${(props: $IsExpanded) =>
 		props.expanded
@@ -128,27 +133,28 @@ const NoArtwork = styled.div`
 					max-width: 40rem;
 					max-height: 40rem;
 			  `
-			: css`
-					float: right;
-			  `};
+			: css``};
+`;
+
+const ActiveMediaBox = styled.div`
+	display: flex;
+	flex-direciton: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 `;
 
 const SizingHack = styled.div`
 	height: 0;
 	transition: all linear 0.3s;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	padding-bottom: 0;
 	position: relative;
 	width: 100%;
 	transform: none;
-	padding-bottom: calc(50.5% + 5rem);
-	position: relative;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	[data-style-id='react-player'] {
-		position: absolute;
-	}
+	padding-bottom: 56.25%;
+	position: absolute;
 
 	/* For hiding SC Embeds in favor of Thumbnails*/
 	${(props: $IsSoundCloud & $IsExpanded) =>
@@ -162,7 +168,11 @@ const SizingHack = styled.div`
 
 const PlayerHolder = styled.div`
 	overflow: hidden;
-	padding-bottom: 50.5%;
+	padding-bottom: 56.25%;
 	height: 0;
 	position: relative;
+
+	${Player} {
+		position: absolute;
+	}
 `;
