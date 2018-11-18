@@ -76,6 +76,7 @@ const SearchHolder = styled.div`
 		button {
 			display: ${(props: $SearchHolderProps) =>
 				props.isSearchOpen ? 'inline-block !important' : 'none'};
+			height: auto !important;
 		}
 	}
 `;
@@ -93,7 +94,6 @@ const SearchIcon = styled.img`
 const CloseButton = styled.button`
 	padding-right: 1rem;
 	cursor: pointer;
-	height: auto !important;
 	opacity: 0.5;
 
 	img {

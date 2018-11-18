@@ -38,7 +38,6 @@ export default function Controls({
 				playNext={playNext}
 				playPrev={playPrev}
 			/>
-			<Slider played={played} duration={duration} setPlayed={setPlayed} />
 		</MediaControls>
 	);
 
@@ -49,17 +48,16 @@ export default function Controls({
 	);
 
 	const desktop = (
-		<Footer>
-			<Row transparent={expanded}>
-				{title}
-				{controls}
-				{expandButton}
-			</Row>
-		</Footer>
+		<ControlsHolder>
+			<Slider played={played} duration={duration} setPlayed={setPlayed} />
+			{title}
+			{controls}
+			<Row transparent={expanded}>{expandButton}</Row>
+		</ControlsHolder>
 	);
 
 	const mobile = (
-		<Footer>
+		<ControlsHolder>
 			{currentlyPlaying && (
 				<Row transparent={expanded} onClick={toggleExpanded}>
 					{title}
@@ -67,7 +65,7 @@ export default function Controls({
 				</Row>
 			)}
 			<Row>{controls}</Row>
-		</Footer>
+		</ControlsHolder>
 	);
 
 	return (
@@ -77,43 +75,40 @@ export default function Controls({
 			toggleExpanded={toggleExpanded}
 			toggleSearch={toggleSearch}
 		>
-			<VelocityTransitionGroup
-				enter={{animation: animations.slideUpExpand.in, duration: 400}}
-				leave={{animation: animations.slideUpExpand.out}}
-			>
-				{currentlyPlaying && (
-					<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-				)}
-			</VelocityTransitionGroup>
+			<ControlsOuter>
+				<VelocityTransitionGroup
+					enter={{animation: animations.slideUpExpand.in, duration: 300}}
+					leave={{animation: animations.slideUpExpand.out}}
+				>
+					{currentlyPlaying && (
+						<MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+					)}
+				</VelocityTransitionGroup>
+			</ControlsOuter>
 		</KeyboardControls>
 	);
 }
 
-const Footer = styled.div`
-	position: fixed;
+const ControlsOuter = styled.div`
+	position: absolute;
 	bottom: 0;
 	width: 100%;
+`;
+
+const ControlsHolder = styled.div`
+	position: relative;
+	width: 100%;
 	z-index: ${zindex('controls')};
-	@media ${device.small} {
-		height: 9rem;
-	}
 `;
 
 const Row = styled.div`
-	height: ${FOOTER_HEIGHT_DESKTOP};
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: ${props => !props.transparent && 'rgb(36, 36, 36)'};
-	border-top: 0.0625rem solid rgb(64, 64, 64);
 	box-sizing: border-box;
 
 	:first-child {
 		border-top: none;
-	}
-
-	@media ${device.small} {
-		height: ${FOOTER_HEIGHT_MOBILE};
 	}
 `;
 
@@ -126,33 +121,12 @@ const MediaControls = styled.div`
 `;
 
 const Title = styled.h5`
-	position: absolute;
-	left: 1.5rem;
-	top: 50%;
-	transform: translateY(-50%);
-	color: rgb(233, 233, 233);
-	max-width: 25%;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-
-	@media ${device.small} {
-		position: static;
-		transform: none;
-		margin-right: auto;
-		margin-left: 0.5rem;
-		max-width: 60%;
-		font-size: 0.845rem;
-
-		${props =>
-			props.centered &&
-			css`
-				margin: auto;
-				font-size: 1rem;
-				padding: 0 0.75rem;
-				max-width: 100%;
-			`};
-	}
+	color: white;
+	position: static;
+	font-size: 0.845rem;
+	font-size: 1rem;
+	text-align: center;
+	margin: 1rem 0;
 `;
 
 const RightCenter = styled.div`

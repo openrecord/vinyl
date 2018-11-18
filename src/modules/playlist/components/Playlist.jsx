@@ -48,7 +48,6 @@ const SearchResultsTarget = styled.div`
 	position: relative;
 `;
 const StyledPlaylist = styled.div`
-	display: block;
 	max-width: 75rem;
 	padding: 1.25rem 0.75rem 0.75rem 0.75rem;
 	min-width: 22.5rem;

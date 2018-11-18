@@ -51,6 +51,9 @@ export default function Queue({
 
 const QueueList = styled.div`
 	margin-bottom: 3.5rem;
+	overflow: hidden;
+	overflow-y: scroll;
+	height: calc(100vh - 9.375rem);
 
 	@media ${device.small} {
 		margin-bottom: 10.25rem;

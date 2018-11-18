@@ -4,9 +4,9 @@ import {VelocityComponent} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
 import zindex from '../../common/zindex';
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
 import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
+import ControlsContainer from '../../controls/components/ControlsContainer';
 
 interface $Props {
 	currentlyPlaying: $Track | null;
@@ -15,13 +15,7 @@ interface $Props {
 	togglePlaying(): void;
 }
 
-export default function PlayerBox({
-	currentlyPlaying,
-	expanded,
-	toggleExpanded,
-	togglePlaying,
-	...props
-}: $Props & $PlayerProps) {
+export default function PlayerBox({currentlyPlaying, expanded, ...props}: $Props & $PlayerProps) {
 	if (!currentlyPlaying) {
 		return null;
 	}
@@ -33,15 +27,19 @@ export default function PlayerBox({
 			delay={20}
 			duration={100}
 		>
-			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
+			<Positioning>
 				<IFrameBlocker />
+
 				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-					{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
-						<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-					) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
-						<NoArtwork expanded={expanded} />
-					) : null}
-					<Player currentlyPlaying={currentlyPlaying} {...props} />
+					<PlayerHolder>
+						{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
+							<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+						) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
+							<NoArtwork expanded={expanded} />
+						) : null}
+						<Player currentlyPlaying={currentlyPlaying} {...props} />
+					</PlayerHolder>
+					<ControlsContainer />
 				</SizingHack>
 			</Positioning>
 		</VelocityComponent>
@@ -68,42 +66,24 @@ interface $IsSoundCloud {
 }
 
 const Positioning = styled.div`
-	position: fixed;
-	bottom: 0;
-	right: 0;
 	overflow: hidden;
 	transition: all linear 0.3s;
-	background-color: rgb(25, 25, 25);
+	background: none !important;
 
 	[data-style-id='react-player'] > div {
 		height: 250% !important;
 		transform: translateY(-30%);
 	}
 
-	${(props: $IsExpanded) =>
-		props.expanded
-			? css`
-					width: 100%;
-					height: 100%;
-					z-index: ${zindex('player-expanded')};
-			  `
-			: css`
-					z-index: ${zindex('player')};
-					height: ${FOOTER_HEIGHT_DESKTOP};
-					width: 8.875rem;
-					overflow: hidden;
-
-					@media ${device.small} {
-						height: ${FOOTER_HEIGHT_MOBILE};
-						bottom: ${FOOTER_HEIGHT_MOBILE};
-					}
-			  `};
+	z-index: ${zindex('player')};
+	width: calc(70% - 1.5rem);
 `;
 
 const IFrameBlocker = styled.div`
 	background: rgba(0, 0, 0, 0);
 	cursor: pointer;
 	position: absolute;
+	display: none;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -154,7 +134,21 @@ const NoArtwork = styled.div`
 `;
 
 const SizingHack = styled.div`
+	height: 0;
 	transition: all linear 0.3s;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding-bottom: 0;
+	position: relative;
+	width: 100%;
+	transform: none;
+	padding-bottom: calc(50.5% + 5rem);
+	position: relative;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	[data-style-id='react-player'] {
+		position: absolute;
+	}
 
 	/* For hiding SC Embeds in favor of Thumbnails*/
 	${(props: $IsSoundCloud & $IsExpanded) =>
@@ -163,31 +157,12 @@ const SizingHack = styled.div`
 			${Player} {
 				display: none;
 			}
-		`} ${props =>
-		props.expanded
-			? css`
-					padding-bottom: 50.5%;
-					position: relative;
-					overflow: hidden;
-					left: 50%;
-					top: 50%;
-					transform: translate(-50%, -50%);
+		`};
+`;
 
-					[data-style-id='react-player'] {
-						position: absolute;
-					}
-
-					@media ${device.small} {
-						width: 100%;
-					}
-			  `
-			: css`
-					height: ${FOOTER_HEIGHT_DESKTOP};
-					padding-bottom: 0;
-					position: relative;
-					width: 100%;
-					left: 0;
-					top: 0;
-					transform: none;
-			  `};
+const PlayerHolder = styled.div`
+	overflow: hidden;
+	padding-bottom: 50.5%;
+	height: 0;
+	position: relative;
 `;
