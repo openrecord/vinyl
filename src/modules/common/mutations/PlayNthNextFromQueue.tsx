@@ -2,14 +2,14 @@ import deepmerge from 'deepmerge';
 import gql from 'graphql-tag';
 import * as _ from 'lodash';
 import * as React from 'react';
-import {Query} from 'react-apollo';
-import {has} from 'shades';
+import { Query } from 'react-apollo';
+import { has } from 'shades';
 
-import {$Track} from '../../search/components/types';
+import { $Track } from '../../search/components/types';
 import adapt from '../components/Adapt';
 import WithPlaylistId from '../components/WithPlaylistId';
 import TrackFragments from '../fragments/TrackFragments';
-import {modulo, nullToUndefined} from '../utils';
+import { modulo, nullToUndefined } from '../utils';
 import LocalUpdatePlaying from './LocalUpdatePlaying';
 import UpdatePlaying from './UpdatePlaying';
 

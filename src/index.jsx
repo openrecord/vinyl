@@ -1,12 +1,13 @@
 import './styles/boot.scss';
 
 import * as React from 'react';
-import {ApolloProvider} from 'react-apollo';
-import {ApolloProvider as ApolloHooksProvider} from 'react-apollo-hooks';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import * as ReactDOM from 'react-dom';
 
 import client from './modules/apollo';
 import App from './modules/common/App';
+import StoreProvider from './modules/store';
 
 // -------------------
 // Load the Redux App
@@ -17,7 +18,9 @@ function render(App) {
 	ReactDOM.render(
 		<ApolloProvider client={client}>
 			<ApolloHooksProvider client={client}>
-				<App />
+				<StoreProvider>
+					<App />
+				</StoreProvider>
 			</ApolloHooksProvider>
 		</ApolloProvider>,
 		MOUNT_NODE
