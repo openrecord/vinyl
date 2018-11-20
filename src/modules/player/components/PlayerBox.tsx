@@ -1,15 +1,15 @@
 import * as React from 'react';
-import styled, {css} from 'styled-components';
-import {VelocityComponent} from 'velocity-react';
+import styled, { css } from 'styled-components';
+import { VelocityComponent } from 'velocity-react';
 
-import {device} from '../../../styles/utilities/device';
+import { device } from '../../../styles/utilities/device';
 import zindex from '../../common/zindex';
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
-import {$Track} from '../../search/components/types';
-import Player, {$PlayerProps} from './Player';
+import { FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE } from '../../controls/components/constants';
+import { $Track } from '../../search/components/types';
+import Player, { $PlayerProps } from './Player';
 
 interface $Props {
-	currentlyPlaying: $Track | null;
+	currentlyPlaying: $Track | undefined;
 	expanded: boolean;
 	toggleExpanded(): void;
 	togglePlaying(): void;
@@ -41,7 +41,7 @@ export default function PlayerBox({
 					) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
 						<NoArtwork expanded={expanded} />
 					) : null}
-					<Player currentlyPlaying={currentlyPlaying} {...props} />
+					<Player currentlyPlaying={currentlyPlaying!} {...props} />
 				</SizingHack>
 			</Positioning>
 		</VelocityComponent>

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
-import {find, has} from 'shades';
+import { find, has } from 'shades';
 import styled from 'styled-components';
 
-import {$Track} from '../../search/components/types';
+import { $Track } from '../../search/components/types';
 
 export interface $PlayerProps {
 	played: number;
 	setPlayed(played: number): void;
 	duration: number;
 	setDuration(duration: number): void;
-	currentlyPlaying: $Track | null;
+	currentlyPlaying: $Track | undefined;
 	playing: boolean;
 	playNext(options: {local: boolean}): void;
 	className?: string;

@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
-import {OnSubscriptionDataOptions, Subscription} from 'react-apollo';
+import { OnSubscriptionDataOptions, Subscription } from 'react-apollo';
 
 import adapt from '../../common/components/Adapt';
 import TrackFragments from '../../common/fragments/TrackFragments';
 import LocalTogglePlaying from '../../common/mutations/LocalTogglePlaying';
 import LocalUpdatePlaying from '../../common/mutations/LocalUpdatePlaying';
-import {$Track} from '../../search/components/types';
+import { $Track } from '../../search/components/types';
 
 const ON_REMOTE_CONTROL = gql`
 	subscription OnRemoteControl($playlist: String!) {
@@ -58,7 +58,7 @@ const handleRemoteControl = ({
 
 interface $Props {
 	playlist: string;
-	currentlyPlaying: $Track | null;
+	currentlyPlaying: $Track | undefined;
 	live: boolean;
 	children(): JSX.Element;
 }
