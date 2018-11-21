@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { useTogglePlaying } from '../../common/mutations/TogglePlaying';
+import {useTogglePlaying} from '../../common/mutations/TogglePlaying';
 import useSkipControls from '../../common/mutations/useSkipControls';
-import { useStore } from '../../store';
+import {useStore} from '../../store';
 import Controls from './Controls';
 
 export default function ControlsContainer() {
@@ -28,7 +28,7 @@ export default function ControlsContainer() {
 			togglePlaying={togglePlaying}
 			expanded={expanded}
 			toggleExpanded={playerToggle('expanded')}
-			toggleSearch={searchToggle('isSearchOpen')}
+			toggleSearch={searchToggle('isOpen')}
 			playNext={playNext}
 			playPrev={playPrev}
 			setPlayed={setter('played')}

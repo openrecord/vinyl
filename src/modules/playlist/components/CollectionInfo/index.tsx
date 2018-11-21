@@ -15,7 +15,7 @@ const link = require('./images/copy-link.svg');
 
 interface $Props {
 	playlist: string;
-	isSearchOpen: boolean;
+	isOpen: boolean;
 	toggleSearch: (arg?: boolean) => void;
 	toggleLive: (arg?: boolean) => void;
 	trackCount: number;
@@ -25,7 +25,7 @@ interface $Props {
 export default function CollectionInfo({
 	playlist,
 	toggleSearch,
-	isSearchOpen,
+	isOpen,
 	trackCount,
 	toggleLive,
 	live
@@ -43,13 +43,13 @@ export default function CollectionInfo({
 						<img src={link} />
 					</PlaylistLink>
 				</CopyToClipboard>
-				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
+				<AddSong onClick={toggleSearch} isOpen={isOpen} />
 			</Stack>
 			<Stack>
 				<Button active={live} onClick={() => toggleLive()}>
 					*LIVE
 				</Button>
-				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
+				<Message isOpen={isOpen} trackCount={trackCount} />
 			</Stack>
 		</StyledCollectionInfo>
 	);
@@ -68,8 +68,8 @@ export default function CollectionInfo({
 				</Button>
 			</Stack>
 			<Stack>
-				<AddSong onClick={toggleSearch} isSearchOpen={isSearchOpen} />
-				<Message isSearchOpen={isSearchOpen} trackCount={trackCount} />
+				<AddSong onClick={toggleSearch} isOpen={isOpen} />
+				<Message isOpen={isOpen} trackCount={trackCount} />
 			</Stack>
 		</StyledCollectionInfo>
 	);

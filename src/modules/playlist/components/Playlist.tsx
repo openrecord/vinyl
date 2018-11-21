@@ -1,8 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { VelocityTransitionGroup } from 'velocity-react';
+import {VelocityTransitionGroup} from 'velocity-react';
 
-import { device } from '../../../styles/utilities/device';
+import {device} from '../../../styles/utilities/device';
+import ControlsContainer from '../../controls/components/ControlsContainer';
+import PlayerContainer from '../../player/components/PlayerContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
 import CollectionInfo from './CollectionInfo';
@@ -11,7 +13,7 @@ import Record from './Record';
 interface $Props {
 	createPlaylist(): void;
 	playlist: string;
-	isSearchOpen: boolean;
+	isOpen: boolean;
 	toggleLive(value?: boolean): void;
 	toggleSearch(value?: boolean): void;
 	trackCount: number;
@@ -24,7 +26,7 @@ export default class Playlist extends React.Component<$Props> {
 	}
 
 	render() {
-		const {playlist, isSearchOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
+		const {playlist, isOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
 		return (
 			<StyledPlaylist>
 				<VelocityTransitionGroup
@@ -40,7 +42,7 @@ export default class Playlist extends React.Component<$Props> {
 							toggleLive={toggleLive}
 							trackCount={trackCount}
 							playlist={playlist}
-							isSearchOpen={isSearchOpen}
+							isOpen={isOpen}
 						/>
 					</Header>
 				</VelocityTransitionGroup>
@@ -54,6 +56,8 @@ export default class Playlist extends React.Component<$Props> {
 					)}
 					<QueueContainer />
 				</SearchResultsTarget>
+				<ControlsContainer />
+				<PlayerContainer />
 			</StyledPlaylist>
 		);
 	}

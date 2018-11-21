@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import usePlaylistName from '../../common/hooks/usePlaylistName';
+import {useTogglePlaying} from '../../common/mutations/TogglePlaying';
 import useSkipControls from '../../common/mutations/useSkipControls';
-import { useStore } from '../../store';
+import {useStore} from '../../store';
 import OnRemoteControl from '../subscriptions/OnRemoteControl';
 import PlayerBox from './PlayerBox';
 
@@ -16,7 +17,10 @@ export default function PlayerContainer() {
 			player: {toggle, setter}
 		}
 	} = useStore();
+
 	const {playNext} = useSkipControls();
+	const togglePlaying = useTogglePlaying();
+
 	return (
 		<OnRemoteControl playlist={playlist} currentlyPlaying={currentlyPlaying} live={live}>
 			{() => (
@@ -27,7 +31,7 @@ export default function PlayerContainer() {
 					played={played}
 					duration={duration}
 					toggleExpanded={() => toggle('expanded')()}
-					togglePlaying={() => toggle('playing')()}
+					togglePlaying={togglePlaying}
 					playNext={playNext}
 					setPlayed={setter('played')}
 					setDuration={setter('duration')}

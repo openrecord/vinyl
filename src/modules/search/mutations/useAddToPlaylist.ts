@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
+import {useMutation} from 'react-apollo-hooks';
 
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
-import { $Nullable } from '../../common/utils';
-import { $Result, $TrackSource } from '../components/types';
+import {$Nullable} from '../../common/utils';
+import {$Result, $TrackSource} from '../components/types';
 
 export function variablesForAddToPlaylist(track: $Result, playlist: string): $TrackInput {
 	switch (track.__typename) {

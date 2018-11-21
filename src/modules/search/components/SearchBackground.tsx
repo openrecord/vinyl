@@ -7,18 +7,13 @@ import {VelocityTransitionGroup} from 'velocity-react';
 import zindex from '../../common/zindex';
 
 interface $Props {
-	isSearchOpen: boolean;
+	isOpen: boolean;
 	toggleSearch(isOpen?: boolean): any;
 	clearSearch(): any;
 	children: React.ReactNode;
 }
 
-export default function SearchBackground({
-	isSearchOpen,
-	toggleSearch,
-	clearSearch,
-	children
-}: $Props) {
+export default function SearchBackground({isOpen, toggleSearch, clearSearch, children}: $Props) {
 	const target = document.getElementById('search-results-target');
 	if (target) {
 		return ReactDOM.createPortal(
@@ -26,12 +21,8 @@ export default function SearchBackground({
 				enter={{animation: 'slideDown', delay: 200, duration: 700}}
 				leave="slideUp"
 			>
-				{isSearchOpen && (
-					<Background
-						isSearchOpen={isSearchOpen}
-						toggleSearch={toggleSearch}
-						clearSearch={clearSearch}
-					>
+				{isOpen && (
+					<Background isOpen={isOpen} toggleSearch={toggleSearch} clearSearch={clearSearch}>
 						{children}
 					</Background>
 				)}
@@ -44,7 +35,7 @@ export default function SearchBackground({
 }
 
 interface $OnClickOutsideBackgroundProps {
-	isSearchOpen: boolean;
+	isOpen: boolean;
 	toggleSearch(isOpen?: boolean): any;
 	clearSearch(): any;
 	children: React.ReactNode;
@@ -54,7 +45,7 @@ interface $OnClickOutsideBackgroundProps {
 
 class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackgroundProps> {
 	handleClickOutside({target}: React.MouseEvent<HTMLElement>) {
-		if (this.props.isSearchOpen && target instanceof HTMLElement) {
+		if (this.props.isOpen && target instanceof HTMLElement) {
 			if (!['show-hide-search', 'search-bar-target'].includes(target.dataset.id || '')) {
 				this.props.toggleSearch();
 			}

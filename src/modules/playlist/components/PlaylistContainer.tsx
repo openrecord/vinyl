@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
-import { useQuery } from 'react-apollo-hooks';
+import {useQuery} from 'react-apollo-hooks';
 
 import usePlaylistName from '../../common/hooks/usePlaylistName';
-import { useStore } from '../../store';
-import { useCreatePlaylist } from '../mutations/CreatePlaylist';
+import {useStore} from '../../store';
+import {useCreatePlaylist} from '../mutations/CreatePlaylist';
 import Playlist from './Playlist';
 
 const query = gql`
@@ -25,7 +25,7 @@ export default function PlaylistContainer() {
 	}
 	const {
 		state: {
-			search: {isSearchOpen},
+			search: {isOpen},
 			player: {live}
 		},
 		actions: {
@@ -45,8 +45,8 @@ export default function PlaylistContainer() {
 		<Playlist
 			live={live}
 			playlist={playlist}
-			isSearchOpen={isSearchOpen}
-			toggleSearch={searchToggler('isSearchOpen')}
+			isOpen={isOpen}
+			toggleSearch={searchToggler('isOpen')}
 			trackCount={tracks.length}
 			createPlaylist={createPlaylist}
 			toggleLive={playerToggler('live')}

@@ -1,17 +1,17 @@
-import {VelocityTransitionGroup} from 'velocity-react';
-import MediaQuery from 'react-responsive';
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
 import styled, {css} from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
 
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';
 import {device} from '../../../styles/utilities/device';
+import * as animations from '../../common/animations';
 import {ifElse} from '../../common/utils';
+import zindex from '../../common/zindex';
+import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';
 import ExpandButton from './ExpandButton';
+import KeyboardControls from './KeyboardControls';
 import Slider from './Slider';
 import SongControls from './SongControls';
-import zindex from '../../common/zindex';
-import KeyboardControls from './KeyboardControls';
-import * as animations from '../../common/animations';
 
 export default function Controls({
 	playing,
@@ -92,6 +92,7 @@ export default function Controls({
 const Footer = styled.div`
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	width: 100%;
 	z-index: ${zindex('controls')};
 	@media ${device.small} {

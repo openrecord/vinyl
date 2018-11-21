@@ -11,7 +11,7 @@ import {$Result} from './types';
 interface $Props {
 	query: string;
 	results: $Result[];
-	isSearchOpen: boolean;
+	isOpen: boolean;
 	enqueue(song: $Result): void;
 	setSearch(query: string): void;
 	toggleSearch(value?: boolean): void;
@@ -23,23 +23,19 @@ export default function Search({
 	setSearch,
 	results,
 	enqueue,
-	isSearchOpen,
+	isOpen,
 	toggleSearch,
 	clearSearch
 }: $Props) {
 	return (
-		<SearchHolder>
+		<SearchHolder isOpen={isOpen}>
 			<VelocityTransitionGroup
 				enter={{animation: animations.slideDownExpand.in, duration: 200}}
 				leave={animations.slideDownExpand.out}
 			>
-				{isSearchOpen && <SearchBar query={query} onChange={setSearch} />}
+				{isOpen && <SearchBar query={query} onChange={setSearch} />}
 			</VelocityTransitionGroup>
-			<SearchBackground
-				isSearchOpen={isSearchOpen}
-				toggleSearch={toggleSearch}
-				clearSearch={clearSearch}
-			>
+			<SearchBackground isOpen={isOpen} toggleSearch={toggleSearch} clearSearch={clearSearch}>
 				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
 			</SearchBackground>
 		</SearchHolder>
@@ -48,6 +44,6 @@ export default function Search({
 
 const SearchHolder = styled.div`
 	background: rgb(36, 36, 36);
-	box-shadow: ${(props: $Props) =>
-		props.isSearchOpen ? '	0px 4px 6px 4px rgba(0, 0, 0, 0.1)' : 'none'};
+	box-shadow: ${(props: {isOpen: boolean}) =>
+		props.isOpen ? '	0px 4px 6px 4px rgba(0, 0, 0, 0.1)' : 'none'};
 `;

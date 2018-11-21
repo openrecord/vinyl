@@ -1,33 +1,36 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 import Toast from '../../common/components/Toast';
 import usePlaylistName from '../../common/hooks/usePlaylistName';
-import { useStore } from '../../store';
-import useAddToPlaylist from '../mutations/AddToPlaylist';
+import {useStore} from '../../store';
+import useAddToPlaylist from '../mutations/useAddToPlaylist';
 import Search from './Search';
 import TrackSearchContainer from './TrackSearchContainer';
 
 export default function SearchContainer() {
 	const {
 		state: {
-			search: {query, isSearchOpen}
+			search: {query, isOpen}
 		},
 		actions: {
 			search: {toggle, setter}
 		}
 	} = useStore();
+
 	const addToPlaylist = useAddToPlaylist();
 	const playlist = usePlaylistName();
+
 	if (!playlist) {
 		return null;
 	}
+
 	return (
 		<TrackSearchContainer search={query}>
 			{results => (
 				<Search
-					isSearchOpen={isSearchOpen}
-					toggleSearch={toggle('isSearchOpen')}
+					isOpen={isOpen}
+					toggleSearch={toggle('isOpen')}
 					query={query}
 					results={results}
 					setSearch={setter('query')}
