@@ -1,23 +1,12 @@
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import adapt from '../../common/components/Adapt';
 import Toast from '../../common/components/Toast';
-import WithPlaylistId from '../../common/components/WithPlaylistId';
+import usePlaylistName from '../../common/hooks/usePlaylistName';
 import { useStore } from '../../store';
-import AddToPlaylist, { $TrackInput, variablesForAddToPlaylist } from '../mutations/AddToPlaylist';
+import useAddToPlaylist from '../mutations/AddToPlaylist';
 import Search from './Search';
 import TrackSearchContainer from './TrackSearchContainer';
-
-const Composed = adapt({
-	playlist: <WithPlaylistId />,
-	addToPlaylist: <AddToPlaylist simple />
-});
-
-interface $Props {
-	playlist: string;
-	addToPlaylist(track: $TrackInput): any;
-}
 
 export default function SearchContainer() {
 	const {
@@ -28,26 +17,27 @@ export default function SearchContainer() {
 			search: {toggle, setter}
 		}
 	} = useStore();
+	const addToPlaylist = useAddToPlaylist();
+	const playlist = usePlaylistName();
+	if (!playlist) {
+		return null;
+	}
 	return (
-		<Composed>
-			{({playlist, addToPlaylist}: $Props) => (
-				<TrackSearchContainer search={query}>
-					{results => (
-						<Search
-							isSearchOpen={isSearchOpen}
-							toggleSearch={toggle('isSearchOpen')}
-							query={query}
-							results={results}
-							setSearch={setter('query')}
-							enqueue={track => {
-								addToPlaylist(variablesForAddToPlaylist(track, playlist));
-								toast(<Toast message="Song Added!" />);
-							}}
-							clearSearch={() => setter('query')('')}
-						/>
-					)}
-				</TrackSearchContainer>
+		<TrackSearchContainer search={query}>
+			{results => (
+				<Search
+					isSearchOpen={isSearchOpen}
+					toggleSearch={toggle('isSearchOpen')}
+					query={query}
+					results={results}
+					setSearch={setter('query')}
+					enqueue={track => {
+						addToPlaylist(track, playlist);
+						toast(<Toast message="Song Added!" />);
+					}}
+					clearSearch={() => setter('query')('')}
+				/>
 			)}
-		</Composed>
+		</TrackSearchContainer>
 	);
 }

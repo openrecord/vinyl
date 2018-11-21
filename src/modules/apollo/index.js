@@ -1,20 +1,12 @@
-import {defaultDataIdFromObject, InMemoryCache} from 'apollo-cache-inmemory';
-import {ApolloClient} from 'apollo-client';
-import {ApolloLink, split} from 'apollo-link';
+import { defaultDataIdFromObject, InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { ApolloLink, split } from 'apollo-link';
 import DebounceLink from 'apollo-link-debounce';
-import {onError} from 'apollo-link-error';
-import {HttpLink} from 'apollo-link-http';
-import {RestLink} from 'apollo-link-rest';
-import {withClientState} from 'apollo-link-state';
-import {WebSocketLink} from 'apollo-link-ws';
-import {getMainDefinition} from 'apollo-utilities';
-
-import {player} from '../player/state';
-import * as playerMutations from '../player/state/mutations';
-import {queue} from '../queue/state';
-import * as queueMutations from '../queue/state/mutations';
-import {search} from '../search/state';
-import * as searchMutations from '../search/state/mutations';
+import { onError } from 'apollo-link-error';
+import { HttpLink } from 'apollo-link-http';
+import { RestLink } from 'apollo-link-rest';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
 
 const cache = new InMemoryCache({
 	dataIdFromObject: object => {
@@ -31,21 +23,6 @@ export default new ApolloClient({
 	addTypename: true,
 	link: ApolloLink.from([
 		onError(errorHandler),
-		withClientState({
-			defaults: {
-				queue,
-				search,
-				player
-			},
-			resolvers: {
-				Mutation: {
-					...queueMutations,
-					...searchMutations,
-					...playerMutations
-				}
-			},
-			cache
-		}),
 		new DebounceLink(250),
 		new RestLink({
 			endpoints: {
@@ -70,9 +47,9 @@ function errorHandler({graphQLErrors, networkError}) {
 		graphQLErrors.map(
 			({message, locations, path, operation = {operationName: 'not provided'}, response}) => {
 				console.error(
-					`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, operation: ${
-						operation.operationName
-					}`
+					`[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+						locations
+					)}, Path: ${path}, operation: ${operation.operationName}`
 				);
 				console.log('operation', operation);
 				console.log('response', response);

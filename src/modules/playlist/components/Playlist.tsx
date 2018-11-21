@@ -1,14 +1,24 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {VelocityTransitionGroup} from 'velocity-react';
+import { VelocityTransitionGroup } from 'velocity-react';
 
-import {device} from '../../../styles/utilities/device';
+import { device } from '../../../styles/utilities/device';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
 import CollectionInfo from './CollectionInfo';
 import Record from './Record';
 
-export default class Playlist extends React.Component {
+interface $Props {
+	createPlaylist(): void;
+	playlist: string;
+	isSearchOpen: boolean;
+	toggleLive(value?: boolean): void;
+	toggleSearch(value?: boolean): void;
+	trackCount: number;
+	live: boolean;
+}
+
+export default class Playlist extends React.Component<$Props> {
 	componentDidMount() {
 		this.props.createPlaylist();
 	}
@@ -34,7 +44,7 @@ export default class Playlist extends React.Component {
 						/>
 					</Header>
 				</VelocityTransitionGroup>
-				<SearchContainer isSearchOpen={isSearchOpen} />
+				<SearchContainer />
 				<SearchResultsTarget id="search-results-target">
 					{trackCount === 0 && (
 						<EmptyCollection>

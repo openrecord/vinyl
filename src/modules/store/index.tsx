@@ -86,16 +86,23 @@ export default class StoreProvider extends React.Component<$Props, $State> {
 			this.setState({[stateKey]: set(key)(value)(this.state[stateKey])});
 		},
 		toggle: (key: string) => (value?: boolean) => {
-			// @ts-ignore
-			this.setState({[stateKey]: set(key)(toggleOr(value))(this.state[stateKey])});
+			this.setState(
+				// @ts-ignore
+				{
+					[stateKey]: set(key)(toggleOr(value)((this.state as any)[stateKey][key] as boolean))(
+						(this.state as any)[stateKey]
+					)
+				}
+			);
 		}
 	});
 
-	actions: $WithDefaultActions<$Actions> = map(this.addDefaultActions)({
+	// @ts-ignore
+	actions = map(this.addDefaultActions)({
 		player: {},
 		search: {},
 		queue: {}
-	});
+	}) as $WithDefaultActions<$Actions>;
 
 	state = initialState;
 

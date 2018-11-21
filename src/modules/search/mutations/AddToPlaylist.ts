@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
+import { useMutation } from 'react-apollo-hooks';
 
-import {mutation, $Nullable} from '../../common/utils';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
-import {$Result, $TrackSource} from '../components/types';
+import { $Nullable } from '../../common/utils';
+import { $Result, $TrackSource } from '../components/types';
 
 export function variablesForAddToPlaylist(track: $Result, playlist: string): $TrackInput {
 	switch (track.__typename) {
@@ -22,8 +23,7 @@ export function variablesForAddToPlaylist(track: $Result, playlist: string): $Tr
 			};
 	}
 }
-
-export interface $TrackInput {
+interface $TrackInput {
 	url: string;
 	thumbnail: $Nullable<string>;
 	title: string;
@@ -31,7 +31,9 @@ export interface $TrackInput {
 	playlist: string;
 }
 
-export default mutation(gql`
+type $AddToPlaylist = (track: $Result, playlist: string) => void;
+
+const ADD_TO_PLAYLIST = gql`
 	mutation AddToPlaylist(
 		$url: String!
 		$thumbnail: String
@@ -59,4 +61,10 @@ export default mutation(gql`
 		}
 	}
 	${PlaylistFragments.all}
-`);
+`;
+
+export default function useAddToPlaylist(): $AddToPlaylist {
+	const addToPlaylist = useMutation(ADD_TO_PLAYLIST);
+	return (track, playlist) =>
+		addToPlaylist({variables: variablesForAddToPlaylist(track, playlist)});
+}

@@ -1,3 +1,4 @@
+declare module "shades" {
 // TypeScript Version: 3.1
 // prettier-ignore
 export type Functor<F, A, B> =
@@ -47615,3 +47616,4 @@ export function mod<
   t5: Traversal<T5>,
   t6: Traversal<T6>
 ): (f: (v: T6) => T6) => <S extends Collection<T1>>(s: S) => S;
+}

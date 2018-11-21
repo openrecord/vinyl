@@ -1,8 +1,7 @@
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {DocumentNode} from 'graphql';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { DocumentNode } from 'graphql';
 import * as React from 'react';
-import {Mutation, MutationProps} from 'react-apollo';
-import {map} from 'shades';
+import { map } from 'shades';
 
 export type $Nullable<T> = T | null | undefined;
 export type $Undef<T> = T | undefined;
@@ -63,10 +62,12 @@ export const nullToUndefined = <T,>(v: T): NullToUndefined<T> | undefined => {
 	}
 
 	if (Array.isArray(v)) {
+		// @ts-ignore: TODO
 		return map(nullToUndefined)(v);
 	}
 
 	if (typeof v === 'object') {
+		// @ts-ignore: TODO
 		return map(nullToUndefined)(v);
 	}
 
@@ -81,48 +82,6 @@ export const ifEnter = (f: () => any) => (event: React.KeyboardEvent) => {
 };
 
 export const ifElse = <S extends {}>(t: S, f: S) => <C extends {}>(c: C) => (c ? t : f);
-
-interface $MutationConfig<V> {
-	simple?: boolean;
-	thunk?: boolean;
-	toggle?: string | null;
-	variable?: string | null;
-	children?: (f: (input: V) => any) => React.ReactNode;
-}
-
-export const mutation = (mutationString: DocumentNode) => <Vars, Data = any>({
-	children = () => null,
-	simple = false,
-	thunk = false,
-	toggle = null,
-	variable = null,
-	...props
-}: $MutationConfig<Vars> & Partial<MutationProps<Data, any>>) => (
-	<Mutation {...props} mutation={mutationString}>
-		{(mutationFunc, args) => {
-			if (simple) {
-				return children(variables => mutationFunc({variables}), args);
-			}
-
-			if (variable) {
-				return children(value => mutationFunc({variables: {[variable]: value}}), args);
-			}
-
-			if (thunk) {
-				return children(() => mutationFunc(), args);
-			}
-
-			if (toggle) {
-				return children(maybeValue =>
-					mutationFunc({
-						variables: {[toggle]: typeof maybeValue === 'boolean' ? maybeValue : undefined}
-					})
-				);
-			}
-			return children(mutationFunc, args);
-		}}
-	</Mutation>
-);
 
 export const modulo = (n: number, m: number): number => ((n % m) + m) % m;
 
