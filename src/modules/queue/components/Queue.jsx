@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {VelocityTransitionGroup} from 'velocity-react';
-import styled from 'styled-components';
-
 import {has} from 'shades';
+import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
+import * as animations from '../../common/animations';
 import ArrowNavigation from '../../common/components/ArrowNavigation';
 import Track from '../../search/components/Track';
-import * as animations from '../../common/animations';
 
 export default function Queue({
 	tracks,

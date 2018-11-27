@@ -15,6 +15,7 @@ interface $Props {
 	search: boolean;
 	thumbnail: string | null;
 	title: string;
+	id: string;
 	onClick(): any;
 	deleteTrack?: () => any;
 	playing?: boolean;
@@ -27,6 +28,7 @@ export default function Track({
 	search,
 	thumbnail,
 	title,
+	id,
 	onClick,
 	deleteTrack,
 	playing = false,
@@ -41,7 +43,16 @@ export default function Track({
 			tabIndex={0}
 		>
 			<ImageHolder search={search}>
-				{thumbnail ? <Thumbnail src={thumbnail} search={search} /> : <NoArtwork />}
+				{thumbnail ? (
+					<Thumbnail
+						crossOrigin="anonymous"
+						src={getThumbnailUrl(thumbnail)}
+						data-id={id}
+						search={search}
+					/>
+				) : (
+					<NoArtwork />
+				)}
 				<PlayBackground>
 					<IconContainer>
 						{search ? (
@@ -294,3 +305,7 @@ const StyledResult = styled.div`
 		}
 	}
 `;
+
+function getThumbnailUrl(url: string): string {
+	return `https://cors-anywhere.herokuapp.com/` + url;
+}

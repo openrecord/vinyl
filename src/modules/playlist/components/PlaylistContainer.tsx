@@ -26,7 +26,7 @@ export default function PlaylistContainer() {
 	const {
 		state: {
 			search: {isOpen},
-			player: {live}
+			player: {live, currentlyPlaying}
 		},
 		actions: {
 			search: {toggle: searchToggler},
@@ -43,6 +43,7 @@ export default function PlaylistContainer() {
 
 	return (
 		<Playlist
+			currentlyPlaying={currentlyPlaying}
 			live={live}
 			playlist={playlist}
 			isOpen={isOpen}

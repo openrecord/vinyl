@@ -3,6 +3,7 @@ import {map, mod, set} from 'shades';
 
 import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
+import {$WithDefaultActions, $WithSetters} from './setters';
 
 const initialState: $State = {
 	player: {
@@ -43,26 +44,6 @@ interface $State {
 		isOpen: boolean;
 	};
 }
-
-type $WithSetters<S> = S & {
-	toggle: $Toggler<S>;
-	setter: $Setter<S>;
-};
-
-interface $Toggler<T> {
-	(key: keyof T): (value?: boolean) => void;
-}
-
-interface $Setter<T> {
-	<Key extends keyof T>(key: Key): (value: T[Key]) => void;
-}
-
-type $WithDefaultActions<State> = {
-	[P in keyof State]: State[P] & {
-		toggle: $Toggler<State[P]>;
-		setter: $Setter<State[P]>;
-	}
-};
 
 interface $Actions {
 	player: {};
@@ -121,7 +102,7 @@ export default class StoreProvider extends React.Component<$Props, $State> {
 			actions,
 			props: {children}
 		} = this;
-		const {Provider} = Store;
-		return <Provider value={{state, actions}}>{children}</Provider>;
+
+		return <Store.Provider value={{state, actions}}>{children}</Store.Provider>;
 	}
 }

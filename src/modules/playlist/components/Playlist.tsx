@@ -7,17 +7,20 @@ import ControlsContainer from '../../controls/components/ControlsContainer';
 import PlayerContainer from '../../player/components/PlayerContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
+import {$Track} from '../../search/components/types';
 import CollectionInfo from './CollectionInfo';
 import Record from './Record';
+import SetBackground from './SetBackground';
 
 interface $Props {
-	createPlaylist(): void;
+	currentlyPlaying: $Track | undefined;
 	playlist: string;
 	isOpen: boolean;
-	toggleLive(value?: boolean): void;
-	toggleSearch(value?: boolean): void;
 	trackCount: number;
 	live: boolean;
+	createPlaylist(): void;
+	toggleLive(value?: boolean): void;
+	toggleSearch(value?: boolean): void;
 }
 
 export default class Playlist extends React.Component<$Props> {
@@ -26,9 +29,19 @@ export default class Playlist extends React.Component<$Props> {
 	}
 
 	render() {
-		const {playlist, isOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
+		const {
+			currentlyPlaying,
+			playlist,
+			isOpen,
+			toggleSearch,
+			toggleLive,
+			trackCount,
+			live
+		} = this.props;
+
 		return (
 			<StyledPlaylist>
+				<SetBackground track={currentlyPlaying} />
 				<VelocityTransitionGroup
 					enter={{animation: 'fadeIn', display: 'flex'}}
 					leave={{animation: 'fadeOut', display: 'flex'}}
