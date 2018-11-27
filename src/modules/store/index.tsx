@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {map, set} from 'shades';
+import {map, mod, set} from 'shades';
 
 import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
@@ -44,8 +44,19 @@ interface $State {
 	};
 }
 
-type $Toggler<T> = (key: keyof T) => (value?: boolean) => void;
-type $Setter<T> = <Key extends keyof T>(key: Key) => (value: T[Key]) => void;
+type $WithSetters<S> = S & {
+	toggle: $Toggler<S>;
+	setter: $Setter<S>;
+};
+
+interface $Toggler<T> {
+	(key: keyof T): (value?: boolean) => void;
+}
+
+interface $Setter<T> {
+	<Key extends keyof T>(key: Key): (value: T[Key]) => void;
+}
+
 type $WithDefaultActions<State> = {
 	[P in keyof State]: State[P] & {
 		toggle: $Toggler<State[P]>;
@@ -79,30 +90,28 @@ interface $Props {
 }
 
 export default class StoreProvider extends React.Component<$Props, $State> {
-	addDefaultActions = (actions: object, stateKey: string): any => ({
+	addDefaultActions = <Key extends keyof $State>(
+		actions: $Actions[Key],
+		stateKey: Key
+	): $WithSetters<$Actions[Key]> => ({
 		...actions,
-		setter: (key: string) => (value: any) => {
+		setter: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value: $State[Key][InnerKey]) =>
 			// @ts-ignore
-			this.setState({[stateKey]: set(key)(value)(this.state[stateKey])});
-		},
-		toggle: (key: string) => (value?: boolean) => {
-			this.setState(
-				// @ts-ignore
-				{
-					[stateKey]: set(key)(toggleOr(value)((this.state as any)[stateKey][key] as boolean))(
-						(this.state as any)[stateKey]
-					)
-				}
-			);
+			this.setState(set(stateKey, key)(value)),
+		toggle: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value?: boolean) => {
+			// @ts-ignore
+			this.setState(mod<Key, Key2>(stateKey, key)(toggleOr(value)));
 		}
 	});
 
-	// @ts-ignore
-	actions = map(this.addDefaultActions)({
+	_actions: $Actions = {
 		player: {},
 		search: {},
 		queue: {}
-	}) as $WithDefaultActions<$Actions>;
+	};
+
+	// @ts-ignore
+	actions = map(this.addDefaultActions)(this._actions) as $WithDefaultActions<$Actions>;
 
 	state = initialState;
 
