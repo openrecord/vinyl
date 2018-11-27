@@ -1,11 +1,10 @@
-import {Link} from 'react-router-dom';
 import * as React from 'react';
-import styled, {css} from 'styled-components';
-import {device} from '../../styles/utilities/device';
+import {Link} from 'react-router-dom';
+import styled from 'styled-components';
 
-import {ROUTES} from '../routes/routes';
+import {device} from '../../styles/utilities/device';
 import zindex from '../common/zindex';
-import ToggleExpanded from '../common/mutations/ToggleExpanded';
+import {ROUTES} from '../routes/routes';
 
 interface $Props {
 	expanded: boolean;

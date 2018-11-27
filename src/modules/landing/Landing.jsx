@@ -1,5 +1,6 @@
-import {withRouter} from 'react-router-dom';
 import * as React from 'react';
+import {withRouter} from 'react-router-dom';
+
 import {ifEnter} from '../common/utils';
 
 var rings = [];

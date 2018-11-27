@@ -1,12 +1,17 @@
-import MediaQuery from 'react-responsive';
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
 import styled from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
 import {ifElse} from '../../../common/utils';
 
-export default function Message({isSearchOpen, trackCount}) {
-	return isSearchOpen ? (
+interface $Props {
+	isOpen: boolean;
+	trackCount: number;
+}
+
+export default function Message({isOpen, trackCount}: $Props) {
+	return isOpen ? (
 		<MediaQuery query={device.medium}>
 			{ifElse(
 				<StyledMessage>Search YouTube and Soundcloud</StyledMessage>,

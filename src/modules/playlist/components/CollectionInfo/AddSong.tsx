@@ -4,13 +4,13 @@ import Button from './Button';
 
 interface $Props {
 	onClick: () => void;
-	isSearchOpen: boolean;
+	isOpen: boolean;
 }
 
-export default function AddSong({onClick, isSearchOpen}: $Props) {
+export default function AddSong({onClick, isOpen}: $Props) {
 	return (
 		<Button onClick={onClick} data-id="show-hide-search">
-			{isSearchOpen ? (
+			{isOpen ? (
 				'Hide Search'
 			) : (
 				<>

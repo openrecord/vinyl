@@ -1,29 +1,18 @@
-import * as React from 'react';
+import { $Track } from '../../search/components/types';
+import { useStore } from '../../store';
+import useCreateRemoteControl from './CreateRemoteControl';
 
-import {$Track} from '../../search/components/types';
-import CreateRemoteControl from './CreateRemoteControl';
-import LocalUpdatePlaying from './LocalUpdatePlaying';
+export default function useUpdatePlaying() {
+	const {
+		actions: {
+			player: {setter}
+		}
+	} = useStore();
 
-interface $Props {
-	children?(mutation: (song: $Track) => void): React.ReactNode;
-}
+	const createRemoteControl = useCreateRemoteControl();
 
-export default function UpdatePlaying({children}: $Props) {
-	return (
-		// @ts-ignore: type error to be resolved by typed-adopt
-		<LocalUpdatePlaying variable="track">
-			{(updatePlayingLocal: (song: $Track) => void) => (
-				// @ts-ignore: type error to be resolved by typed-adopt
-				<CreateRemoteControl variable="id" variables={{action: 'SET'}}>
-					{(setSong: (id: string) => void) =>
-						children &&
-						children(track => {
-							updatePlayingLocal(track);
-							setSong(track.id);
-						})
-					}
-				</CreateRemoteControl>
-			)}
-		</LocalUpdatePlaying>
-	);
+	return (track: $Track) => {
+		setter('currentlyPlaying')(track);
+		createRemoteControl({action: 'SET', id: track.id});
+	};
 }

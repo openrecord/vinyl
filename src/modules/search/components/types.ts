@@ -1,9 +1,10 @@
-import {$SoundCloudResult} from './SoundCloudQueryContainer';
-import {$YoutubeResult} from './YoutubeQueryContainer';
+import { $SoundCloudResult } from './SoundCloudQueryContainer';
+import { $YoutubeResult } from './YoutubeQueryContainer';
 
 export type $Result = $SoundCloudResult | $YoutubeResult;
 
 export type $TrackSource = 'YOUTUBE' | 'SOUNDCLOUD';
+
 export interface $Track {
 	id: string;
 	playlist: string;
