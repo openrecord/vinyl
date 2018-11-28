@@ -1,16 +1,18 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
-import { VelocityComponent } from 'velocity-react';
+import styled, {css} from 'styled-components';
 
-import { device } from '../../../styles/utilities/device';
+import {device} from '../../../styles/utilities/device';
+import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
-import { FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE } from '../../controls/components/constants';
-import { $Track } from '../../search/components/types';
-import Player, { $PlayerProps } from './Player';
+import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
+import {$Track} from '../../search/components/types';
+import {$Color} from '../../store';
+import Player, {$PlayerProps} from './Player';
 
 interface $Props {
 	currentlyPlaying: $Track | undefined;
 	expanded: boolean;
+	color: $Color;
 	toggleExpanded(): void;
 	togglePlaying(): void;
 }
@@ -19,6 +21,7 @@ export default function PlayerBox({
 	currentlyPlaying,
 	expanded,
 	toggleExpanded,
+	color,
 	togglePlaying,
 	...props
 }: $Props & $PlayerProps) {
@@ -28,23 +31,17 @@ export default function PlayerBox({
 
 	const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
 	return (
-		<VelocityComponent
-			animation={{backgroundColorAlpha: expanded ? 1 : 0}}
-			delay={20}
-			duration={100}
-		>
-			<Positioning expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
-				<IFrameBlocker />
-				<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-					{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
-						<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-					) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
-						<NoArtwork expanded={expanded} />
-					) : null}
-					<Player currentlyPlaying={currentlyPlaying!} {...props} />
-				</SizingHack>
-			</Positioning>
-		</VelocityComponent>
+		<Positioning bg={color} expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
+			<IFrameBlocker />
+			<SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
+				{isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
+					<SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
+				) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
+					<NoArtwork expanded={expanded} />
+				) : null}
+				<Player currentlyPlaying={currentlyPlaying!} {...props} />
+			</SizingHack>
+		</Positioning>
 	);
 }
 
@@ -57,6 +54,10 @@ function getTrackThumbnail(track: $Track) {
 		}
 	}
 	return '';
+}
+
+interface $HasColor {
+	bg: $Color;
 }
 
 interface $IsExpanded {
@@ -73,14 +74,15 @@ const Positioning = styled.div`
 	right: 0;
 	overflow: hidden;
 	transition: all linear 0.3s;
-	background-color: rgb(25, 25, 25);
+	background-color: ${(props: $IsExpanded & $HasColor) =>
+		props.expanded ? toRGBString(props.bg) : 'transparent'};
 
 	[data-style-id='react-player'] > div {
 		height: 250% !important;
 		transform: translateY(-30%);
 	}
 
-	${(props: $IsExpanded) =>
+	${props =>
 		props.expanded
 			? css`
 					width: 100%;
@@ -101,7 +103,6 @@ const Positioning = styled.div`
 `;
 
 const IFrameBlocker = styled.div`
-	background: rgba(0, 0, 0, 0);
 	cursor: pointer;
 	position: absolute;
 	bottom: 0;
@@ -156,14 +157,15 @@ const NoArtwork = styled.div`
 const SizingHack = styled.div`
 	transition: all linear 0.3s;
 
-	/* For hiding SC Embeds in favor of Thumbnails*/
 	${(props: $IsSoundCloud & $IsExpanded) =>
 		props.isSoundCloud &&
 		css`
 			${Player} {
 				display: none;
 			}
-		`} ${props =>
+		`};
+
+	${props =>
 		props.expanded
 			? css`
 					padding-bottom: 50.5%;

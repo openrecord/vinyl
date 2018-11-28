@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
-import { Subscription } from 'react-apollo';
-import { useQuery } from 'react-apollo-hooks';
-import { toast } from 'react-toastify';
+import {Subscription} from 'react-apollo';
+import {toast} from 'react-toastify';
 
 import Toast from '../../common/components/Toast';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 import usePlaylistName from '../../common/hooks/usePlaylistName';
 import useUpdatePlaying from '../../common/mutations/UpdatePlaying';
-import { $Track } from '../../search/components/types';
-import { useStore } from '../../store';
+import {useSimpleQuery} from '../../common/utils';
+import {$Track} from '../../search/components/types';
+import {useStore} from '../../store';
 import useDeleteTrack from '../mutations/DeleteTrack';
 import Queue from './Queue';
 
@@ -47,14 +47,12 @@ export default function QueueContainer() {
 	}
 
 	const {
-		data: {
-			playlist: {tracks}
-		}
-	} = useQuery<$QueryData>(query, {variables: {playlist}});
+		data: {playlist: {tracks} = {tracks: []}}
+	} = useSimpleQuery<$QueryData>(query, {playlist});
 
 	const {
 		state: {
-			player: {currentlyPlaying, playing}
+			player: {currentlyPlaying, playing, color}
 		},
 		actions: {
 			player: {toggle}
@@ -68,6 +66,7 @@ export default function QueueContainer() {
 		<Subscription subscription={ON_TRACK_ADDED} variables={{playlist}}>
 			{_ => (
 				<Queue
+					color={color}
 					tracks={tracks}
 					playing={playing}
 					togglePlaying={toggle('playing')}

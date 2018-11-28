@@ -1,10 +1,12 @@
 import classname from 'classnames';
+import Color from 'color';
 import * as React from 'react';
 import styled, {css} from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
 import PlayPause from '../../../common/components/PlayPause';
 import {ifEnter} from '../../../common/utils';
+import {$Color} from '../../../store';
 import Options from './Options';
 
 const speaker = require('../../../controls/components/images/speaker.svg');
@@ -22,6 +24,7 @@ interface $Props {
 	isCurrentSong?: boolean;
 	youtube?: boolean;
 	soundcloud?: boolean;
+	color?: $Color;
 }
 
 export default function Track({
@@ -33,7 +36,8 @@ export default function Track({
 	deleteTrack,
 	playing = false,
 	isCurrentSong = false,
-	soundcloud = false
+	soundcloud = false,
+	color
 }: $Props) {
 	return (
 		<StyledResult
@@ -41,6 +45,7 @@ export default function Track({
 			className={classname({'is-current-song': isCurrentSong})}
 			onKeyPress={ifEnter(onClick)}
 			tabIndex={0}
+			bgColor={color}
 		>
 			<ImageHolder search={search}>
 				{thumbnail ? (
@@ -247,6 +252,10 @@ const SourceIcon = styled.div`
 	}
 `;
 
+interface $StyledResultProps {
+	bgColor?: $Color;
+}
+
 const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
@@ -257,8 +266,13 @@ const StyledResult = styled.div`
 	&.is-current-song,
 	:hover,
 	:focus {
-		background: rgb(40, 40, 40);
-
+		background: ${(props: $StyledResultProps) =>
+			props.bgColor
+				? Color(props.bgColor)
+						.darken(0.33)
+						.rgb()
+						.string()
+				: 'rgb(40, 40, 40)'};
 		${PlayBackground}, ${AddPlus} {
 			opacity: 1;
 		}

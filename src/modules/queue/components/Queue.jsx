@@ -9,6 +9,7 @@ import ArrowNavigation from '../../common/components/ArrowNavigation';
 import Track from '../../search/components/Track';
 
 export default function Queue({
+	color,
 	tracks,
 	updatePlaying,
 	togglePlaying,
@@ -34,6 +35,7 @@ export default function Queue({
 					{tracks.map(track => (
 						<Track
 							{...track.info}
+							color={color}
 							key={track.id}
 							onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
 							deleteTrack={() => deleteTrack(track)}
