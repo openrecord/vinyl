@@ -11,7 +11,7 @@ export default function PlayerContainer() {
 	const playlist = usePlaylistName();
 	const {
 		state: {
-			player: {currentlyPlaying, playing, played, duration, expanded, live}
+			player: {currentlyPlaying, playing, played, duration, expanded, live, color}
 		},
 		actions: {
 			player: {toggle, setter}
@@ -25,6 +25,7 @@ export default function PlayerContainer() {
 		<OnRemoteControl playlist={playlist} currentlyPlaying={currentlyPlaying} live={live}>
 			{() => (
 				<PlayerBox
+					color={color}
 					expanded={expanded}
 					currentlyPlaying={currentlyPlaying}
 					playing={playing}

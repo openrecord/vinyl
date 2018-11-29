@@ -1,7 +1,9 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { DocumentNode } from 'graphql';
+import {DocumentNode} from 'graphql';
 import * as React from 'react';
-import { map } from 'shades';
+import {useQuery} from 'react-apollo-hooks';
+import {map} from 'shades';
+
+import {$Color} from '../store';
 
 export type $Nullable<T> = T | null | undefined;
 export type $Undef<T> = T | undefined;
@@ -28,50 +30,28 @@ export function ifNull<T>(value: T) {
 	return (maybeValue: $Nullable<T>): T => maybeValue || value;
 }
 
-type QLReducer<Vars, State> = (variables: Vars) => (old: State) => State;
-
-export const updateQL = (query: DocumentNode) => ({
-	with: <V, S>(reducer: QLReducer<V, S>) => (
-		_: any,
-		variables: V,
-		{cache}: {cache: InMemoryCache}
-	) => {
-		const prev = cache.readQuery<S>({query, variables});
-
-		cache.writeQuery({query, variables, data: reducer(variables)(prev)});
-		return null;
-	}
-});
-
 export function inspect<T>(value: T, ...args: any[]): T {
 	console.log(value, ...args);
 	return value;
 }
 
 // prettier-ignore
-type NullToUndefined<T> = 
-	T extends undefined ? undefined : 
-	T extends null ? undefined : 
-	T extends object ? {[P in keyof T]: NullToUndefined<T>}  :
-	T;
-
-// prettier-ignore
-export const nullToUndefined = <T,>(v: T): NullToUndefined<T> | undefined => {
+export const nullToUndefined = <T>(v: T): T => {
 	if (v === null || v === undefined) {
+		// @ts-ignore
 		return undefined;
 	}
 
 	if (Array.isArray(v)) {
-		// @ts-ignore: TODO
+		// @ts-ignore
 		return map(nullToUndefined)(v);
 	}
 
 	if (typeof v === 'object') {
-		// @ts-ignore: TODO
+		// @ts-ignore
 		return map(nullToUndefined)(v);
 	}
 
-	// @ts-ignore
 	return v;
 };
 
@@ -87,3 +67,10 @@ export const modulo = (n: number, m: number): number => ((n % m) + m) % m;
 
 export const toggleOr = (maybeValue: $Undef<boolean>) => (oldValue: boolean): boolean =>
 	typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
+
+export const toRGBString = ({r, g, b, a = 1}: $Color) => `rgba(${r}, ${g}, ${b}, ${a})`;
+export const toHexString = ({r, g, b, a = 1}: $Color) =>
+	`#(${r.toString(16)}, ${g.toString(16)}, ${b.toString(16)}, ${a.toString(16)})`;
+
+export const useSimpleQuery = <Data>(query: DocumentNode, variables?: any) =>
+	nullToUndefined(useQuery<Data>(query, {variables}));

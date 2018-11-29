@@ -6,28 +6,20 @@ import {device} from '../../styles/utilities/device';
 import zindex from '../common/zindex';
 import {ROUTES} from '../routes/routes';
 
-interface $Props {
-	expanded: boolean;
-}
-
 interface $StyledNavProps {
-	expanded: boolean;
 	landing: boolean;
 }
 
-export default function Nav({expanded}: $Props) {
+export default function Nav() {
 	return (
-		<StyledNav expanded={expanded} landing={location.pathname === ROUTES.LANDING}>
-			<Link to={ROUTES.LANDING} key={'home'}>
-				OPENRECORD
-			</Link>
+		<StyledNav landing={location.pathname === ROUTES.LANDING}>
+			<Link to={ROUTES.LANDING}>OPENRECORD</Link>
 		</StyledNav>
 	);
 }
 
 const StyledNav = styled.nav`
-	background: ${(props: $StyledNavProps) =>
-		props.expanded || props.landing ? 'transparent' : 'rgb(25,25,25)'};
+	background: 'transparent';
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;
@@ -53,6 +45,6 @@ const StyledNav = styled.nav`
 	}
 
 	@media ${device.small} {
-		display: ${props => (props.landing ? 'inherit' : 'none')};
+		display: ${(props: $StyledNavProps) => (props.landing ? 'inherit' : 'none')};
 	}
 `;

@@ -3,21 +3,24 @@ import styled from 'styled-components';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
+import {toRGBString} from '../../common/utils';
 import ControlsContainer from '../../controls/components/ControlsContainer';
 import PlayerContainer from '../../player/components/PlayerContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
+import {$Color} from '../../store';
 import CollectionInfo from './CollectionInfo';
 import Record from './Record';
 
 interface $Props {
-	createPlaylist(): void;
+	color: $Color;
 	playlist: string;
 	isOpen: boolean;
-	toggleLive(value?: boolean): void;
-	toggleSearch(value?: boolean): void;
 	trackCount: number;
 	live: boolean;
+	createPlaylist(): void;
+	toggleLive(value?: boolean): void;
+	toggleSearch(value?: boolean): void;
 }
 
 export default class Playlist extends React.Component<$Props> {
@@ -26,45 +29,55 @@ export default class Playlist extends React.Component<$Props> {
 	}
 
 	render() {
-		const {playlist, isOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
+		const {playlist, color, isOpen, toggleSearch, toggleLive, trackCount, live} = this.props;
+
 		return (
-			<StyledPlaylist>
-				<VelocityTransitionGroup
-					enter={{animation: 'fadeIn', display: 'flex'}}
-					leave={{animation: 'fadeOut', display: 'flex'}}
-					runOnMount
-				>
-					<Header>
-						<Record />
-						<CollectionInfo
-							live={live}
-							toggleSearch={toggleSearch}
-							toggleLive={toggleLive}
-							trackCount={trackCount}
-							playlist={playlist}
-							isOpen={isOpen}
-						/>
-					</Header>
-				</VelocityTransitionGroup>
-				<SearchContainer />
-				<SearchResultsTarget id="search-results-target">
-					{trackCount === 0 && (
-						<EmptyCollection>
-							<h2>This collection is currently empty</h2>
-							<h4>Click 'Add Song' button to start collecting</h4>
-						</EmptyCollection>
-					)}
-					<QueueContainer />
-				</SearchResultsTarget>
-				<ControlsContainer />
-				<PlayerContainer />
-			</StyledPlaylist>
+			<StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
+				<StyledPlaylist>
+					<VelocityTransitionGroup
+						enter={{animation: 'fadeIn', display: 'flex'}}
+						leave={{animation: 'fadeOut', display: 'flex'}}
+						runOnMount
+					>
+						<Header>
+							<Record />
+							<CollectionInfo
+								live={live}
+								toggleSearch={toggleSearch}
+								toggleLive={toggleLive}
+								trackCount={trackCount}
+								playlist={playlist}
+								isOpen={isOpen}
+							/>
+						</Header>
+					</VelocityTransitionGroup>
+					<SearchContainer />
+					<SearchResultsTarget id="search-results-target">
+						{trackCount === 0 && (
+							<EmptyCollection>
+								<h2>This collection is currently empty</h2>
+								<h4>Click 'Add Song' button to start collecting</h4>
+							</EmptyCollection>
+						)}
+						<QueueContainer />
+					</SearchResultsTarget>
+					<ControlsContainer />
+					<PlayerContainer />
+				</StyledPlaylist>
+			</StyledPlaylistBackground>
 		);
 	}
 }
+
+const StyledPlaylistBackground = styled.div`
+	transition: background-color 0.5s linear;
+	height: 100vh;
+`;
+
 const SearchResultsTarget = styled.div`
 	position: relative;
 `;
+
 const StyledPlaylist = styled.div`
 	display: block;
 	max-width: 75rem;
