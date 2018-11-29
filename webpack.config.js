@@ -6,19 +6,29 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
+const DEV = 0;
+const STAGING = 1;
+const PROD = 2;
+
 module.exports = (env, argv) => {
 	console.info('Building webpack...', {mode: argv.mode});
-	const isProduction = argv.mode === 'production';
+	const isDev = argv.mode != 'production';
+	const isStaging = process.argv.BRANCH === 'develop' || process.argv.PULL_REQUEST;
+	const stage = isDev ? DEV : isStaging ? STAGING : PROD;
 
 	let devtool, devServer, plugins, optimization;
 
 	//TODO: Potentially leverage node-config
 	const URLS = {
-		PROD: {
+		[PROD]: {
 			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
 		},
-		DEV: {
+		[STAGING]: {
+			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/staging',
+			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/staging'
+		},
+		[DEV]: {
 			HTTP: 'http://localhost:4466/',
 			WS: 'ws://localhost:4466/'
 		}
@@ -29,11 +39,11 @@ module.exports = (env, argv) => {
 		new ReactRootPlugin(), // create react root within generated html file
 		new CopyWebpackPlugin([{from: './public/_redirects', to: './'}]),
 		new webpack.DefinePlugin({
-			GRAPHQL_URI: JSON.stringify(isProduction ? URLS.PROD : URLS.DEV)
+			GRAPHQL_URI: JSON.stringify(URLS[stage])
 		})
 	];
 
-	if (isProduction) {
+	if (stage > DEV) {
 		plugins.push(
 			new UglifyJSPlugin(),
 			new MiniCssExtractPlugin(),
@@ -85,7 +95,7 @@ module.exports = (env, argv) => {
 				{
 					test: /\.s?css/,
 					use: [
-						isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
+						stage > DEV ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
 						{loader: 'css-loader', options: {importLoaders: 1}}, // translates CSS into CommonJS
 						'postcss-loader', // adds on vendor prefixes and adds css polyfills
 						'sass-loader' // compiles Sass to CSS
