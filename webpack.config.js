@@ -12,9 +12,9 @@ const PROD = 2;
 
 module.exports = (env, argv) => {
 	const isDev = argv.mode != 'production';
-	const isStaging = process.argv.BRANCH === 'develop' || process.argv.PULL_REQUEST;
+	const isStaging = process.env.BRANCH === 'develop' || process.env.PULL_REQUEST;
 	const stage = isDev ? DEV : isStaging ? STAGING : PROD;
-	console.info('Building webpack...', {mode: argv.mode}, process.argv, 'env', env, isStaging);
+	console.info('Building webpack...', {mode: argv.mode}, process.env, 'env', env, isStaging);
 
 	let devtool, devServer, plugins, optimization;
 
