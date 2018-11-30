@@ -14,7 +14,6 @@ module.exports = (env, argv) => {
 	const isDev = argv.mode != 'production';
 	const isStaging = process.env.BRANCH === 'develop' || process.env.PULL_REQUEST;
 	const stage = isDev ? DEV : isStaging ? STAGING : PROD;
-	console.info('Building webpack...', {mode: argv.mode}, process.env, 'env', env, isStaging);
 
 	let devtool, devServer, plugins, optimization;
 
@@ -25,11 +24,11 @@ module.exports = (env, argv) => {
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
 		},
 		[STAGING]: {
-			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/staging',
+			HTTP: 'https://develop--openrecord-api.netlify.com/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/staging'
 		},
 		[DEV]: {
-			HTTP: 'http://localhost:4466/',
+			HTTP: 'http://localhost:9000/.netlify/functions/graphql',
 			WS: 'ws://localhost:4466/'
 		}
 	};
@@ -79,7 +78,13 @@ module.exports = (env, argv) => {
 			allowedHosts: ['.ngrok.io', '0.0.0.0'],
 			port: 8080,
 			hot: true,
-			historyApiFallback: true // Redirect to /index.html for 404s
+			historyApiFallback: true,
+			proxy: {
+				'/.netlify': {
+					target: 'http://localhost:9000',
+					pathRewrite: {'^/.netlify/functions': ''}
+				}
+			}
 		};
 	}
 
