@@ -1,5 +1,5 @@
 [build]
-  functions = "./turntable/dist/functions"
+  functions = "./dist/functions"
   command = "npm run deploy"
   environment = { ENDPOINT = "http://localhost:4466/" }
 

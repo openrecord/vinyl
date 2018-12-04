@@ -8,7 +8,7 @@ module.exports = {
 	entry: ['babel-polyfill', './graphql.ts'],
 	output: {
 		filename: 'graphql.js',
-		path: path.resolve(__dirname, 'dist/functions')
+		path: path.resolve(__dirname, '../dist/functions')
 	},
 	module: {
 		rules: [

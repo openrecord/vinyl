@@ -1,11 +1,11 @@
-import {ApolloServer} from 'apollo-server-lambda';
+import {ApolloServer, gql} from 'apollo-server-lambda';
 import {forwardTo} from 'graphql-binding';
+import {importSchema} from 'graphql-import';
 import {always, map, set} from 'shades';
 
 import {Prisma} from '../generated/prisma';
 import updateIndex from './mutations/updateIndex';
 
-// import {importSchema} from 'graphql-import';
 declare const ENDPOINT: string;
 
 export const prisma = new Prisma({

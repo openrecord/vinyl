@@ -75,7 +75,7 @@ module.exports = (env, argv) => {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 		devtool = 'inline-source-map'; // enable web browser debugging
 		devServer = {
-			allowedHosts: ['.ngrok.io', '0.0.0.0'],
+			allowedHosts: ['.ngrok.io', '0.0.0.0', 'openrecord'],
 			port: 8080,
 			hot: true,
 			historyApiFallback: true,
