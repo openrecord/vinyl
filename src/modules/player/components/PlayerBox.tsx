@@ -69,9 +69,7 @@ interface $IsSoundCloud {
 }
 
 const Positioning = styled.div`
-	position: fixed;
-	bottom: 0;
-	right: 0;
+	position: relative;
 	overflow: hidden;
 	transition: all linear 0.3s;
 	background-color: ${(props: $IsExpanded & $HasColor) =>
@@ -86,7 +84,7 @@ const Positioning = styled.div`
 		props.expanded
 			? css`
 					width: 100%;
-					height: 100%;
+					height: 100vh;
 					z-index: ${zindex('player-expanded')};
 			  `
 			: css`

@@ -51,6 +51,8 @@ export default class Playlist extends React.Component<$Props> {
 							/>
 						</Header>
 					</VelocityTransitionGroup>
+					<PlayerContainer />
+					<ControlsContainer />
 					<SearchContainer />
 					<SearchResultsTarget id="search-results-target">
 						{trackCount === 0 && (
@@ -61,8 +63,6 @@ export default class Playlist extends React.Component<$Props> {
 						)}
 						<QueueContainer />
 					</SearchResultsTarget>
-					<ControlsContainer />
-					<PlayerContainer />
 				</StyledPlaylist>
 			</StyledPlaylistBackground>
 		);
@@ -80,11 +80,9 @@ const SearchResultsTarget = styled.div`
 
 const StyledPlaylist = styled.div`
 	display: block;
-	max-width: 75rem;
 	margin: 0 auto;
-	padding-top: 4rem;
 	position: relative;
-	width: 80%;
+	width: 100%;
 	transition: all 0.1s;
 
 	@media ${device.small} {
@@ -96,7 +94,7 @@ const StyledPlaylist = styled.div`
 const Header = styled.div`
 	border-bottom: 1px solid rgba(40, 40, 40, 1);
 	padding: 0 0 1rem 0;
-	display: flex;
+	display: none !important;
 	flex-direction: row;
 	align-items: stretch;
 

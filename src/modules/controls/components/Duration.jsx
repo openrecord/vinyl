@@ -11,6 +11,7 @@ export default function Duration({className, seconds}) {
 
 const StyledTime = styled.time`
 	color: rgba(255, 255, 255, 0.7);
+	display: none;
 	font-size: 0.75rem;
 	min-width: 2.5rem;
 	position: relative;
