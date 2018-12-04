@@ -4,7 +4,7 @@
   "description": "Frontend for openrecord platform.",
   "main": "TODO",
   "scripts": {
-    "clean": "rm -r dist turntable/generated turntable/schema.graphql",
+    "clean": "rm -rf dist turntable/generated turntable/schema.graphql",
     "start": "npm run start:web & npm run start:api",
     "start:web": "webpack-dev-server --mode development",
     "start:api": "docker-compose -f turntable/docker-compose.yml up -d && npm run create-dist && npm run serve:api",
