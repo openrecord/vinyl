@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run start:web & npm run start:api",
     "start:web": "webpack-dev-server --mode development",
-    "build": "npm run build:api && npm run build:web",
-    "build:web": "webpack --mode production",
+    "deploy": "npm run deploy:api && npm run deploy:web",
+    "deploy:web": "webpack --mode production",
     "test": "jest",
     "test:ci": "jest --ci",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
@@ -16,7 +16,7 @@
     "create-dist": "mkdir -p turntable/dist/functions && touch turntable/dist/functions/main.js",
     "serve:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
     "serve:debug": "NODE_ENV=development ENDPOINT='http://localhost:4466' npx --node-arg=--inspect-brk netlify-lambda serve --config webpack.config.js turntable/functions",
-    "build:api": "npm run create-dist && npm run codegen && npm run compile:api",
+    "deploy:api": "npm run create-dist && npm run codegen && npm run compile:api",
     "codegen": "cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
     "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
     "migrate": "node turntable/built/migrations/index.js"

@@ -24,7 +24,7 @@ module.exports = (env, argv) => {
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
 		},
 		[STAGING]: {
-			HTTP: 'https://develop--openrecord-api.netlify.com/.netlify/functions/graphql',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/staging'
 		},
 		[DEV]: {
