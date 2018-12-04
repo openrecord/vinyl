@@ -1,0 +1,11 @@
+projects:
+  turntable:
+    schemaPath: prisma.graphql
+    extensions:
+      endpoints:
+        default: ${env:ENDPOINT}
+      codegen:
+        - generator: prisma-binding
+          language: typescript
+          output:
+            binding: generated/prisma.ts

@@ -1,0 +1,15 @@
+# import Query.* from "./prisma.graphql"
+# import Mutation.* from './prisma.graphql'
+# import Subscription.* from './prisma.graphql'
+
+type Query {
+	hello: String
+}
+
+type Mutation {
+	updateIndex(trackId: ID!, newIdx: Int!): Playlist!
+}
+
+type Subscription {
+	empty: String
+}

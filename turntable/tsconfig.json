@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"lib": ["esnext", "dom"],
+		"types": ["node"],
+		"outDir": "./built",
+		"allowJs": true,
+		"target": "es6"
+	},
+	"include": ["./scripts/*", "./generated/*", "./migrations/*"]
+}
