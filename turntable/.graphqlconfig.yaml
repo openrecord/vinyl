@@ -1,4 +1,4 @@
-schemaPath: ./schema.graphql
+schemaPath: './schema.graphql'
 extensions:
   endpoints:
     default: ${env:ENDPOINT}
@@ -6,4 +6,4 @@ extensions:
     - generator: prisma-binding
       language: typescript
       output:
-        binding: generated/prisma.ts
+        binding: ./generated/prisma.ts
