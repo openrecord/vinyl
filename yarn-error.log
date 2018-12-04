@@ -1,5 +1,5 @@
 Arguments: 
-  /home/james/.nvm/versions/node/v8.9.1/bin/node /home/james/.yarn/bin/yarn.js start:api
+  /home/james/.nvm/versions/node/v8.9.1/bin/node /home/james/.yarn/bin/yarn.js codegen
 
 PATH: 
   /home/james/.nvm/versions/node/v8.9.1/bin:/home/james/.yarn/bin:/home/james/.opam/4.03.0/bin:/home/james/.virtualenvs/base/bin:/home/james/xiki-project/bin:/home/james/.cargo/bin:/home/james/bin:/home/james/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
@@ -28,12 +28,12 @@ npm manifest:
       "test:ci": "jest --ci",
       "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
       "config": "node bin/printConfig.js",
-      "start:api": "docker-compose up -f turntable/docker-compose.yml -d && npm run create-dist && npm run serve:api",
+      "start:api": "docker-compose -f turntable/docker-compose.yml up -d && npm run create-dist && npm run serve:api",
       "create-dist": "mkdir -p turntable/dist/functions && touch turntable/dist/functions/main.js",
       "serve:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
       "serve:debug": "NODE_ENV=development ENDPOINT='http://localhost:4466' npx --node-arg=--inspect-brk netlify-lambda serve --config webpack.config.js turntable/functions",
       "build:api": "npm run create-dist && npm run codegen && npm run compile:api",
-      "codegen": "cd turntable; gql get-schema && gql codegen",
+      "codegen": "cd turntable; get-graphql-schema $ENDPOINT && gql codegen",
       "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
       "migrate": "node turntable/built/migrations/index.js"
     },
@@ -133,6 +133,7 @@ npm manifest:
       "create-react-class": "^15.6.3",
       "deepmerge": "^2.2.1",
       "express": "^4.16.4",
+      "get-graphql-schema": "^2.1.2",
       "graphql": "0.13",
       "graphql-binding": "^2.2.5",
       "graphql-cli": "^2.16.7",
@@ -9221,7 +9222,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c docker-compose up -f turntable/docker-compose.yml -d && npm run create-dist && npm run serve:api
+  Arguments: -c cd turntable; get-graphql-schema $ENDPOINT && gql codegen
   Directory: /home/james/vms/openrecord/vinyl
   Output:
   

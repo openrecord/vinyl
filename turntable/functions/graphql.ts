@@ -15,7 +15,7 @@ export const prisma = new Prisma({
 const forwardToPrisma = map(always(forwardTo('db')));
 
 const server = new ApolloServer({
-	// typeDefs: gql(importSchema('turntable/server.graphql')),
+	typeDefs: gql(importSchema('turntable/server.graphql')),
 	resolvers: {
 		Query: forwardToPrisma(prisma.query),
 		Mutation: {

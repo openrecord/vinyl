@@ -17,7 +17,7 @@
     "serve:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
     "serve:debug": "NODE_ENV=development ENDPOINT='http://localhost:4466' npx --node-arg=--inspect-brk netlify-lambda serve --config webpack.config.js turntable/functions",
     "build:api": "npm run create-dist && npm run codegen && npm run compile:api",
-    "codegen": "cd turntable && gql get-schema --project turntable && gql codegen --project turntable",
+    "codegen": "cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
     "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
     "migrate": "node turntable/built/migrations/index.js"
   },
@@ -117,6 +117,7 @@
     "create-react-class": "^15.6.3",
     "deepmerge": "^2.2.1",
     "express": "^4.16.4",
+    "get-graphql-schema": "^2.1.2",
     "graphql": "0.13",
     "graphql-binding": "^2.2.5",
     "graphql-cli": "^2.16.7",
