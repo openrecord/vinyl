@@ -1,12 +1,11 @@
 import {ApolloServer} from 'apollo-server-lambda';
 import {forwardTo} from 'graphql-binding';
-import {importSchema} from 'graphql-import';
-import gql from 'graphql-tag';
 import {always, map, set} from 'shades';
 
 import {Prisma} from '../generated/prisma';
 import updateIndex from './mutations/updateIndex';
 
+// import {importSchema} from 'graphql-import';
 declare const ENDPOINT: string;
 
 export const prisma = new Prisma({
@@ -16,7 +15,7 @@ export const prisma = new Prisma({
 const forwardToPrisma = map(always(forwardTo('db')));
 
 const server = new ApolloServer({
-	typeDefs: gql(importSchema('turntable/server.graphql')),
+	// typeDefs: gql(importSchema('turntable/server.graphql')),
 	resolvers: {
 		Query: forwardToPrisma(prisma.query),
 		Mutation: {
