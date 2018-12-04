@@ -7,7 +7,7 @@
     "start": "npm run start:web & npm run start:api",
     "start:web": "webpack-dev-server --mode development",
     "deploy": "npm run deploy:api && npm run deploy:web",
-    "deploy:web": "webpack --mode production",
+    "deploy:web": "webpack -c webpack.config.js --mode production",
     "test": "jest",
     "test:ci": "jest --ci",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
