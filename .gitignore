@@ -37,5 +37,5 @@ coverage
 # Auto generated
 built/
 generated/
-prisma.graphql
+schema.graphql
 dist/
