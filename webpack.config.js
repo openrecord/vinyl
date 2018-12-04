@@ -112,7 +112,7 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.(mjs|js|jsx|ts|tsx)$/,
-					exclude: /node_modules/,
+					include: /src/,
 					use: ['babel-loader']
 				},
 

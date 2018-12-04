@@ -14,30 +14,30 @@ const scIcon = require('../images/soundcloud.svg');
 const ytIcon = require('../images/youtube.svg');
 
 interface $Props {
-	search: boolean;
 	thumbnail: string | null;
 	title: string;
 	id: string;
 	onClick(): any;
 	deleteTrack?: () => any;
+	search?: boolean;
 	playing?: boolean;
 	isCurrentSong?: boolean;
 	youtube?: boolean;
 	soundcloud?: boolean;
-	color?: $Color;
+	bgColor?: $Color;
 }
 
 export default function Track({
-	search,
 	thumbnail,
 	title,
 	id,
 	onClick,
 	deleteTrack,
+	search = false,
 	playing = false,
 	isCurrentSong = false,
 	soundcloud = false,
-	color
+	bgColor
 }: $Props) {
 	return (
 		<StyledResult
@@ -45,7 +45,7 @@ export default function Track({
 			className={classname({'is-current-song': isCurrentSong})}
 			onKeyPress={ifEnter(onClick)}
 			tabIndex={0}
-			bgColor={color}
+			bgColor={bgColor}
 		>
 			<ImageHolder search={search}>
 				{thumbnail ? (
@@ -261,6 +261,7 @@ const StyledResult = styled.div`
 	align-items: center;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
+	width: 100%;
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,

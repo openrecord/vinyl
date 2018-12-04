@@ -54,7 +54,7 @@ services:
       dockerfile: docker/chrome-headless/Dockerfile
       context: .
     ports:
-      - 9222:9222
+      - 9223:9223
     networks: [main]
 
 networks:

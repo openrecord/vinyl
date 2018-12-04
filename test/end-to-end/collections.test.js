@@ -16,6 +16,7 @@ describe('Collections Page', () => {
 
 		page.goto(`${tutil.baseUrl()}/${collection}`);
 		await page.waitForNavigation();
+		debugger;
 
 		const title = await page.$eval('h1', el => el.innerHTML);
 		expect(title).toEqual('/' + collection);
