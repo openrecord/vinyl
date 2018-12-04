@@ -17,7 +17,7 @@
     "serve:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
     "serve:debug": "NODE_ENV=development ENDPOINT='http://localhost:4466' npx --node-arg=--inspect-brk netlify-lambda serve --config webpack.config.js turntable/functions",
     "build:api": "npm run create-dist && npm run codegen && npm run compile:api",
-    "codegen": "cd turntable; gql get-schema && gql codegen",
+    "codegen": "cd turntable && gql get-schema --project turntable && gql codegen --project turntable",
     "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
     "migrate": "node turntable/built/migrations/index.js"
   },

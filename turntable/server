@@ -1,0 +1,15 @@
+import Query.* from "./schema.graphql"
+import Mutation.* from './schema.graphql'
+import Subscription.* from './schema.graphql'
+
+type Query {
+	hello: String
+}
+
+type Mutation {
+	updateIndex(trackId: ID!, newIdx: Int!): Playlist!
+}
+
+type Subscription {
+	empty: String
+}
