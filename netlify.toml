@@ -1,13 +1,18 @@
 [build]
   functions = "./dist/functions"
   command = "npm run deploy"
-  environment = { ENDPOINT = "http://localhost:4466/" }
+[build.environment]
+  ENDPOINT = "http://localhost:4466/"
+  NODE_ENV = "development"
 
-[context.production]
-  environment = { ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/dev" }
+[context.production.environment]
+  ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/dev"
+  NODE_ENV = "production"
 
-[context.develop]
-  environment = { ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/staging" }
+[context.develop.environment]
+  ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/staging"
+  NODE_ENV = "production"
 
-[context.deploy-preview]
-  environment = { ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/staging" }
+[context.deploy-preview.environment]
+  ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/staging"
+  NODE_ENV = "production"
