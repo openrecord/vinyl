@@ -17,4 +17,3 @@
 [context.deploy-preview.environment]
   ENDPOINT = "https://us1.prisma.sh/jamesscottmcnamara/turntable/staging"
   NODE_ENV = "production"
-

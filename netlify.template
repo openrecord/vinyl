@@ -1,0 +1,3 @@
+[build]
+  functions = "./dist/functions"
+  command = "npm run build"

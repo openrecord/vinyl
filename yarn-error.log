@@ -1,5 +1,5 @@
 Arguments: 
-  /home/james/.nvm/versions/node/v8.9.1/bin/node /home/james/.yarn/bin/yarn.js deploy
+  /home/james/.nvm/versions/node/v8.9.1/bin/node /home/james/.yarn/bin/yarn.js deploy:staging
 
 PATH: 
   /home/james/.opam/4.03.0/bin:/home/james/.virtualenvs/base/bin:/home/james/.nvm/versions/node/v8.9.1/bin:/home/james/.yarn/bin:/home/james/xiki-project/bin:/home/james/.cargo/bin:/home/james/bin:/home/james/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
@@ -26,9 +26,10 @@ npm manifest:
       "start:api": "docker-compose -f turntable/docker-compose.yml up -d && npm run create-dist && npm run serve:api",
       "serve:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
       "serve:debug": "NODE_ENV=development ENDPOINT='http://localhost:4466' npx --node-arg=--inspect-brk netlify-lambda serve --config webpack.config.js turntable/functions",
-      "deploy": "npm run clean && npm run deploy:api && npm run deploy:web",
-      "deploy:web": "webpack -c webpack.config.js --mode production",
-      "deploy:api": "npm run codegen && npm run compile:api",
+      "build": "npm run clean && npm run build:api && npm run build:web",
+      "build:web": "webpack -c webpack.config.js --mode production",
+      "build:api": "npm run codegen && npm run compile:api",
+      "deploy:staging": "cd turntable; prisma deploy -e env/staging",
       "codegen": "cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
       "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
       "test": "jest",
@@ -36,7 +37,8 @@ npm manifest:
       "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
       "config": "node bin/printConfig.js",
       "create-dist": "mkdir -p dist/functions && touch dist/functions/main.js",
-      "migrate": "node turntable/built/migrations/index.js"
+      "migrate": "node turntable/built/migrations/index.js",
+      "toml": "babel-node scripts/create_netlify_env.js"
     },
     "repository": {
       "type": "git",
@@ -92,11 +94,12 @@ npm manifest:
     },
     "husky": {
       "hooks": {
-        "pre-commit": "pretty-quick --staged"
+        "pre-commit": "pretty-quick --staged && npm run toml"
       }
     },
     "dependencies": {
       "@babel/core": "^7.1.6",
+      "@babel/node": "^7.2.0",
       "@babel/preset-env": "^7.1.6",
       "@babel/preset-typescript": "^7.1.0",
       "@types/classnames": "^2.2.6",
@@ -9223,7 +9226,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c npm run clean && npm run deploy:api && npm run deploy:web
+  Arguments: -c cd turntable; prisma deploy -e env/staging
   Directory: /home/james/vms/openrecord/vinyl
   Output:
   
