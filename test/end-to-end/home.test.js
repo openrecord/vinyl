@@ -21,6 +21,7 @@ describe('Home Page', () => {
 	test('navigates to a collections page when a collection is entered', async () => {
 		const collection = 'test-collection-' + faker.lorem.word();
 
+		page.on('error', console.error);
 		await page.waitForSelector('.hero-action');
 		await page.type('#open-collection', collection);
 
