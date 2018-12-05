@@ -1,6 +1,8 @@
+
 [build]
   functions = "./dist/functions"
   command = "npm run deploy"
+
 [build.environment]
   ENDPOINT = "http://localhost:4466/"
   NODE_ENV = "development"
