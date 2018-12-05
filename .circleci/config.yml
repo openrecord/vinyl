@@ -13,26 +13,25 @@ jobs:
 
       - run:
           name: Start postgres, prisma server, and chrome-headless.
-          command: docker-compose up -d prisma chrome-headless
+          command: docker-compose -f docker-compose.test.yml up -d prisma chrome-headless
 
       - run:
           name: Build test image.
-          command: docker-compose build vinyl
+          command: docker-compose -f docker-compose.test.yml build vinyl
 
-      #TODO: Come up with better way to start turntable. Ideally we can package it as its own docker image.
       - run:
-          name: Deploy turntable schema to prisma server.
-          command: docker-compose up turntable-deploy
+          name: Start turntable server
+          command: docker-compose -f docker-compose.test.yml up -d turntable
 
       - run:
           name: Start vinyl container
-          command: docker-compose up -d vinyl
+          command: docker-compose -f docker-compose.test.yml up -d vinyl
 
       - run:
           name: Run end-to-end tests in a new vinyl container.
           command: |
             docker rm test-run || echo "Test contaner does not exist."
-            docker-compose run --name test-run vinyl npm run test:ci
+            docker-compose -f docker-compose.test.yml run --name test-run vinyl npm run test:ci
 
       - run:
           name: Copy test artifacts from the test-run container into the job space.

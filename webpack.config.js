@@ -9,11 +9,13 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const DEV = 0;
 const STAGING = 1;
 const PROD = 2;
+const TEST = 3;
 
 module.exports = (env, argv) => {
 	const isDev = argv.mode != 'production';
+	const isTest = !!process.env.NODE_TEST;
 	const isStaging = process.env.BRANCH === 'develop' || process.env.PULL_REQUEST;
-	const stage = isDev ? DEV : isStaging ? STAGING : PROD;
+	const stage = isTest ? TEST : isDev ? DEV : isStaging ? STAGING : PROD;
 
 	let devtool, devServer, plugins, optimization;
 
@@ -26,6 +28,10 @@ module.exports = (env, argv) => {
 		[STAGING]: {
 			HTTP: '/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/staging'
+		},
+		[TEST]: {
+			HTTP: 'http://turntable:9000/.netlify/functions/graphql',
+			WS: 'ws://prisma:4466/'
 		},
 		[DEV]: {
 			HTTP: 'http://localhost:9000/.netlify/functions/graphql',

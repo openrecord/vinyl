@@ -17,10 +17,12 @@ COPY ./bin bin
 COPY ./test test
 COPY ./public public
 COPY ./src src
-COPY webpack.config.js .importjs.js postcss.config.js tsconfig.json .babelrc ./
+COPY webpack.config.js postcss.config.js tsconfig.json .babelrc ./
+
+ENV NODE_TEST="true"
 
 # Build web image.
-RUN npm run build
+RUN npm run build:web
 
 # The fallback for http-server missed routes: https://github.com/indexzero/http-server
 RUN cp dist/index.html dist/404.html

@@ -60,7 +60,9 @@ export default function QueueContainer() {
 		return null;
 	}
 
-	const {data: {playlist} = {playlist: {id: '', tracks: []}}} = useSimpleQuery<$QueryData>(query, {
+	const {
+		data: {playlist = {id: '', tracks: []}}
+	} = useSimpleQuery<$QueryData>(query, {
 		playlist: playlistName
 	});
 

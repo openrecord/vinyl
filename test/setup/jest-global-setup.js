@@ -7,7 +7,9 @@ const tutil = require('../tools/testUtils');
 
 module.exports = async function() {
 	await tutil.ensureScreenshotsDir();
-	return config.puppeteer.useRemoteChrome ? discoverRunningChrome() : launchChromeWithPuppeteer();
+	config.puppeteer.useRemoteChrome
+		? await discoverRunningChrome()
+		: await launchChromeWithPuppeteer();
 };
 
 async function discoverRunningChrome() {

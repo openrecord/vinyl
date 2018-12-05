@@ -6,17 +6,20 @@ services:
       dockerfile: docker/vinyl/Dockerfile
     ports:
       - 8080:8080
+    env_file: ./env/.test.env
     environment:
       HOST: docker
+    depends_on: [turntable]
     networks: [main]
 
-  #TODO: wait on prisma healthcheck
-  turntable-deploy:
-    image: openrecord/turntable:prisma-cli
+  turntable:
+    build:
+      context: .
+      dockerfile: docker/turntable/Dockerfile
     depends_on: [prisma]
-    command: npx prisma deploy
-    environment:
-      ENDPOINT: http://prisma:4466
+    env_file: ./env/.test.env
+    ports:
+      - 9000:9000
     networks: [main]
 
   #TODO: Add healthcheck
