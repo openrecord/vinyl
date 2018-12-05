@@ -77,7 +77,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run toml"
+      "pre-commit": "pretty-quick --staged && npm run toml > netlify.toml"
     }
   },
   "dependencies": {
