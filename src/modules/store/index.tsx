@@ -1,9 +1,16 @@
+import Vibrant from 'node-vibrant';
 import * as React from 'react';
 import {map, mod, set} from 'shades';
 
 import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
 import {$WithDefaultActions, $WithSetters} from './setters';
+
+const DEFAULT_BG: $Color = {
+	r: 25,
+	g: 25,
+	b: 25
+};
 
 const initialState: $State = {
 	player: {
@@ -12,7 +19,8 @@ const initialState: $State = {
 		expanded: false,
 		played: 0,
 		duration: 0,
-		live: false
+		live: true,
+		color: DEFAULT_BG
 	},
 	queue: {
 		tracks: [],
@@ -32,6 +40,7 @@ interface $State {
 		played: number;
 		duration: number;
 		live: boolean;
+		color: $Color;
 	};
 
 	queue: {
@@ -43,6 +52,13 @@ interface $State {
 		query: string;
 		isOpen: boolean;
 	};
+}
+
+export interface $Color {
+	r: number;
+	g: number;
+	b: number;
+	a?: number;
 }
 
 interface $Actions {
@@ -95,6 +111,22 @@ export default class StoreProvider extends React.Component<$Props, $State> {
 	actions = map(this.addDefaultActions)(this._actions) as $WithDefaultActions<$Actions>;
 
 	state = initialState;
+
+	async componentDidUpdate(_prevProps: $Props, prevState: $State) {
+		if (prevState.player.currentlyPlaying !== this.state.player.currentlyPlaying) {
+			const track = this.state.player.currentlyPlaying;
+			if (track) {
+				const thumb = document.querySelector(`img[data-id="${track.info.id}"]`) as HTMLImageElement;
+				const vibrant = new Vibrant(thumb);
+				const {
+					Muted: {r, g, b}
+				} = await vibrant.getPalette();
+				this.setState(set('player', 'color')({r, g, b}));
+			} else {
+				this.setState(set('player', 'color')(DEFAULT_BG));
+			}
+		}
+	}
 
 	render() {
 		const {

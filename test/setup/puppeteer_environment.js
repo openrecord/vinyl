@@ -20,7 +20,7 @@ class PuppeteerEnvironment extends NodeEnvironment {
 
 	async teardown() {
 		super.teardown();
-		return this.global.__BROWSER__.disconnect();
+		this.global.__BROWSER__.disconnect();
 	}
 }
 

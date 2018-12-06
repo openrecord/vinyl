@@ -1,3 +1,4 @@
+import Color from 'color';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import styled, {css} from 'styled-components';
@@ -14,6 +15,7 @@ import Slider from './Slider';
 import SongControls from './SongControls';
 
 export default function Controls({
+	color,
 	playing,
 	expanded,
 	togglePlaying,
@@ -49,7 +51,7 @@ export default function Controls({
 	);
 
 	const desktop = (
-		<Footer>
+		<Footer color={color}>
 			<Row transparent={expanded}>
 				{title}
 				{controls}
@@ -59,7 +61,7 @@ export default function Controls({
 	);
 
 	const mobile = (
-		<Footer>
+		<Footer color={color}>
 			{currentlyPlaying && (
 				<Row transparent={expanded} onClick={toggleExpanded}>
 					{title}
@@ -90,6 +92,11 @@ export default function Controls({
 }
 
 const Footer = styled.div`
+	background-color: ${props =>
+		Color(props.color)
+			.darken(0.5)
+			.rgb()
+			.string()};
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -105,7 +112,6 @@ const Row = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: ${props => !props.transparent && 'rgb(36, 36, 36)'};
 	border-top: 0.0625rem solid rgb(64, 64, 64);
 	box-sizing: border-box;
 

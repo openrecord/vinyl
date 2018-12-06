@@ -1,10 +1,12 @@
 import classname from 'classnames';
+import Color from 'color';
 import * as React from 'react';
 import styled, {css} from 'styled-components';
 
 import {device} from '../../../../styles/utilities/device';
 import PlayPause from '../../../common/components/PlayPause';
 import {ifEnter} from '../../../common/utils';
+import {$Color} from '../../../store';
 import Options from './Options';
 
 const speaker = require('../../../controls/components/images/speaker.svg');
@@ -12,26 +14,30 @@ const scIcon = require('../images/soundcloud.svg');
 const ytIcon = require('../images/youtube.svg');
 
 interface $Props {
-	search: boolean;
 	thumbnail: string | null;
 	title: string;
+	id?: string;
 	onClick(): any;
 	deleteTrack?: () => any;
+	search?: boolean;
 	playing?: boolean;
 	isCurrentSong?: boolean;
 	youtube?: boolean;
 	soundcloud?: boolean;
+	bgColor?: $Color;
 }
 
 export default function Track({
-	search,
 	thumbnail,
 	title,
+	id,
 	onClick,
 	deleteTrack,
+	search = false,
 	playing = false,
 	isCurrentSong = false,
-	soundcloud = false
+	soundcloud = false,
+	bgColor
 }: $Props) {
 	return (
 		<StyledResult
@@ -39,9 +45,21 @@ export default function Track({
 			className={classname({'is-current-song': isCurrentSong})}
 			onKeyPress={ifEnter(onClick)}
 			tabIndex={0}
+			bgColor={bgColor}
+			data-id={id}
+			data-track-type={search ? 'search' : 'queue'}
 		>
 			<ImageHolder search={search}>
-				{thumbnail ? <Thumbnail src={thumbnail} search={search} /> : <NoArtwork />}
+				{thumbnail ? (
+					<Thumbnail
+						crossOrigin="anonymous"
+						src={getThumbnailUrl(thumbnail)}
+						data-id={id}
+						search={search}
+					/>
+				) : (
+					<NoArtwork />
+				)}
 				<PlayBackground>
 					<IconContainer>
 						{search ? (
@@ -236,18 +254,28 @@ const SourceIcon = styled.div`
 	}
 `;
 
+interface $StyledResultProps {
+	bgColor?: $Color;
+}
+
 const StyledResult = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
+	width: 100%;
 	transition: background-color 0.1s linear;
 
 	&.is-current-song,
 	:hover,
 	:focus {
-		background: rgb(40, 40, 40);
-
+		background: ${(props: $StyledResultProps) =>
+			props.bgColor
+				? Color(props.bgColor)
+						.darken(0.33)
+						.rgb()
+						.string()
+				: 'rgb(40, 40, 40)'};
 		${PlayBackground}, ${AddPlus} {
 			opacity: 1;
 		}
@@ -294,3 +322,7 @@ const StyledResult = styled.div`
 		}
 	}
 `;
+
+function getThumbnailUrl(url: string): string {
+	return `https://cors-anywhere.herokuapp.com/` + url;
+}

@@ -1,5 +1,5 @@
 puppeteer:
   headless: true
   useRemoteChrome: true
-  remoteChromeEndpoint: http://chrome-headless:9222
+  remoteChromeEndpoint: http://chrome-headless:9223
   baseUrl: http://vinyl:8080

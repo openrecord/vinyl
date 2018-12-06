@@ -27,9 +27,7 @@ describe('Home Page', () => {
 		page.click('.hero-button');
 		await page.waitForNavigation();
 
-		const regex = new RegExp('/' + collection + '$');
-		expect(page.url()).toMatch(regex);
-
+		await page.waitForSelector('h1');
 		const title = await page.$eval('h1', el => el.innerHTML);
 		expect(title).toEqual('/' + collection);
 

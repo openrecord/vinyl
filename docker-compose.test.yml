@@ -6,18 +6,19 @@ services:
       dockerfile: docker/vinyl/Dockerfile
     ports:
       - 8080:8080
+    env_file: ./env/.test.env
     environment:
       HOST: docker
-    networks: [main]
+    depends_on: [turntable]
 
-  #TODO: wait on prisma healthcheck
-  turntable-deploy:
-    image: openrecord/turntable:prisma-cli
+  turntable:
+    build:
+      context: .
+      dockerfile: docker/turntable/Dockerfile
     depends_on: [prisma]
-    command: npx prisma deploy
-    environment:
-      ENDPOINT: http://prisma:4466
-    networks: [main]
+    env_file: ./env/.test.env
+    ports:
+      - 9000:9000
 
   #TODO: Add healthcheck
   prisma:
@@ -37,7 +38,6 @@ services:
     ports:
       - 4466:4466
     depends_on: [postgres]
-    networks: [main]
 
   #TODO: Add healthcheck
   postgres:
@@ -46,7 +46,6 @@ services:
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
-    networks: [main]
 
   chrome-headless:
     image: openrecord/chrome-headless
@@ -54,9 +53,4 @@ services:
       dockerfile: docker/chrome-headless/Dockerfile
       context: .
     ports:
-      - 9222:9222
-    networks: [main]
-
-networks:
-  main:
-    driver: bridge
+      - 9223:9223

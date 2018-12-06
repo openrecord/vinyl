@@ -18,3 +18,24 @@ yarn.lock
 # Test output
 test-screenshots
 test-reports
+
+# logs
+*.log
+
+
+# mac
+.DS_Store
+
+# configs
+config/**/*local*.yml
+.envrc
+
+# Test output
+test-reports
+coverage
+
+# Auto generated
+built/
+generated/
+schema.graphql
+dist/
