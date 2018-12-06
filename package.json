@@ -15,6 +15,7 @@
     "build:api": "npm run codegen && npm run compile:api",
     "deploy:test": "cd turntable; env-cmd ../env.test.env prisma deploy",
     "deploy:staging": "cd turntable; env-cmd ../env/.staging.env prisma deploy",
+    "deploy:prod": "cd turntable; env-cmd ../env/.prod.env prisma deploy", 
     "codegen": "npm run clean; cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
     "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
     "test": "jest --runInBand",
