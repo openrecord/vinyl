@@ -16,12 +16,20 @@ jobs:
           command: docker-compose -f docker-compose.test.yml up --build -d prisma chrome-headless
 
       - run:
-          name: Build test image.
-          command: docker-compose -f docker-compose.test.yml build vinyl
+          name: Build test images.
+          command: docker-compose -f docker-compose.test.yml build turntable vinyl
+
+      - run:
+          name: Take a nap
+          command: sleep 10
 
       - run:
           name: Start turntable server
           command: docker-compose -f docker-compose.test.yml up -d turntable
+
+      - run:
+          name: Peek at turntable logs
+          command: docker-compose -f docker-compose.test.yml logs turntable
 
       - run:
           name: Start vinyl container
@@ -32,6 +40,10 @@ jobs:
           command: |
             docker rm test-run || echo "Test contaner does not exist."
             docker-compose -f docker-compose.test.yml run --name test-run vinyl npm run test:ci
+
+      - run:
+          name: Peek at turntable logs
+          command: docker-compose -f docker-compose.test.yml logs
 
       - run:
           name: Copy test artifacts from the test-run container into the job space.
