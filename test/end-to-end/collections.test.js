@@ -12,7 +12,6 @@ describe('Collections Page', () => {
 	afterAll(() => page.close());
 
 	test('opens a new collection when navigated via url', async () => {
-		page.on('console', console.error);
 		const collection = 'test-collection-' + faker.lorem.word();
 
 		page.goto(`${tutil.baseUrl()}/${collection}`);
