@@ -19,7 +19,7 @@ const initialState: $State = {
 		expanded: false,
 		played: 0,
 		duration: 0,
-		live: false,
+		live: true,
 		color: DEFAULT_BG
 	},
 	queue: {

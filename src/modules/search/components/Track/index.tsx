@@ -16,7 +16,7 @@ const ytIcon = require('../images/youtube.svg');
 interface $Props {
 	thumbnail: string | null;
 	title: string;
-	id: string;
+	id?: string;
 	onClick(): any;
 	deleteTrack?: () => any;
 	search?: boolean;
@@ -46,6 +46,8 @@ export default function Track({
 			onKeyPress={ifEnter(onClick)}
 			tabIndex={0}
 			bgColor={bgColor}
+			data-id={id}
+			data-track-type={search ? 'search' : 'queue'}
 		>
 			<ImageHolder search={search}>
 				{thumbnail ? (
