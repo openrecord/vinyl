@@ -13,7 +13,7 @@ jobs:
 
       - run:
           name: Start postgres, prisma server, and chrome-headless.
-          command: docker-compose -f docker-compose.test.yml up -d prisma chrome-headless
+          command: docker-compose -f docker-compose.test.yml up --build -d prisma chrome-headless
 
       - run:
           name: Build test image.

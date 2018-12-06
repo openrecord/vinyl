@@ -10,7 +10,6 @@ services:
     environment:
       HOST: docker
     depends_on: [turntable]
-    networks: [main]
 
   turntable:
     build:
@@ -20,7 +19,6 @@ services:
     env_file: ./env/.test.env
     ports:
       - 9000:9000
-    networks: [main]
 
   #TODO: Add healthcheck
   prisma:
@@ -40,7 +38,6 @@ services:
     ports:
       - 4466:4466
     depends_on: [postgres]
-    networks: [main]
 
   #TODO: Add healthcheck
   postgres:
@@ -49,7 +46,6 @@ services:
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
-    networks: [main]
 
   chrome-headless:
     image: openrecord/chrome-headless
@@ -58,9 +54,3 @@ services:
       context: .
     ports:
       - 9223:9223
-    depends_on: [vinyl, turntable]
-    networks: [main]
-
-networks:
-  main:
-    driver: bridge
