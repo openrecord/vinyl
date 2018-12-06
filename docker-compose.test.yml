@@ -58,6 +58,7 @@ services:
       context: .
     ports:
       - 9223:9223
+    depends_on: [vinyl, turntable]
     networks: [main]
 
 networks:
