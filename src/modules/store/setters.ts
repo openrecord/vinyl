@@ -17,3 +17,5 @@ export type $WithDefaultActions<State> = {
 		setter: $Setter<State[P]>;
 	}
 };
+
+export type $SetState<S> = (updater: (s: S) => S) => void;

@@ -2,7 +2,7 @@ const faker = require('faker');
 
 const tutil = require('../tools/testUtils');
 
-const id = a => a;
+const choice = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const SEL = {
 	searchButton: '[data-id="show-hide-search"]',
@@ -10,6 +10,7 @@ const SEL = {
 	searchTrack: '[data-track-type="search"]',
 	queueTrack: '[data-track-type="queue"]'
 };
+const waitForAnimation = page => page.waitFor(() => !document.querySelector('.velocity-animating'));
 
 async function loadCollection(page, collection) {
 	page.goto(`${tutil.baseUrl()}/${collection}`);
@@ -26,16 +27,22 @@ async function checkHasHeader(page, collection) {
 async function searchFor(page, query) {
 	const searchButton = await page.$(SEL.searchButton);
 	searchButton.click();
+	await waitForAnimation(page);
 	await page.waitForSelector(SEL.searchBar);
 	await page.type(SEL.searchBar, query);
 }
 
 async function addSongFromQuery(page, query) {
+	await waitForAnimation(page);
 	await searchFor(page, query);
+	await page.waitFor(250);
 	await page.waitForSelector(SEL.searchTrack);
-	const trackName = await page.$eval(`${SEL.searchTrack} > h4`, track => track.innerText);
+	const track = choice(await page.$$(SEL.searchTrack));
 
-	await page.click(SEL.searchTrack);
+	const trackName = await track.$eval('h4', track => track.innerText);
+
+	await track.click();
+	await page.click(SEL.searchButton);
 	return trackName;
 }
 
@@ -62,7 +69,8 @@ describe('Collections Page', () => {
 	test(
 		'everything',
 		async () => {
-			await Promise.all([loadCollection(page, collection), loadCollection(remotePage, collection)]);
+			await loadCollection(page, collection);
+			await loadCollection(remotePage, collection);
 			await page.bringToFront();
 			await checkHasHeader(page, collection);
 			console.log('has header passed!');
@@ -77,7 +85,39 @@ describe('Collections Page', () => {
 			const remoteQueueName = await getQueueTrackName(remotePage);
 			expect(remoteQueueName).toEqual(trackName);
 			console.log('Remote sync passed!');
+
+			await addSongFromQuery(page, 'butts');
+
+			const oldTrackIDs = await page.$$eval(SEL.queueTrack, tracks =>
+				tracks.map(n => n.getAttribute('data-id'))
+			);
+
+			await page.$$(selector => document.querySelectorAll(selector).length > 1);
+			const tracks = await page.$$(SEL.queueTrack);
+			const boundingBoxes = await Promise.all(tracks.map(el => el.boundingBox()));
+			const one = boundingBoxes[0],
+				two = boundingBoxes[1];
+			console.log(one, two);
+
+			await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
+			await page.mouse.down();
+			await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10);
+			await page.mouse.up();
+			await page.waitFor(500);
+
+			const newTrackIDs = await page.$$eval(SEL.queueTrack, tracks =>
+				tracks.map(n => n.getAttribute('data-id'))
+			);
+			expect(newTrackIDs[1]).toEqual(oldTrackIDs[0]);
+			expect(newTrackIDs[0]).toEqual(oldTrackIDs[1]);
+
+			const remoteTrackIDs = await remotePage.$$eval(SEL.queueTrack, tracks =>
+				tracks.map(n => n.getAttribute('data-id'))
+			);
+
+			expect(remoteTrackIDs[1]).toEqual(oldTrackIDs[0]);
+			expect(remoteTrackIDs[0]).toEqual(oldTrackIDs[1]);
 		},
-		30 * 1000
+		600 * 1000
 	);
 });
