@@ -78,6 +78,6 @@ describe('Collections Page', () => {
 			expect(remoteQueueName).toEqual(trackName);
 			console.log('Remote sync passed!');
 		},
-		15 * 1000
+		30 * 1000
 	);
 });

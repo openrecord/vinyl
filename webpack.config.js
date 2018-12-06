@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
 	//TODO: Potentially leverage node-config
 	const URLS = {
 		[PROD]: {
-			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
 		},
 		[STAGING]: {
@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
 			WS: 'ws://prisma:4466/'
 		},
 		[DEV]: {
-			HTTP: 'http://localhost:9000/.netlify/functions/graphql',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'ws://localhost:4466/'
 		}
 	};
