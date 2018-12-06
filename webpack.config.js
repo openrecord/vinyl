@@ -9,26 +9,32 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const DEV = 0;
 const STAGING = 1;
 const PROD = 2;
+const TEST = 3;
 
 module.exports = (env, argv) => {
 	const isDev = argv.mode != 'production';
+	const isTest = !!process.env.NODE_TEST;
 	const isStaging = process.env.BRANCH === 'develop' || process.env.PULL_REQUEST;
-	const stage = isDev ? DEV : isStaging ? STAGING : PROD;
+	const stage = isTest ? TEST : isDev ? DEV : isStaging ? STAGING : PROD;
 
 	let devtool, devServer, plugins, optimization;
 
 	//TODO: Potentially leverage node-config
 	const URLS = {
 		[PROD]: {
-			HTTP: 'https://us1.prisma.sh/jamesscottmcnamara/turntable/dev',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/dev'
 		},
 		[STAGING]: {
-			HTTP: 'https://develop--openrecord-api.netlify.com/.netlify/functions/graphql',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'wss://us1.prisma.sh/jamesscottmcnamara/turntable/staging'
 		},
+		[TEST]: {
+			HTTP: 'http://turntable:9000/.netlify/functions/graphql',
+			WS: 'ws://prisma:4466/'
+		},
 		[DEV]: {
-			HTTP: 'http://localhost:9000/.netlify/functions/graphql',
+			HTTP: '/.netlify/functions/graphql',
 			WS: 'ws://localhost:4466/'
 		}
 	};
@@ -75,7 +81,7 @@ module.exports = (env, argv) => {
 		plugins.push(new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin());
 		devtool = 'inline-source-map'; // enable web browser debugging
 		devServer = {
-			allowedHosts: ['.ngrok.io', '0.0.0.0'],
+			allowedHosts: ['.ngrok.io', '0.0.0.0', 'openrecord'],
 			port: 8080,
 			hot: true,
 			historyApiFallback: true,
@@ -112,7 +118,7 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.(mjs|js|jsx|ts|tsx)$/,
-					exclude: /node_modules/,
+					include: /src/,
 					use: ['babel-loader']
 				},
 

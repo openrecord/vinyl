@@ -2,7 +2,7 @@ const util = require('util');
 const path = require('path');
 const os = require('os');
 const fs = require('fs-extra');
-const axios = require('axios');
+const request = require('request-promise-native');
 const config = require('config');
 const dns = require('dns');
 const url = require('url');
@@ -22,27 +22,20 @@ module.exports.getWebsocketEndpointFromRemoteChrome = async () => {
 
 	console.debug(chromeInfoEndpoint);
 
-	try {
-		const {
-			data: [{webSocketDebuggerUrl}]
-		} = await axios.get(chromeInfoEndpoint);
+	const {webSocketDebuggerUrl} = await request({uri: chromeInfoEndpoint, json: true});
 
-		return webSocketDebuggerUrl;
-	} catch (err) {
-		console.error(err.message);
-		throw new Error(`Could not find Chrome instance at ${endpointWithIp}`);
-	}
-
-	// Fix for https://github.com/GoogleChrome/puppeteer/issues/2242
-	async function generateChromeInfoUrl(urlString) {
-		const urlParsed = url.parse(urlString);
-		const {address: hostIp} = await util.promisify(dns.lookup)(urlParsed.hostname);
-		delete urlParsed.host;
-		urlParsed.hostname = hostIp;
-		urlParsed.pathname = 'json';
-		return url.format(urlParsed);
-	}
+	return webSocketDebuggerUrl;
 };
+
+// Fix for https://github.com/GoogleChrome/puppeteer/issues/2242
+async function generateChromeInfoUrl(urlString) {
+	const urlParsed = url.parse(urlString);
+	const {address: hostIp} = await util.promisify(dns.lookup)(urlParsed.hostname);
+	delete urlParsed.host;
+	urlParsed.hostname = hostIp;
+	urlParsed.pathname = 'json/version';
+	return url.format(urlParsed);
+}
 
 module.exports.readWebsocketEndpointFile = () => {
 	const wsEndpoint = fs.readFileSync(WEBSOCKET_FILE, 'utf8');
