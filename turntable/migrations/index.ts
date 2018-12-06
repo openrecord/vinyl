@@ -1,8 +1,9 @@
-const fs = require('mz/fs');
+import * as path from 'path';
 import {always} from 'shades';
 
 import {Prisma} from '../generated/prisma';
 
+const fs = require('mz/fs');
 export const prisma = new Prisma({
 	endpoint: process.env.ENDPOINT
 });
@@ -22,7 +23,7 @@ interface Migration {
 	code: () => Promise<void>;
 }
 
-const migrationRE = /(\d{4})--(.*).ts/;
+const migrationRE = /(\d{4})--(.*).js/;
 
 const isMigration = migrationRE.test.bind(migrationRE);
 
@@ -31,14 +32,14 @@ const toMigration = (filename: string): Migration => {
 	return {
 		index: parseInt(idx),
 		name,
-		code: require(`${process.cwd()}/built/migrations/${filename.replace('.ts', '.js')}`).default
+		code: require(path.resolve(__dirname, filename)).default
 	};
 };
 
 const unapplied = (idx: number) => ({index}: Migration) => index > idx;
 
 async function main() {
-	const files = await fs.readdir('migrations');
+	const files = await fs.readdir(__dirname);
 	const [lastMigration] = await prisma.query.migrations({
 		where: {},
 		orderBy: 'index_DESC',

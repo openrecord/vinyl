@@ -87,9 +87,10 @@ describe('Collections Page', () => {
 			console.log('Remote sync passed!');
 
 			await addSongFromQuery(page, 'butts');
+			await waitForAnimation(page);
 
-			const oldTrackIDs = await page.$$eval(SEL.queueTrack, tracks =>
-				tracks.map(n => n.getAttribute('data-id'))
+			const oldTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
+				tracks.map(n => n.innerText)
 			);
 
 			await page.$$(selector => document.querySelectorAll(selector).length > 1);
@@ -101,18 +102,20 @@ describe('Collections Page', () => {
 
 			await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
 			await page.mouse.down();
-			await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10);
+			await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10, {steps: 10});
 			await page.mouse.up();
-			await page.waitFor(500);
 
-			const newTrackIDs = await page.$$eval(SEL.queueTrack, tracks =>
-				tracks.map(n => n.getAttribute('data-id'))
+			await page.waitFor(400);
+
+			const newTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
+				tracks.map(n => n.innerText)
 			);
+			console.log(oldTrackIDs, newTrackIDs);
 			expect(newTrackIDs[1]).toEqual(oldTrackIDs[0]);
 			expect(newTrackIDs[0]).toEqual(oldTrackIDs[1]);
 
-			const remoteTrackIDs = await remotePage.$$eval(SEL.queueTrack, tracks =>
-				tracks.map(n => n.getAttribute('data-id'))
+			const remoteTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
+				tracks.map(n => n.innerText)
 			);
 
 			expect(remoteTrackIDs[1]).toEqual(oldTrackIDs[0]);
