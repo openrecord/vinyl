@@ -6,5 +6,6 @@ if (slowMoMillis) {
 	console.warn('Overriding jest timeout due to puppeteer slowdown.', {slowMoMillis});
 	jest.setTimeout(timeout);
 } else {
+	console.log('updating timeout');
 	jest.setTimeout(10 * 1000);
 }
