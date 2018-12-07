@@ -4,9 +4,14 @@ import {always, map, set} from 'shades';
 
 import {Prisma} from '../generated/prisma';
 import updateIndex from './mutations/updateIndex';
+import addToPlaylist from './mutations/addToPlaylist';
 
 declare const ENDPOINT: string;
 declare const SCHEMA: string;
+
+if (!global['_babelPolyfill']) {
+	require('babel-polyfill');
+}
 
 export const prisma = new Prisma({
 	endpoint: ENDPOINT
@@ -20,7 +25,8 @@ const server = new ApolloServer({
 		Query: forwardToPrisma(prisma.query),
 		Mutation: {
 			...forwardToPrisma(prisma.mutation),
-			updateIndex
+			updateIndex,
+			addToPlaylist
 		}
 	},
 	context: set('db')(prisma)

@@ -50,6 +50,56 @@ async function getQueueTrackName(page) {
 	await page.waitForSelector(SEL.queueTrack);
 	return page.$eval(`${SEL.queueTrack} > h4`, el => el.innerText);
 }
+
+function getQueueNames(page) {
+	return page.$$eval(`${SEL.queueTrack} > h4`, tracks => tracks.map(n => n.innerText));
+}
+
+async function testAddSong(page, query) {
+	const trackName = await addSongFromQuery(page, query);
+	const queueName = await getQueueTrackName(page);
+	expect(queueName).toEqual(trackName);
+	return trackName;
+}
+
+async function testAddSongAddedToRemote(remotePage, trackName) {
+	const remoteQueueName = await getQueueTrackName(remotePage);
+	expect(remoteQueueName).toEqual(trackName);
+}
+
+async function testDragAndDrop(page) {
+	async function dragTracks() {
+		await page.$$(selector => document.querySelectorAll(selector).length > 1, SEL.queueTrack);
+		const tracks = await page.$$(SEL.queueTrack);
+		const boundingBoxes = await Promise.all(tracks.map(el => el.boundingBox()));
+		const one = boundingBoxes[0],
+			two = boundingBoxes[1];
+
+		await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
+		await page.mouse.down();
+		await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10, {steps: 10});
+		await page.mouse.up();
+	}
+
+	await addSongFromQuery(page, 'butts');
+	await waitForAnimation(page);
+
+	const oldTrackNames = await getQueueNames(page);
+
+	await dragTracks();
+	await page.waitFor(400);
+
+	const newTrackNames = await getQueueNames(page);
+
+	expect(newTrackNames[1]).toEqual(oldTrackNames[0]);
+	expect(newTrackNames[0]).toEqual(oldTrackNames[1]);
+
+	const remoteTrackNames = await getQueueNames(page);
+
+	expect(remoteTrackNames[1]).toEqual(oldTrackNames[0]);
+	expect(remoteTrackNames[0]).toEqual(oldTrackNames[1]);
+}
+
 describe('Collections Page', () => {
 	let page;
 	let remotePage;
@@ -72,54 +122,20 @@ describe('Collections Page', () => {
 			await loadCollection(page, collection);
 			await loadCollection(remotePage, collection);
 			await page.bringToFront();
+
 			await checkHasHeader(page, collection);
 			console.log('has header passed!');
 
 			// Searching for a song and clicking it adds it to the queue
-			const trackName = await addSongFromQuery(page, 'song');
-			const queueName = await getQueueTrackName(page);
-			expect(queueName).toEqual(trackName);
+			const trackName = await testAddSong(page, 'song');
 			console.log('Track added passed!');
 
 			// Adding a song pushes it to all remote clients
-			const remoteQueueName = await getQueueTrackName(remotePage);
-			expect(remoteQueueName).toEqual(trackName);
+			await testAddSongAddedToRemote(remotePage, trackName);
 			console.log('Remote sync passed!');
 
-			await addSongFromQuery(page, 'butts');
-			await waitForAnimation(page);
-
-			const oldTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
-				tracks.map(n => n.innerText)
-			);
-
-			await page.$$(selector => document.querySelectorAll(selector).length > 1);
-			const tracks = await page.$$(SEL.queueTrack);
-			const boundingBoxes = await Promise.all(tracks.map(el => el.boundingBox()));
-			const one = boundingBoxes[0],
-				two = boundingBoxes[1];
-			console.log(one, two);
-
-			await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
-			await page.mouse.down();
-			await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10, {steps: 10});
-			await page.mouse.up();
-
-			await page.waitFor(400);
-
-			const newTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
-				tracks.map(n => n.innerText)
-			);
-			console.log(oldTrackIDs, newTrackIDs);
-			expect(newTrackIDs[1]).toEqual(oldTrackIDs[0]);
-			expect(newTrackIDs[0]).toEqual(oldTrackIDs[1]);
-
-			const remoteTrackIDs = await page.$$eval(`${SEL.queueTrack} > h4`, tracks =>
-				tracks.map(n => n.innerText)
-			);
-
-			expect(remoteTrackIDs[1]).toEqual(oldTrackIDs[0]);
-			expect(remoteTrackIDs[0]).toEqual(oldTrackIDs[1]);
+			await testDragAndDrop(page);
+			console.log('Drag and drop passed!');
 		},
 		600 * 1000
 	);

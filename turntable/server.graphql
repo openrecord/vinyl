@@ -3,7 +3,7 @@
 # import Subscription.* from './schema.graphql'
 
 type Query {
-	hello: String
+	empty: String
 }
 
 type Mutation {
