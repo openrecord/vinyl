@@ -7,22 +7,14 @@ interface $Props {
 const FILL = '#9c4d9d';
 
 export default styled.button`
-	background: ${({active}: $Props) => (active ? FILL : 'transparent')};
-	border: 0.125rem solid #9c4d9d;
-	border-radius: 0.25rem;
-	color: rgba(255, 255, 255, 0.9);
+	background: ${({active}: $Props) => (active ? FILL : 'white')};
+	border-radius: 6.25rem;
+	color: black;
 	cursor: pointer;
-	font-size: 0.875rem;
-	line-height: 1rem;
+	font-size: 1.125rem;
 	outline: none;
-	padding: 0.25rem 0.5rem;
-	transition: all 0.1s;
-	max-width: 6.5rem;
-
-	span {
-		font-size: 1rem;
-		line-height: 0.875rem;
-	}
+	margin: 2rem;
+	padding: 0.75rem 1.25rem;
 
 	&:hover {
 		color: rgba(255, 255, 255, 1);

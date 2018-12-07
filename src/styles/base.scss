@@ -1,13 +1,11 @@
 @font-face {
-	font-family: 'Haas Reg';
-	src: url('./utilities/fonts/NHaasGroteskDSW02-55Rg.woff2') format('woff2'),
-		url('./utilities/fonts/NHaasGroteskDSW02-55Rg.woff') format('woff');
+	font-family: 'WS Reg';
+	src: url('./utilities/fonts/WorkSans-Regular.ttf') format('ttf');
 }
 
 @font-face {
-	font-family: 'Haas Med';
-	src: url('./utilities/fonts/NHaasGroteskDSW02-65Md.woff2') format('woff2'),
-		url('./utilities/fonts/NHaasGroteskDSW02-65Md.woff') format('woff');
+	font-family: 'WS SB';
+	src: url('./utilities/fonts/WorkSans-SemiBold.ttf') format('woff2');
 }
 
 //Media Query Variables
@@ -18,7 +16,7 @@ $extra-large: 1800px;
 
 body {
 	background: rgb(25, 25, 25);
-	font-family: 'Haas Reg', Arial, sans-serif;
+	font-family: 'WS Reg', Arial, sans-serif;
 	margin: 0;
 }
 
@@ -84,6 +82,7 @@ h6 {
 button {
 	background: transparent;
 	border: 0;
+	font-family: 'WS SB', Arial, sans-serif;
 	outline: none;
 }
 

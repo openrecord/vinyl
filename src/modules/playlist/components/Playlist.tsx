@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
@@ -10,7 +9,7 @@ import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
 import {$Color} from '../../store';
 import CollectionInfo from './CollectionInfo';
-import Record from './Record';
+import zindex from '../../common/zindex';
 
 interface $Props {
 	color: $Color;
@@ -34,35 +33,20 @@ export default class Playlist extends React.Component<$Props> {
 		return (
 			<StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
 				<StyledPlaylist>
-					<VelocityTransitionGroup
-						enter={{animation: 'fadeIn', display: 'flex'}}
-						leave={{animation: 'fadeOut', display: 'flex'}}
-						runOnMount
-					>
-						<Header>
-							<Record />
-							<CollectionInfo
-								live={live}
-								toggleSearch={toggleSearch}
-								toggleLive={toggleLive}
-								trackCount={trackCount}
-								playlist={playlist}
-								isOpen={isOpen}
-							/>
-						</Header>
-					</VelocityTransitionGroup>
+					<Header>
+						<CollectionInfo
+							live={live}
+							toggleSearch={toggleSearch}
+							toggleLive={toggleLive}
+							trackCount={trackCount}
+							playlist={playlist}
+							isOpen={isOpen}
+						/>
+					</Header>
 					<PlayerContainer />
 					<ControlsContainer />
 					<SearchContainer />
-					<SearchResultsTarget id="search-results-target">
-						{trackCount === 0 && (
-							<EmptyCollection>
-								<h2>This collection is currently empty</h2>
-								<h4>Click 'Add Song' button to start collecting</h4>
-							</EmptyCollection>
-						)}
-						<QueueContainer />
-					</SearchResultsTarget>
+					<QueueContainer />
 				</StyledPlaylist>
 			</StyledPlaylistBackground>
 		);
@@ -72,10 +56,6 @@ export default class Playlist extends React.Component<$Props> {
 const StyledPlaylistBackground = styled.div`
 	transition: background-color 0.5s linear;
 	height: 100vh;
-`;
-
-const SearchResultsTarget = styled.div`
-	position: relative;
 `;
 
 const StyledPlaylist = styled.div`
@@ -92,16 +72,9 @@ const StyledPlaylist = styled.div`
 `;
 
 const Header = styled.div`
-	border-bottom: 1px solid rgba(40, 40, 40, 1);
-	padding: 0 0 1rem 0;
-	display: none !important;
-	flex-direction: row;
-	align-items: stretch;
-
-	@media ${device.small} {
-		padding: 0;
-		width: 100%;
-	}
+	position absolute;
+	width: 100%;
+	z-index: ${zindex('header')};
 `;
 
 const EmptyCollection = styled.div`

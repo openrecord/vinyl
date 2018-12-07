@@ -17,10 +17,7 @@ export default function SearchBackground({isOpen, toggleSearch, clearSearch, chi
 	const target = document.getElementById('search-results-target');
 	if (target) {
 		return ReactDOM.createPortal(
-			<VelocityTransitionGroup
-				enter={{animation: 'slideDown', delay: 200, duration: 700}}
-				leave="slideUp"
-			>
+			<VelocityTransitionGroup>
 				{isOpen && (
 					<Background isOpen={isOpen} toggleSearch={toggleSearch} clearSearch={clearSearch}>
 						{children}
@@ -67,10 +64,13 @@ class OnClickOutsideBackground extends React.Component<$OnClickOutsideBackground
 }
 
 const Background = styled(onClickOutside(OnClickOutsideBackground))`
-	background: rgba(25, 25, 25, 0.97);
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
+	background: white;
+	border-radius: 5rem;
+	width: 80%;
+	height: 80%;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 	z-index: ${zindex('search-background')};
 `;

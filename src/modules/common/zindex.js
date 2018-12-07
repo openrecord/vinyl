@@ -1,13 +1,15 @@
 const baseZIndexList = [
 	0,
-	'search-background',
-	'search-results',
 	'toast',
 	'player-expanded',
 	'controls',
 	'iframeblocker',
 	'player',
-	'nav'
+	'header',
+	'nav',
+	'search-background',
+	'search-holder',
+	'search-results'
 ];
 
 export default function zindex(element, list = baseZIndexList) {

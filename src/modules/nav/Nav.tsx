@@ -20,6 +20,7 @@ export default function Nav() {
 
 const StyledNav = styled.nav`
 	background: 'transparent';
+	display: none !important;
 	padding: 1rem 0;
 	position: fixed;
 	width: 100%;

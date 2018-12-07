@@ -10,14 +10,7 @@ interface $Props {
 export default function AddSong({onClick, isOpen}: $Props) {
 	return (
 		<Button onClick={onClick} data-id="show-hide-search">
-			{isOpen ? (
-				'Hide Search'
-			) : (
-				<>
-					Add Song
-					<span> +</span>
-				</>
-			)}
+			{isOpen ? 'Hide' : <>Add Song</>}
 		</Button>
 	);
 }
