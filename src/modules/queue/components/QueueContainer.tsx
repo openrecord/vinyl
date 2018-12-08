@@ -1,7 +1,9 @@
+import * as _f from 'lodash/fp';
 import gql from 'graphql-tag';
 import * as React from 'react';
 import {Subscription} from 'react-apollo';
 import {toast} from 'react-toastify';
+import {mod} from 'shades';
 
 import Toast from '../../common/components/Toast';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
@@ -11,6 +13,7 @@ import {useSimpleQuery} from '../../common/utils';
 import {$Track} from '../../search/components/types';
 import {useStore} from '../../store';
 import useDeleteTrack from '../mutations/DeleteTrack';
+import useUpdateIndex from '../mutations/UpdateIndex';
 import Queue from './Queue';
 
 const query = gql`
@@ -40,15 +43,28 @@ const ON_TRACK_ADDED = gql`
 	${PlaylistFragments.all}
 `;
 
+const ON_TRACK_UPDATED = gql`
+	subscription OnTrackUpdated($playlist: String!) {
+		track(where: {node: {playlist: {name: $playlist}}}) {
+			node {
+				id
+				index
+			}
+		}
+	}
+`;
+
 export default function QueueContainer() {
-	const playlist = usePlaylistName();
-	if (!playlist) {
+	const playlistName = usePlaylistName();
+	if (!playlistName) {
 		return null;
 	}
 
 	const {
-		data: {playlist: {tracks} = {tracks: []}}
-	} = useSimpleQuery<$QueryData>(query, {playlist});
+		data: {playlist = {id: '', tracks: []}}
+	} = useSimpleQuery<$QueryData>(query, {
+		playlist: playlistName
+	});
 
 	const {
 		state: {
@@ -61,29 +77,35 @@ export default function QueueContainer() {
 
 	const updatePlaying = useUpdatePlaying();
 	const deleteTrack = useDeleteTrack();
+	const updateIndex = useUpdateIndex();
 
 	return (
-		<Subscription subscription={ON_TRACK_ADDED} variables={{playlist}}>
-			{_ => (
-				<Queue
-					color={color}
-					tracks={tracks}
-					playing={playing}
-					togglePlaying={toggle('playing')}
-					updatePlaying={(track: $Track) => {
-						// Need to check if it's already playing, otherwise it actually
-						// stops playback
-						if (!playing) {
-							toggle('playing')(true);
-						}
-						updatePlaying(track);
-					}}
-					deleteTrack={(track: $Track) => {
-						deleteTrack({playlist, trackId: track.id});
-						toast(<Toast message="Song Deleted" />);
-					}}
-					currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
-				/>
+		<Subscription subscription={ON_TRACK_ADDED} variables={{playlist: playlistName}}>
+			{__ => (
+				<Subscription subscription={ON_TRACK_UPDATED} variables={{playlist: playlistName}}>
+					{__ => (
+						<Queue
+							color={color}
+							playlist={mod('tracks')(_f.sortBy('index'))(playlist)}
+							playing={playing}
+							togglePlaying={toggle('playing')}
+							updatePlaying={(track: $Track) => {
+								// Need to check if it's already playing, otherwise it actually
+								// stops playback
+								if (!playing) {
+									toggle('playing')(true);
+								}
+								updatePlaying(track);
+							}}
+							deleteTrack={(track: $Track) => {
+								deleteTrack({playlist: playlistName, trackId: track.id});
+								toast(<Toast message="Song Deleted" />);
+							}}
+							updateIndex={updateIndex}
+							currentlyPlayingId={currentlyPlaying && currentlyPlaying.id}
+						/>
+					)}
+				</Subscription>
 			)}
 		</Subscription>
 	);

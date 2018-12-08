@@ -7,6 +7,7 @@ export type $TrackSource = 'YOUTUBE' | 'SOUNDCLOUD';
 
 export interface $Track {
 	id: string;
+	index: number;
 	playlist: string;
 	info: {
 		id: string;
