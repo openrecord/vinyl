@@ -7,15 +7,16 @@ const FUNCTIONS_DIR = path.resolve(OUTPUT_DIR, 'functions');
 
 module.exports = {
 	devtool: 'inline-source-map',
-	entry: ['babel-polyfill', './graphql.ts'],
+	entry: {
+		graphql: './graphql.ts'
+	},
 	output: {
-		filename: 'graphql.js',
 		path: FUNCTIONS_DIR
 	},
 	module: {
 		rules: [
 			{
-				test: /\.(mjs|js|ts)$/,
+				test: /\.(js|ts)$/,
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',
@@ -23,20 +24,11 @@ module.exports = {
 						presets: ['@babel/preset-typescript', '@babel/preset-env']
 					}
 				}
-			},
-			{
-				test: /\.mjs$/,
-				include: /node_modules/,
-				type: 'javascript/auto'
 			}
 		]
 	},
 	resolve: {
 		extensions: ['.mjs', '.js', '.ts']
-	},
-	node: {
-		module: 'empty',
-		fs: 'empty'
 	},
 	plugins: [
 		new webpack.DefinePlugin({

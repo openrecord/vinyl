@@ -41,21 +41,12 @@ const ADD_TO_PLAYLIST = gql`
 		$playlist: String!
 		$source: TrackSource!
 	) {
-		upsertTrackInfo(
-			where: {url: $url}
-			create: {thumbnail: $thumbnail, title: $title, url: $url, source: $source}
-			update: {}
-		) {
-			id
-		}
-
-		upsertPlaylist(where: {name: $playlist}, create: {name: $playlist}, update: {}) {
-			id
-		}
-
-		updatePlaylist(
-			where: {name: $playlist}
-			data: {tracks: {create: [{info: {connect: {url: $url}}}]}}
+		addToPlaylist(
+			url: $url
+			thumbnail: $thumbnail
+			title: $title
+			playlist: $playlist
+			source: $source
 		) {
 			...AllPlaylist
 		}

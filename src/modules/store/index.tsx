@@ -1,16 +1,56 @@
 import Vibrant from 'node-vibrant';
 import * as React from 'react';
-import {map, mod, set} from 'shades';
+import {mod, set} from 'shades';
 
 import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
-import {$WithDefaultActions, $WithSetters} from './setters';
+import {$SetState, $WithDefaultActions} from './setters';
+
+function useFunctionalState<S>(initialState: S): [S, $SetState<S>] {
+	const [state, setState] = React.useState(initialState);
+	return [state, updater => setState(updater(state))];
+}
+
+const addDefaultActions = <S extends object>(setState: $SetState<S>) => <A extends object>(
+	actions: A
+) => ({
+	...actions,
+	setter: <Key extends keyof S>(key: Key) => (value: S[Key]) => setState(set(key)(value)),
+	toggle: <Key extends keyof S>(key: Key) => (value?: boolean) =>
+		setState(mod(key)(toggleOr(value)))
+});
 
 const DEFAULT_BG: $Color = {
 	r: 25,
 	g: 25,
 	b: 25
 };
+
+export interface $Player {
+	currentlyPlaying: $Track | undefined;
+	playing: boolean;
+	expanded: boolean;
+	played: number;
+	duration: number;
+	live: boolean;
+	color: $Color;
+}
+
+export interface $Queue {
+	tracks: $Track[];
+	isOpen: boolean;
+}
+
+export interface $Search {
+	query: string;
+	isOpen: boolean;
+}
+
+export interface $State {
+	player: $Player;
+	queue: $Queue;
+	search: $Search;
+}
 
 const initialState: $State = {
 	player: {
@@ -31,28 +71,6 @@ const initialState: $State = {
 		isOpen: false
 	}
 };
-
-interface $State {
-	player: {
-		currentlyPlaying: $Track | undefined;
-		playing: boolean;
-		expanded: boolean;
-		played: number;
-		duration: number;
-		live: boolean;
-		color: $Color;
-	};
-
-	queue: {
-		tracks: $Track[];
-		isOpen: boolean;
-	};
-
-	search: {
-		query: string;
-		isOpen: boolean;
-	};
-}
 
 export interface $Color {
 	r: number;
@@ -86,55 +104,46 @@ interface $Props {
 	children: React.ReactNode;
 }
 
-export default class StoreProvider extends React.Component<$Props, $State> {
-	addDefaultActions = <Key extends keyof $State>(
-		actions: $Actions[Key],
-		stateKey: Key
-	): $WithSetters<$Actions[Key]> => ({
-		...actions,
-		setter: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value: $State[Key][InnerKey]) =>
-			// @ts-ignore
-			this.setState(set(stateKey, key)(value)),
-		toggle: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value?: boolean) => {
-			// @ts-ignore
-			this.setState(mod<Key, Key2>(stateKey, key)(toggleOr(value)));
-		}
-	});
+export default function StoreProvider({children}: $Props) {
+	const [player, setPlayer] = useFunctionalState(initialState.player);
+	const [search, setSearch] = useFunctionalState(initialState.search);
+	const [queue, setQueue] = useFunctionalState(initialState.queue);
 
-	_actions: $Actions = {
-		player: {},
-		search: {},
-		queue: {}
+	useUpdateColorForTrack(player.currentlyPlaying, setPlayer);
+
+	const state: $State = {
+		player,
+		search,
+		queue
 	};
 
-	// @ts-ignore
-	actions = map(this.addDefaultActions)(this._actions) as $WithDefaultActions<$Actions>;
+	const actions: $Actions = {
+		player: addDefaultActions(setPlayer)({}),
+		search: addDefaultActions(setSearch)({}),
+		queue: addDefaultActions(setQueue)({})
+	};
 
-	state = initialState;
+	return <Store.Provider value={{state, actions}}>{children}</Store.Provider>;
+}
 
-	async componentDidUpdate(_prevProps: $Props, prevState: $State) {
-		if (prevState.player.currentlyPlaying !== this.state.player.currentlyPlaying) {
-			const track = this.state.player.currentlyPlaying;
-			if (track) {
-				const thumb = document.querySelector(`img[data-id="${track.info.id}"]`) as HTMLImageElement;
-				const vibrant = new Vibrant(thumb);
-				const {
-					Muted: {r, g, b}
-				} = await vibrant.getPalette();
-				this.setState(set('player', 'color')({r, g, b}));
+function useUpdateColorForTrack(
+	currentlyPlaying: $Track | undefined,
+	setPlayer: $SetState<$Player>
+) {
+	React.useEffect(
+		() => {
+			if (currentlyPlaying) {
+				const thumb = document.querySelector(
+					`img[data-id="${currentlyPlaying.info.id}"]`
+				) as HTMLImageElement;
+
+				new Vibrant(thumb)
+					.getPalette()
+					.then(({Muted: {r, g, b}}: {Muted: $Color}) => setPlayer(set('color')({r, g, b})));
 			} else {
-				this.setState(set('player', 'color')(DEFAULT_BG));
+				setPlayer(set('color')(DEFAULT_BG));
 			}
-		}
-	}
-
-	render() {
-		const {
-			state,
-			actions,
-			props: {children}
-		} = this;
-
-		return <Store.Provider value={{state, actions}}>{children}</Store.Provider>;
-	}
+		},
+		[currentlyPlaying]
+	);
 }
