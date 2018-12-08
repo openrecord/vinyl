@@ -3,11 +3,18 @@
 # import Subscription.* from './schema.graphql'
 
 type Query {
-	hello: String
+	empty: String
 }
 
 type Mutation {
 	updateIndex(trackId: ID!, newIdx: Int!): Playlist!
+	addToPlaylist(
+		url: String!
+		thumbnail: String
+		title: String!
+		playlist: String!
+		source: TrackSource!
+	): Playlist!
 }
 
 type Subscription {

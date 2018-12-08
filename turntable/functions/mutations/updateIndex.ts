@@ -1,12 +1,36 @@
+import * as _ from 'lodash';
 import gql from 'graphql-tag';
 import {findBy, get} from 'shades';
 
-import {Track} from '../../generated/prisma';
+import {Track, Playlist} from '../../generated/prisma';
 import {prisma} from '../graphql';
 
-export default async function updateIndex(_, {trackId, newIdx}) {
-	const {playlist} = await playlistForTrack(trackId);
+const PlaylistFragment = `
+	id
+	tracks(orderBy: index_ASC) {
+		id
+		index
+	}
+`;
 
+interface $Vars {
+	trackId: string;
+	newIdx: number;
+}
+
+export default async function updateIndex(__root, {trackId, newIdx}: $Vars, __, info) {
+	let {playlist} = await prisma.query.track<Track>(
+		{where: {id: trackId}},
+		gql`
+			query {
+				playlist {
+					${PlaylistFragment}
+				}
+			}
+		`
+	);
+
+	playlist = await ensureGaplessTrackOrder(playlist);
 	const oldIdx = get('tracks', findBy({id: trackId}), 'index')(playlist);
 
 	if (oldIdx === newIdx) {
@@ -28,25 +52,8 @@ export default async function updateIndex(_, {trackId, newIdx}) {
 		const toMoveUp = playlist.tracks.slice(newIdx, oldIdx);
 		await moveBy(toMoveUp, 1);
 	}
-
-	return playlistForTrack(trackId).then(get('playlist'));
+	return prisma.query.playlist({where: {id: playlist.id}}, info);
 }
-
-const playlistForTrack = (trackId: number) =>
-	prisma.query.track<Track>(
-		{where: {id: trackId}},
-		gql`
-			query {
-				playlist {
-					id
-					tracks(orderBy: index_ASC) {
-						id
-						index
-					}
-				}
-			}
-		`
-	);
 
 const moveBy = (tracks: Track[], amt: number) => Promise.all(tracks.map(moveTrackBy(amt)));
 
@@ -55,3 +62,26 @@ const moveTrackBy = (amt: number) => (track: Track) =>
 		where: {id: track.id},
 		data: {index: track.index + amt}
 	});
+
+async function ensureGaplessTrackOrder(playlist: Playlist) {
+	if (playlist.tracks.length === _.last(playlist.tracks).index + 1) {
+		return playlist;
+	}
+
+	await Promise.all(
+		playlist.tracks.map(({id, index}, idx) => {
+			if (index !== idx) {
+				return prisma.mutation.updateTrack({where: {id}, data: {index: idx}});
+			}
+		})
+	);
+
+	return prisma.query.playlist(
+		{where: {id: playlist.id}},
+		gql`
+			{
+				${PlaylistFragment}
+			}
+		`
+	);
+}
