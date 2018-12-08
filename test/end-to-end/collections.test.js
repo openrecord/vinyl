@@ -43,6 +43,7 @@ async function addSongFromQuery(page, query) {
 
 	await track.click();
 	await page.click(SEL.searchButton);
+	await waitForAnimation(page);
 	return trackName;
 }
 
@@ -67,13 +68,16 @@ async function testAddSongAddedToRemote(remotePage, trackName) {
 	expect(remoteQueueName).toEqual(trackName);
 }
 
-async function testDragAndDrop(page) {
+async function testDragAndDrop(page, remotePage) {
 	async function dragTracks() {
-		await page.$$(selector => document.querySelectorAll(selector).length > 1, SEL.queueTrack);
+		await waitForAnimation(page);
+		await page.waitFor(
+			selector => document.querySelectorAll(selector).length > 1,
+			{},
+			SEL.queueTrack
+		);
 		const tracks = await page.$$(SEL.queueTrack);
-		const boundingBoxes = await Promise.all(tracks.map(el => el.boundingBox()));
-		const one = boundingBoxes[0],
-			two = boundingBoxes[1];
+		const [one, two] = await Promise.all(tracks.map(el => el.boundingBox()));
 
 		await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
 		await page.mouse.down();
@@ -82,22 +86,20 @@ async function testDragAndDrop(page) {
 	}
 
 	await addSongFromQuery(page, 'butts');
-	await waitForAnimation(page);
 
-	const oldTrackNames = await getQueueNames(page);
+	const [oldOne, oldTwo] = await getQueueNames(page);
 
 	await dragTracks();
-	await page.waitFor(400);
+	await page.waitFor(1000);
 
-	const newTrackNames = await getQueueNames(page);
+	const [newOne, newTwo] = await getQueueNames(page);
+	expect(newTwo).toEqual(oldOne);
+	expect(newOne).toEqual(oldTwo);
 
-	expect(newTrackNames[1]).toEqual(oldTrackNames[0]);
-	expect(newTrackNames[0]).toEqual(oldTrackNames[1]);
+	const [remoteOne, remoteTwo] = await getQueueNames(remotePage);
 
-	const remoteTrackNames = await getQueueNames(page);
-
-	expect(remoteTrackNames[1]).toEqual(oldTrackNames[0]);
-	expect(remoteTrackNames[0]).toEqual(oldTrackNames[1]);
+	expect(remoteTwo).toEqual(oldOne);
+	expect(remoteOne).toEqual(oldTwo);
 }
 
 describe('Collections Page', () => {
@@ -134,7 +136,7 @@ describe('Collections Page', () => {
 			await testAddSongAddedToRemote(remotePage, trackName);
 			console.log('Remote sync passed!');
 
-			await testDragAndDrop(page);
+			await testDragAndDrop(page, remotePage);
 			console.log('Drag and drop passed!');
 		},
 		600 * 1000

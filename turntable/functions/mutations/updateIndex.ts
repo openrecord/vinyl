@@ -30,7 +30,7 @@ export default async function updateIndex(__root, {trackId, newIdx}: $Vars, __, 
 		`
 	);
 
-	playlist = await ensureTrackOrderSequential(playlist);
+	playlist = await ensureGaplessTrackOrder(playlist);
 	const oldIdx = get('tracks', findBy({id: trackId}), 'index')(playlist);
 
 	if (oldIdx === newIdx) {
@@ -63,7 +63,7 @@ const moveTrackBy = (amt: number) => (track: Track) =>
 		data: {index: track.index + amt}
 	});
 
-async function ensureTrackOrderSequential(playlist: Playlist) {
+async function ensureGaplessTrackOrder(playlist: Playlist) {
 	if (playlist.tracks.length === _.last(playlist.tracks).index + 1) {
 		return playlist;
 	}
