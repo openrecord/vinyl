@@ -4,7 +4,6 @@
   "description": "Frontend for openrecord platform.",
   "main": "TODO",
   "scripts": {
-    "clean": "rm -rf dist turntable/generated turntable/schema.graphql",
     "start": "docker-compose -f turntable/docker-compose.yml up -d && npm run start:web & npm run start:api",
     "start:web": "webpack-dev-server --mode development",
     "start:api": "netlify-lambda serve --config turntable/webpack.config.js turntable/functions",
@@ -15,7 +14,7 @@
     "deploy:test": "cd turntable; env-cmd ../env.test.env prisma deploy",
     "deploy:staging": "cd turntable; env-cmd ../env/.staging.env prisma deploy",
     "deploy:prod": "cd turntable; env-cmd ../env/.prod.env prisma deploy", 
-    "codegen": "npm run clean; cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
+    "codegen": "cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
     "compile:api": "netlify-lambda build --config turntable/webpack.config.js turntable/functions",
     "test": "jest --runInBand",
     "test:ci": "jest --runInBand --ci || jest --runInBand --ci",
