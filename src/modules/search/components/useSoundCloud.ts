@@ -32,7 +32,7 @@ export default function useSoundCloud(search: string) {
   React.useEffect(
     () => {
       if (search) {
-        searchSoundcloud(getSoundCloudUrl(search))
+        searchSoundcloud(search)
           .then(resp => resp.json())
           // @ts-ignore: needs traversal types
           .then(set(all, '__typename')('SoundCloudResult'))
