@@ -34,8 +34,8 @@ export default class Playlist extends React.Component<$Props> {
             <AddSong onClick={toggleSearch} isOpen={isOpen} />
           </TopRight>
           <PlayerContainer />
-          <ControlsContainer />
           <SearchContainer />
+          <ControlsContainer />
           {isEmpty ? (
             <EmptyCollection>
               <h2>This collection is currently empty</h2>

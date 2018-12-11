@@ -1,9 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import * as Modal from 'react-modal';
 
-import zindex from '../../common/zindex';
 import SearchBar from './SearchBar';
-import SearchInner from './SearchInner';
 import SearchResults from './SearchResults';
 import {$Result} from './types';
 
@@ -14,42 +12,31 @@ interface $Props {
   enqueue(song: $Result): void;
   setSearch(query: string): void;
   toggleSearch(value?: boolean): void;
-  clearSearch(): void;
 }
 
-export default function Search({
-  query,
-  setSearch,
-  results,
-  enqueue,
-  isOpen,
-  toggleSearch,
-  clearSearch
-}: $Props) {
+Modal.setAppElement('#root');
+
+export default function Search({query, setSearch, results, enqueue, isOpen, toggleSearch}: $Props) {
   return (
-    <SearchHolder isOpen={isOpen}>
-      <SearchInner isOpen={isOpen} toggleSearch={toggleSearch} clearSearch={clearSearch}>
-        <SearchBar query={query} onChange={setSearch} />
-        <SearchResults results={results} enqueue={enqueue} />
-      </SearchInner>
-      <SearchResultsTarget id="search-results-target" />
-    </SearchHolder>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={() => toggleSearch(false)}
+      style={{
+        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.85)'},
+        content: {
+          padding: 0,
+          border: 0,
+          background: 'rgba(60, 60, 60)',
+          borderRadius: '0 0 5rem 5rem',
+          width: '80%',
+          height: '80%',
+          left: '10%',
+          top: '10%'
+        }
+      }}
+    >
+      <SearchBar query={query} onChange={setSearch} />
+      <SearchResults results={results} enqueue={enqueue} />
+    </Modal>
   );
 }
-
-const SearchHolder = styled.div`
-  background: rgba(20, 20, 20, 0.5);
-  display: ${(props: {isOpen: boolean}) => (props.isOpen ? '	flex' : 'none')};
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  z-index: ${zindex('search-holder')};
-`;
-
-const SearchResultsTarget = styled.div`
-  position: relative;
-`;

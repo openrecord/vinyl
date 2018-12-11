@@ -1,45 +1,45 @@
 enum TrackSource {
-	YOUTUBE
-	SOUNDCLOUD
+  YOUTUBE
+  SOUNDCLOUD
 }
 
 type Track {
-	id: ID! @unique
-	info: TrackInfo!
-	playlist: Playlist!
-	index: Int
-	controls: [RemoteControl!]! @relation(name: "ControlsBySong", onDelete: CASCADE)
+  id: ID! @unique
+  info: TrackInfo!
+  playlist: Playlist!
+  index: Int
+  controls: [RemoteControl!]! @relation(name: "ControlsBySong", onDelete: CASCADE)
 }
 
 type TrackInfo {
-	id: ID! @unique
-	thumbnail: String
-	title: String!
-	description: String
-	url: String! @unique
-	source: TrackSource!
+  id: ID! @unique
+  thumbnail: String
+  title: String!
+  description: String
+  url: String! @unique
+  source: TrackSource!
 }
 
 type Playlist {
-	id: ID! @unique
-	name: String! @unique
-	tracks: [Track!]!
+  id: ID! @unique
+  name: String! @unique
+  tracks: [Track!]!
 }
 
 enum ControlAction {
-	PLAY
-	PAUSE
-	SET
+  PLAY
+  PAUSE
+  SET
 }
 
 type RemoteControl {
-	id: ID! @unique
-	song: Track! @relation(name: "ControlsBySong")
-	action: ControlAction!
+  id: ID! @unique
+  song: Track! @relation(name: "ControlsBySong")
+  action: ControlAction!
 }
 
 type Migration {
-	id: ID! @unique
-	index: Int @unique
-	name: String!
+  id: ID! @unique
+  index: Int @unique
+  name: String!
 }
