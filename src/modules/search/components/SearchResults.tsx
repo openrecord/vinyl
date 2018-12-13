@@ -6,7 +6,6 @@ import Track from './Track';
 import {$Result} from './types';
 import zindex from '../../common/zindex';
 import * as animations from '../../common/animations';
-import ResultsFilter from './ResultsFilter';
 
 export default class SearchResults extends React.Component {
 	props: {
@@ -27,7 +26,6 @@ export default class SearchResults extends React.Component {
 		const {results, enqueue} = this.props;
 		return (
 			<div>
-				<ResultsFilter handleFilter={this.handleFilter} />
 				<StyledSearchResults>
 					<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.SEARCH} childIsWrapped>
 						<VelocityTransitionGroup
@@ -92,7 +90,6 @@ const StyledSearchResults = styled.div`
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 100%;
-	box-shadow: 0px 12px 6px 4px rgba(0, 0, 0, 0.2);
 	::-webkit-scrollbar {
 		display: none;
 	}

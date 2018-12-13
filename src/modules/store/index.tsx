@@ -56,7 +56,7 @@ const initialState: $State = {
 	player: {
 		currentlyPlaying: undefined,
 		playing: true,
-		expanded: false,
+		expanded: true,
 		played: 0,
 		duration: 0,
 		live: true,

@@ -40,7 +40,6 @@ export default function Controls({
 				playNext={playNext}
 				playPrev={playPrev}
 			/>
-			<Slider played={played} duration={duration} setPlayed={setPlayed} />
 		</MediaControls>
 	);
 
@@ -52,6 +51,7 @@ export default function Controls({
 
 	const desktop = (
 		<Footer color={color}>
+			<Slider played={played} duration={duration} setPlayed={setPlayed} />
 			<Row transparent={expanded}>
 				{title}
 				{controls}
@@ -94,7 +94,6 @@ export default function Controls({
 const Footer = styled.div`
 	background-color: ${props =>
 		Color(props.color)
-			.darken(0.5)
 			.rgb()
 			.string()};
 	position: fixed;
@@ -108,24 +107,22 @@ const Footer = styled.div`
 `;
 
 const Row = styled.div`
-	height: ${FOOTER_HEIGHT_DESKTOP};
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-	border-top: 0.0625rem solid rgb(64, 64, 64);
 	box-sizing: border-box;
+	margin: 0.25rem 2rem 1rem 2rem;
 
 	:first-child {
 		border-top: none;
 	}
-
-	@media ${device.small} {
-		height: ${FOOTER_HEIGHT_MOBILE};
-	}
 `;
 
 const MediaControls = styled.div`
+	left: 50%;
 	min-width: 40%;
+	position: absolute;
+	transform: translateX(-50%);
 
 	@media ${device.small} {
 		width: 100%;
@@ -133,41 +130,15 @@ const MediaControls = styled.div`
 `;
 
 const Title = styled.h5`
-	position: absolute;
-	left: 1.5rem;
-	top: 50%;
-	transform: translateY(-50%);
-	color: rgb(233, 233, 233);
+	color: rgb(255, 255, 255);
 	max-width: 25%;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-
-	@media ${device.small} {
-		position: static;
-		transform: none;
-		margin-right: auto;
-		margin-left: 0.5rem;
-		max-width: 60%;
-		font-size: 0.845rem;
-
-		${props =>
-			props.centered &&
-			css`
-				margin: auto;
-				font-size: 1rem;
-				padding: 0 0.75rem;
-				max-width: 100%;
-			`};
-	}
 `;
 
 const RightCenter = styled.div`
 	cursor: pointer;
-	height: 100%;
-	position: absolute;
-	right: 0;
-	margin-right: 0.5rem;
 
 	:hover {
 		${ExpandButton} {

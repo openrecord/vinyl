@@ -59,8 +59,8 @@ const Flex1 = styled.div`
 `;
 
 export const StyledReactSlider = styled(ReactSlider)`
-	background: rgb(80, 80, 80);
-	margin: 0.75rem 0;
+	background: rgb(255, 255, 255);
+	margin: 0.75rem 2rem;
 
 	.rc-slider-track {
 		background: rgba(255, 255, 255, 0.6);
