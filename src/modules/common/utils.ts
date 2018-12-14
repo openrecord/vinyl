@@ -6,7 +6,6 @@ import {map} from 'shades';
 import {$Color} from '../store';
 
 export type $Nullable<T> = T | null | undefined;
-export type $Undef<T> = T | undefined;
 
 interface $InputEvent {
   target: {
@@ -65,7 +64,7 @@ export const ifElse = <S extends {}>(t: S, f: S) => <C extends {}>(c: C) => (c ?
 
 export const modulo = (n: number, m: number): number => ((n % m) + m) % m;
 
-export const toggleOr = (maybeValue: $Undef<boolean>) => (oldValue: boolean): boolean =>
+export const toggleOr = (maybeValue: boolean | undefined) => (oldValue: any): boolean =>
   typeof maybeValue === 'boolean' ? maybeValue : !oldValue;
 
 export const toRGBString = ({r, g, b, a = 1}: $Color) => `rgba(${r}, ${g}, ${b}, ${a})`;

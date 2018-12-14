@@ -51,7 +51,7 @@ export default class Playlist extends React.Component<$Props> {
 }
 
 const StyledPlaylistBackground = styled.div`
-  transition: background-color 0.5s linear;
+  transition: background-color 1.5s linear;
   height: 100vh;
 `;
 

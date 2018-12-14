@@ -1,17 +1,17 @@
-import * as _f from 'lodash/fp';
 import gql from 'graphql-tag';
+import * as _f from 'lodash/fp';
 import * as React from 'react';
-import {Subscription} from 'react-apollo';
-import {toast} from 'react-toastify';
-import {mod} from 'shades';
+import { Subscription } from 'react-apollo';
+import { toast } from 'react-toastify';
+import { mod } from 'shades';
 
 import Toast from '../../common/components/Toast';
 import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 import usePlaylistName from '../../common/hooks/usePlaylistName';
 import useUpdatePlaying from '../../common/mutations/UpdatePlaying';
-import {useSimpleQuery} from '../../common/utils';
-import {$Track} from '../../search/components/types';
-import {useStore} from '../../store';
+import { useSimpleQuery } from '../../common/utils';
+import { $Track } from '../../search/components/types';
+import { useStore } from '../../store';
 import useDeleteTrack from '../mutations/DeleteTrack';
 import useUpdateIndex from '../mutations/UpdateIndex';
 import Queue from './Queue';
@@ -61,7 +61,7 @@ export default function QueueContainer() {
   }
 
   const {
-    data: {playlist = {id: '', tracks: []}}
+    data: {playlist = {id: '', name: '', tracks: []}}
   } = useSimpleQuery<$QueryData>(query, {
     playlist: playlistName
   });
@@ -85,7 +85,7 @@ export default function QueueContainer() {
         <Subscription subscription={ON_TRACK_UPDATED} variables={{playlist: playlistName}}>
           {__ => (
             <Queue
-              color={color}
+              bgColor={color}
               playlist={mod('tracks')(_f.sortBy('index'))(playlist)}
               playing={playing}
               togglePlaying={toggle('playing')}

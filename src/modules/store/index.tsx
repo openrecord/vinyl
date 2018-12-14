@@ -1,4 +1,5 @@
 import Vibrant from 'node-vibrant';
+import {Palette} from 'node-vibrant/lib/color';
 import * as React from 'react';
 import {mod, set} from 'shades';
 
@@ -6,17 +7,13 @@ import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
 import {$SetState, $WithDefaultActions} from './setters';
 
-function useFunctionalState<S>(initialState: S): [S, $SetState<S>] {
-  const [state, setState] = React.useState(initialState);
-  return [state, updater => setState(updater(state))];
-}
-
 const addDefaultActions = <S extends object>(setState: $SetState<S>) => <A extends object>(
   actions: A
 ) => ({
   ...actions,
-  setter: <Key extends keyof S>(key: Key) => (value: S[Key]) => setState(set(key)(value)),
-  toggle: <Key extends keyof S>(key: Key) => (value?: boolean) =>
+  setter: <Key extends (keyof S) & string>(key: Key) => (value: S[Key]) =>
+    setState(set(key)(value)),
+  toggle: <Key extends (keyof S) & string>(key: Key) => (value?: boolean) =>
     setState(mod(key)(toggleOr(value)))
 });
 
@@ -90,11 +87,8 @@ interface $Store {
   actions: $Actions & $WithDefaultActions<$State>;
 }
 
-const Store = React.createContext<$Store>({
-  state: initialState,
-  // @ts-ignore
-  actions: null
-});
+// @ts-ignore
+const Store = React.createContext<$Store>();
 
 export function useStore(): $Store {
   return React.useContext(Store);
@@ -105,9 +99,9 @@ interface $Props {
 }
 
 export default function StoreProvider({children}: $Props) {
-  const [player, setPlayer] = useFunctionalState(initialState.player);
-  const [search, setSearch] = useFunctionalState(initialState.search);
-  const [queue, setQueue] = useFunctionalState(initialState.queue);
+  const [search, setSearch] = React.useState(initialState.search);
+  const [queue, setQueue] = React.useState(initialState.queue);
+  const [player, setPlayer] = React.useState(initialState.player);
 
   useUpdateColorForTrack(player.currentlyPlaying, setPlayer);
 
@@ -139,7 +133,8 @@ function useUpdateColorForTrack(
 
         new Vibrant(thumb)
           .getPalette()
-          .then(({Muted: {r, g, b}}: {Muted: $Color}) => setPlayer(set('color')({r, g, b})));
+          .then(getSwatch)
+          .then(({r, g, b}: $Color) => setPlayer(set('color')({r, g, b})));
       } else {
         setPlayer(set('color')(DEFAULT_BG));
       }
@@ -147,3 +142,12 @@ function useUpdateColorForTrack(
     [currentlyPlaying]
   );
 }
+
+const getSwatch = (palette: Palette) =>
+  palette.Muted ||
+  palette.DarkMuted ||
+  palette.LightMuted ||
+  palette.LightVibrant ||
+  palette.DarkVibrant ||
+  palette.Vibrant ||
+  DEFAULT_BG;
