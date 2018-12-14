@@ -32,8 +32,7 @@ export default function useSoundCloud(search: string) {
       if (search) {
         fetch(getSoundCloudUrl(search))
           .then(resp => resp.json())
-          // @ts-ignore: needs traversal types
-          .then(set(all, '__typename')('SoundCloudResult'))
+          .then(set(all(), '__typename')('SoundCloudResult'))
           .then(setResults);
       } else {
         setResults([]);

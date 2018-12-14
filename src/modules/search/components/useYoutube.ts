@@ -48,8 +48,7 @@ export default function useYoutube(search: string) {
     fetch(getYoutubeURL(query))
       .then(resp => resp.json() as Promise<$YoutubeResponse>)
       .then(get('items'))
-      .then(set(all, '__typename')('YoutubeResult'))
-      // @ts-ignore: needs traversal ignatures
+      .then(set(all(), '__typename')('YoutubeResult'))
       .then(setResults);
 
   const [results, setResults] = React.useState([] as $YoutubeResult[]);

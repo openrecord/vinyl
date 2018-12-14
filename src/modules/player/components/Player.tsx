@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
-import {find, has} from 'shades';
+import {find, includes} from 'shades';
 import styled from 'styled-components';
 
 import {$Track} from '../../search/components/types';
@@ -35,9 +35,10 @@ class Player extends React.Component<$PlayerProps> {
       }
     }
 
-    const iframes = document.getElementsByTagName('iframe');
-    const sc = find(has({src: (src: string) => src.includes('soundcloud')}))(iframes);
+    const iframes = Array.from(document.getElementsByTagName('iframe'));
+    const sc = find({src: includes('soundcloud')})(iframes);
     if (sc) {
+      // @ts-ignore: HTMLIFrameElements DO have an 'allow' property, it's just new
       sc.allow = 'autoplay';
     }
   }

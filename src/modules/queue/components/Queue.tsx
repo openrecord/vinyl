@@ -1,20 +1,20 @@
 import * as React from 'react';
-import {DragDropContext, Droppable} from 'react-beautiful-dnd';
-import {has} from 'shades';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { has } from 'shades';
 import styled from 'styled-components';
-import {VelocityTransitionGroup} from 'velocity-react';
+import { VelocityTransitionGroup } from 'velocity-react';
 
-import {device} from '../../../styles/utilities/device';
+import { device } from '../../../styles/utilities/device';
 import * as animations from '../../common/animations';
 import ArrowNavigation from '../../common/components/ArrowNavigation';
-import {$Playlist, $Track} from '../../search/components/types';
-import {$Color} from '../../store';
+import { $Playlist, $Track } from '../../search/components/types';
+import { $Color } from '../../store';
 import QueueTrack from './QueueTrack';
 
 interface $Props {
   bgColor: $Color;
   playlist: $Playlist;
-  currentlyPlayingId: string;
+  currentlyPlayingId: string | undefined;
   playing: boolean;
   updatePlaying(track: $Track): void;
   togglePlaying(): void;

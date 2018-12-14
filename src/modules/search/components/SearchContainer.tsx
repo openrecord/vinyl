@@ -38,7 +38,6 @@ export default function SearchContainer() {
         addToPlaylist(track, playlist);
         toast(<Toast message="Song Added!" />);
       }}
-      clearSearch={() => setter('query')('')}
     />
   );
 }
