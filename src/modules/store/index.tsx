@@ -1,10 +1,10 @@
 import Vibrant from 'node-vibrant';
 import * as React from 'react';
-import {mod, set} from 'shades';
+import { mod, set } from 'shades';
 
-import {toggleOr} from '../common/utils';
-import {$Track} from '../search/components/types';
-import {$SetState, $WithDefaultActions} from './setters';
+import { toggleOr } from '../common/utils';
+import { $Track } from '../search/components/types';
+import { $SetState, $WithDefaultActions } from './setters';
 
 function useFunctionalState<S>(initialState: S): [S, $SetState<S>] {
   const [state, setState] = React.useState(initialState);

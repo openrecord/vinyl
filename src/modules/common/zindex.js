@@ -1,24 +1,24 @@
 const baseZIndexList = [
-	0,
-	'toast',
-	'player-expanded',
-	'controls',
-	'iframeblocker',
-	'player',
-	'header',
-	'nav',
-	'search-background',
-	'search-holder',
-	'search-results'
+  0,
+  'toast',
+  'player-expanded',
+  'controls',
+  'iframeblocker',
+  'player',
+  'header',
+  'nav',
+  'search-background',
+  'search-holder',
+  'search-results'
 ];
 
 export default function zindex(element, list = baseZIndexList) {
-	const z = list.indexOf(element);
-	const zero = list.includes(0) ? list.indexOf(0) : 0;
+  const z = list.indexOf(element);
+  const zero = list.includes(0) ? list.indexOf(0) : 0;
 
-	if (z > -1) {
-		return z - zero;
-	}
+  if (z > -1) {
+    return z - zero;
+  }
 
-	throw new Error(`There is no item ${element} in list: ${list}`);
+  throw new Error(`There is no item ${element} in list: ${list}`);
 }

@@ -1,10 +1,14 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
-import {find, includes} from 'shades';
+import { find, includes } from 'shades';
 import styled from 'styled-components';
 
-import {$Track} from '../../search/components/types';
+import { $Track } from '../../search/components/types';
 
+<<<<<<< HEAD
+=======
+import {find, has} from 'shades';
+>>>>>>> develop
 export interface $PlayerProps {
   played: number;
   setPlayed(played: number): void;
@@ -65,7 +69,11 @@ class Player extends React.Component<$PlayerProps> {
             options: {
               auto_play: true
             },
+<<<<<<< HEAD
             // @ts-ignore
+=======
+            // @ts-ignore: they forgot to put this in the types, but it works
+>>>>>>> develop
             preload: true
           },
           youtube: {

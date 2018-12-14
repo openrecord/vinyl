@@ -1,18 +1,18 @@
-import { $Track } from '../../search/components/types';
-import { useStore } from '../../store';
+import {$Track} from '../../search/components/types';
+import {useStore} from '../../store';
 import useCreateRemoteControl from './CreateRemoteControl';
 
 export default function useUpdatePlaying() {
-	const {
-		actions: {
-			player: {setter}
-		}
-	} = useStore();
+  const {
+    actions: {
+      player: {setter}
+    }
+  } = useStore();
 
-	const createRemoteControl = useCreateRemoteControl();
+  const createRemoteControl = useCreateRemoteControl();
 
-	return (track: $Track) => {
-		setter('currentlyPlaying')(track);
-		createRemoteControl({action: 'SET', id: track.id});
-	};
+  return (track: $Track) => {
+    setter('currentlyPlaying')(track);
+    createRemoteControl({action: 'SET', id: track.id});
+  };
 }
