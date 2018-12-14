@@ -12,82 +12,82 @@ import {$Color} from '../../store';
 import QueueTrack from './QueueTrack';
 
 interface $Props {
-	bgColor: $Color;
-	playlist: $Playlist;
-	currentlyPlayingId: string;
-	playing: boolean;
-	updatePlaying(track: $Track): void;
-	togglePlaying(): void;
-	deleteTrack(track: $Track): void;
-	updateIndex(id: string, newIndex: number, playlist: $Playlist): void;
+  bgColor: $Color;
+  playlist: $Playlist;
+  currentlyPlayingId: string;
+  playing: boolean;
+  updatePlaying(track: $Track): void;
+  togglePlaying(): void;
+  deleteTrack(track: $Track): void;
+  updateIndex(id: string, newIndex: number, playlist: $Playlist): void;
 }
 
 export default function Queue({
-	bgColor,
-	playlist,
-	updatePlaying,
-	togglePlaying,
-	currentlyPlayingId,
-	playing,
-	deleteTrack,
-	updateIndex
+  bgColor,
+  playlist,
+  updatePlaying,
+  togglePlaying,
+  currentlyPlayingId,
+  playing,
+  deleteTrack,
+  updateIndex
 }: $Props) {
-	const isCurrentSong = has({id: currentlyPlayingId});
+  const isCurrentSong = has({id: currentlyPlayingId});
 
-	return (
-		<DragDropContext
-			onDragEnd={({draggableId, destination}) => {
-				if (destination && destination.index) {
-					updateIndex(draggableId, destination.index, playlist);
-				}
-			}}
-		>
-			<QueueList>
-				<ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
-					<Droppable droppableId="queue">
-						{provided => (
-							<div ref={provided.innerRef} {...provided.droppableProps}>
-								{provided.placeholder}
-								<VelocityTransitionGroup
-									enter={{
-										animation: animations.rotate3d.in,
-										display: 'flex',
-										stagger: 90,
-										duration: 850
-									}}
-									leave={{animation: animations.rotate3d.out, display: 'flex'}}
-									runOnMount
-								>
-									{playlist.tracks.map((track, idx) => (
-										<QueueTrack
-											track={track}
-											index={idx}
-											bgColor={bgColor}
-											onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
-											deleteTrack={() => deleteTrack(track)}
-											playing={playing}
-											isCurrentSong={isCurrentSong(track)}
-											key={idx}
-										/>
-									))}
-								</VelocityTransitionGroup>
-							</div>
-						)}
-					</Droppable>
-				</ArrowNavigation>
-			</QueueList>
-		</DragDropContext>
-	);
+  return (
+    <DragDropContext
+      onDragEnd={({draggableId, destination}) => {
+        if (destination && destination.index) {
+          updateIndex(draggableId, destination.index, playlist);
+        }
+      }}
+    >
+      <QueueList>
+        <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
+          <Droppable droppableId="queue">
+            {provided => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {provided.placeholder}
+                <VelocityTransitionGroup
+                  enter={{
+                    animation: animations.rotate3d.in,
+                    display: 'flex',
+                    stagger: 90,
+                    duration: 850
+                  }}
+                  leave={{animation: animations.rotate3d.out, display: 'flex'}}
+                  runOnMount
+                >
+                  {playlist.tracks.map((track, idx) => (
+                    <QueueTrack
+                      track={track}
+                      index={idx}
+                      bgColor={bgColor}
+                      onClick={isCurrentSong(track) ? togglePlaying : () => updatePlaying(track)}
+                      deleteTrack={() => deleteTrack(track)}
+                      playing={playing}
+                      isCurrentSong={isCurrentSong(track)}
+                      key={idx}
+                    />
+                  ))}
+                </VelocityTransitionGroup>
+              </div>
+            )}
+          </Droppable>
+        </ArrowNavigation>
+      </QueueList>
+    </DragDropContext>
+  );
 }
 
 const QueueList = styled.div`
-	margin-bottom: 5rem;
+  margin-bottom: 5rem;
 
-	@media ${device.small} {
-		margin-bottom: 10.25rem;
-	}
+  @media ${device.small} {
+    margin-bottom: 10.25rem;
+  }
 
-	::-webkit-scrollbar {
-		display: none;
-	}
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
