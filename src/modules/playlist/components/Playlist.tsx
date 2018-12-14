@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import {VelocityComponent} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
@@ -15,6 +16,7 @@ interface $Props {
   color: $Color;
   isOpen: boolean;
   isEmpty: boolean;
+  showAddBtn: boolean;
   createPlaylist(): void;
   toggleSearch(value?: boolean): void;
 }
@@ -25,13 +27,15 @@ export default class Playlist extends React.Component<$Props> {
   }
 
   render() {
-    const {color, isOpen, isEmpty, toggleSearch} = this.props;
+    const {color, isOpen, isEmpty, showAddBtn, toggleSearch} = this.props;
 
     return (
       <StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
         <StyledPlaylist>
           <TopRight>
-            <AddSong onClick={toggleSearch} isOpen={isOpen} />
+            <VelocityComponent animation={{opacity: showAddBtn ? 0 : 1}}>
+              <AddSong onClick={toggleSearch} isOpen={isOpen} />
+            </VelocityComponent>
           </TopRight>
           <PlayerContainer />
           <SearchContainer />

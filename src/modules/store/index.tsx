@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import Vibrant from 'node-vibrant';
 import {Palette} from 'node-vibrant/lib/color';
 import * as React from 'react';
@@ -31,6 +32,7 @@ export interface $Player {
   duration: number;
   live: boolean;
   color: $Color;
+  isActive: boolean;
 }
 
 export interface $Queue {
@@ -57,7 +59,8 @@ const initialState: $State = {
     played: 0,
     duration: 0,
     live: true,
-    color: DEFAULT_BG
+    color: DEFAULT_BG,
+    isActive: true
   },
   queue: {
     tracks: [],
@@ -104,6 +107,7 @@ export default function StoreProvider({children}: $Props) {
   const [player, setPlayer] = React.useState(initialState.player);
 
   useUpdateColorForTrack(player.currentlyPlaying, setPlayer);
+  useUpdateIsActive(setPlayer);
 
   const state: $State = {
     player,
@@ -151,3 +155,30 @@ const getSwatch = (palette: Palette) =>
   palette.DarkVibrant ||
   palette.Vibrant ||
   DEFAULT_BG;
+
+function useUpdateIsActive(setPlayer: $SetState<$Player>) {
+  const pid = React.useRef(0);
+
+  const setTimer = () => {
+    pid.current = window.setTimeout(() => setPlayer(set('isActive')(false)), 3000);
+  };
+
+  const reset = React.useRef(
+    _.throttle(() => {
+      setPlayer(set('isActive')(true));
+      clearTimeout(pid.current);
+      setTimer();
+    }, 250)
+  );
+
+  React.useEffect(() => {
+    setTimer();
+    document.addEventListener('mousemove', reset.current);
+    document.addEventListener('keypress', reset.current);
+
+    return () => {
+      document.removeEventListener('mousemove', reset.current);
+      document.removeEventListener('keypress', reset.current);
+    };
+  }, []);
+}
