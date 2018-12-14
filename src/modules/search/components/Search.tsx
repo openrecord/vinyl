@@ -22,16 +22,19 @@ export default function Search({query, setSearch, results, enqueue, isOpen, togg
       isOpen={isOpen}
       onRequestClose={() => toggleSearch(false)}
       style={{
-        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.85)'},
+        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.5)', zIndex: '3'},
         content: {
-          padding: 0,
+          padding: '0.75rem 2rem',
           border: 0,
-          background: 'rgba(60, 60, 60)',
-          borderRadius: '0 0 5rem 5rem',
+          background: 'white',
+          borderRadius: '2rem',
           width: '80%',
           height: '80%',
-          left: '10%',
-          top: '10%'
+          left: '50%',
+          top: '50%',
+          maxWidth: '50rem',
+          overflow: 'hidden',
+          transform: 'translate(-50%,-50%)'
         }
       }}
     >
