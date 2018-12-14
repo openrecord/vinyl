@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {VelocityTransitionGroup} from 'velocity-react';
 import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
+
+import * as animations from '../../common/animations';
 import ArrowNavigation from '../../common/components/ArrowNavigation';
+import zindex from '../../common/zindex';
 import Track from './Track';
 import {$Result} from './types';
-import zindex from '../../common/zindex';
-import * as animations from '../../common/animations';
 
 export default class SearchResults extends React.Component {
   props: {

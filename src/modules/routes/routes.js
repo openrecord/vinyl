@@ -1,6 +1,6 @@
 export const ROUTES = {
-	LANDING: '/',
-	REGISTER: '/register',
-	PROFILE: '/profile',
-	PLAYER: '/:playlist'
+  LANDING: '/',
+  REGISTER: '/register',
+  PROFILE: '/profile',
+  PLAYER: '/:playlist'
 };

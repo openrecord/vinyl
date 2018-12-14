@@ -5,102 +5,102 @@ import styled from 'styled-components';
 import {device} from '../../../../styles/utilities/device';
 
 interface $Props {
-	deleteTrack(): void;
+  deleteTrack(): void;
 }
 
 class Options extends React.Component<$Props> {
-	state = {
-		isOpen: false
-	};
+  state = {
+    isOpen: false
+  };
 
-	handleClickOutside() {
-		this.setState({isOpen: false});
-	}
+  handleClickOutside() {
+    this.setState({isOpen: false});
+  }
 
-	toggleOpen = (event: React.MouseEvent<HTMLDivElement>) => {
-		event.stopPropagation();
-		this.setState({isOpen: !this.state.isOpen});
-	};
+  toggleOpen = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    this.setState({isOpen: !this.state.isOpen});
+  };
 
-	render() {
-		return (
-			<StyledOptions className="options" isOpen={this.state.isOpen}>
-				<SongDots onClick={this.toggleOpen}>
-					<Dot />
-					<Dot />
-					<Dot />
-					<Menu isOpen={this.state.isOpen}>
-						<li onClick={this.props.deleteTrack}>Delete</li>
-					</Menu>
-				</SongDots>
-			</StyledOptions>
-		);
-	}
+  render() {
+    return (
+      <StyledOptions className="options" isOpen={this.state.isOpen}>
+        <SongDots onClick={this.toggleOpen}>
+          <Dot />
+          <Dot />
+          <Dot />
+          <Menu isOpen={this.state.isOpen}>
+            <li onClick={this.props.deleteTrack}>Delete</li>
+          </Menu>
+        </SongDots>
+      </StyledOptions>
+    );
+  }
 }
 
 export default styled(onClickOutside(Options))``;
 
 interface $OptionsProps {
-	isOpen: boolean;
+  isOpen: boolean;
 }
 const StyledOptions = styled.div`
-	opacity: ${({isOpen}: $OptionsProps) => (isOpen ? '1' : '0')};
-	margin-left: auto;
+  opacity: ${({isOpen}: $OptionsProps) => (isOpen ? '1' : '0')};
+  margin-left: auto;
 
-	@media ${device.small} {
-		opacity: ${({isOpen}) => (isOpen ? '1 !important' : '0.5 !important')};
-	}
+  @media ${device.small} {
+    opacity: ${({isOpen}) => (isOpen ? '1 !important' : '0.5 !important')};
+  }
 
-	&:hover {
-		opacity: 1 !important;
-	}
+  &:hover {
+    opacity: 1 !important;
+  }
 `;
 
 const SongDots = styled.div`
-	display: flex;
-	padding: 0.5rem;
-	position: relative;
+  display: flex;
+  padding: 0.5rem;
+  position: relative;
 `;
 
 const Dot = styled.span`
-	background: white;
-	border-radius: 50%;
-	height: 0.25rem;
-	margin: 0.125rem;
-	width: 0.25rem;
+  background: white;
+  border-radius: 50%;
+  height: 0.25rem;
+  margin: 0.125rem;
+  width: 0.25rem;
 
-	@media ${device.small} {
-		height: 0.1875rem;
-		margin: 0.0625rem;
-		width: 0.1875rem;
-	}
+  @media ${device.small} {
+    height: 0.1875rem;
+    margin: 0.0625rem;
+    width: 0.1875rem;
+  }
 `;
 
 interface $MenuProps {
-	isOpen: boolean;
+  isOpen: boolean;
 }
 
 const Menu = styled.ul`
-	position: absolute;
-	top: 1.375rem;
-	background: rgb(32, 32, 32);
-	border-radius: 0.25rem;
-	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
-	right: 0;
-	opacity: ${({isOpen}: $MenuProps) => (isOpen ? '1' : '0')};
-	transition: all 0.1s;
+  position: absolute;
+  top: 1.375rem;
+  background: rgb(32, 32, 32);
+  border-radius: 0.25rem;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+  right: 0;
+  opacity: ${({isOpen}: $MenuProps) => (isOpen ? '1' : '0')};
+  transition: all 0.1s;
 
-	li {
-		border-radius: 0.25rem;
-		color: white;
-		cursor: pointer;
-		display: block;
-		font-size: 0.875rem;
-		padding: 0.375rem 0.75rem 0.375rem 0.75rem;
-		text-align: left;
+  li {
+    border-radius: 0.25rem;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+    text-align: left;
 
-		&:hover {
-			background: rgb(64, 64, 64);
-		}
-	}
+    &:hover {
+      background: rgb(64, 64, 64);
+    }
+  }
 `;
