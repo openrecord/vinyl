@@ -1,5 +1,4 @@
 import * as Color from 'color';
-import * as _ from 'lodash';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import styled from 'styled-components';
@@ -29,6 +28,7 @@ interface $Props {
   duration: number;
   currentlyPlaying: $Track | undefined;
   setPlayed(played: number): void;
+  isActive: boolean;
 }
 
 export default function Controls({
@@ -43,9 +43,9 @@ export default function Controls({
   played,
   duration,
   currentlyPlaying,
-  setPlayed
+  setPlayed,
+  isActive
 }: $Props) {
-  const isHidden = useHideOnMouseIdle();
   const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
   const controls = (
@@ -99,42 +99,11 @@ export default function Controls({
         enter={{animation: animations.slideUpExpand.in, duration: 400}}
         leave={{animation: animations.slideUpExpand.out}}
       >
-        {currentlyPlaying && !isHidden && (
-          <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        )}
+        {currentlyPlaying &&
+          isActive && <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>}
       </VelocityTransitionGroup>
     </KeyboardControls>
   );
-}
-
-function useHideOnMouseIdle() {
-  const [isHidden, setIsHidden] = React.useState(false);
-  const pid = React.useRef(0);
-
-  const setTimer = () => {
-    pid.current = window.setTimeout(() => setIsHidden(true), 3000);
-  };
-
-  const reset = React.useRef(
-    _.throttle(() => {
-      setIsHidden(false);
-      clearTimeout(pid.current);
-      setTimer();
-    }, 250)
-  );
-
-  React.useEffect(() => {
-    setTimer();
-    document.addEventListener('mousemove', reset.current);
-    document.addEventListener('keypress', reset.current);
-
-    return () => {
-      document.removeEventListener('mousemove', reset.current);
-      document.removeEventListener('keypress', reset.current);
-    };
-  }, []);
-
-  return isHidden;
 }
 
 interface $BgColor {
