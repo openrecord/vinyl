@@ -11,10 +11,10 @@ export default function PlayerContainer() {
   const playlist = usePlaylistName();
   const {
     state: {
-      player: {currentlyPlaying, playing, played, duration, expanded, live, color}
+      player: {currentlyPlaying, playing, played, duration, live, color}
     },
     actions: {
-      player: {toggle, setter}
+      player: {setter}
     }
   } = useStore();
 
@@ -26,12 +26,10 @@ export default function PlayerContainer() {
       {() => (
         <PlayerBox
           color={color}
-          expanded={expanded}
           currentlyPlaying={currentlyPlaying}
           playing={playing}
           played={played}
           duration={duration}
-          toggleExpanded={() => toggle('expanded')()}
           togglePlaying={togglePlaying}
           playNext={playNext}
           setPlayed={setter('played')}
