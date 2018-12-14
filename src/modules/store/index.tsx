@@ -1,4 +1,5 @@
 import Vibrant from 'node-vibrant';
+import {Palette} from 'node-vibrant/lib/color';
 import * as React from 'react';
 import {mod, set} from 'shades';
 
@@ -132,9 +133,8 @@ function useUpdateColorForTrack(
 
         new Vibrant(thumb)
           .getPalette()
-          .then(({Muted: {r, g, b} = DEFAULT_BG}: {Muted?: $Color}) =>
-            setPlayer(set('color')({r, g, b}))
-          );
+          .then(getSwatch)
+          .then(({r, g, b}: $Color) => setPlayer(set('color')({r, g, b})));
       } else {
         setPlayer(set('color')(DEFAULT_BG));
       }
@@ -142,3 +142,12 @@ function useUpdateColorForTrack(
     [currentlyPlaying]
   );
 }
+
+const getSwatch = (palette: Palette) =>
+  palette.Muted ||
+  palette.DarkMuted ||
+  palette.LightMuted ||
+  palette.LightVibrant ||
+  palette.DarkVibrant ||
+  palette.Vibrant ||
+  DEFAULT_BG;
