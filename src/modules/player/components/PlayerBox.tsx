@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled, {css} from 'styled-components';
 
+import {device} from '../../../styles/utilities/device';
+import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
@@ -25,11 +27,13 @@ export default function PlayerBox({
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Sizing onClick={togglePlaying} isSoundCloud={isSoundCloud} gradient={isSoundCloud && !art}>
+    <Positioning bg={color} onClick={togglePlaying}>
       <IFrameBlocker />
-      {isSoundCloud && art && <SoundCloudArt src={art} />}
-      <Player currentlyPlaying={currentlyPlaying!} {...props} />
-    </Sizing>
+      <SizingHack isSoundCloud={isSoundCloud}>
+        {isSoundCloud && art && <SoundCloudArt src={art} />}
+        <Player currentlyPlaying={currentlyPlaying!} {...props} />
+      </SizingHack>
+    </Positioning>
   );
 }
 
@@ -44,50 +48,41 @@ function getTrackThumbnail(track: $Track) {
   return '';
 }
 
-interface $isSoundCloud {
+interface $HasColor {
+  bg: $Color;
+}
+
+interface $IsSoundCloud {
   isSoundCloud: boolean;
 }
 
-interface $HasGradient {
-  gradient: boolean;
-}
-
-const Sizing = styled.div`
+const Positioning = styled.div`
+  position: relative;
+  background-color: ${(props: $HasColor) => toRGBString(props.bg)};
   width: 100%;
   height: 100vh;
-  position: relative;
-  ${(props: $isSoundCloud & $HasGradient) =>
-    props.gradient &&
-    css`
-      background-image: linear-gradient(135deg, #846170, #e6846e);
-    `}
+  z-index: ${zindex('player-expanded')};
 
-  [data-style-id='react-player'] {
-    overflow: hidden;
-    ${props =>
-      props.isSoundCloud &&
-      css`
-        display: none;
-      `}
-
-    & > div {
-      height: 250% !important;
-      transform: translateY(-30%);
-    }
+  [data-style-id='react-player'] > div {
+    height: 250% !important;
+    transform: translateY(-30%);
   }
 `;
 
 const IFrameBlocker = styled.div`
   cursor: pointer;
   position: absolute;
+  bottom: 0;
   left: 0;
   right: 0;
   top: 0;
-  height: 100vh;
   z-index: ${zindex('iframeblocker')};
+  transition: all linear 0.3s;
 `;
 
 const SoundCloudArt = styled.img`
+  height: 100%;
+  width: 56.25%;
   position: absolute;
   overflow: hidden;
   left: 50%;
@@ -95,4 +90,32 @@ const SoundCloudArt = styled.img`
   transform: translate(-50%, -50%);
   max-width: 40rem;
   max-height: 40rem;
+`;
+
+// const NoArtwork = styled.div`
+//   background-image: linear-gradient(135deg, #846170, #e6846e);
+// `;
+
+const SizingHack = styled.div`
+  padding-bottom: 50.5%;
+  position: relative;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%);
+
+  [data-style-id='react-player'] {
+    position: absolute;
+  }
+
+  @media ${device.small} {
+    width: 100%;
+  }
+
+  ${(props: $IsSoundCloud) =>
+    props.isSoundCloud &&
+    css`
+      ${Player} {
+        display: none;
+      }
+    `};
 `;
