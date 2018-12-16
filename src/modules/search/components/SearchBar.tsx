@@ -2,21 +2,21 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 const StyledSearchBar = styled.input`
-  background-color: rgb(36, 36, 36);
+  background-color: none;
   border: 0;
+  border-bottom: 0.0675rem solid rgba(0, 0, 0, 0.4);
   border-radius: 0;
   box-sizing: border-box;
-  color: #f2f2f2;
+  color: #000000;
   display: block;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   outline: none;
-  padding: 1rem 1rem;
+  padding: 1.5rem 0;
   position: relative;
   width: 100%;
-  caret-color: rgb(156, 77, 157);
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 0, 0, 0.5);
   }
 `;
 
@@ -46,7 +46,7 @@ export default class SearchBar extends React.Component<$Props> {
         type="text"
         value={this.state.query}
         autoFocus
-        placeholder="Start typing..."
+        placeholder="Enter something from YouTube or Soundcloud..."
         onChange={this.updateQuery}
       />
     );

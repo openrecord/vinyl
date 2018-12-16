@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {VelocityTransitionGroup} from 'velocity-react';
 import styled from 'styled-components';
+import {VelocityTransitionGroup} from 'velocity-react';
+
+import * as animations from '../../common/animations';
 import ArrowNavigation from '../../common/components/ArrowNavigation';
+import zindex from '../../common/zindex';
 import Track from './Track';
 import {$Result} from './types';
-import zindex from '../../common/zindex';
-import * as animations from '../../common/animations';
 
 export default class SearchResults extends React.Component {
   props: {
@@ -82,11 +83,10 @@ export default class SearchResults extends React.Component {
 }
 
 const StyledSearchResults = styled.div`
-  position: absolute;
+  position: relative;
   z-index: ${zindex('search-results')};
-  background: rgb(25, 25, 25);
+  background: none;
   display: block;
-  max-height: 30rem;
   overflow: hidden;
   overflow-y: scroll;
   width: 100%;
