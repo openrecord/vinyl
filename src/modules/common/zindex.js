@@ -7,8 +7,7 @@ const baseZIndexList = [
   'player',
   'header',
   'nav',
-  'search-background',
-  'search-holder',
+  'search',
   'search-results'
 ];
 

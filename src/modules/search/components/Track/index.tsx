@@ -48,6 +48,7 @@ export default function Track({
       bgColor={bgColor}
       data-id={id}
       data-track-type={search ? 'search' : 'queue'}
+      search={search}
     >
       <ImageHolder search={search}>
         {thumbnail ? (
@@ -248,7 +249,8 @@ const SourceIcon = styled.div`
   display: flex;
   margin-left: auto;
   margin-right: 0.5rem;
-  opacity: 0.3;
+  opacity: 1;
+  filter: invert(100%);
   img {
     align-content: center;
   }
@@ -256,6 +258,7 @@ const SourceIcon = styled.div`
 
 interface $StyledResultProps {
   bgColor?: $Color;
+  search: boolean;
 }
 
 const StyledResult = styled.div`
@@ -322,6 +325,18 @@ const StyledResult = styled.div`
       margin-right: 0.25rem;
     }
   }
+
+  ${({search}: $ImageHolderProps) =>
+    search &&
+    css`
+      &:hover,
+      :focus {
+        background: #f2f2f2;
+      }
+      h4 {
+        color: black;
+      }
+    `};
 `;
 
 function getThumbnailUrl(url: string): string {

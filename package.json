@@ -12,6 +12,7 @@
     "build:web": "webpack -c webpack.config.js --mode production",
     "build:api": "npm run codegen && npm run compile:api",
     "deploy:test": "cd turntable; env-cmd ../env.test.env prisma deploy",
+    "deploy:dev": "cd turntable; env-cmd ../env/.dev.env prisma deploy",
     "deploy:staging": "cd turntable; env-cmd ../env/.staging.env prisma deploy",
     "deploy:prod": "cd turntable; env-cmd ../env/.prod.env prisma deploy",
     "codegen": "cd turntable; get-graphql-schema $ENDPOINT > schema.graphql && gql codegen",
