@@ -5,22 +5,20 @@ import styled from 'styled-components';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
+import animate from '../../common/animate';
 import * as animations from '../../common/animations';
 import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import ExpandButton from './ExpandButton';
-import KeyboardControls from './KeyboardControls';
+import ScrollButton from './ScrollButton';
 import Slider from './Slider';
 import SongControls from './SongControls';
 
 interface $Props {
   bgColor: $Color;
   playing: boolean;
-  expanded: boolean;
   togglePlaying(): void;
-  toggleExpanded(): void;
   toggleSearch(): void;
   playNext(): void;
   playPrev(): void;
@@ -29,22 +27,21 @@ interface $Props {
   currentlyPlaying: $Track | undefined;
   setPlayed(played: number): void;
   isActive: boolean;
+  arrowDown: boolean;
 }
 
 export default function Controls({
   bgColor,
   playing,
-  expanded,
   togglePlaying,
-  toggleExpanded,
-  toggleSearch,
   playNext,
   playPrev,
   played,
   duration,
   currentlyPlaying,
   setPlayed,
-  isActive
+  isActive,
+  arrowDown
 }: $Props) {
   const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
@@ -59,11 +56,7 @@ export default function Controls({
     </MediaControls>
   );
 
-  const expandButton = expanded && (
-    <RightCenter onClick={toggleExpanded}>
-      <ExpandButton />
-    </RightCenter>
-  );
+  const expand = <ScrollButton arrowDown={arrowDown} onClick={scroller(arrowDown)} />;
 
   const desktop = (
     <Footer bgColor={bgColor}>
@@ -71,7 +64,7 @@ export default function Controls({
       <Row>
         {title}
         {controls}
-        {expandButton}
+        {expand}
       </Row>
     </Footer>
   );
@@ -81,7 +74,7 @@ export default function Controls({
       {currentlyPlaying && (
         <Row>
           {title}
-          <ExpandButton />
+          {expand}
         </Row>
       )}
       <Row>{controls}</Row>
@@ -89,21 +82,21 @@ export default function Controls({
   );
 
   return (
-    <KeyboardControls
-      isPlayerOpen={!!currentlyPlaying}
-      togglePlaying={togglePlaying}
-      toggleExpanded={toggleExpanded}
-      toggleSearch={toggleSearch}
+    <VelocityTransitionGroup
+      enter={{animation: animations.slideUpExpand.in, duration: 400}}
+      leave={{animation: animations.slideUpExpand.out}}
     >
-      <VelocityTransitionGroup
-        enter={{animation: animations.slideUpExpand.in, duration: 400}}
-        leave={{animation: animations.slideUpExpand.out}}
-      >
-        {currentlyPlaying &&
-          isActive && <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>}
-      </VelocityTransitionGroup>
-    </KeyboardControls>
+      {currentlyPlaying &&
+        isActive && <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>}
+    </VelocityTransitionGroup>
   );
+}
+
+function scroller(scrollDown: boolean) {
+  return () =>
+    animate('scroll', {easing: 'ease-in-out', duration: 750}).on(
+      `[data-id="${scrollDown ? 'queue' : 'player'}"]`
+    );
 }
 
 interface $BgColor {
@@ -154,14 +147,4 @@ const Title = styled.h5`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`;
-
-const RightCenter = styled.div`
-  cursor: pointer;
-
-  :hover {
-    ${ExpandButton} {
-      opacity: 1;
-    }
-  }
 `;

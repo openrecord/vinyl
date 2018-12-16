@@ -1,7 +1,7 @@
 const baseZIndexList = [
   0,
   'toast',
-  'player-expanded',
+  'player',
   'iframeblocker',
   'controls',
   'player',

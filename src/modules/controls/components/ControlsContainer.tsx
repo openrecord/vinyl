@@ -3,21 +3,27 @@ import * as React from 'react';
 import {useTogglePlaying} from '../../common/mutations/TogglePlaying';
 import useSkipControls from '../../common/mutations/useSkipControls';
 import {useStore} from '../../store';
+import useKeyboardControls from '../hooks/useKeyboardControls';
+import useQueueBelowMidScreen from '../hooks/useQueueBelowMidScreen';
 import Controls from './Controls';
 
 export default function ControlsContainer() {
   const {
     state: {
-      player: {currentlyPlaying, playing, expanded, played, duration, color, isActive}
+      player: {currentlyPlaying, playing, played, duration, color, isActive}
     },
     actions: {
-      player: {toggle: playerToggle, setter},
+      player: {setter},
       search: {toggle: searchToggle}
     }
   } = useStore();
 
   const {playNext, playPrev} = useSkipControls();
   const togglePlaying = useTogglePlaying();
+  const toggleSearch = searchToggle('isOpen');
+  const belowHalfway = useQueueBelowMidScreen();
+
+  useKeyboardControls({toggleSearch, togglePlaying});
 
   return (
     <Controls
@@ -27,13 +33,12 @@ export default function ControlsContainer() {
       played={played}
       duration={duration}
       togglePlaying={togglePlaying}
-      expanded={expanded}
-      toggleExpanded={playerToggle('expanded')}
-      toggleSearch={searchToggle('isOpen')}
+      toggleSearch={toggleSearch}
       playNext={playNext}
       playPrev={playPrev}
       setPlayed={setter('played')}
       isActive={isActive}
+      arrowDown={belowHalfway}
     />
   );
 }

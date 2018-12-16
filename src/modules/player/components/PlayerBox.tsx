@@ -27,7 +27,7 @@ export default function PlayerBox({
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Positioning bg={color} onClick={togglePlaying}>
+    <Positioning bg={color} onClick={togglePlaying} data-id="player">
       <IFrameBlocker />
       <SizingHack isSoundCloud={isSoundCloud}>
         {isSoundCloud && art && <SoundCloudArt src={art} />}
@@ -61,7 +61,7 @@ const Positioning = styled.div`
   background-color: ${(props: $HasColor) => toRGBString(props.bg)};
   width: 100%;
   height: 100vh;
-  z-index: ${zindex('player-expanded')};
+  z-index: ${zindex('player')};
 
   [data-style-id='react-player'] > div {
     height: 250% !important;
