@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Modal from 'react-modal';
-
+import zindex from '../../common/zindex';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import {$Result} from './types';
@@ -22,7 +22,7 @@ export default function Search({query, setSearch, results, enqueue, isOpen, togg
       isOpen={isOpen}
       onRequestClose={() => toggleSearch(false)}
       style={{
-        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.5)', zIndex: '3'},
+        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.5)', zIndex: zindex('search')},
         content: {
           padding: '0.75rem 2rem',
           border: 0,
