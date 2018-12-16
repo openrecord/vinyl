@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import playImg from './images/play.svg';
 
 function PlayPause({play, ...props}) {
   if (play) {
@@ -11,11 +12,7 @@ function PlayPause({play, ...props}) {
 
 export default styled(PlayPause)``;
 
-const Play = props => (
-  <svg viewBox="0 0 100 100" {...props}>
-    <polygon points="25,0 100, 50, 25,100" />
-  </svg>
-);
+const Play = props => <img src={playImg} {...props} />;
 
 const Pause = props => (
   <svg viewBox="0 0 353.562 353.562" {...props}>
