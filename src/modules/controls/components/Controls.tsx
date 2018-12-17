@@ -1,21 +1,38 @@
-import Color from 'color';
+import * as Color from 'color';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import {device} from '../../../styles/utilities/device';
 import * as animations from '../../common/animations';
 import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from './constants';
+import {$Track} from '../../search/components/types';
+import {$Color} from '../../store';
 import ExpandButton from './ExpandButton';
 import KeyboardControls from './KeyboardControls';
 import Slider from './Slider';
 import SongControls from './SongControls';
 
+interface $Props {
+  bgColor: $Color;
+  playing: boolean;
+  expanded: boolean;
+  togglePlaying(): void;
+  toggleExpanded(): void;
+  toggleSearch(): void;
+  playNext(): void;
+  playPrev(): void;
+  played: number;
+  duration: number;
+  currentlyPlaying: $Track | undefined;
+  setPlayed(played: number): void;
+  isActive: boolean;
+}
+
 export default function Controls({
-  color,
+  bgColor,
   playing,
   expanded,
   togglePlaying,
@@ -26,11 +43,10 @@ export default function Controls({
   played,
   duration,
   currentlyPlaying,
-  setPlayed
-}) {
-  const title = currentlyPlaying && (
-    <Title centered={expanded}>{currentlyPlaying.info.title}</Title>
-  );
+  setPlayed,
+  isActive
+}: $Props) {
+  const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
   const controls = (
     <MediaControls>
@@ -50,9 +66,9 @@ export default function Controls({
   );
 
   const desktop = (
-    <Footer color={color}>
+    <Footer bgColor={bgColor}>
       <Slider played={played} duration={duration} setPlayed={setPlayed} />
-      <Row transparent={expanded}>
+      <Row>
         {title}
         {controls}
         {expandButton}
@@ -61,9 +77,9 @@ export default function Controls({
   );
 
   const mobile = (
-    <Footer color={color}>
+    <Footer bgColor={bgColor}>
       {currentlyPlaying && (
-        <Row transparent={expanded} onClick={toggleExpanded}>
+        <Row>
           {title}
           <ExpandButton />
         </Row>
@@ -83,7 +99,7 @@ export default function Controls({
         enter={{animation: animations.slideUpExpand.in, duration: 400}}
         leave={{animation: animations.slideUpExpand.out}}
       >
-        {currentlyPlaying && (
+        {currentlyPlaying && isActive && (
           <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
         )}
       </VelocityTransitionGroup>
@@ -91,9 +107,13 @@ export default function Controls({
   );
 }
 
+interface $BgColor {
+  bgColor: $Color;
+}
+
 const Footer = styled.div`
-  background-color: ${props =>
-    Color(props.color)
+  background-color: ${(props: $BgColor) =>
+    Color(props.bgColor)
       .rgb()
       .string()};
   position: fixed;

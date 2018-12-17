@@ -8,7 +8,7 @@ import Controls from './Controls';
 export default function ControlsContainer() {
   const {
     state: {
-      player: {currentlyPlaying, playing, expanded, played, duration, color}
+      player: {currentlyPlaying, playing, expanded, played, duration, color, isActive}
     },
     actions: {
       player: {toggle: playerToggle, setter},
@@ -21,7 +21,7 @@ export default function ControlsContainer() {
 
   return (
     <Controls
-      color={color}
+      bgColor={color}
       currentlyPlaying={currentlyPlaying}
       playing={playing}
       played={played}
@@ -33,6 +33,7 @@ export default function ControlsContainer() {
       playNext={playNext}
       playPrev={playPrev}
       setPlayed={setter('played')}
+      isActive={isActive}
     />
   );
 }

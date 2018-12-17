@@ -31,7 +31,7 @@ export default function PlaylistContainer() {
   const {
     state: {
       search: {isOpen},
-      player: {color}
+      player: {color, isActive, currentlyPlaying}
     },
     actions: {
       search: {toggle}
@@ -47,6 +47,7 @@ export default function PlaylistContainer() {
     <Playlist
       color={color}
       isOpen={isOpen}
+      showAddBtn={!!currentlyPlaying && !isActive}
       isEmpty={tracks.length === 0}
       toggleSearch={toggle('isOpen')}
       createPlaylist={createPlaylist}
