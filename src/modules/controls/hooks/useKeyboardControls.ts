@@ -7,7 +7,7 @@ interface $Props {
 
 export default function useKeyboardControls({togglePlaying, toggleSearch}: $Props) {
   React.useEffect(() => {
-    document.addEventListener('keydown', event => {
+    const handler = (event: KeyboardEvent) => {
       if (document.activeElement instanceof HTMLInputElement && event.key != 'Escape') {
         return;
       }
@@ -22,6 +22,11 @@ export default function useKeyboardControls({togglePlaying, toggleSearch}: $Prop
           event.preventDefault();
           return toggleSearch(false);
       }
-    });
+    };
+
+    document.addEventListener('keydown', handler);
+    return () => {
+      document.removeEventListener('keydown', handler);
+    };
   }, []);
 }

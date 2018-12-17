@@ -3,10 +3,9 @@ import * as React from 'react';
 
 export default function useQueueBelowMidScreen() {
   const [belowHalfway, setBelowHalfway] = React.useState(true);
-  const scrollHandler = React.useRef<() => void>(null) as React.MutableRefObject<() => void>;
   React.useEffect(
     () => {
-      scrollHandler.current = _.throttle(() => {
+      const handler = _.throttle(() => {
         const queue = document.querySelector('[data-id="queue"]');
         if (queue) {
           const {top} = queue.getBoundingClientRect();
@@ -20,9 +19,9 @@ export default function useQueueBelowMidScreen() {
           );
         }
       }, 250);
-      document.addEventListener('scroll', scrollHandler.current);
+      document.addEventListener('scroll', handler);
       return () => {
-        document.removeEventListener('scroll', scrollHandler.current);
+        document.removeEventListener('scroll', handler);
       };
     },
     [belowHalfway]
