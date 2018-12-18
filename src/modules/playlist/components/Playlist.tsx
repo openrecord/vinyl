@@ -33,7 +33,7 @@ export default class Playlist extends React.Component<$Props> {
       <StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
         <StyledPlaylist>
           <TopRight>
-            <VelocityComponent animation={{opacity: showAddBtn ? 0 : 1}}>
+            <VelocityComponent animation={{opacity: showAddBtn ? 1 : 0}}>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
             </VelocityComponent>
           </TopRight>
