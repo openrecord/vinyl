@@ -10,10 +10,10 @@ import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import ExpandButton from './ExpandButton';
 import KeyboardControls from './KeyboardControls';
 import Slider from './Slider';
 import SongControls from './SongControls';
+import TriButton from './TriButton';
 
 interface $Props {
   bgColor: $Color;
@@ -57,33 +57,26 @@ export default function Controls({
     </MediaControls>
   );
 
-  const expandButton = expanded && (
-    <RightCenter onClick={toggleExpanded}>
-      <ExpandButton />
-    </RightCenter>
-  );
+  const minimize = <TriButton up={!expanded} onClick={toggleExpanded} />;
 
   const desktop = (
-    <Footer bgColor={bgColor}>
-      <Slider played={played} setPlayed={setPlayed} />
-      <Row>
-        {title}
-        {controls}
-        {expandButton}
-      </Row>
-    </Footer>
+    <Row>
+      {title}
+      {controls}
+      {minimize}
+    </Row>
   );
 
   const mobile = (
-    <Footer bgColor={bgColor}>
+    <>
       {currentlyPlaying && (
         <Row>
           {title}
-          <ExpandButton />
+          {minimize}
         </Row>
       )}
       <Row>{controls}</Row>
-    </Footer>
+    </>
   );
 
   return (
@@ -93,14 +86,17 @@ export default function Controls({
       toggleExpanded={toggleExpanded}
       toggleSearch={toggleSearch}
     >
-      <VelocityTransitionGroup
-        enter={{animation: animations.slideUpExpand.in, duration: 400}}
-        leave={{animation: animations.slideUpExpand.out}}
-      >
-        {currentlyPlaying && isActive && (
-          <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        )}
-      </VelocityTransitionGroup>
+      <Footer bgColor={bgColor}>
+        <Slider played={played} setPlayed={setPlayed} />
+        <VelocityTransitionGroup
+          enter={{animation: animations.slideUpExpand.in, duration: 400}}
+          leave={{animation: animations.slideUpExpand.out}}
+        >
+          {currentlyPlaying && isActive && (
+            <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+          )}
+        </VelocityTransitionGroup>
+      </Footer>
     </KeyboardControls>
   );
 }
@@ -153,14 +149,4 @@ const Title = styled.h5`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`;
-
-const RightCenter = styled.div`
-  cursor: pointer;
-
-  :hover {
-    ${ExpandButton} {
-      opacity: 1;
-    }
-  }
 `;

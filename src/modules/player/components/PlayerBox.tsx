@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components';
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
+import {FOOTER_HEIGHT_DESKTOP} from '../../controls/components/constants';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import Player, {$PlayerProps} from './Player';
@@ -70,6 +70,9 @@ interface $IsSoundCloud {
 
 const Positioning = styled.div`
   position: relative;
+  width: 100%;
+  height: ${props => (props.expanded ? '100vh' : '0')};
+  z-index: ${zindex('player')};
   overflow: hidden;
   transition: all linear 0.3s;
   background-color: ${(props: $IsExpanded & $HasColor) =>
@@ -79,25 +82,6 @@ const Positioning = styled.div`
     height: 250% !important;
     transform: translateY(-30%);
   }
-
-  ${props =>
-    props.expanded
-      ? css`
-          width: 100%;
-          height: 100vh;
-          z-index: ${zindex('player-expanded')};
-        `
-      : css`
-          z-index: ${zindex('player')};
-          height: ${FOOTER_HEIGHT_DESKTOP};
-          width: 8.875rem;
-          overflow: hidden;
-
-          @media ${device.small} {
-            height: ${FOOTER_HEIGHT_MOBILE};
-            bottom: ${FOOTER_HEIGHT_MOBILE};
-          }
-        `};
 `;
 
 const IFrameBlocker = styled.div`

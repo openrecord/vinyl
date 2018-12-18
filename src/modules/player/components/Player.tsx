@@ -12,6 +12,7 @@ export interface $PlayerProps {
   setDuration(duration: number): void;
   currentlyPlaying: $Track | undefined;
   playing: boolean;
+  muted: boolean;
   playNext(options: {local: boolean}): void;
   className?: string;
 }
@@ -44,7 +45,15 @@ class Player extends React.Component<$PlayerProps> {
   }
 
   render() {
-    const {currentlyPlaying, playing, playNext, setDuration, setPlayed, className} = this.props;
+    const {
+      currentlyPlaying,
+      playing,
+      playNext,
+      setDuration,
+      setPlayed,
+      className,
+      muted
+    } = this.props;
     if (!currentlyPlaying) {
       return null;
     }
@@ -58,6 +67,7 @@ class Player extends React.Component<$PlayerProps> {
         height="100%"
         ref={this.playerRef}
         url={getTrackUrl(currentlyPlaying)}
+        muted={muted}
         playing={playing}
         loop
         config={{

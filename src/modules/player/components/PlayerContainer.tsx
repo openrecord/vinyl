@@ -23,21 +23,20 @@ export default function PlayerContainer() {
 
   return (
     <OnRemoteControl playlist={playlist} currentlyPlaying={currentlyPlaying} live={live}>
-      {() => (
-        <PlayerBox
-          color={color}
-          expanded={expanded}
-          currentlyPlaying={currentlyPlaying}
-          playing={playing}
-          played={played}
-          duration={duration}
-          toggleExpanded={() => toggle('expanded')()}
-          togglePlaying={togglePlaying}
-          playNext={playNext}
-          setPlayed={setter('played')}
-          setDuration={setter('duration')}
-        />
-      )}
+      <PlayerBox
+        color={color}
+        expanded={expanded}
+        currentlyPlaying={currentlyPlaying}
+        playing={playing}
+        played={played}
+        muted={!expanded}
+        duration={duration}
+        toggleExpanded={() => toggle('expanded')()}
+        togglePlaying={togglePlaying}
+        playNext={playNext}
+        setPlayed={setter('played')}
+        setDuration={setter('duration')}
+      />
     </OnRemoteControl>
   );
 }
