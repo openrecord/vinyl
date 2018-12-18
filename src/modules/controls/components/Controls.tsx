@@ -10,7 +10,6 @@ import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import KeyboardControls from './KeyboardControls';
 import Slider from './Slider';
 import SongControls from './SongControls';
 import TriButton from './TriButton';
@@ -18,8 +17,8 @@ import TriButton from './TriButton';
 interface $Props {
   bgColor: $Color;
   playing: boolean;
-  expanded: boolean;
   togglePlaying(): void;
+  expanded: boolean;
   toggleExpanded(): void;
   toggleSearch(): void;
   playNext(): void;
@@ -33,10 +32,9 @@ interface $Props {
 export default function Controls({
   bgColor,
   playing,
-  expanded,
   togglePlaying,
+  expanded,
   toggleExpanded,
-  toggleSearch,
   playNext,
   playPrev,
   played,
@@ -80,24 +78,17 @@ export default function Controls({
   );
 
   return (
-    <KeyboardControls
-      isPlayerOpen={!!currentlyPlaying}
-      togglePlaying={togglePlaying}
-      toggleExpanded={toggleExpanded}
-      toggleSearch={toggleSearch}
-    >
-      <Footer bgColor={bgColor}>
-        <Slider played={played} setPlayed={setPlayed} />
-        <VelocityTransitionGroup
-          enter={{animation: animations.slideUpExpand.in, duration: 400}}
-          leave={{animation: animations.slideUpExpand.out}}
-        >
-          {currentlyPlaying && isActive && (
-            <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-          )}
-        </VelocityTransitionGroup>
-      </Footer>
-    </KeyboardControls>
+    <Footer bgColor={bgColor}>
+      <Slider played={played} setPlayed={setPlayed} />
+      <VelocityTransitionGroup
+        enter={{animation: animations.slideUpExpand.in, duration: 400}}
+        leave={{animation: animations.slideUpExpand.out}}
+      >
+        {currentlyPlaying && isActive && (
+          <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+        )}
+      </VelocityTransitionGroup>
+    </Footer>
   );
 }
 

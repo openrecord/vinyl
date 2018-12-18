@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useTogglePlaying} from '../../common/mutations/TogglePlaying';
 import useSkipControls from '../../common/mutations/useSkipControls';
 import {useStore} from '../../store';
+import useKeyboardControls from '../hooks/useKeyboardControls';
 import Controls from './Controls';
 
 export default function ControlsContainer() {
@@ -10,28 +11,28 @@ export default function ControlsContainer() {
     state: {
       player: {currentlyPlaying, playing, expanded, played, color, isActive}
     },
-    actions: {
-      player: {toggle: playerToggle, setter},
-      search: {toggle: searchToggle}
-    }
+    actions: {player: playerActions, search: searchActions}
   } = useStore();
 
   const {playNext, playPrev} = useSkipControls();
   const togglePlaying = useTogglePlaying();
+  const toggleSearch = searchActions.toggle('isOpen');
+
+  useKeyboardControls({toggleSearch, togglePlaying});
 
   return (
     <Controls
       bgColor={color}
       currentlyPlaying={currentlyPlaying}
       playing={playing}
+      expanded={expanded}
+      toggleExpanded={playerActions.toggle('expanded')}
       played={played}
       togglePlaying={togglePlaying}
-      expanded={expanded}
-      toggleExpanded={playerToggle('expanded')}
-      toggleSearch={searchToggle('isOpen')}
+      toggleSearch={toggleSearch}
       playNext={playNext}
       playPrev={playPrev}
-      setPlayed={setter('played')}
+      setPlayed={playerActions.setter('played')}
       isActive={isActive}
     />
   );

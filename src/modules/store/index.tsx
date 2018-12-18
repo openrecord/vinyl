@@ -27,12 +27,12 @@ const DEFAULT_BG: $Color = {
 export interface $Player {
   currentlyPlaying: $Track | undefined;
   playing: boolean;
-  expanded: boolean;
   played: number;
   duration: number;
   live: boolean;
   color: $Color;
   isActive: boolean;
+  expanded: boolean;
 }
 
 export interface $Queue {
@@ -55,12 +55,12 @@ const initialState: $State = {
   player: {
     currentlyPlaying: undefined,
     playing: true,
-    expanded: true,
     played: 0,
     duration: 0,
     live: true,
     color: DEFAULT_BG,
-    isActive: true
+    isActive: true,
+    expanded: true
   },
   queue: {
     tracks: [],
@@ -163,22 +163,19 @@ function useUpdateIsActive(setPlayer: $SetState<$Player>) {
     pid.current = window.setTimeout(() => setPlayer(set('isActive')(false)), 3000);
   };
 
-  const reset = React.useRef(
-    _.throttle(() => {
+  React.useEffect(() => {
+    setTimer();
+    const reset = _.throttle(() => {
       setPlayer(set('isActive')(true));
       clearTimeout(pid.current);
       setTimer();
-    }, 250)
-  );
+    }, 250);
 
-  React.useEffect(() => {
-    setTimer();
-    document.addEventListener('mousemove', reset.current);
-    document.addEventListener('keypress', reset.current);
+    const actions = ['mousemove', 'keydown', 'touchstart'];
 
+    actions.forEach(action => document.addEventListener(action, reset));
     return () => {
-      document.removeEventListener('mousemove', reset.current);
-      document.removeEventListener('keypress', reset.current);
+      actions.forEach(action => document.removeEventListener(action, reset));
     };
   }, []);
 }
