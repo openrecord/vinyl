@@ -59,7 +59,6 @@ class Player extends React.Component<$PlayerProps> {
         ref={this.playerRef}
         url={getTrackUrl(currentlyPlaying)}
         playing={playing}
-        loop
         config={{
           soundcloud: {
             options: {

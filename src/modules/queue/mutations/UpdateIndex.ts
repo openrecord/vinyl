@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import * as _f from 'lodash/fp';
 import {useMutation} from 'react-apollo-hooks';
-import {cons, find, map, mod, set} from 'shades';
+import {all, cons, filter, find, mod, not, set} from 'shades';
 
 import {$Playlist, $Track} from '../../search/components/types';
 
@@ -40,8 +40,8 @@ const reorderTracks = (id: string, newIdx: number, tracks: $Track[]) => {
   const track = find({id})(tracks);
   const oldIdx = track!.index;
   return _f.pipe(
-    _f.reject({id}),
-    map(mod('index')(trackUpdater(oldIdx, newIdx))),
+    filter(not({id})),
+    mod(all(), 'index')(trackUpdater(oldIdx, newIdx)),
     cons(set('index')(newIdx)(track!)),
     _f.sortBy('index')
   )(tracks);
