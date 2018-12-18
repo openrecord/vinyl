@@ -27,12 +27,12 @@ const DEFAULT_BG: $Color = {
 export interface $Player {
   currentlyPlaying: $Track | undefined;
   playing: boolean;
+  expanded: boolean;
   played: number;
   duration: number;
   live: boolean;
   color: $Color;
   isActive: boolean;
-  expanded: boolean;
 }
 
 export interface $Queue {
@@ -55,12 +55,12 @@ const initialState: $State = {
   player: {
     currentlyPlaying: undefined,
     playing: true,
+    expanded: true,
     played: 0,
     duration: 0,
     live: true,
     color: DEFAULT_BG,
-    isActive: true,
-    expanded: true
+    isActive: true
   },
   queue: {
     tracks: [],

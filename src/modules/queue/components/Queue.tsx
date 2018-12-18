@@ -42,7 +42,7 @@ export default function Queue({
         }
       }}
     >
-      <QueueList data-id="queue">
+      <QueueList>
         <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
           <Droppable droppableId="queue">
             {provided => (

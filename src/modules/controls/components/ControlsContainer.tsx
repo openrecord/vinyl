@@ -25,15 +25,15 @@ export default function ControlsContainer() {
       bgColor={color}
       currentlyPlaying={currentlyPlaying}
       playing={playing}
-      expanded={expanded}
-      toggleExpanded={playerActions.toggle('expanded')}
       played={played}
       togglePlaying={togglePlaying}
+      expanded={expanded}
+      toggleExpanded={playerActions.toggle('expanded')}
       toggleSearch={toggleSearch}
       playNext={playNext}
       playPrev={playPrev}
       setPlayed={playerActions.setter('played')}
-      isActive={isActive}
+      visible={!!currentlyPlaying && (!expanded || isActive)}
     />
   );
 }

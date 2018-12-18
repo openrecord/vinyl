@@ -17,8 +17,8 @@ import TriButton from './TriButton';
 interface $Props {
   bgColor: $Color;
   playing: boolean;
-  togglePlaying(): void;
   expanded: boolean;
+  togglePlaying(): void;
   toggleExpanded(): void;
   toggleSearch(): void;
   playNext(): void;
@@ -26,21 +26,21 @@ interface $Props {
   played: number;
   currentlyPlaying: $Track | undefined;
   setPlayed(played: number): void;
-  isActive: boolean;
+  visible: boolean;
 }
 
 export default function Controls({
   bgColor,
   playing,
-  togglePlaying,
   expanded,
+  togglePlaying,
   toggleExpanded,
   playNext,
   playPrev,
   played,
   currentlyPlaying,
   setPlayed,
-  isActive
+  visible
 }: $Props) {
   const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
@@ -78,17 +78,17 @@ export default function Controls({
   );
 
   return (
-    <Footer bgColor={bgColor}>
-      <Slider played={played} setPlayed={setPlayed} />
-      <VelocityTransitionGroup
-        enter={{animation: animations.slideUpExpand.in, duration: 400}}
-        leave={{animation: animations.slideUpExpand.out}}
-      >
-        {currentlyPlaying && isActive && (
+    <VelocityTransitionGroup
+      enter={{animation: animations.slideUpExpand.in, duration: 400}}
+      leave={{animation: animations.slideUpExpand.out}}
+    >
+      {visible && (
+        <Footer bgColor={bgColor}>
+          <Slider played={played} setPlayed={setPlayed} />
           <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        )}
-      </VelocityTransitionGroup>
-    </Footer>
+        </Footer>
+      )}
+    </VelocityTransitionGroup>
   );
 }
 
@@ -140,4 +140,8 @@ const Title = styled.h5`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  @media ${device.small} {
+    max-width: 75%;
+  }
 `;

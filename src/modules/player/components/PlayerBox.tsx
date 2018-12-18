@@ -10,16 +10,16 @@ import Player, {$PlayerProps} from './Player';
 
 interface $Props {
   currentlyPlaying: $Track | undefined;
-  color: $Color;
   expanded: boolean;
+  color: $Color;
   togglePlaying(): void;
 }
 
 export default function PlayerBox({
   currentlyPlaying,
+  expanded,
   color,
   togglePlaying,
-  expanded,
   ...props
 }: $Props & $PlayerProps) {
   if (!currentlyPlaying) {
@@ -50,12 +50,12 @@ function getTrackThumbnail(track: $Track) {
   return '';
 }
 
-interface $IsExpanded {
-  expanded: boolean;
-}
-
 interface $HasColor {
   bg: $Color;
+}
+
+interface $IsExpanded {
+  expanded: boolean;
 }
 
 interface $IsSoundCloud {
