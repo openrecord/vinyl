@@ -59,6 +59,7 @@
     "@types/graphql": "^0.13.4",
     "@types/lodash": "^4.14.117",
     "@types/node": "^10.10.1",
+    "@types/rc-slider": "^8.6.0",
     "@types/react": "^16.7.6",
     "@types/react-beautiful-dnd": "^7.1.2",
     "@types/react-copy-to-clipboard": "^4.2.6",

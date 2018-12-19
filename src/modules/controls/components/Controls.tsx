@@ -25,7 +25,6 @@ interface $Props {
   playNext(): void;
   playPrev(): void;
   played: number;
-  duration: number;
   currentlyPlaying: $Track | undefined;
   setPlayed(played: number): void;
   isActive: boolean;
@@ -41,7 +40,6 @@ export default function Controls({
   playNext,
   playPrev,
   played,
-  duration,
   currentlyPlaying,
   setPlayed,
   isActive
@@ -67,7 +65,7 @@ export default function Controls({
 
   const desktop = (
     <Footer bgColor={bgColor}>
-      <Slider played={played} duration={duration} setPlayed={setPlayed} />
+      <Slider played={played} setPlayed={setPlayed} />
       <Row>
         {title}
         {controls}
