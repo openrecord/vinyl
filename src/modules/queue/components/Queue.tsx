@@ -37,7 +37,7 @@ export default function Queue({
   return (
     <DragDropContext
       onDragEnd={({draggableId, destination}) => {
-        if (destination && destination.index) {
+        if (destination && Number.isSafeInteger(destination.index)) {
           updateIndex(draggableId, destination.index, playlist);
         }
       }}
