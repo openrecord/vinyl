@@ -10,10 +10,9 @@ import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import ExpandButton from './ExpandButton';
-import KeyboardControls from './KeyboardControls';
 import Slider from './Slider';
 import SongControls from './SongControls';
+import TriButton from './TriButton';
 
 interface $Props {
   bgColor: $Color;
@@ -27,7 +26,7 @@ interface $Props {
   played: number;
   currentlyPlaying: $Track | undefined;
   setPlayed(played: number): void;
-  isActive: boolean;
+  visible: boolean;
 }
 
 export default function Controls({
@@ -36,13 +35,12 @@ export default function Controls({
   expanded,
   togglePlaying,
   toggleExpanded,
-  toggleSearch,
   playNext,
   playPrev,
   played,
   currentlyPlaying,
   setPlayed,
-  isActive
+  visible
 }: $Props) {
   const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
@@ -57,51 +55,40 @@ export default function Controls({
     </MediaControls>
   );
 
-  const expandButton = expanded && (
-    <RightCenter onClick={toggleExpanded}>
-      <ExpandButton />
-    </RightCenter>
-  );
+  const minimize = <TriButton up={!expanded} onClick={toggleExpanded} />;
 
   const desktop = (
-    <Footer bgColor={bgColor}>
-      <Slider played={played} setPlayed={setPlayed} />
-      <Row>
-        {title}
-        {controls}
-        {expandButton}
-      </Row>
-    </Footer>
+    <Row>
+      {title}
+      {controls}
+      {minimize}
+    </Row>
   );
 
   const mobile = (
-    <Footer bgColor={bgColor}>
+    <>
       {currentlyPlaying && (
         <Row>
           {title}
-          <ExpandButton />
+          {minimize}
         </Row>
       )}
       <Row>{controls}</Row>
-    </Footer>
+    </>
   );
 
   return (
-    <KeyboardControls
-      isPlayerOpen={!!currentlyPlaying}
-      togglePlaying={togglePlaying}
-      toggleExpanded={toggleExpanded}
-      toggleSearch={toggleSearch}
+    <VelocityTransitionGroup
+      enter={{animation: animations.slideUpExpand.in, duration: 400}}
+      leave={{animation: animations.slideUpExpand.out}}
     >
-      <VelocityTransitionGroup
-        enter={{animation: animations.slideUpExpand.in, duration: 400}}
-        leave={{animation: animations.slideUpExpand.out}}
-      >
-        {currentlyPlaying && isActive && (
+      {visible && (
+        <Footer bgColor={bgColor}>
+          <Slider played={played} setPlayed={setPlayed} />
           <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        )}
-      </VelocityTransitionGroup>
-    </KeyboardControls>
+        </Footer>
+      )}
+    </VelocityTransitionGroup>
   );
 }
 
@@ -153,14 +140,8 @@ const Title = styled.h5`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`;
 
-const RightCenter = styled.div`
-  cursor: pointer;
-
-  :hover {
-    ${ExpandButton} {
-      opacity: 1;
-    }
+  @media ${device.small} {
+    max-width: 75%;
   }
 `;

@@ -32,7 +32,7 @@ interface $Props {
   playlist: string | null;
   currentlyPlaying: $Track | undefined;
   live: boolean;
-  children(): JSX.Element;
+  children: JSX.Element;
 }
 
 export default ({playlist, currentlyPlaying, live, children}: $Props) => {
@@ -66,7 +66,7 @@ export default ({playlist, currentlyPlaying, live, children}: $Props) => {
         }
       }}
     >
-      {children}
+      {() => children}
     </Subscription>
   );
 };

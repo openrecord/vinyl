@@ -4,7 +4,6 @@ import styled, {css} from 'styled-components';
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
-import {FOOTER_HEIGHT_DESKTOP, FOOTER_HEIGHT_MOBILE} from '../../controls/components/constants';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import Player, {$PlayerProps} from './Player';
@@ -13,14 +12,12 @@ interface $Props {
   currentlyPlaying: $Track | undefined;
   expanded: boolean;
   color: $Color;
-  toggleExpanded(): void;
   togglePlaying(): void;
 }
 
 export default function PlayerBox({
   currentlyPlaying,
   expanded,
-  toggleExpanded,
   color,
   togglePlaying,
   ...props
@@ -30,15 +27,12 @@ export default function PlayerBox({
   }
 
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
+  const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Positioning bg={color} expanded={expanded} onClick={expanded ? togglePlaying : toggleExpanded}>
+    <Positioning bg={color} expanded={expanded} onClick={togglePlaying} data-id="player">
       <IFrameBlocker />
-      <SizingHack expanded={expanded} isSoundCloud={isSoundCloud}>
-        {isSoundCloud && getTrackThumbnail(currentlyPlaying) !== '' ? (
-          <SoundCloudArt expanded={expanded} src={getTrackThumbnail(currentlyPlaying)} />
-        ) : isSoundCloud && getTrackThumbnail(currentlyPlaying) === '' ? (
-          <NoArtwork expanded={expanded} />
-        ) : null}
+      <SizingHack isSoundCloud={isSoundCloud}>
+        {isSoundCloud && art && <SoundCloudArt src={art} />}
         <Player currentlyPlaying={currentlyPlaying!} {...props} />
       </SizingHack>
     </Positioning>
@@ -70,34 +64,17 @@ interface $IsSoundCloud {
 
 const Positioning = styled.div`
   position: relative;
+  width: 100%;
+  height: ${props => (props.expanded ? '100vh' : '0')};
+  z-index: ${zindex('player')};
   overflow: hidden;
   transition: all linear 0.3s;
-  background-color: ${(props: $IsExpanded & $HasColor) =>
-    props.expanded ? toRGBString(props.bg) : 'transparent'};
+  background-color: ${(props: $IsExpanded & $HasColor) => toRGBString(props.bg)};
 
   [data-style-id='react-player'] > div {
     height: 250% !important;
     transform: translateY(-30%);
   }
-
-  ${props =>
-    props.expanded
-      ? css`
-          width: 100%;
-          height: 100vh;
-          z-index: ${zindex('player-expanded')};
-        `
-      : css`
-          z-index: ${zindex('player')};
-          height: ${FOOTER_HEIGHT_DESKTOP};
-          width: 8.875rem;
-          overflow: hidden;
-
-          @media ${device.small} {
-            height: ${FOOTER_HEIGHT_MOBILE};
-            bottom: ${FOOTER_HEIGHT_MOBILE};
-          }
-        `};
 `;
 
 const IFrameBlocker = styled.div`
@@ -114,80 +91,39 @@ const IFrameBlocker = styled.div`
 const SoundCloudArt = styled.img`
   height: 100%;
   width: 56.25%;
-
-  ${(props: $IsExpanded) =>
-    props.expanded
-      ? css`
-          position: absolute;
-          overflow: hidden;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          max-width: 40rem;
-          max-height: 40rem;
-        `
-      : css`
-          float: right;
-        `};
+  position: absolute;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 40rem;
+  max-height: 40rem;
 `;
 
-const NoArtwork = styled.div`
-  background-image: linear-gradient(135deg, #846170, #e6846e);
-  height: 100%;
-  width: 56.25%;
-
-  ${(props: $IsExpanded) =>
-    props.expanded
-      ? css`
-          position: absolute;
-          overflow: hidden;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          max-width: 40rem;
-          max-height: 40rem;
-        `
-      : css`
-          float: right;
-        `};
-`;
+// const NoArtwork = styled.div`
+//   background-image: linear-gradient(135deg, #846170, #e6846e);
+// `;
 
 const SizingHack = styled.div`
-  transition: all linear 0.3s;
+  padding-bottom: 50.5%;
+  position: relative;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%);
 
-  ${(props: $IsSoundCloud & $IsExpanded) =>
+  [data-style-id='react-player'] {
+    position: absolute;
+  }
+
+  @media ${device.small} {
+    width: 100%;
+  }
+
+  ${(props: $IsSoundCloud) =>
     props.isSoundCloud &&
     css`
       ${Player} {
         display: none;
       }
     `};
-
-  ${props =>
-    props.expanded
-      ? css`
-          padding-bottom: 50.5%;
-          position: relative;
-          overflow: hidden;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-
-          [data-style-id='react-player'] {
-            position: absolute;
-          }
-
-          @media ${device.small} {
-            width: 100%;
-          }
-        `
-      : css`
-          height: ${FOOTER_HEIGHT_DESKTOP};
-          padding-bottom: 0;
-          position: relative;
-          width: 100%;
-          left: 0;
-          top: 0;
-          transform: none;
-        `};
 `;
