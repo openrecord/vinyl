@@ -27,8 +27,7 @@ async function discoverRunningChrome() {
 async function launchChromeWithPuppeteer() {
   console.log('Launching Chrome with puppeteer.');
   const browser = await puppeteer.launch({
-    headless: config.puppeteer.headless,
-    devtools: true
+    headless: config.puppeteer.headless
   });
 
   /**

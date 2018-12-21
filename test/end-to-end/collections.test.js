@@ -14,9 +14,8 @@ const SEL = {
 const waitForAnimation = page => page.waitFor(() => !document.querySelector('.velocity-animating'));
 
 async function loadCollection(page, collection) {
-  page.goto(`${tutil.baseUrl()}/${collection}`);
+  await page.goto(`${tutil.baseUrl()}/${collection}`);
 
-  await page.waitForNavigation();
   await page.waitForSelector('h2');
 }
 
@@ -35,21 +34,23 @@ async function addSongFromQuery(page, query) {
   await page.waitForSelector(SEL.searchTrack);
   const track = choice(await page.$$(SEL.searchTrack));
 
-  const trackName = await track.$eval('h4', track => track.innerText);
+  const trackName = await getTrackTitle(track);
 
   await track.click();
-  await page.click(SEL.modalOverlay);
+  await page.keyboard.press('Escape');
   await waitForAnimation(page);
+  await page.waitFor(250);
   return trackName;
 }
 
 async function getQueueTrackName(page) {
   await page.waitForSelector(SEL.queueTrack);
-  return page.$eval(`${SEL.queueTrack} > h4`, el => el.innerText);
+  return page.$eval(SEL.queueTrack, getTrackTitle);
 }
 
-function getQueueNames(page) {
-  return page.$$eval(`${SEL.queueTrack} > h4`, tracks => tracks.map(n => n.innerText));
+async function getQueueNames(page) {
+  const tracks = await page.$$(SEL.queueTrack);
+  return Promise.all(tracks.map(getTrackTitle));
 }
 
 async function testAddSong(page, query) {
@@ -77,7 +78,7 @@ async function testDragAndDrop(page, remotePage) {
 
     await page.mouse.move(one.x + one.width / 2, one.y + one.height / 2);
     await page.mouse.down();
-    await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 10, {steps: 10});
+    await page.mouse.move(two.x + two.width / 2, two.y + two.height / 2 + 30, {steps: 10});
     await page.mouse.up();
   }
 
@@ -96,6 +97,28 @@ async function testDragAndDrop(page, remotePage) {
 
   expect(remoteTwo).toEqual(oldOne);
   expect(remoteOne).toEqual(oldTwo);
+}
+
+const getTrackTitle = dom => {
+  if (dom.querySelector) {
+    return dom.querySelector('h4').innerText;
+  }
+  return dom.$eval('h4', title => title.innerText);
+};
+
+async function testArrowKeys(page) {
+  const [one, two] = await getQueueNames(page);
+  await page.keyboard.press('ArrowDown');
+  let focused = await page.evaluateHandle('document.activeElement');
+  expect(await getTrackTitle(focused)).toBe(one);
+
+  await page.keyboard.press('ArrowDown');
+  focused = await page.evaluateHandle('document.activeElement');
+  expect(await getTrackTitle(focused)).toBe(two);
+
+  await page.keyboard.press('ArrowUp');
+  focused = await page.evaluateHandle('document.activeElement');
+  expect(await getTrackTitle(focused)).toBe(one);
 }
 
 describe('Collections Page', () => {
@@ -131,6 +154,9 @@ describe('Collections Page', () => {
 
       await testDragAndDrop(page, remotePage);
       console.log('Drag and drop passed!');
+
+      await testArrowKeys(page);
+      console.log('Arrow keys work!');
     },
     600 * 1000
   );
