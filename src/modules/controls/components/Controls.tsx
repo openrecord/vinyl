@@ -116,7 +116,7 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  margin: 0.25rem 2rem 1rem 2rem;
+  margin: 0.25rem 2rem 0.25rem 2rem;
 
   :first-child {
     border-top: none;
