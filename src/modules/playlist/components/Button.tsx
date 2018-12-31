@@ -4,10 +4,8 @@ interface $Props {
   active?: boolean;
 }
 
-const FILL = '#9c4d9d';
-
 export default styled.button`
-  background: ${({active}: $Props) => (active ? FILL : 'white')};
+  background: ${({active}: $Props) => (active ? 'black' : 'white')};
   border-radius: 6.25rem;
   color: black;
   cursor: pointer;
@@ -18,6 +16,6 @@ export default styled.button`
 
   &:hover {
     color: rgba(255, 255, 255, 1);
-    background: ${FILL};
+    background: black;
   }
 `;

@@ -101,14 +101,12 @@ const Footer = styled.div`
     Color(props.bgColor)
       .rgb()
       .string()};
+  padding: 0.5rem 0;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: ${zindex('controls')};
-  @media ${device.small} {
-    height: 9rem;
-  }
 `;
 
 const Row = styled.div`
