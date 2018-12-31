@@ -24,7 +24,6 @@ interface $Props {
   isCurrentSong?: boolean;
   youtube?: boolean;
   soundcloud?: boolean;
-  bgColor?: $Color;
 }
 
 export default function Track({
@@ -36,8 +35,7 @@ export default function Track({
   search = false,
   playing = false,
   isCurrentSong = false,
-  soundcloud = false,
-  bgColor
+  soundcloud = false
 }: $Props) {
   return (
     <StyledResult
@@ -45,7 +43,6 @@ export default function Track({
       className={classname({'is-current-song': isCurrentSong})}
       onKeyPress={ifEnter(onClick)}
       tabIndex={0}
-      bgColor={bgColor}
       data-id={id}
       data-track-type={search ? 'search' : 'queue'}
       search={search}
@@ -257,7 +254,6 @@ const SourceIcon = styled.div`
 `;
 
 interface $StyledResultProps {
-  bgColor?: $Color;
   search: boolean;
 }
 
@@ -270,16 +266,16 @@ const StyledResult = styled.div`
   width: 100%;
   transition: background-color 0.1s linear;
 
+  ${PlayPause} {
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   &.is-current-song,
-  :hover,
-  :focus {
-    background: ${(props: $StyledResultProps) =>
-      props.bgColor
-        ? Color(props.bgColor)
-            .darken(0.33)
-            .rgb()
-            .string()
-        : 'rgb(40, 40, 40)'};
+  :hover {
     ${PlayBackground}, ${AddPlus} {
       opacity: 1;
     }
@@ -295,6 +291,7 @@ const StyledResult = styled.div`
   }
 
   :hover {
+    background: #101010;
     ${PlayPause} {
       opacity: 1;
     }
@@ -309,7 +306,7 @@ const StyledResult = styled.div`
   }
 
   :focus {
-    outline: 1px solid rgb(80, 80, 80);
+    outline: none;
   }
 
   h4 {
@@ -329,8 +326,7 @@ const StyledResult = styled.div`
   ${({search}: $ImageHolderProps) =>
     search &&
     css`
-      &:hover,
-      :focus {
+      &:hover {
         background: #f2f2f2;
       }
       h4 {

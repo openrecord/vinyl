@@ -20,9 +20,9 @@ export default function Nav() {
 
 const StyledNav = styled.nav`
   background: 'transparent';
-  display: none !important;
+  display: block;
   padding: 1rem 0;
-  position: fixed;
+  position: absolute;
   width: 100%;
   text-align: center;
   z-index: ${zindex('nav')};
