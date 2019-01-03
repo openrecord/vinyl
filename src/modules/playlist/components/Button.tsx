@@ -14,8 +14,17 @@ export default styled.button`
   margin: 2rem;
   padding: 0.75rem 1.25rem;
 
+  img {
+    position: relative;
+    top: 0.125rem;
+  }
+
   &:hover {
     color: rgba(255, 255, 255, 1);
     background: black;
+
+    img {
+      filter: invert(100%);
+    }
   }
 `;
