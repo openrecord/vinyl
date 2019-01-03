@@ -29,7 +29,7 @@ class Landing extends React.Component {
         {rings}
         <div className="circle center" />
         <div className="circle hole" />
-        <h1 className="hero-headline">Instant Party Playlists</h1>
+        <h1 className="hero-headline">Easy Party Playlists</h1>
         <h5 className="hero-description">No ads. No downloads. No login required.</h5>
         <div className="hero-action">
           <input
