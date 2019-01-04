@@ -61,18 +61,10 @@ module.exports = (env, argv) => {
       runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          react: {
-            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-            name: 'react',
-            chunks: 'all'
-          },
           vendor: {
             test(module) {
               const context = module.context || '';
-              return (
-                context.includes('node_modules') &&
-                !(context.includes('/react/') || context.includes('/react-dom/'))
-              );
+              return context.includes('node_modules');
             },
             name: 'vendor',
             chunks: 'all'
