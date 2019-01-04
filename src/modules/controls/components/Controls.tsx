@@ -10,7 +10,6 @@ import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import Slider from './Slider';
 import SongControls from './SongControls';
 import TriButton from './TriButton';
 
@@ -84,7 +83,6 @@ export default function Controls({
     >
       {visible && (
         <Footer bgColor={bgColor}>
-          <Slider played={played} setPlayed={setPlayed} />
           <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
         </Footer>
       )}

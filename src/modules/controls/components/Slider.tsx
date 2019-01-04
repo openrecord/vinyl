@@ -32,7 +32,6 @@ export default function Slider({played, setPlayed}: $Props) {
 }
 
 const SliderContainer = styled.div`
-  display: none;
   cursor: pointer;
   padding: 0.75rem 2rem;
 
