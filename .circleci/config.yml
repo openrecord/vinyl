@@ -43,6 +43,7 @@ jobs:
 
       - run:
           name: Peek at all logs
+          when: always
           command: docker-compose -f docker-compose.test.yml logs
 
       - run:

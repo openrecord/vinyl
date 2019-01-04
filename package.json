@@ -135,7 +135,7 @@
     "prop-types": "^15.6.1",
     "puppeteer": "^1.9.0",
     "rc-slider": "^8.6.3",
-    "react": "^16.7.0-alpha.0",
+    "react": "^16.7.0-alpha.2",
     "react-apollo": "^2.2.4",
     "react-apollo-hooks": "^0.1.6",
     "react-beautiful-dnd": "^10.0.2",
