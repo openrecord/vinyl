@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Button from './Button';
+const closeX = require('./images/close-x.svg');
 
 interface $Props {
   onClick: () => void;
@@ -10,7 +11,7 @@ interface $Props {
 export default function AddSong({onClick, isOpen}: $Props) {
   return (
     <Button onClick={onClick} data-id="show-hide-search">
-      {isOpen ? 'Hide' : 'Add Song'}
+      {isOpen ? <img src={closeX} /> : 'Add Song'}
     </Button>
   );
 }

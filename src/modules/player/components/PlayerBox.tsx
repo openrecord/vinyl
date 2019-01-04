@@ -64,7 +64,8 @@ interface $IsSoundCloud {
 
 const Positioning = styled.div`
   position: relative;
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
   height: ${props => (props.expanded ? '100vh' : '0')};
   z-index: ${zindex('player')};
   overflow: hidden;

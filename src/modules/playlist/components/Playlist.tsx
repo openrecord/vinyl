@@ -42,8 +42,7 @@ export default class Playlist extends React.Component<$Props> {
           <ControlsContainer />
           {isEmpty ? (
             <EmptyCollection>
-              <h2>This collection is currently empty</h2>
-              <h4>Click 'Add Song' button to start collecting</h4>
+              <AddSong onClick={toggleSearch} isOpen={isOpen} />
             </EmptyCollection>
           ) : (
             <QueueContainer />
@@ -80,23 +79,13 @@ const TopRight = styled.div`
 `;
 
 const EmptyCollection = styled.div`
-  margin: 2rem auto;
   text-align: center;
   color: white;
 
-  h2 {
-    margin-bottom: 1rem;
-  }
-
-  h4 {
-    color: rgba(98, 98, 98, 1);
-  }
-
-  @media ${device.small} {
-    margin: 1.5rem auto;
-
-    h2 {
-      margin-bottom: 0.75rem;
-    }
+  button {
+    font-size: 2.25rem;
+    padding: 1.25rem 2.5rem;
+    position: relative;
+    top: 2.5rem;
   }
 `;
