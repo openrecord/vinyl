@@ -23,6 +23,8 @@ export interface $SoundCloudResult {
   description: string;
   thumbnail: string | null;
   url: string;
+  permalink_url: string;
+  artwork_url: string;
 }
 
 export default function useSoundCloud(search: string) {

@@ -21,6 +21,8 @@ export function variablesForAddToPlaylist(
     case 'SoundCloudResult':
       return {
         ...track,
+        url: track.permalink_url,
+        thumbnail: track.artwork_url,
         source: 'SOUNDCLOUD',
         playlist
       };
