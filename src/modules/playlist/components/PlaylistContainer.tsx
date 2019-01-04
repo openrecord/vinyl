@@ -67,6 +67,7 @@ export default function PlaylistContainer() {
   } = useSimpleQuery<$QueryData>(query, {playlist});
   const createPlaylist = useCreatePlaylist(playlist);
 
+  const isEmpty = tracks.length === 0;
   return (
     <Subscription subscription={ON_TRACK_ADDED} variables={{playlist}}>
       {__ => (
@@ -75,8 +76,8 @@ export default function PlaylistContainer() {
             <Playlist
               color={color}
               isOpen={isOpen}
-              showAddBtn={!currentlyPlaying || !expanded || isActive}
-              isEmpty={tracks.length === 0}
+              showAddBtn={(!currentlyPlaying || !expanded || isActive) && !isEmpty}
+              isEmpty={isEmpty}
               toggleSearch={toggle('isOpen')}
               createPlaylist={createPlaylist}
             />

@@ -10,7 +10,6 @@ import {ifElse} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
-import Slider from './Slider';
 import SongControls from './SongControls';
 import TriButton from './TriButton';
 
@@ -84,7 +83,6 @@ export default function Controls({
     >
       {visible && (
         <Footer bgColor={bgColor}>
-          <Slider played={played} setPlayed={setPlayed} />
           <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
         </Footer>
       )}
@@ -101,14 +99,12 @@ const Footer = styled.div`
     Color(props.bgColor)
       .rgb()
       .string()};
+  padding: 0.5rem 0;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: ${zindex('controls')};
-  @media ${device.small} {
-    height: 9rem;
-  }
 `;
 
 const Row = styled.div`
@@ -116,7 +112,7 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  margin: 0.25rem 2rem 1rem 2rem;
+  margin: 0.25rem 2rem 0.25rem 2rem;
 
   :first-child {
     border-top: none;

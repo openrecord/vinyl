@@ -43,6 +43,7 @@ export default function Queue({
       }}
     >
       <QueueList>
+        <QueueHeader>Queue</QueueHeader>
         <Droppable droppableId="queue">
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -81,7 +82,9 @@ export default function Queue({
 }
 
 const QueueList = styled.div`
+  max-width: 60rem;
   margin-bottom: 5rem;
+  margin: 0 auto 5rem auto;
 
   @media ${device.small} {
     margin-bottom: 10.25rem;
@@ -90,4 +93,10 @@ const QueueList = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const QueueHeader = styled.h1`
+  color: white;
+  display: block;
+  margin: 1.5rem 0.5rem 0.5rem 0.5rem;
 `;
