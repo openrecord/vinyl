@@ -4,10 +4,10 @@ const baseZIndexList = [
   'player',
   'iframeblocker',
   'controls',
-  'header',
   'nav',
   'search',
-  'search-results'
+  'search-results',
+  'header'
 ];
 
 export default function zindex(element, list = baseZIndexList) {
