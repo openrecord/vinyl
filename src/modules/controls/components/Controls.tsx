@@ -35,9 +35,7 @@ export default function Controls({
   toggleExpanded,
   playNext,
   playPrev,
-  played,
   currentlyPlaying,
-  setPlayed,
   visible
 }: $Props) {
   const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
