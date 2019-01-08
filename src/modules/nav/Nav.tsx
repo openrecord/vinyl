@@ -1,21 +1,28 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+import {VelocityComponent} from 'velocity-react';
 
 import {device} from '../../styles/utilities/device';
 import zindex from '../common/zindex';
 import {ROUTES} from '../routes/routes';
 
-interface $StyledNavProps {
-  landing: boolean;
+interface $Props {
+  hide: boolean;
 }
 
-export default function Nav() {
+export default function Nav({hide}: $Props) {
   return (
-    <StyledNav landing={location.pathname === ROUTES.LANDING}>
-      <Link to={ROUTES.LANDING}>OPENRECORD</Link>
-    </StyledNav>
+    <VelocityComponent animation={{opacity: hide ? 0 : 1}}>
+      <StyledNav landing={location.pathname === ROUTES.LANDING}>
+        <Link to={ROUTES.LANDING}>OPENRECORD</Link>
+      </StyledNav>
+    </VelocityComponent>
   );
+}
+
+interface $StyledNavProps {
+  landing: boolean;
 }
 
 const StyledNav = styled.nav`
