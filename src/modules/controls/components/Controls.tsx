@@ -116,6 +116,10 @@ const Row = styled.div`
   :first-child {
     border-top: none;
   }
+
+  @media ${device.small} {
+    height: 2.25rem;
+  }
 `;
 
 const ShowToggle = styled.button`

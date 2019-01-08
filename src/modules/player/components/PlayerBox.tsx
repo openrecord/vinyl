@@ -2,23 +2,19 @@ import * as React from 'react';
 import styled, {css} from 'styled-components';
 
 import {device} from '../../../styles/utilities/device';
-import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
-import {$Color} from '../../store';
 import Player, {$PlayerProps} from './Player';
 
 interface $Props {
   currentlyPlaying: $Track | undefined;
   expanded: boolean;
-  color: $Color;
   togglePlaying(): void;
 }
 
 export default function PlayerBox({
   currentlyPlaying,
   expanded,
-  color,
   togglePlaying,
   ...props
 }: $Props & $PlayerProps) {
@@ -29,7 +25,7 @@ export default function PlayerBox({
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Positioning bg={color} expanded={expanded} onClick={togglePlaying} data-id="player">
+    <Positioning expanded={expanded} onClick={togglePlaying} data-id="player">
       <IFrameBlocker />
       <SizingHack isSoundCloud={isSoundCloud}>
         {isSoundCloud && art && <SoundCloudArt src={art} />}
@@ -50,10 +46,6 @@ function getTrackThumbnail(track: $Track) {
   return '';
 }
 
-interface $HasColor {
-  bg: $Color;
-}
-
 interface $IsExpanded {
   expanded: boolean;
 }
@@ -66,11 +58,11 @@ const Positioning = styled.div`
   position: relative;
   margin: 0 auto;
   width: 90%;
-  height: ${props => (props.expanded ? '100vh' : '0')};
+  height: ${(props: $IsExpanded) => (props.expanded ? '100vh' : '0')};
   z-index: ${zindex('player')};
   overflow: hidden;
   transition: all linear 0.3s;
-  background-color: ${(props: $IsExpanded & $HasColor) => toRGBString(props.bg)};
+  background-color: transparent;
 
   [data-style-id='react-player'] > div {
     height: 250% !important;
