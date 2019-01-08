@@ -130,7 +130,7 @@ const ShowToggle = styled.button`
   padding: 0.25rem 0.5rem;
   outline: none;
 
-  hover {
+  :hover {
     background: white;
     color: black;
   }
