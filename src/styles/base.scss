@@ -99,10 +99,11 @@ li {
 .toast.toast {
   background: transparent;
   padding: 0;
+  box-shadow: none;
 }
 
 .toast-container.toast-container {
-  bottom: 3.5rem;
+  bottom: 2.5rem;
   left: 50% !important;
   margin-left: 0;
   width: auto;
