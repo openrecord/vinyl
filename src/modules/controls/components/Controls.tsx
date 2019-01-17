@@ -11,7 +11,6 @@ import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import SongControls from './SongControls';
-import TriButton from './TriButton';
 
 interface $Props {
   bgColor: $Color;
@@ -52,13 +51,13 @@ export default function Controls({
     </MediaControls>
   );
 
-  const minimize = <TriButton up={!expanded} onClick={toggleExpanded} />;
-
   const desktop = (
     <Row>
       {title}
       {controls}
-      {minimize}
+      <ShowToggle onClick={toggleExpanded}>
+        {expanded ? <h5>Playback Mode</h5> : <h5>Contributor Mode</h5>}
+      </ShowToggle>
     </Row>
   );
 
@@ -67,7 +66,9 @@ export default function Controls({
       {currentlyPlaying && (
         <Row>
           {title}
-          {minimize}
+          <ShowToggle onClick={toggleExpanded}>
+            {expanded ? 'Playback Mode' : 'Contributor Mode'}
+          </ShowToggle>
         </Row>
       )}
       <Row>{controls}</Row>
@@ -97,7 +98,7 @@ const Footer = styled.div`
     Color(props.bgColor)
       .rgb()
       .string()};
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -114,6 +115,26 @@ const Row = styled.div`
 
   :first-child {
     border-top: none;
+  }
+
+  @media ${device.small} {
+    height: 2.25rem;
+  }
+`;
+
+const ShowToggle = styled.button`
+  background: transparent;
+  border: 0.125rem solid white;
+  border-radius: 0.25rem;
+  color: white;
+  cursor: pointer;
+  font-family: Haas Reg;
+  padding: 0.25rem 0.5rem;
+  outline: none;
+
+  :hover {
+    background: white;
+    color: black;
   }
 `;
 
