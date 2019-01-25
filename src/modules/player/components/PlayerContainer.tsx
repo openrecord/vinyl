@@ -8,36 +8,31 @@ import OnRemoteControl from '../subscriptions/OnRemoteControl';
 import PlayerBox from './PlayerBox';
 
 export default function PlayerContainer() {
-	const playlist = usePlaylistName();
-	const {
-		state: {
-			player: {currentlyPlaying, playing, played, duration, expanded, live, color}
-		},
-		actions: {
-			player: {toggle, setter}
-		}
-	} = useStore();
+  const playlist = usePlaylistName();
+  const {
+    state: {
+      player: {currentlyPlaying, playing, played, expanded, duration, live}
+    },
+    actions: {player: playerActions}
+  } = useStore();
 
-	const {playNext} = useSkipControls();
-	const togglePlaying = useTogglePlaying();
+  const {playNext} = useSkipControls();
+  const togglePlaying = useTogglePlaying();
 
-	return (
-		<OnRemoteControl playlist={playlist} currentlyPlaying={currentlyPlaying} live={live}>
-			{() => (
-				<PlayerBox
-					color={color}
-					expanded={expanded}
-					currentlyPlaying={currentlyPlaying}
-					playing={playing}
-					played={played}
-					duration={duration}
-					toggleExpanded={() => toggle('expanded')()}
-					togglePlaying={togglePlaying}
-					playNext={playNext}
-					setPlayed={setter('played')}
-					setDuration={setter('duration')}
-				/>
-			)}
-		</OnRemoteControl>
-	);
+  return (
+    <OnRemoteControl playlist={playlist} currentlyPlaying={currentlyPlaying} live={live}>
+      <PlayerBox
+        expanded={expanded}
+        currentlyPlaying={currentlyPlaying}
+        playing={playing}
+        played={played}
+        muted={!expanded}
+        duration={duration}
+        togglePlaying={togglePlaying}
+        playNext={playNext}
+        setPlayed={playerActions.setter('played')}
+        setDuration={playerActions.setter('duration')}
+      />
+    </OnRemoteControl>
+  );
 }

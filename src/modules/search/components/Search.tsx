@@ -1,49 +1,45 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import {VelocityTransitionGroup} from 'velocity-react';
-
-import * as animations from '../../common/animations';
-import SearchBackground from './SearchBackground';
+import * as Modal from 'react-modal';
+import zindex from '../../common/zindex';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import {$Result} from './types';
 
 interface $Props {
-	query: string;
-	results: $Result[];
-	isOpen: boolean;
-	enqueue(song: $Result): void;
-	setSearch(query: string): void;
-	toggleSearch(value?: boolean): void;
-	clearSearch(): void;
+  query: string;
+  results: $Result[];
+  isOpen: boolean;
+  enqueue(song: $Result): void;
+  setSearch(query: string): void;
+  toggleSearch(value?: boolean): void;
 }
 
-export default function Search({
-	query,
-	setSearch,
-	results,
-	enqueue,
-	isOpen,
-	toggleSearch,
-	clearSearch
-}: $Props) {
-	return (
-		<SearchHolder isOpen={isOpen}>
-			<VelocityTransitionGroup
-				enter={{animation: animations.slideDownExpand.in, duration: 200}}
-				leave={animations.slideDownExpand.out}
-			>
-				{isOpen && <SearchBar query={query} onChange={setSearch} />}
-			</VelocityTransitionGroup>
-			<SearchBackground isOpen={isOpen} toggleSearch={toggleSearch} clearSearch={clearSearch}>
-				{results.length > 0 && <SearchResults results={results} enqueue={enqueue} />}
-			</SearchBackground>
-		</SearchHolder>
-	);
-}
+Modal.setAppElement('#root');
 
-const SearchHolder = styled.div`
-	background: rgb(36, 36, 36);
-	box-shadow: ${(props: {isOpen: boolean}) =>
-		props.isOpen ? '	0px 4px 6px 4px rgba(0, 0, 0, 0.1)' : 'none'};
-`;
+export default function Search({query, setSearch, results, enqueue, isOpen, toggleSearch}: $Props) {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={() => toggleSearch(false)}
+      style={{
+        overlay: {backgroundColor: 'rgba(20, 20, 20, 0.5)', zIndex: zindex('search')},
+        content: {
+          padding: '0.75rem 2rem',
+          border: 0,
+          background: 'white',
+          borderRadius: '2rem',
+          width: '80%',
+          height: '80%',
+          left: '50%',
+          top: '50%',
+          maxWidth: '50rem',
+          overflow: 'hidden',
+          transform: 'translate(-50%,-50%)'
+        }
+      }}
+    >
+      <SearchBar query={query} onChange={setSearch} />
+      <SearchResults results={results} enqueue={enqueue} />
+    </Modal>
+  );
+}

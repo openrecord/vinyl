@@ -1,140 +1,181 @@
+import * as _ from 'lodash';
 import Vibrant from 'node-vibrant';
+import {Palette} from 'node-vibrant/lib/color';
 import * as React from 'react';
-import {map, mod, set} from 'shades';
+import {mod, set} from 'shades';
 
 import {toggleOr} from '../common/utils';
 import {$Track} from '../search/components/types';
-import {$WithDefaultActions, $WithSetters} from './setters';
+import {$SetState, $WithDefaultActions} from './setters';
+
+const addDefaultActions = <S extends object>(setState: $SetState<S>) => <A extends object>(
+  actions: A
+) => ({
+  ...actions,
+  setter: <Key extends (keyof S) & string>(key: Key) => (value: S[Key]) =>
+    setState(set(key)(value)),
+  toggle: <Key extends (keyof S) & string>(key: Key) => (value?: boolean) =>
+    setState(mod(key)(toggleOr(value)))
+});
 
 const DEFAULT_BG: $Color = {
-	r: 25,
-	g: 25,
-	b: 25
+  r: 25,
+  g: 25,
+  b: 25
 };
 
-const initialState: $State = {
-	player: {
-		currentlyPlaying: undefined,
-		playing: true,
-		expanded: false,
-		played: 0,
-		duration: 0,
-		live: true,
-		color: DEFAULT_BG
-	},
-	queue: {
-		tracks: [],
-		isOpen: false
-	},
-	search: {
-		query: '',
-		isOpen: false
-	}
-};
-
-interface $State {
-	player: {
-		currentlyPlaying: $Track | undefined;
-		playing: boolean;
-		expanded: boolean;
-		played: number;
-		duration: number;
-		live: boolean;
-		color: $Color;
-	};
-
-	queue: {
-		tracks: $Track[];
-		isOpen: boolean;
-	};
-
-	search: {
-		query: string;
-		isOpen: boolean;
-	};
+export interface $Player {
+  currentlyPlaying: $Track | undefined;
+  playing: boolean;
+  expanded: boolean;
+  played: number;
+  duration: number;
+  live: boolean;
+  color: $Color;
+  isActive: boolean;
 }
 
+export interface $Queue {
+  tracks: $Track[];
+  isOpen: boolean;
+}
+
+export interface $Search {
+  query: string;
+  isOpen: boolean;
+}
+
+export interface $State {
+  player: $Player;
+  queue: $Queue;
+  search: $Search;
+}
+
+const initialState: $State = {
+  player: {
+    currentlyPlaying: undefined,
+    playing: true,
+    expanded: true,
+    played: 0,
+    duration: 0,
+    live: true,
+    color: DEFAULT_BG,
+    isActive: true
+  },
+  queue: {
+    tracks: [],
+    isOpen: false
+  },
+  search: {
+    query: '',
+    isOpen: false
+  }
+};
+
 export interface $Color {
-	r: number;
-	g: number;
-	b: number;
-	a?: number;
+  r: number;
+  g: number;
+  b: number;
+  a?: number;
 }
 
 interface $Actions {
-	player: {};
-	search: {};
-	queue: {};
+  player: {};
+  search: {};
+  queue: {};
 }
 
 interface $Store {
-	state: $State;
-	actions: $Actions & $WithDefaultActions<$State>;
+  state: $State;
+  actions: $Actions & $WithDefaultActions<$State>;
 }
 
-const Store = React.createContext<$Store>({
-	state: initialState,
-	// @ts-ignore
-	actions: null
-});
+// @ts-ignore
+const Store = React.createContext<$Store>();
 
 export function useStore(): $Store {
-	return React.useContext(Store);
+  return React.useContext(Store);
 }
 
 interface $Props {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export default class StoreProvider extends React.Component<$Props, $State> {
-	addDefaultActions = <Key extends keyof $State>(
-		actions: $Actions[Key],
-		stateKey: Key
-	): $WithSetters<$Actions[Key]> => ({
-		...actions,
-		setter: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value: $State[Key][InnerKey]) =>
-			// @ts-ignore
-			this.setState(set(stateKey, key)(value)),
-		toggle: <InnerKey extends keyof $State[Key]>(key: InnerKey) => (value?: boolean) => {
-			// @ts-ignore
-			this.setState(mod<Key, Key2>(stateKey, key)(toggleOr(value)));
-		}
-	});
+export default function StoreProvider({children}: $Props) {
+  const [search, setSearch] = React.useState(initialState.search);
+  const [queue, setQueue] = React.useState(initialState.queue);
+  const [player, setPlayer] = React.useState(initialState.player);
 
-	_actions: $Actions = {
-		player: {},
-		search: {},
-		queue: {}
-	};
+  useUpdateColorForTrack(player.currentlyPlaying, setPlayer);
+  useUpdateIsActive(setPlayer);
 
-	// @ts-ignore
-	actions = map(this.addDefaultActions)(this._actions) as $WithDefaultActions<$Actions>;
+  const state: $State = {
+    player,
+    search,
+    queue
+  };
 
-	state = initialState;
+  const actions: $Actions = {
+    player: addDefaultActions(setPlayer)({}),
+    search: addDefaultActions(setSearch)({}),
+    queue: addDefaultActions(setQueue)({})
+  };
 
-	async componentDidUpdate(_prevProps: $Props, prevState: $State) {
-		if (prevState.player.currentlyPlaying !== this.state.player.currentlyPlaying) {
-			const track = this.state.player.currentlyPlaying;
-			if (track) {
-				const thumb = document.querySelector(`img[data-id="${track.info.id}"]`) as HTMLImageElement;
-				const vibrant = new Vibrant(thumb);
-				const {
-					Muted: {r, g, b}
-				} = await vibrant.getPalette();
-				this.setState(set('player', 'color')({r, g, b}));
-			} else {
-				this.setState(set('player', 'color')(DEFAULT_BG));
-			}
-		}
-	}
+  return <Store.Provider value={{state, actions}}>{children}</Store.Provider>;
+}
 
-	render() {
-		const {
-			state,
-			actions,
-			props: {children}
-		} = this;
+function useUpdateColorForTrack(
+  currentlyPlaying: $Track | undefined,
+  setPlayer: $SetState<$Player>
+) {
+  React.useEffect(
+    () => {
+      if (currentlyPlaying) {
+        const thumb = document.querySelector(
+          `img[data-id="${currentlyPlaying.info.id}"]`
+        ) as HTMLImageElement;
 
-		return <Store.Provider value={{state, actions}}>{children}</Store.Provider>;
-	}
+        new Vibrant(thumb)
+          .getPalette()
+          .then(getSwatch)
+          .then(({r, g, b}: $Color) => setPlayer(set('color')({r, g, b})));
+      } else {
+        setPlayer(set('color')(DEFAULT_BG));
+      }
+    },
+    [currentlyPlaying]
+  );
+}
+
+const getSwatch = (palette: Palette) =>
+  palette.Muted ||
+  palette.DarkMuted ||
+  palette.LightMuted ||
+  palette.LightVibrant ||
+  palette.DarkVibrant ||
+  palette.Vibrant ||
+  DEFAULT_BG;
+
+function useUpdateIsActive(setPlayer: $SetState<$Player>) {
+  const pid = React.useRef(0);
+
+  const setTimer = () => {
+    pid.current = window.setTimeout(() => setPlayer(set('isActive')(false)), 3000);
+  };
+
+  React.useEffect(() => {
+    setTimer();
+    const reset = _.throttle(() => {
+      setPlayer(set('isActive')(true));
+      clearTimeout(pid.current);
+      setTimer();
+    }, 250);
+
+    const actions = ['mousemove', 'keydown', 'touchstart'];
+
+    actions.forEach(action => document.addEventListener(action, reset));
+    return () => {
+      actions.forEach(action => document.removeEventListener(action, reset));
+    };
+  }, []);
 }
