@@ -83,11 +83,11 @@ export default function Queue({
 
 const QueueList = styled.div`
   max-width: 60rem;
-  margin-bottom: 5rem;
-  margin: 0 auto 5rem auto;
+  padding-bottom: 5rem;
+  margin: 0 auto;
 
   @media ${device.small} {
-    margin-bottom: 10.25rem;
+    padding-bottom: 10.25rem;
   }
 
   ::-webkit-scrollbar {

@@ -40,12 +40,10 @@ export default class SearchResults extends React.Component {
               runOnMount
             >
               {results
-                .filter(result => {
-                  return this.state.filterFor === 'both' ||
-                    result.__typename === this.state.filterFor
-                    ? result
-                    : null;
-                })
+                .filter(
+                  result =>
+                    this.state.filterFor === 'both' || result.__typename === this.state.filterFor
+                )
                 .map(result => {
                   switch (result.__typename) {
                     case 'YoutubeResult':
@@ -63,7 +61,7 @@ export default class SearchResults extends React.Component {
                       return (
                         <Track
                           search
-                          thumbnail={result.thumbnail}
+                          thumbnail={result.artwork_url}
                           title={result.title}
                           key={result.id}
                           onClick={() => enqueue(result)}
