@@ -52,6 +52,7 @@ async function getQueueNames(page) {
 }
 
 async function testAddSong(page, query) {
+  await page.waitForSelector(SEL.searchButton);
   const trackName = await addSongFromQuery(page, query);
   const queueName = await getQueueTrackName(page);
   expect(queueName).toEqual(trackName);
