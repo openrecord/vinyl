@@ -13,7 +13,7 @@ describe('Home Page', () => {
 
   test('loads correctly', async () => {
     const html = await page.$eval('h1', e => e.innerHTML);
-    expect(html).toBe('Open music collections');
+    expect(html).toBe('Easy Party Playlists');
 
     await tutil.screenshot(page, 'home');
   });

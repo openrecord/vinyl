@@ -15,8 +15,6 @@ const waitForAnimation = page => page.waitFor(() => !document.querySelector('.ve
 
 async function loadCollection(page, collection) {
   await page.goto(`${tutil.baseUrl()}/${collection}`);
-
-  await page.waitForSelector('h2');
 }
 
 async function searchFor(page, query) {
