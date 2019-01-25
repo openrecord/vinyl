@@ -8,16 +8,13 @@ export default function useDebouncedSearch<T>(
   const [results, setResults] = React.useState([] as T[]);
   const debouncedSearch = React.useRef(_.debounce(search => searcher(search).then(setResults), 500))
     .current;
-  React.useEffect(
-    () => {
-      if (search) {
-        debouncedSearch.cancel();
-        debouncedSearch(search);
-      } else {
-        setResults([]);
-      }
-    },
-    [search]
-  );
+  React.useEffect(() => {
+    if (search) {
+      debouncedSearch.cancel();
+      debouncedSearch(search);
+    } else {
+      setResults([]);
+    }
+  }, [search]);
   return results;
 }

@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
+import {Subscription} from 'react-apollo';
 
+import PlaylistFragments from '../../common/fragments/PlaylistFragments';
 import usePlaylistName from '../../common/hooks/usePlaylistName';
 import {useSimpleQuery} from '../../common/utils';
 import {$Playlist} from '../../search/components/types';
@@ -14,6 +16,28 @@ const query = gql`
       id
       tracks {
         id
+      }
+    }
+  }
+`;
+
+const ON_TRACK_ADDED = gql`
+  subscription OnTrackAdded($playlist: String!) {
+    playlist(where: {node: {name: $playlist}}) {
+      node {
+        ...AllPlaylist
+      }
+    }
+  }
+  ${PlaylistFragments.all}
+`;
+
+const ON_TRACK_UPDATED = gql`
+  subscription OnTrackUpdated($playlist: String!) {
+    track(where: {node: {playlist: {name: $playlist}}}) {
+      node {
+        id
+        index
       }
     }
   }
@@ -45,13 +69,21 @@ export default function PlaylistContainer() {
 
   const isEmpty = tracks.length === 0;
   return (
-    <Playlist
-      color={color}
-      isOpen={isOpen}
-      showAddBtn={(!currentlyPlaying || !expanded || isActive) && !isEmpty}
-      isEmpty={isEmpty}
-      toggleSearch={toggle('isOpen')}
-      createPlaylist={createPlaylist}
-    />
+    <Subscription subscription={ON_TRACK_ADDED} variables={{playlist}}>
+      {__ => (
+        <Subscription subscription={ON_TRACK_UPDATED} variables={{playlist}}>
+          {__ => (
+            <Playlist
+              color={color}
+              isOpen={isOpen}
+              showAddBtn={(!currentlyPlaying || !expanded || isActive) && !isEmpty}
+              isEmpty={isEmpty}
+              toggleSearch={toggle('isOpen')}
+              createPlaylist={createPlaylist}
+            />
+          )}
+        </Subscription>
+      )}
+    </Subscription>
   );
 }

@@ -44,11 +44,11 @@ export default function Queue({
     >
       <QueueList>
         <QueueHeader>Queue</QueueHeader>
-        <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
-          <Droppable droppableId="queue">
-            {provided => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                {provided.placeholder}
+        <Droppable droppableId="queue">
+          {provided => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {provided.placeholder}
+              <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
                 <VelocityTransitionGroup
                   enter={{
                     animation: animations.rotate3d.in,
@@ -72,10 +72,10 @@ export default function Queue({
                     />
                   ))}
                 </VelocityTransitionGroup>
-              </div>
-            )}
-          </Droppable>
-        </ArrowNavigation>
+              </ArrowNavigation>
+            </div>
+          )}
+        </Droppable>
       </QueueList>
     </DragDropContext>
   );
