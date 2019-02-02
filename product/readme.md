@@ -1,7 +1,7 @@
 # OpenRecord
 
 ## Vision
-The vision for OpenRecord's is to make music easier to share and enjoy with others.
+Make music easier to share and enjoy with others.
 
 ## Mission
 Our mission is to build a open source service that enables anyone to collect good music and share it with others in real time.
