@@ -1,10 +1,7 @@
 # OpenRecord
 
 ## Vision
-Make music easier to share and enjoy with others.
-
-## Mission
-Our mission is to build a open source service that enables anyone to collect good music and share it with others in real time.
+Our vision is to build an open source service that enables anyone to collect good music and share it with others in real time.
 
 ## Problem Statement
 - Ads are annoying
