@@ -1,9 +1,9 @@
 ## Story or Description
 As a {_user_type_} I need {_function_} so that {_benefit_}
 
-*OR*
+**OR**
 
-Currently, {current functionality} , now we want {desired functionality}.
+Currently, {_current functionality_} , now we want {_desired functionality_}.
 
 ## Screenshot 
 
