@@ -10,7 +10,4 @@ Currently, {current functionality} , now we want {desired functionality}.
 ## Acceptance Criteria
 - [ ] Consider: Conditional States, Validation rules, Collaboration needs, Testing (specify the environment)
 
-## Def of Done
-- [ ] Issue is connected to Epic
-- [ ] All AC met
 
