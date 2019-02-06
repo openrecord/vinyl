@@ -1,19 +1,40 @@
 # OpenRecord
 
 ## Vision
-Our vision is to build an open source service that enables anyone to collect good music and share it with others in real time.
+Create your music personality.
 
-## Problem Statement
-- Ads are annoying
+Personality is who you are, traits that grow but also remain consistent over time.
+Personalitzaion is trying to predict what you like.
+
+## Hypothesis
+Listeners want to be able to develop a music identity online by curating their favorite music and sharing it with others.
+
+- Other people contributing is exciting because you know they're looking and their is a curiosity/surprise when someone shares with you.
+- How do we help people create/curate their music personality?
+- Sense of self
+- helping people express themselves through music
+
+How do you encourage interaction and make sure things don't get stale?
+- Song limit (25 songs?)
+- Songs disappear after 30 days.
+
+Listeners want a music service that enables them to easily collect and discover good music.
+
+## Problems with current music services 
 - Good music is spread across different services
-- High quality music experiences are behind paywalls
 
-## Goals
-- Remove interruptions from music playback
+## Goal
+To build an open source music service that: 
 - Enable music collection from across multiple platforms
-- Offer a high quality music experience for Free
 
 
+## Features
+- Remove interruptions from music playback
+- Free
+
+## Assumptions
+- People won't want to log in
+- 
 
 
 ## User Groups
