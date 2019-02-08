@@ -1,7 +1,7 @@
 # OpenRecord
 
 ## Vision
-Create your music personality.
+Create your music personality
 
 Personality is who you are, traits that grow but also remain consistent over time.
 Personalitzaion is trying to predict what you like.
