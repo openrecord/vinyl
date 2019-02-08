@@ -1,13 +1,39 @@
 # OpenRecord
 
-## Vision
-Create your music personality
+## 4 Word Vision
+Cultivate your music personality
 
+## Mission
+Create an open source music platform that enables music listeners to build a music profile that captures their  identity
+
+## Hypothesis
+Music listeners want a fun, colorful way to collect and share their favorite music with friends. 
+
+## Current Problems
+- Good music is spread across different services
+- Algorithmic curation feels unauthentic and limited
+
+
+## Goal
+To build an open source music service that: 
+- Enable music collection from across multiple platforms
+
+
+## Features
+- Remove interruptions from music playback
+- Free
+- Syncing playback in real time
+
+## Assumptions
+- People won't want to log in
+- 
+
+# Notes
+## Thoughts
 Personality is who you are, traits that grow but also remain consistent over time.
 Personalitzaion is trying to predict what you like.
 
-## Hypothesis
-Listeners want to be able to develop a music identity online by curating their favorite music and sharing it with others.
+A way music identity online by curating their favorite music and sharing it with others.
 
 - Other people contributing is exciting because you know they're looking and their is a curiosity/surprise when someone shares with you.
 - How do we help people create/curate their music personality?
@@ -19,22 +45,6 @@ How do you encourage interaction and make sure things don't get stale?
 - Songs disappear after 30 days.
 
 Listeners want a music service that enables them to easily collect and discover good music.
-
-## Problems with current music services 
-- Good music is spread across different services
-
-## Goal
-To build an open source music service that: 
-- Enable music collection from across multiple platforms
-
-
-## Features
-- Remove interruptions from music playback
-- Free
-
-## Assumptions
-- People won't want to log in
-- 
 
 
 ## User Groups
@@ -54,7 +64,7 @@ _Digital DJs_
 1. I want to be able to 
 
 
-### Business Goals - *Objectives*
+### *Objectives*
 
 
 ## Assumptions
@@ -72,8 +82,6 @@ _Digital DJs_
 ## Success Metrics
 ### KPIs
 ### Key Storypoints
-
-
 
 
 
