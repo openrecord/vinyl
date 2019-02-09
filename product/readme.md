@@ -2,27 +2,27 @@
 
 ## Table of Contents
 
-1. [Summary of Purpose](#summary-of-purpose)
+1. **[Summary of Purpose](#summary-of-purpose)**
    - [Vision](#vision)
    - [Mission](#mission)
    - [Hypothesis](#hypothesis)
    - [Problems](#Problem)
    - [Goals](#goals)
-2. [Status](#status)
+2. **[Status](#status)**
    - [URL](#url)
    - [Current Features](#current-features)
    - [Potential Enhancements](#potential-enhancements)
-3. [Engineering](#engineering)
+3. **[Engineering](#engineering)**
    - [Onboarding](#onboarding)
    - [Backend](#Backend)
    - [Frontend](#Fronted)
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
-4. [Design](#design)
+4. **[Design](#design)**
    - [Mockups](#mockups)
    - [User Flows](#user-flows)
    - [Icons](#icons)
-5. [Research](#research)
+5. **[Research](#research)**
    - [Secondary Research](#secondary-research)
    
 
