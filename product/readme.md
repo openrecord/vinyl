@@ -80,12 +80,12 @@ Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/maste
 
 ### Codebase Intro Videos
 **[Intro to OpenRecord Codebase 1](https://www.youtube.com/watch?v=AMhLE61joV0)**
-[<img width="800" alt="screen shot 2019-02-09 at 4 03 03 pm" src="https://user-images.githubusercontent.com/7230519/52526277-44051600-2c84-11e9-997c-c1e990839ee1.png">](https://www.youtube.com/watch?v=AMhLE61joV0)
+[<img width="400" alt="intro video 1" src="https://user-images.githubusercontent.com/7230519/52527461-c8f92b00-2c96-11e9-9c10-5d0b84c2d11f.png">](https://www.youtube.com/watch?v=AMhLE61joV0)
 
 <br>
 
 **[Intro to the OpenRecord Codebase 2](https://www.youtube.com/watch?v=t_J2FKngQWA)**
-[<img width="1440" alt="screen shot 2019-02-09 at 4 06 39 pm" src="https://user-images.githubusercontent.com/7230519/52526313-bece3100-2c84-11e9-8851-ddf632e8e284.png">](https://www.youtube.com/watch?v=t_J2FKngQWA)
+[<img width="400" alt="intro video 2" src="https://user-images.githubusercontent.com/7230519/52527460-c8f92b00-2c96-11e9-9c2f-2ff3b64ff822.png">](https://www.youtube.com/watch?v=t_J2FKngQWA)
 
 ---
 
