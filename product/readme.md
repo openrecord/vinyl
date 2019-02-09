@@ -19,7 +19,9 @@
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
 4. [Design](#design)
-   -
+   - [Mockups](#mockups)
+   - [User Flows](#user-flows)
+   - [Icons](#icons)
 5. [Research](#research)
    - [Secondary Research](#secondary-research)
    
