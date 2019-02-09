@@ -25,6 +25,13 @@ Listeners want a fun, colorful way to collect and share their favorite music.
 - Free
 - Syncing playback in real time
 
+## Research
+### WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?
+
+<img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
+
+[Link to Article](https://www.academia.edu/267455/What_Are_Musical_Identities_and_Why_Are_They_Important)
+
 ## Assumptions
 
 # Notes
@@ -45,12 +52,6 @@ How do you encourage interaction and make sure things don't get stale?
 
 Listeners want a music service that enables them to easily collect and discover good music.
 
-## Research
-#### WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?
-
-<img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
-
-[Link to Article](https://www.academia.edu/267455/What_Are_Musical_Identities_and_Why_Are_They_Important)
 
 
 
