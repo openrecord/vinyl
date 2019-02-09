@@ -4,18 +4,18 @@
 Cultivate your music personality
 
 ## Mission
-Create an open source music platform that enables music listeners to build a music profile that captures their  identity
+Create an open source platform that enables music lovers to foster their music identities and share with friends & followers.
 
 ## Hypothesis
-Music listeners want a fun, colorful way to collect and share their favorite music with friends. 
+Listeners want a fun, colorful way to collect and share their favorite music. 
 
 ## Current Problems
 - Good music is spread across different services
-- Algorithmic curation feels unauthentic and limited
+- Algorithmic curation feels unauthentic and limiting
 
-
-## Goal
-To build an open source music service that: 
+## Goals 
+- Empower users to cultivate an identity through music online
+- Facilitate and prioritize human driven music discovery
 - Enable music collection from across multiple platforms
 
 
@@ -25,8 +25,6 @@ To build an open source music service that:
 - Syncing playback in real time
 
 ## Assumptions
-- People won't want to log in
-- 
 
 # Notes
 ## Thoughts
@@ -45,6 +43,9 @@ How do you encourage interaction and make sure things don't get stale?
 - Songs disappear after 30 days.
 
 Listeners want a music service that enables them to easily collect and discover good music.
+
+<img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
+
 
 
 ## User Groups
