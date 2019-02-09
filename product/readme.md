@@ -10,8 +10,9 @@ Create an open source platform that enables music lovers to foster their music i
 Listeners want a fun, colorful way to collect and share their favorite music. 
 
 ## Current Problems
-- Good music is spread across different services
 - Algorithmic curation feels unauthentic and limiting
+- Good music is spread across different services
+
 
 ## Goals 
 - Empower users to cultivate an identity through music online
