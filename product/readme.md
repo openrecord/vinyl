@@ -8,11 +8,15 @@
    - [Hypothesis](#hypothesis)
    - [Problems](#Problem)
    - [Goals](#goals)
-2. What currently
+2. [Engineering]
+   - [Vision](#vision)
+   - [Mission](#mission)
+   - [Hypothesis](#hypothesis)
+   - [Problems](#Problem)
 
 
 ---
-## Summary of Purpose
+# Summary of Purpose
 
 ### Vision
 Cultivate your music personality
@@ -33,20 +37,21 @@ Create an endless feed dedicated to discovering songs and music videos hand pick
 - Facilitate human driven music discovery
 - Enable content collection from across multiple platforms 
 
+---
 
-## Current Status
+# Engineering
 
-## Engineering
-## Onboarding
+
+### Onboarding
 **To be filled in by @bruno &/or @rian
 
-#### Backend
+### Backend
 - Graph QL backend server run by Primsa - Database layer and crud operation
 
-#### Devops
+### Devops
 - Everything is routed through Netlify as a layer over AWS Lambda (Serverless)
 
-#### Frontend
+### Frontend
 - The frontend Apollo caches the FE through React Hooks
 
 **[Intro to OpenRecord Codebase 1](https://www.youtube.com/watch?v=AMhLE61joV0)**
@@ -57,8 +62,6 @@ Create an endless feed dedicated to discovering songs and music videos hand pick
 
 
 
-
-#### Onboarding
 
 ### Features
 - Remove interruptions from music playback
