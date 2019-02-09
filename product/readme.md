@@ -38,11 +38,12 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 ### Problem
 - Algorithmic curation feels unauthentic and limiting
 - Good songs and music videos are spread across different services
+- People experience friction when sharing songs due to paywalls and logins
 
 ### Goals 
 - Empower users to form and cultivate their music identity online
 - Facilitate human driven music discovery
-- Enable content collection from across multiple platforms 
+- Enable content collection from across multiple platforms & reduce friction in sharing
 
 ---
 
@@ -99,7 +100,7 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
-
+# Team
 
 
 ## Challenges to overcome
@@ -122,65 +123,19 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 ## Thoughts
 Personality is who you are, traits that grow but also remain consistent over time.
 Personalitzaion is trying to predict what you like.
-
-
-- Other people contributing is exciting because you know they're looking and their is a curiosity/surprise when someone shares with you.
-- How do we help people create/curate their music personality?
-- Sense of self
-- helping people express themselves through music
-
-
-
-Listeners want a music service that enables them to easily collect and discover good music.
-
-
+Other people contributing to a shared community is exciting because their engagement leads to surprise, curiosity and encourages more engagement.
 
 
 ## User Groups
-### 1) Digital DJ's
-
-**User Problem Statement**
-
-
-### 2) Listening Enthusiasts
-
-**User Problem Statement**
-
-
-## Goals
-### User Goals - *Outcomes*
-_Digital DJs_
-1. I want to be able to 
-
-
-### *Objectives*
-
-
-## Assumptions
-1. 
-
-## Value Propositions
-
-
-## Solution Approach
-**1.**
+1. Digital Music Listeners (18 - 35 yrs old)
+1. Digital DJ's
+1. Influencers 
 
 
 
-
-## Success Metrics
+### Value Propositions
+### Success Metrics
 ### KPIs
 ### Key Storypoints
-
-
-
-# Implementation Info
-## Status
-
-
-
-## Team
-
- 
-## Screenshots
+### Screenshots
 
