@@ -8,7 +8,7 @@
    - [Hypothesis](#hypothesis)
    - [Problems](#Problem)
    - [Goals](#goals)
-2. [Current Status]
+2. [Status](#status)
    - [URL](#url)
    - [Current Features](#current-features)
    - [Potential Enhancements](#potential-enhancements)
@@ -46,7 +46,7 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 
 ---
 
-# Current Status
+# Status
 
 ### URL: https://openrecord.co/
 
