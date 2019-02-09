@@ -1,29 +1,57 @@
 # OpenRecord
 
-## 4 Word Vision
+## Table of Contents
+
+1. Summary of Purpose
+   - [Vision](#vision)
+   - [Mission](#mission)
+   - [Hypothesis](#hypothesis)
+   - [Current Problems](#current-problems)
+   - [Goals](#goals)
+2. What currently
+
+
+---
+
+## Vision
 Cultivate your music personality
 
-## Mission
-Create an open source platform that enables music lovers to foster their music identities and share with friends & followers.
-
 ## Hypothesis
-Listeners want a fun, colorful way to collect and share their favorite music. 
+Listeners want a fun, colorful way to collect and share their favorite music with friends/followers.
 
-## Current Problems
+## Problem
+**There is no space dedicated for digital music lovers to express themselves through music**
 - Algorithmic curation feels unauthentic and limiting
-- Good music is spread across different services
+- Good songs and music videos are spread across different services
 
+## Solution Approach
+**Create an endless feed dedicated to discovering songs and music videos hand picked by friends.** 
 
 ## Goals 
-- Empower users to cultivate an identity through music online
-- Facilitate and prioritize human driven music discovery
-- Enable music collection from across multiple platforms
+- Empower users to form and cultivate their music identity online
+- Facilitate human driven music discovery
+- Enable content collection from across multiple platforms 
 
+
+# What is already built? What we currently have
 
 ## Features
 - Remove interruptions from music playback
 - Free
 - Syncing playback in real time
+
+## Challenges to overcome
+### 1. Music becoming stale
+**Ideas**
+- Song limit (25 songs?)
+- Songs disappear after 30 days.
+
+### 2. Adoption
+**How do we get users to try a new music experience?**
+
+**3. How do we get users to repetitively return to a new music experience?**
+- Create virtuous loops
+![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
 
 ## Research
 ### WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?
@@ -39,16 +67,13 @@ Listeners want a fun, colorful way to collect and share their favorite music.
 Personality is who you are, traits that grow but also remain consistent over time.
 Personalitzaion is trying to predict what you like.
 
-A way music identity online by curating their favorite music and sharing it with others.
 
 - Other people contributing is exciting because you know they're looking and their is a curiosity/surprise when someone shares with you.
 - How do we help people create/curate their music personality?
 - Sense of self
 - helping people express themselves through music
 
-How do you encourage interaction and make sure things don't get stale?
-- Song limit (25 songs?)
-- Songs disappear after 30 days.
+
 
 Listeners want a music service that enables them to easily collect and discover good music.
 
