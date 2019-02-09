@@ -2,40 +2,65 @@
 
 ## Table of Contents
 
-1. Summary of Purpose
+1. [Summary of Purpose](#summary-of-purpose)
    - [Vision](#vision)
    - [Mission](#mission)
    - [Hypothesis](#hypothesis)
-   - [Current Problems](#current-problems)
+   - [Problems](#Problem)
    - [Goals](#goals)
 2. What currently
 
 
 ---
+## Summary of Purpose
 
-## Vision
+### Vision
 Cultivate your music personality
 
-## Hypothesis
+### Hypothesis
 Listeners want a fun, colorful way to collect and share their favorite music with friends/followers.
 
-## Problem
-**There is no space dedicated for digital music lovers to express themselves through music**
+### Problem
+There is no space dedicated for digital music lovers to express themselves through music
 - Algorithmic curation feels unauthentic and limiting
 - Good songs and music videos are spread across different services
 
-## Solution Approach
-**Create an endless feed dedicated to discovering songs and music videos hand picked by friends.** 
+### Solution Approach
+Create an endless feed dedicated to discovering songs and music videos hand picked by friends.
 
-## Goals 
+### Goals 
 - Empower users to form and cultivate their music identity online
 - Facilitate human driven music discovery
 - Enable content collection from across multiple platforms 
 
 
-# What is already built? What we currently have
+## Current Status
 
-## Features
+## Engineering
+## Onboarding
+**To be filled in by @bruno &/or @rian
+
+#### Backend
+- Graph QL backend server run by Primsa - Database layer and crud operation
+
+#### Devops
+- Everything is routed through Netlify as a layer over AWS Lambda (Serverless)
+
+#### Frontend
+- The frontend Apollo caches the FE through React Hooks
+
+**[Intro to OpenRecord Codebase 1](https://www.youtube.com/watch?v=AMhLE61joV0)**
+[<img width="800" alt="screen shot 2019-02-09 at 4 03 03 pm" src="https://user-images.githubusercontent.com/7230519/52526277-44051600-2c84-11e9-997c-c1e990839ee1.png">](https://www.youtube.com/watch?v=AMhLE61joV0)
+
+**[Intro to the OpenRecord Codebase 2](https://www.youtube.com/watch?v=t_J2FKngQWA)**
+[<img width="1440" alt="screen shot 2019-02-09 at 4 06 39 pm" src="https://user-images.githubusercontent.com/7230519/52526313-bece3100-2c84-11e9-8851-ddf632e8e284.png">](https://www.youtube.com/watch?v=t_J2FKngQWA)
+
+
+
+
+#### Onboarding
+
+### Features
 - Remove interruptions from music playback
 - Free
 - Syncing playback in real time
@@ -54,13 +79,12 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 ![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
 
 ## Research
-### WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?
+### Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](https://www.academia.edu/267455/What_Are_Musical_Identities_and_Why_Are_They_Important)
 
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
-[Link to Article](https://www.academia.edu/267455/What_Are_Musical_Identities_and_Why_Are_They_Important)
 
-## Assumptions
+
 
 # Notes
 ## Thoughts
