@@ -6,6 +6,7 @@
    - [Hypothesis](#hypothesis)
    - [Problems](#Problem)
    - [Goals](#goals)
+   - [Team](#team)
 2. **[Status](#status)**
    - [URL](#url)
    - [Current Features](#current-features)
@@ -42,6 +43,22 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 - Empower users to form and cultivate their music identity online
 - Facilitate human driven music discovery
 - Enable content collection from across multiple platforms & reduce friction in sharing
+
+### Team
+#### Join the Team
+If you're interested in contributing to OpenRecord, shoot us an email at [openrecordteam@gmail.com](mailto:openrecordteam@gmail.com) for an invite to our Slack & Github Repo.
+
+#### Active
+- Ryan - [@rtluu](https://github.com/rtluu)
+- Bruno - [@brunogarciagonzalez](https://github.com/brunogarciagonzalez)
+- Rian - [@rianfowler](https://github.com/rianfowler)
+- Alex - [@Agiraldez17](https://github.com/agiraldez17)
+
+#### Inactive
+- James - [@jamesmcnamara](https://github.com/jamesmcnamara)
+- Osebo - [@osebo](https://github.com/osebo)
+- Chas - [@chasdevs](https://github.com/chasdevs)
+- Cam - [@camlatimer](https://github.com/camlatimer)
 
 ---
 
@@ -97,13 +114,6 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
-# Team
-- Ryan Luu - @rtluu
-- James Macnamara - @jamesmcnamara
-- Bruno Gonzalez - @brunogarciagonzalez
-- Rian Fowler - @rianfowler
-- Alex Giraldez - @Agiraldez17
-
 ## Challenges to overcome
 ### 1. Music becoming stale
 **Ideas**
@@ -113,11 +123,10 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 ### 2. Adoption
 **How do we get users to try a new music experience?**
 
-**3. How do we get users to repetitively return to a new music experience?**
-- Create virtuous loops
+
+### 3. How do we get users to repetitively return to a new music experience?
+**Create virtuous loops**
 ![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
-
-
 
 
 # Notes
