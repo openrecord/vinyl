@@ -1,6 +1,4 @@
-# OpenRecord
-
-## Table of Contents
+# Table of Contents
 
 1. **[Summary of Purpose](#summary-of-purpose)**
    - [Vision](#vision)
@@ -25,8 +23,8 @@
 5. **[Research](#research)**
    - [Secondary Research](#secondary-research)
    
-
 ---
+
 # Summary of Purpose
 
 ### Vision
@@ -65,7 +63,6 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 
 # Engineering
 
-
 ### Onboarding
 **To be filled in by @bruno &/or @rian
 
@@ -101,7 +98,7 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
 # Team
-
+- Ryan Luu 
 
 ## Challenges to overcome
 ### 1. Music becoming stale
@@ -127,11 +124,10 @@ Other people contributing to a shared community is exciting because their engage
 
 
 ## User Groups
-1. Digital Music Listeners (18 - 35 yrs old)
-1. Digital DJ's
-1. Influencers 
-
-
+1. Listeners
+1. DJs
+1. Music Creators
+1. Music Influencers 
 
 ### Value Propositions
 ### Success Metrics
