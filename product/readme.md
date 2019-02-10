@@ -16,7 +16,7 @@
    - [Frontend](#Fronted)
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
-4. **[Design](#design)**
+4. **[Design](#design) - WIP**
    - [Mockups](#mockups)
    - [User Flows](#user-flows)
    - [Icons](#icons)
@@ -98,7 +98,11 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
 # Team
-- Ryan Luu 
+- Ryan Luu - @rtluu
+- James Macnamara - @jamesmcnamara
+- Bruno Gonzalez - @brunogarciagonzalez
+- Rian Fowler - @rianfowler
+- Alex Giraldez - @Agiraldez17
 
 ## Challenges to overcome
 ### 1. Music becoming stale
