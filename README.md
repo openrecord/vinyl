@@ -8,17 +8,17 @@
    - [Goals](#goals)
    - [Status](#status)
    - [Team](#team)
-3. **[Engineering](#engineering)**
+1. **[Engineering](#engineering)**
    - [Onboarding](#onboarding)
    - [Backend](#Backend)
    - [Frontend](#Fronted)
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
-4. **[Design](#design) - WIP**
+1. **[Design](#design) - WIP**
    - [Mockups](#mockups)
    - [User Flows](#user-flows)
    - [Icons](#icons)
-5. **[Research](#research)**
+1. **[Research](#research)**
    - [Secondary Research](#secondary-research)
    
 ---
