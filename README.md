@@ -20,8 +20,8 @@
    - [Mockups](#mockups)
 1. **[Research](#research)**
    - [Secondary Research](#secondary-research)
-   
----
+
+<br>
 
 # Summary of Purpose
 
@@ -72,7 +72,7 @@ If you're interested in contributing to OpenRecord, shoot us an email at [openre
 - Chas - [@chasdevs](https://github.com/chasdevs)
 - Cam - [@camlatimer](https://github.com/camlatimer)
 
----
+<br>
 
 # Engineering
 
@@ -104,7 +104,8 @@ Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/maste
 
 [<img width="400" alt="intro video 2" src="https://user-images.githubusercontent.com/7230519/52527460-c8f92b00-2c96-11e9-9c2f-2ff3b64ff822.png">](https://www.youtube.com/watch?v=t_J2FKngQWA)
 
----
+<br>
+
 # Design
 ### Toolset
 We use Figma for easy access and feedback.
@@ -127,7 +128,7 @@ We use Figma for easy access and feedback.
 
 <img width="220" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
 
----
+<br>
 
 # Research
 ### Secondary Research
