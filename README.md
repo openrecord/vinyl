@@ -114,21 +114,19 @@ We use Figma for easy access and feedback.
 
 ### Mockups
 **Sidebar**
-<img width="400" alt="Playing" src="https://user-images.githubusercontent.com/7230519/52543123-ee5c6680-2d74-11e9-871b-60934e423f44.png">
 
+<img width="400" alt="Playing" src="https://user-images.githubusercontent.com/7230519/52543123-ee5c6680-2d74-11e9-871b-60934e423f44.png">
 <br>
 
 **Search**
-<img width="400" alt="Sidebar Search" src="https://user-images.githubusercontent.com/7230519/52543122-edc3d000-2d74-11e9-8fa0-4f5e97f0434b.png">
 
+<img width="400" alt="Sidebar Search" src="https://user-images.githubusercontent.com/7230519/52543122-edc3d000-2d74-11e9-8fa0-4f5e97f0434b.png">
 <br>
 
 **Mobile History**
+
 <img width="400" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
 
-![mobilehistory](https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png)
-![sidebarsearch](https://user-images.githubusercontent.com/7230519/52543122-edc3d000-2d74-11e9-8fa0-4f5e97f0434b.png)
-![sidebar](https://user-images.githubusercontent.com/7230519/52543123-ee5c6680-2d74-11e9-871b-60934e423f44.png)
 ---
 
 # Research
