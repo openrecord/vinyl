@@ -125,7 +125,7 @@ We use Figma for easy access and feedback.
 
 **Mobile History**
 
-<img width="400" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
+<img width="220" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
 
 ---
 
