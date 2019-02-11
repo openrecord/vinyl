@@ -20,6 +20,7 @@
    - [Mockups](#mockups)
 1. **[Research](#research)**
    - [Secondary Research](#secondary-research)
+1. **[Notes](#notes)**
 
 <br>
 
@@ -154,13 +155,11 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 
 
 # Notes
-## Thoughts
 Personality is who you are, traits that grow but also remain consistent over time.
 Personalitzaion is trying to predict what you like.
 Other people contributing to a shared community is exciting because their engagement leads to surprise, curiosity and encourages more engagement.
 
-
-## User Groups
+**User Groups**
 1. Listeners
 1. DJs
 1. Music Creators
