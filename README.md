@@ -14,10 +14,10 @@
    - [Frontend](#Fronted)
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
-1. **[Design](#design) - WIP**
-   - [Mockups](#mockups)
+1. **[Design](#design)**
+   - [Toolset](#toolset)
    - [User Flows](#user-flows)
-   - [Icons](#icons)
+   - [Mockups](#mockups)
 1. **[Research](#research)**
    - [Secondary Research](#secondary-research)
    
@@ -105,6 +105,31 @@ Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/maste
 [<img width="400" alt="intro video 2" src="https://user-images.githubusercontent.com/7230519/52527460-c8f92b00-2c96-11e9-9c2f-2ff3b64ff822.png">](https://www.youtube.com/watch?v=t_J2FKngQWA)
 
 ---
+# Design
+### Toolset
+We use Figma for easy access and feedback.
+- [Figma WIP Design](https://www.figma.com/file/JA060sqEtiPBNkZE8VkWPKS4/Sidebar-Orientation?node-id=0%3A1)
+
+### Userflow
+
+### Mockups
+**Sidebar**
+<img width="400" alt="Playing" src="https://user-images.githubusercontent.com/7230519/52543123-ee5c6680-2d74-11e9-871b-60934e423f44.png">
+
+<br>
+
+**Search**
+<img width="400" alt="Sidebar Search" src="https://user-images.githubusercontent.com/7230519/52543122-edc3d000-2d74-11e9-8fa0-4f5e97f0434b.png">
+
+<br>
+
+**Mobile History**
+<img width="400" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
+
+![mobilehistory](https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png)
+![sidebarsearch](https://user-images.githubusercontent.com/7230519/52543122-edc3d000-2d74-11e9-8fa0-4f5e97f0434b.png)
+![sidebar](https://user-images.githubusercontent.com/7230519/52543123-ee5c6680-2d74-11e9-871b-60934e423f44.png)
+---
 
 # Research
 ### Secondary Research
@@ -115,16 +140,16 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
 ## Challenges to overcome
-### 1. Music becoming stale
+**1. Music Staleness** *How do we prevent music from getting stale and repetative?*
+
 **Ideas**
 - Song limit (25 songs?)
 - Songs disappear after 30 days.
 
-### 2. Adoption
-**How do we get users to try a new music experience?**
+**2. Adoption** *How do we get users to try a new music experience?*
 
+**3. Retention** *How do we get users to repetitively return to a new music experience?*
 
-### 3. How do we get users to repetitively return to a new music experience?
 **Create virtuous loops**
 ![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
 
