@@ -29,7 +29,8 @@
 Cultivate your music personality
 
 ### Hypothesis
-Listeners want a fun, colorful way to collect and share their favorite music with friends/followers.
+Listeners want a fun, colorful way to collect and share their favorite music with friends/followers. 
+- The value of human driven discovery vs algorithmic automation
 
 ### Problem
 - Algorithmic curation feels unauthentic and limiting
