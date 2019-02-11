@@ -3,6 +3,7 @@ const baseZIndexList = [
   'toast',
   'player',
   'iframeblocker',
+  'hiddenplaytoggle',
   'controls',
   'nav',
   'search',

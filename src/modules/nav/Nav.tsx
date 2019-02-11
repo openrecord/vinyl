@@ -27,6 +27,7 @@ interface $StyledNavProps {
 
 const StyledNav = styled.nav`
   background: 'transparent';
+  display: ${(props: $StyledNavProps) => (props.landing ? 'block' : 'none !important')};
   display: block;
   padding: 1rem 0;
   position: absolute;

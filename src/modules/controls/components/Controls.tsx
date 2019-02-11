@@ -11,6 +11,7 @@ import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import SongControls from './SongControls';
+import SoundSwitch from '../../common/components/SoundSwitch';
 
 interface $Props {
   bgColor: $Color;
@@ -38,8 +39,6 @@ export default function Controls({
   currentlyPlaying,
   visible
 }: $Props) {
-  const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
-
   const controls = (
     <MediaControls>
       <SongControls
@@ -53,55 +52,42 @@ export default function Controls({
 
   const desktop = (
     <Row>
-      {title}
+      <SoundToggle onClick={toggleExpanded}>
+        <SoundSwitch expanded={!expanded} />
+      </SoundToggle>
       {controls}
-      <ShowToggle onClick={toggleExpanded}>
-        {expanded ? <h5>Playback Mode</h5> : <h5>Contributor Mode</h5>}
-      </ShowToggle>
     </Row>
   );
 
   const mobile = (
     <>
-      {currentlyPlaying && (
-        <Row>
-          {title}
-          <ShowToggle onClick={toggleExpanded}>
-            {expanded ? 'Playback Mode' : 'Contributor Mode'}
-          </ShowToggle>
-        </Row>
-      )}
-      <Row>{controls}</Row>
+      <Row>
+        <SoundToggle onClick={toggleExpanded} expanded={expanded}>
+          <SoundSwitch expanded={!expanded} />
+        </SoundToggle>
+        {controls}
+      </Row>
     </>
   );
 
   return (
-    <VelocityTransitionGroup
-      enter={{animation: animations.slideUpExpand.in, duration: 400}}
-      leave={{animation: animations.slideUpExpand.out}}
-    >
-      {visible && (
-        <Footer bgColor={bgColor}>
-          <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        </Footer>
-      )}
-    </VelocityTransitionGroup>
+    <ControlBar visible={visible}>
+      <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+    </ControlBar>
   );
 }
 
-interface $BgColor {
-  bgColor: $Color;
+interface $IsVisible {
+  visible: boolean;
 }
 
-const Footer = styled.div`
-  background-color: ${(props: $BgColor) =>
-    Color(props.bgColor)
-      .rgb()
-      .string()};
-  padding: 0.75rem 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+const ControlBar = styled.div`
+  display: block;
+  opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+  padding: 0.5rem 0;
+  position: relative;
+  top: 100%;
+  transition: all 0.1s;
   width: 100%;
   z-index: ${zindex('controls')};
 `;
@@ -111,7 +97,6 @@ const Row = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  margin: 0.25rem 2rem 0.25rem 2rem;
 
   :first-child {
     border-top: none;
@@ -122,19 +107,16 @@ const Row = styled.div`
   }
 `;
 
-const ShowToggle = styled.button`
+const SoundToggle = styled.button`
   background: transparent;
-  border: 0.125rem solid white;
-  border-radius: 0.25rem;
   color: white;
   cursor: pointer;
-  font-family: Haas Reg;
-  padding: 0.25rem 0.5rem;
-  outline: none;
+  padding: 0.5rem;
+  opacity: 0.9;
+  transition: all 0.1s;
 
   :hover {
-    background: white;
-    color: black;
+    opacity: 1;
   }
 `;
 
@@ -146,17 +128,5 @@ const MediaControls = styled.div`
 
   @media ${device.small} {
     width: 100%;
-  }
-`;
-
-const Title = styled.h5`
-  color: rgb(255, 255, 255);
-  max-width: 25%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  @media ${device.small} {
-    max-width: 75%;
   }
 `;

@@ -5,32 +5,41 @@ import {device} from '../../../styles/utilities/device';
 import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
+import ControlsContainer from '../../controls/components/ControlsContainer';
 
 interface $Props {
   currentlyPlaying: $Track | undefined;
   expanded: boolean;
   togglePlaying(): void;
+  visible: boolean;
 }
 
 export default function PlayerBox({
   currentlyPlaying,
   expanded,
   togglePlaying,
+  visible,
   ...props
 }: $Props & $PlayerProps) {
   if (!currentlyPlaying) {
     return null;
   }
+  const title = currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>;
 
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Positioning expanded={expanded} onClick={togglePlaying} data-id="player">
-      <IFrameBlocker />
-      <SizingHack isSoundCloud={isSoundCloud}>
-        {isSoundCloud && art && <SoundCloudArt src={art} />}
-        <Player currentlyPlaying={currentlyPlaying!} {...props} />
-      </SizingHack>
+    <Positioning data-id="player">
+      {title}
+      <PlayerHolder>
+        <SizingHack isSoundCloud={isSoundCloud}>
+          <IFrameBlocker />
+          <HiddenPlayToggle visible={visible} onClick={togglePlaying} />
+          {isSoundCloud && art && <SoundCloudArt src={art} />}
+          <Player currentlyPlaying={currentlyPlaying!} {...props} />
+        </SizingHack>
+        <ControlsContainer />
+      </PlayerHolder>
     </Positioning>
   );
 }
@@ -54,11 +63,15 @@ interface $IsSoundCloud {
   isSoundCloud: boolean;
 }
 
+interface $IsVisible {
+  visible: boolean;
+}
+
 const Positioning = styled.div`
   position: relative;
-  margin: 0 auto;
-  width: 90%;
-  height: ${(props: $IsExpanded) => (props.expanded ? '100vh' : '0')};
+  margin: 0 2rem;
+  width: 80%;
+  height: 100vh;
   z-index: ${zindex('player')};
   overflow: hidden;
   transition: all linear 0.3s;
@@ -68,17 +81,6 @@ const Positioning = styled.div`
     height: 250% !important;
     transform: translateY(-30%);
   }
-`;
-
-const IFrameBlocker = styled.div`
-  cursor: pointer;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: ${zindex('iframeblocker')};
-  transition: all linear 0.3s;
 `;
 
 const SoundCloudArt = styled.img`
@@ -97,12 +99,41 @@ const SoundCloudArt = styled.img`
 //   background-image: linear-gradient(135deg, #846170, #e6846e);
 // `;
 
+const IFrameBlocker = styled.div`
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: ${zindex('iframeblocker')};
+  transition: all linear 0.3s;
+`;
+
+const HiddenPlayToggle = styled.div`
+  cursor: pointer;
+  display: ${(props: $IsVisible) => (props.visible ? 'block' : 'none')};
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: ${zindex('hiddenplaytoggle')};
+  transition: all linear 0.3s;
+`;
+
+const PlayerHolder = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
 const SizingHack = styled.div`
   padding-bottom: 50.5%;
   position: relative;
   overflow: hidden;
-  top: 50%;
-  transform: translateY(-50%);
 
   [data-style-id='react-player'] {
     position: absolute;
@@ -119,4 +150,19 @@ const SizingHack = styled.div`
         display: none;
       }
     `};
+`;
+
+const Title = styled.h3`
+  top: 1.5rem;
+  position: fixed;
+  color: rgb(255, 255, 255);
+  max-width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+
+  @media ${device.small} {
+    max-width: 75%;
+  }
 `;

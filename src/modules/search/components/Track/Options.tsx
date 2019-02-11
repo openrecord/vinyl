@@ -40,24 +40,14 @@ class Options extends React.Component<$Props> {
 
 export default styled(onClickOutside(Options))``;
 
-interface $OptionsProps {
-  isOpen: boolean;
-}
 const StyledOptions = styled.div`
-  opacity: ${({isOpen}: $OptionsProps) => (isOpen ? '1' : '0')};
+  padding: 0 0.5rem;
   margin-left: auto;
-
-  @media ${device.small} {
-    opacity: ${({isOpen}) => (isOpen ? '1 !important' : '0.5 !important')};
-  }
-
-  &:hover {
-    opacity: 1 !important;
-  }
 `;
 
 const SongDots = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 0.5rem;
   position: relative;
 `;
@@ -66,7 +56,7 @@ const Dot = styled.span`
   background: white;
   border-radius: 50%;
   height: 0.25rem;
-  margin: 0.125rem;
+  margin: 0.0625rem;
   width: 0.25rem;
 
   @media ${device.small} {
