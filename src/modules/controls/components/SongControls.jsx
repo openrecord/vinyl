@@ -5,14 +5,22 @@ import prevImg from './images/prev-arrow.svg';
 
 import PlayPause from '../../common/components/PlayPause';
 
+const left = {
+  margin: '0 1.5rem 0 0'
+};
+
+const right = {
+  margin: '0 0 0 1.5rem'
+};
+
 export default function SongControls({playing, playPrev, playNext, togglePlaying}) {
   return (
     <StyledControls>
-      <Arrow onClick={playPrev} src={prevImg} />
+      <Arrow style={left} onClick={playPrev} src={prevImg} />
       <PlayPauseHolder onClick={togglePlaying}>
         <PlayPause play={!playing} />
       </PlayPauseHolder>
-      <Arrow onClick={playNext} src={nextImg} />
+      <Arrow style={right} onClick={playNext} src={nextImg} />
     </StyledControls>
   );
 }
@@ -30,8 +38,14 @@ const Arrow = styled.img`
   height: 1rem;
   margin: 0 2rem;
   padding: 0.5rem;
+  opacity: 0.9;
   position: relative;
+  transition: all 0.1s;
   width: 1rem;
+
+  :hover {
+    opacity: 1;
+  }
 `;
 
 const PlayPauseHolder = styled.div`
@@ -40,10 +54,16 @@ const PlayPauseHolder = styled.div`
   height: 1.125rem;
   margin-right: -0.325rem;
   padding: 0.5rem;
+  opacity: 0.9;
+  transition: all 0.1s;
   width: 1.125rem;
 
   svg {
     fill: white;
     position: relative;
+  }
+
+  :hover {
+    opacity: 1;
   }
 `;

@@ -1,4 +1,4 @@
-# Open Record
+# Table of Contents
 
 1. **[Summary of Purpose](#summary-of-purpose)**
    - [Vision](#vision)
@@ -6,19 +6,22 @@
    - [Hypothesis](#hypothesis)
    - [Problems](#Problem)
    - [Goals](#goals)
-   - [Status](#status)
    - [Team](#team)
-1. **[Engineering](#engineering)**
+2. **[Status](#status)**
+   - [URL](#url)
+   - [Current Features](#current-features)
+   - [Potential Enhancements](#potential-enhancements)
+3. **[Engineering](#engineering)**
    - [Onboarding](#onboarding)
    - [Backend](#Backend)
    - [Frontend](#Fronted)
    - [Devops](#Devops)
    - [Codebase Intro Videos](#codebase-intro-videos)
-1. **[Design](#design) - WIP**
+4. **[Design](#design) - WIP**
    - [Mockups](#mockups)
    - [User Flows](#user-flows)
    - [Icons](#icons)
-1. **[Research](#research)**
+5. **[Research](#research)**
    - [Secondary Research](#secondary-research)
    
 ---
@@ -41,20 +44,6 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 - Facilitate human driven music discovery
 - Enable content collection from across multiple platforms & reduce friction in sharing
 
-### Status
-**URL: https://openrecord.co/**
-
-**Current Features:**
-- Create a collection - url based (i.e. [openrecord.co/ryan](https://openrecord.co/ryan))
-- Ad free music playback
-- Live playlists - if another users adds a song while your in the collection it will show up
-
-**Potential Enhancements** 
-- Create an endless feed of songs from the collections you follow
-- Syncing playback in real time
-- Collect music form other collections
-
-
 ### Team
 #### Join the Team
 If you're interested in contributing to OpenRecord, shoot us an email at [openrecordteam@gmail.com](mailto:openrecordteam@gmail.com) for an invite to our Slack & Github Repo.
@@ -73,14 +62,26 @@ If you're interested in contributing to OpenRecord, shoot us an email at [openre
 
 ---
 
+# Status
+
+### URL: https://openrecord.co/
+
+### Current Features:
+- Create a collection - url based (i.e. [openrecord.co/ryan](https://openrecord.co/ryan))
+- Ad free music playback
+- Live playlists - if another users adds a song while your in the collection it will show up
+
+### Potential enhancements 
+- Create an endless feed of songs from the collections you follow
+- Syncing playback in real time
+- Collect music form other collections
+
+---
+
 # Engineering
 
 ### Onboarding
-```bash
-npm install     # Install packages.
-npm start       # Run the frontend using webpack-dev-server (with hot module replacement). Default address is http://localhost:8080
-```
-**More to be written**
+**To be filled in by @bruno &/or @rian
 
 ### Backend
 Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/master/turntable) folder of this repo
@@ -146,3 +147,4 @@ Other people contributing to a shared community is exciting because their engage
 ### KPIs
 ### Key Storypoints
 ### Screenshots
+

@@ -5,7 +5,6 @@ import {VelocityComponent} from 'velocity-react';
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
-import ControlsContainer from '../../controls/components/ControlsContainer';
 import PlayerContainer from '../../player/components/PlayerContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
@@ -39,7 +38,6 @@ export default class Playlist extends React.Component<$Props> {
           </TopRight>
           <PlayerContainer />
           <SearchContainer />
-          <ControlsContainer />
           {isEmpty ? (
             <EmptyCollection>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
@@ -59,7 +57,7 @@ const StyledPlaylistBackground = styled.div`
 `;
 
 const StyledPlaylist = styled.div`
-  display: block;
+  display: flex;
   margin: 0 auto;
   position: relative;
   width: 100%;
@@ -73,7 +71,7 @@ const StyledPlaylist = styled.div`
 
 const TopRight = styled.div`
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   z-index: ${zindex('header')};
 `;

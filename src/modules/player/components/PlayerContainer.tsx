@@ -11,7 +11,7 @@ export default function PlayerContainer() {
   const playlist = usePlaylistName();
   const {
     state: {
-      player: {currentlyPlaying, playing, played, expanded, duration, live}
+      player: {currentlyPlaying, playing, played, expanded, duration, live, isActive}
     },
     actions: {player: playerActions}
   } = useStore();
@@ -32,6 +32,7 @@ export default function PlayerContainer() {
         playNext={playNext}
         setPlayed={playerActions.setter('played')}
         setDuration={playerActions.setter('duration')}
+        visible={!!currentlyPlaying && (!expanded || isActive)}
       />
     </OnRemoteControl>
   );

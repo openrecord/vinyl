@@ -82,9 +82,10 @@ export default function Queue({
 }
 
 const QueueList = styled.div`
-  max-width: 60rem;
-  padding-bottom: 5rem;
-  margin: 0 auto;
+  background: rgba(34, 34, 34, 0.2);
+  max-height: 100vh;
+  max-width: 30rem;
+  overflow: scroll;
 
   @media ${device.small} {
     padding-bottom: 10.25rem;
@@ -95,8 +96,8 @@ const QueueList = styled.div`
   }
 `;
 
-const QueueHeader = styled.h1`
+const QueueHeader = styled.h3`
   color: white;
   display: block;
-  margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+  padding: 1.5rem 0.5rem 0.5rem 0.5rem;
 `;
