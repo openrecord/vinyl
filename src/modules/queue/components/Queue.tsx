@@ -90,7 +90,7 @@ const QueueList = styled.div`
   @media ${device.medium} {
     max-height: none;
     max-width: none;
-    overflow: auto;
+    overflow: hidden;
   }
 
   ::-webkit-scrollbar {
