@@ -41,20 +41,22 @@ export default function Controls({
 }: $Props) {
   const controls = (
     <MediaControls>
+      <SoundToggle onClick={toggleExpanded}>
+        <SoundSwitch expanded={!expanded} />
+      </SoundToggle>
       <SongControls
         playing={playing}
         togglePlaying={togglePlaying}
         playNext={playNext}
         playPrev={playPrev}
       />
+      <ExpandToggle />
     </MediaControls>
   );
 
   const desktop = (
     <Row>
-      <SoundToggle onClick={toggleExpanded}>
-        <SoundSwitch expanded={!expanded} />
-      </SoundToggle>
+      {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
       {controls}
     </Row>
   );
@@ -62,9 +64,7 @@ export default function Controls({
   const mobile = (
     <>
       <Row>
-        <SoundToggle onClick={toggleExpanded} expanded={expanded}>
-          <SoundSwitch expanded={!expanded} />
-        </SoundToggle>
+        {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
         {controls}
       </Row>
     </>
@@ -90,20 +90,18 @@ const ControlBar = styled.div`
   transition: all 0.1s;
   width: 100%;
   z-index: ${zindex('controls')};
+
+  @media ${device.medium} {
+    opacity: 1;
+  }
 `;
 
 const Row = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
 
-  :first-child {
-    border-top: none;
-  }
-
-  @media ${device.small} {
-    height: 2.25rem;
+  @media ${device.medium} {
+    flex-direction: column;
   }
 `;
 
@@ -111,6 +109,7 @@ const SoundToggle = styled.button`
   background: transparent;
   color: white;
   cursor: pointer;
+  height: 2.25rem;
   padding: 0.5rem;
   opacity: 0.9;
   transition: all 0.1s;
@@ -121,12 +120,42 @@ const SoundToggle = styled.button`
 `;
 
 const MediaControls = styled.div`
-  left: 50%;
-  min-width: 40%;
-  position: absolute;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
 
   @media ${device.small} {
     width: 100%;
+  }
+`;
+
+const ExpandToggle = styled.button`
+  background: transparent;
+  box-sizing: content-box;
+  cursor: pointer;
+  height: 1.25rem;
+  padding: 0.5rem;
+  opacity: 0.9;
+  pointer-events: none;
+  transition: all 0.1s;
+  width: 1.5rem;
+
+  :hover {
+    opacity: 1;
+  }
+`;
+
+const Title = styled.h4`
+  color: rgb(255, 255, 255);
+  display: none;
+  margin: 1rem 0;
+  max-width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  @media ${device.medium} {
+    display: block;
   }
 `;
