@@ -63,9 +63,8 @@ const StyledPlaylist = styled.div`
   width: 100%;
   transition: all 0.1s;
 
-  @media ${device.small} {
-    padding-top: 0;
-    width: 100%;
+  @media ${device.medium} {
+    flex-direction: column;
   }
 `;
 

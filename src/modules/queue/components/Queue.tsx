@@ -87,8 +87,10 @@ const QueueList = styled.div`
   max-width: 30rem;
   overflow: scroll;
 
-  @media ${device.small} {
-    padding-bottom: 10.25rem;
+  @media ${device.medium} {
+    max-height: none;
+    max-width: none;
+    overflow: auto;
   }
 
   ::-webkit-scrollbar {

@@ -22,15 +22,23 @@ export default function PlayerBox({
   ...props
 }: $Props & $PlayerProps) {
   if (!currentlyPlaying) {
-    return null;
+    return (
+      <Positioning>
+        <PlayerHolder>
+          <SizingEmpty>
+            <h2>Click a song to start listening</h2>
+          </SizingEmpty>
+        </PlayerHolder>
+      </Positioning>
+    );
   }
-  const title = currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>;
+  const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
 
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
     <Positioning data-id="player">
-      {title}
+      {currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>}
       <PlayerHolder>
         <SizingHack isSoundCloud={isSoundCloud}>
           <IFrameBlocker />
@@ -81,6 +89,14 @@ const Positioning = styled.div`
     height: 250% !important;
     transform: translateY(-30%);
   }
+
+  @media ${device.medium} {
+    box-sizing: border-box;
+    height: auto;
+    margin: 0;
+    padding: 1rem;
+    width: 100%;
+  }
 `;
 
 const SoundCloudArt = styled.img`
@@ -128,6 +144,10 @@ const PlayerHolder = styled.div`
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  @media ${device.medium} {
+    top: 0;
+    transform: translateY(0);
+  }
 `;
 
 const SizingHack = styled.div`
@@ -152,6 +172,33 @@ const SizingHack = styled.div`
     `};
 `;
 
+const SizingEmpty = styled.div`
+  border: 0.125rem solid white;
+  padding-bottom: 50.5%;
+  position: relative;
+  overflow: hidden;
+
+  [data-style-id='react-player'] {
+    position: absolute;
+  }
+
+  h2 {
+    color: white;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    @media ${device.medium} {
+      font-size: 1.25rem;
+    }
+    @media ${device.small} {
+      font-size: 1rem;
+    }
+  }
+`;
+
 const Title = styled.h3`
   top: 1.5rem;
   position: fixed;
@@ -162,7 +209,7 @@ const Title = styled.h3`
   text-overflow: ellipsis;
   opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
 
-  @media ${device.small} {
-    max-width: 75%;
+  @media ${device.medium} {
+    display: none;
   }
 `;

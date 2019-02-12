@@ -1,7 +1,7 @@
 export const size = {
   small: 600,
   tablet: 750,
-  medium: 900,
+  medium: 800,
   large: 1200,
   xl: 1450
 };
