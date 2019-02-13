@@ -45,7 +45,7 @@ export default function QueueContainer() {
 
   const {
     state: {
-      player: {currentlyPlaying, playing, color}
+      player: {currentlyPlaying, playing, color, expanded}
     },
     actions: {
       player: {toggle}
@@ -61,6 +61,7 @@ export default function QueueContainer() {
       bgColor={color}
       playlist={mod('tracks')(_f.sortBy('index'))(playlist)}
       playing={playing}
+      expanded={expanded}
       togglePlaying={toggle('playing')}
       updatePlaying={(track: $Track) => {
         // Need to check if it's already playing, otherwise it actually

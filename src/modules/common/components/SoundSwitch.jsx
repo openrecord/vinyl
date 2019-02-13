@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import SoundOn from './images/sound-on.svg';
 import SoundOff from './images/sound-off.svg';
 
-function SoundSwitch({expanded, ...props}) {
-  console.log(expanded);
-  if (expanded) {
+function SoundSwitch({muted, ...props}) {
+  if (muted) {
     return <Mute {...props} />;
   } else {
     return <Unmute {...props} />;
