@@ -80,6 +80,7 @@ export default function PlaylistContainer() {
               isEmpty={isEmpty}
               toggleSearch={toggle('isOpen')}
               createPlaylist={createPlaylist}
+              expanded={expanded}
             />
           )}
         </Subscription>

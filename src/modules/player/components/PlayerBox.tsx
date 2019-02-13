@@ -23,7 +23,7 @@ export default function PlayerBox({
 }: $Props & $PlayerProps) {
   if (!currentlyPlaying) {
     return (
-      <Positioning>
+      <Positioning expanded={expanded}>
         <PlayerHolder>
           <SizingEmpty>
             <h2>Click a song to start listening</h2>
@@ -37,9 +37,9 @@ export default function PlayerBox({
   const isSoundCloud = currentlyPlaying.info.source === 'SOUNDCLOUD';
   const art = getTrackThumbnail(currentlyPlaying);
   return (
-    <Positioning data-id="player">
-      {currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>}
+    <Positioning data-id="player" expanded={expanded}>
       <PlayerHolder>
+        {currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>}
         <SizingHack isSoundCloud={isSoundCloud}>
           <IFrameBlocker />
           <HiddenPlayToggle visible={visible} onClick={togglePlaying} />
@@ -78,7 +78,7 @@ interface $IsVisible {
 const Positioning = styled.div`
   position: relative;
   margin: 0 2rem;
-  width: 80%;
+  width: ${(props: $IsExpanded) => (props.expanded ? '80%' : '100%')};
   height: 100vh;
   z-index: ${zindex('player')};
   overflow: hidden;
@@ -200,14 +200,17 @@ const SizingEmpty = styled.div`
 `;
 
 const Title = styled.h3`
-  top: 1.5rem;
-  position: fixed;
   color: rgb(255, 255, 255);
-  max-width: 50%;
+  max-width: 75%;
   overflow: hidden;
+  margin: 0.75rem 0;
   white-space: nowrap;
   text-overflow: ellipsis;
   opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+
+  @media ${device.large} {
+    font-size: 1.125rem;
+  }
 
   @media ${device.medium} {
     display: none;

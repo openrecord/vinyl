@@ -28,6 +28,7 @@ export interface $Player {
   currentlyPlaying: $Track | undefined;
   playing: boolean;
   expanded: boolean;
+  muted: boolean;
   played: number;
   duration: number;
   live: boolean;
@@ -56,6 +57,7 @@ const initialState: $State = {
     currentlyPlaying: undefined,
     playing: true,
     expanded: true,
+    muted: false,
     played: 0,
     duration: 0,
     live: true,

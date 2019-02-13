@@ -15,6 +15,7 @@ interface $Props {
   color: $Color;
   isOpen: boolean;
   isEmpty: boolean;
+  expanded: boolean;
   showAddBtn: boolean;
   createPlaylist(): void;
   toggleSearch(value?: boolean): void;
@@ -26,12 +27,11 @@ export default class Playlist extends React.Component<$Props> {
   }
 
   render() {
-    const {color, isOpen, isEmpty, showAddBtn, toggleSearch} = this.props;
-
+    const {color, isOpen, isEmpty, showAddBtn, toggleSearch, expanded} = this.props;
     return (
       <StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
         <StyledPlaylist>
-          <TopRight>
+          <TopRight expanded={expanded}>
             <VelocityComponent animation={{opacity: showAddBtn ? 1 : 0}}>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
             </VelocityComponent>
@@ -49,6 +49,10 @@ export default class Playlist extends React.Component<$Props> {
       </StyledPlaylistBackground>
     );
   }
+}
+
+interface $IsExpanded {
+  expanded: boolean;
 }
 
 const StyledPlaylistBackground = styled.div`
@@ -69,6 +73,7 @@ const StyledPlaylist = styled.div`
 `;
 
 const TopRight = styled.div`
+  display: ${(props: $IsExpanded) => (props.expanded ? 'inline-block' : 'none')};
   position: fixed;
   bottom: 0;
   right: 0;

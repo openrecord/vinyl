@@ -14,6 +14,7 @@ import QueueTrack from './QueueTrack';
 interface $Props {
   bgColor: $Color;
   playlist: $Playlist;
+  expanded: boolean;
   currentlyPlayingId: string | undefined;
   playing: boolean;
   updatePlaying(track: $Track): void;
@@ -27,6 +28,7 @@ export default function Queue({
   playlist,
   updatePlaying,
   togglePlaying,
+  expanded,
   currentlyPlayingId,
   playing,
   deleteTrack,
@@ -42,7 +44,7 @@ export default function Queue({
         }
       }}
     >
-      <QueueList>
+      <QueueList expanded={expanded}>
         <QueueHeader>Queue</QueueHeader>
         <Droppable droppableId="queue">
           {provided => (
@@ -81,11 +83,22 @@ export default function Queue({
   );
 }
 
+interface $IsExpanded {
+  expanded: boolean;
+}
+
 const QueueList = styled.div`
   background: rgba(34, 34, 34, 0.2);
   max-height: 100vh;
   max-width: 30rem;
   overflow: scroll;
+  position: relative;
+  width: ${(props: $IsExpanded) => (props.expanded ? '100%' : '0')};
+  transition: all 0.2s;
+
+  @media ${device.large} {
+    max-width: 25rem;
+  }
 
   @media ${device.medium} {
     max-height: none;

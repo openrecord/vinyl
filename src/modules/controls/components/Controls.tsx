@@ -12,13 +12,16 @@ import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import SongControls from './SongControls';
 import SoundSwitch from '../../common/components/SoundSwitch';
+import ExpandSwitch from '../../common/components/ExpandSwitch';
 
 interface $Props {
   bgColor: $Color;
   playing: boolean;
   expanded: boolean;
+  muted: boolean;
   togglePlaying(): void;
   toggleExpanded(): void;
+  toggleMuted(): void;
   toggleSearch(): void;
   playNext(): void;
   playPrev(): void;
@@ -31,8 +34,10 @@ interface $Props {
 export default function Controls({
   bgColor,
   playing,
+  muted,
   expanded,
   togglePlaying,
+  toggleMuted,
   toggleExpanded,
   playNext,
   playPrev,
@@ -41,8 +46,8 @@ export default function Controls({
 }: $Props) {
   const controls = (
     <MediaControls>
-      <SoundToggle onClick={toggleExpanded}>
-        <SoundSwitch expanded={!expanded} />
+      <SoundToggle onClick={toggleMuted}>
+        <SoundSwitch muted={muted} />
       </SoundToggle>
       <SongControls
         playing={playing}
@@ -50,7 +55,9 @@ export default function Controls({
         playNext={playNext}
         playPrev={playPrev}
       />
-      <ExpandToggle />
+      <ExpandToggle onClick={toggleExpanded}>
+        <ExpandSwitch expanded={expanded} />
+      </ExpandToggle>
     </MediaControls>
   );
 
@@ -113,6 +120,7 @@ const SoundToggle = styled.button`
   padding: 0.5rem;
   opacity: 0.9;
   transition: all 0.1s;
+  width: 2.5rem;
 
   :hover {
     opacity: 1;
@@ -121,6 +129,7 @@ const SoundToggle = styled.button`
 
 const MediaControls = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   position: relative;
@@ -131,13 +140,11 @@ const MediaControls = styled.div`
 `;
 
 const ExpandToggle = styled.button`
-  background: transparent;
   box-sizing: content-box;
   cursor: pointer;
-  height: 1.25rem;
+  height: 1.5rem;
   padding: 0.5rem;
   opacity: 0.9;
-  pointer-events: none;
   transition: all 0.1s;
   width: 1.5rem;
 
