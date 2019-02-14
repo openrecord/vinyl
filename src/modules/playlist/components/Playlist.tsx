@@ -5,7 +5,6 @@ import {VelocityComponent} from 'velocity-react';
 import {device} from '../../../styles/utilities/device';
 import {toRGBString} from '../../common/utils';
 import zindex from '../../common/zindex';
-import ControlsContainer from '../../controls/components/ControlsContainer';
 import PlayerContainer from '../../player/components/PlayerContainer';
 import QueueContainer from '../../queue/components/QueueContainer';
 import SearchContainer from '../../search/components/SearchContainer';
@@ -16,6 +15,7 @@ interface $Props {
   color: $Color;
   isOpen: boolean;
   isEmpty: boolean;
+  expanded: boolean;
   showAddBtn: boolean;
   createPlaylist(): void;
   toggleSearch(value?: boolean): void;
@@ -27,19 +27,17 @@ export default class Playlist extends React.Component<$Props> {
   }
 
   render() {
-    const {color, isOpen, isEmpty, showAddBtn, toggleSearch} = this.props;
-
+    const {color, isOpen, isEmpty, showAddBtn, toggleSearch, expanded} = this.props;
     return (
       <StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
         <StyledPlaylist>
-          <TopRight>
+          <TopRight expanded={expanded}>
             <VelocityComponent animation={{opacity: showAddBtn ? 1 : 0}}>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
             </VelocityComponent>
           </TopRight>
           <PlayerContainer />
           <SearchContainer />
-          <ControlsContainer />
           {isEmpty ? (
             <EmptyCollection>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
@@ -53,27 +51,31 @@ export default class Playlist extends React.Component<$Props> {
   }
 }
 
+interface $IsExpanded {
+  expanded: boolean;
+}
+
 const StyledPlaylistBackground = styled.div`
   transition: background-color 1.5s linear;
   min-height: 100vh;
 `;
 
 const StyledPlaylist = styled.div`
-  display: block;
+  display: flex;
   margin: 0 auto;
   position: relative;
   width: 100%;
   transition: all 0.1s;
 
-  @media ${device.small} {
-    padding-top: 0;
-    width: 100%;
+  @media ${device.medium} {
+    flex-direction: column;
   }
 `;
 
 const TopRight = styled.div`
+  display: ${(props: $IsExpanded) => (props.expanded ? 'inline-block' : 'none')};
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   z-index: ${zindex('header')};
 `;

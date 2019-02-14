@@ -11,13 +11,17 @@ import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import {$Color} from '../../store';
 import SongControls from './SongControls';
+import SoundSwitch from '../../common/components/SoundSwitch';
+import ExpandSwitch from '../../common/components/ExpandSwitch';
 
 interface $Props {
   bgColor: $Color;
   playing: boolean;
   expanded: boolean;
+  muted: boolean;
   togglePlaying(): void;
   toggleExpanded(): void;
+  toggleMuted(): void;
   toggleSearch(): void;
   playNext(): void;
   playPrev(): void;
@@ -30,133 +34,135 @@ interface $Props {
 export default function Controls({
   bgColor,
   playing,
+  muted,
   expanded,
   togglePlaying,
+  toggleMuted,
   toggleExpanded,
   playNext,
   playPrev,
   currentlyPlaying,
   visible
 }: $Props) {
-  const title = currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>;
-
   const controls = (
     <MediaControls>
+      <SoundToggle onClick={toggleMuted}>
+        <SoundSwitch muted={muted} />
+      </SoundToggle>
       <SongControls
         playing={playing}
         togglePlaying={togglePlaying}
         playNext={playNext}
         playPrev={playPrev}
       />
+      <ExpandToggle onClick={toggleExpanded}>
+        <ExpandSwitch expanded={expanded} />
+      </ExpandToggle>
     </MediaControls>
   );
 
   const desktop = (
     <Row>
-      {title}
+      {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
       {controls}
-      <ShowToggle onClick={toggleExpanded}>
-        {expanded ? <h5>Playback Mode</h5> : <h5>Contributor Mode</h5>}
-      </ShowToggle>
     </Row>
   );
 
   const mobile = (
     <>
-      {currentlyPlaying && (
-        <Row>
-          {title}
-          <ShowToggle onClick={toggleExpanded}>
-            {expanded ? 'Playback Mode' : 'Contributor Mode'}
-          </ShowToggle>
-        </Row>
-      )}
-      <Row>{controls}</Row>
+      <Row>
+        {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
+        {controls}
+      </Row>
     </>
   );
 
   return (
-    <VelocityTransitionGroup
-      enter={{animation: animations.slideUpExpand.in, duration: 400}}
-      leave={{animation: animations.slideUpExpand.out}}
-    >
-      {visible && (
-        <Footer bgColor={bgColor}>
-          <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
-        </Footer>
-      )}
-    </VelocityTransitionGroup>
+    <ControlBar visible={visible}>
+      <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
+    </ControlBar>
   );
 }
 
-interface $BgColor {
-  bgColor: $Color;
+interface $IsVisible {
+  visible: boolean;
 }
 
-const Footer = styled.div`
-  background-color: ${(props: $BgColor) =>
-    Color(props.bgColor)
-      .rgb()
-      .string()};
-  padding: 0.75rem 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+const ControlBar = styled.div`
+  display: block;
+  opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+  padding: 0.5rem 0;
+  position: relative;
+  top: 100%;
+  transition: all 0.1s;
   width: 100%;
   z-index: ${zindex('controls')};
+
+  @media ${device.medium} {
+    opacity: 1;
+  }
 `;
 
 const Row = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
-  margin: 0.25rem 2rem 0.25rem 2rem;
 
-  :first-child {
-    border-top: none;
-  }
-
-  @media ${device.small} {
-    height: 2.25rem;
+  @media ${device.medium} {
+    flex-direction: column;
   }
 `;
 
-const ShowToggle = styled.button`
+const SoundToggle = styled.button`
   background: transparent;
-  border: 0.125rem solid white;
-  border-radius: 0.25rem;
   color: white;
   cursor: pointer;
-  font-family: Haas Reg;
-  padding: 0.25rem 0.5rem;
-  outline: none;
+  height: 2.25rem;
+  padding: 0.5rem;
+  opacity: 0.9;
+  transition: all 0.1s;
+  width: 2.5rem;
 
   :hover {
-    background: white;
-    color: black;
+    opacity: 1;
   }
 `;
 
 const MediaControls = styled.div`
-  left: 50%;
-  min-width: 40%;
-  position: absolute;
-  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
 
   @media ${device.small} {
     width: 100%;
   }
 `;
 
-const Title = styled.h5`
+const ExpandToggle = styled.button`
+  box-sizing: content-box;
+  cursor: pointer;
+  height: 1.5rem;
+  padding: 0.5rem;
+  opacity: 0.9;
+  transition: all 0.1s;
+  width: 1.5rem;
+
+  :hover {
+    opacity: 1;
+  }
+`;
+
+const Title = styled.h4`
   color: rgb(255, 255, 255);
-  max-width: 25%;
+  display: none;
+  margin: 1rem 0;
+  max-width: 90%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  @media ${device.small} {
-    max-width: 75%;
+  @media ${device.medium} {
+    display: block;
   }
 `;

@@ -9,7 +9,7 @@ import Controls from './Controls';
 export default function ControlsContainer() {
   const {
     state: {
-      player: {currentlyPlaying, playing, expanded, played, color, isActive}
+      player: {currentlyPlaying, playing, expanded, muted, played, color, isActive}
     },
     actions: {player: playerActions, search: searchActions}
   } = useStore();
@@ -28,12 +28,14 @@ export default function ControlsContainer() {
       played={played}
       togglePlaying={togglePlaying}
       expanded={expanded}
+      muted={muted}
+      toggleMuted={playerActions.toggle('muted')}
       toggleExpanded={playerActions.toggle('expanded')}
       toggleSearch={toggleSearch}
       playNext={playNext}
       playPrev={playPrev}
       setPlayed={playerActions.setter('played')}
-      visible={!!currentlyPlaying && (!expanded || isActive)}
+      visible={!!currentlyPlaying && isActive}
     />
   );
 }

@@ -47,6 +47,10 @@ export default function Track({
       data-track-type={search ? 'search' : 'queue'}
       search={search}
     >
+      <OrderLines>
+        <span />
+        <span />
+      </OrderLines>
       <ImageHolder search={search}>
         {thumbnail ? (
           <Thumbnail
@@ -71,7 +75,7 @@ export default function Track({
           </IconContainer>
         </PlayBackground>
       </ImageHolder>
-      <h4>{title}</h4>
+      <h5>{title}</h5>
       {search && (
         <SourceIcon>
           <img src={soundcloud ? scIcon : ytIcon} />
@@ -106,14 +110,9 @@ const Speaker = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 1.625rem;
-  width: 2rem;
+  height: 1.25rem;
+  width: 1.5rem;
   transform: translate(-50%, -50%);
-
-  @media ${device.small} {
-    height: 1.25rem;
-    width: 1.5rem;
-  }
 `;
 
 const AddPlus = styled.span`
@@ -166,13 +165,28 @@ interface $ImageHolderProps {
   search: boolean;
 }
 
+const OrderLines = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.5rem;
+
+  span {
+    background: #e2e2e2;
+    border-radius: 1px;
+    display: block;
+    height: 1px;
+    margin: 1px 0;
+    width: 8px;
+  }
+`;
+
 const ImageHolder = styled.div`
   display: inline-block;
   position: relative;
-  height: 4.125rem;
+  height: 3rem;
   overflow: hidden;
-  margin-right: 0.75rem;
-  min-width: 7.5rem;
+  margin-right: 0.5rem;
+  min-width: 5.5rem;
 
   @media ${device.small} {
     height: 2.75rem;
@@ -206,36 +220,22 @@ interface $ThumbnailProps {
 }
 
 const Thumbnail = styled.img`
-	height: 5.625rem;
-	position: absolute;
-	top: -0.75rem;
-	width: 7.5rem;
+  height: 4.125rem;
+  position: absolute;
+  top: -0.55rem;
+  width: 5.5rem;
 
-	${({search}: $ThumbnailProps) =>
-    search &&
-    css`
-      height: 4.5rem;
-      top: -0.6rem;
-      width: 6rem;
-
-      @media ${device.small} {
-        height: 3.75rem;
-        top: -0.5rem;
-        width: 5rem;
-      }
-    `}
-
-	@media ${device.small} {
-		height: 3.75rem;
-		top: -0.5rem;
-		width: 5rem;
-	}
+  @media ${device.small} {
+    height: 3.75rem;
+    top: -0.5rem;
+    width: 5rem;
+  }
 `;
 
 const NoArtwork = styled.div`
   background-image: linear-gradient(135deg, #846170, #e6846e);
-  height: 4.125rem;
-  min-width: 7.5rem;
+  height: 3rem;
+  min-width: 5.5rem;
   @media ${device.small} {
     height: 2.75rem;
     min-width: 5rem;
@@ -261,7 +261,7 @@ const StyledResult = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0;
   box-sizing: border-box;
   width: 100%;
   transition: background-color 0.1s linear;
@@ -291,7 +291,7 @@ const StyledResult = styled.div`
   }
 
   :hover {
-    background: #101010;
+    background: rgba(34, 34, 34, 0.4);
     ${PlayPause} {
       opacity: 1;
     }
@@ -309,7 +309,7 @@ const StyledResult = styled.div`
     outline: none;
   }
 
-  h4 {
+  h5 {
     overflow: hidden;
     color: rgba(255, 255, 255, 0.8);
     display: -webkit-box;

@@ -13,10 +13,12 @@ export default styled.button`
   outline: none;
   margin: 2rem;
   padding: 0.75rem 1.25rem;
+  transition: all 0.1s;
 
   img {
     position: relative;
     top: 0.125rem;
+    transition: all 0.1s;
   }
 
   &:hover {
