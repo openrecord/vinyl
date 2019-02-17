@@ -26,7 +26,7 @@ export default function PlayerBox({
       <Positioning expanded={expanded}>
         <PlayerHolder>
           <SizingEmpty>
-            <h2>Click a song to start listening</h2>
+            <h2>Select a song to start listening</h2>
           </SizingEmpty>
         </PlayerHolder>
       </Positioning>

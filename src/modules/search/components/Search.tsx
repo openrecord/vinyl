@@ -24,17 +24,17 @@ export default function Search({query, setSearch, results, enqueue, isOpen, togg
       style={{
         overlay: {backgroundColor: 'rgba(20, 20, 20, 0.5)', zIndex: zindex('search')},
         content: {
-          padding: '0.75rem 2rem',
           border: 0,
-          background: 'white',
-          borderRadius: '2rem',
-          width: '80%',
-          height: '80%',
-          left: '50%',
-          top: '50%',
-          maxWidth: '50rem',
-          overflow: 'hidden',
-          transform: 'translate(-50%,-50%)'
+          background: '#222222',
+          width: '50%',
+          top: 'auto',
+          left: 'auto',
+          bottom: 'auto',
+          height: '100%',
+          padding: '0',
+          right: '0',
+          maxWidth: '30rem',
+          overflow: 'scroll'
         }
       }}
     >
