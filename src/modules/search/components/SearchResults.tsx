@@ -31,12 +31,12 @@ export default class SearchResults extends React.Component {
           <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.SEARCH} childIsWrapped>
             <VelocityTransitionGroup
               enter={{
-                animation: animations.rotate3d.in,
-                stagger: 200,
-                duration: 750,
+                animation: animations.fade.in,
+                stagger: 100,
+                duration: 350,
                 display: 'flex'
               }}
-              leave={{animation: animations.rotate3d.out, duration: 200, display: 'flex'}}
+              leave={{animation: animations.fade.out, duration: 100, display: 'flex'}}
               runOnMount
             >
               {results
@@ -85,7 +85,6 @@ const StyledSearchResults = styled.div`
   z-index: ${zindex('search-results')};
   background: none;
   display: block;
-  overflow: hidden;
   overflow-y: scroll;
   width: 100%;
   ::-webkit-scrollbar {

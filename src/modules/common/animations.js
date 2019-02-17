@@ -2,19 +2,16 @@ import {velocityHelpers} from 'velocity-react';
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 
-export const rotate3d = {
+export const fade = {
   in: velocityHelpers.registerEffect({
     calls: [
       [
         {
-          transformPerspective: [2000, 2000],
-          marginBottom: 0,
-          rotateX: [0, -70],
           opacity: [1, 0]
         },
         1,
         {
-          easing: [500, 25],
+          easing: [300, 25],
           display: 'block'
         }
       ]
@@ -25,8 +22,6 @@ export const rotate3d = {
     calls: [
       [
         {
-          transformPerspective: [2000, 2000],
-          rotateX: -70,
           opacity: [0, 1]
         },
         1,

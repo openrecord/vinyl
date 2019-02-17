@@ -53,12 +53,12 @@ export default function Queue({
               <ArrowNavigation priority={ArrowNavigation.PRIORITY_MAP.QUEUE} childIsWrapped>
                 <VelocityTransitionGroup
                   enter={{
-                    animation: animations.rotate3d.in,
+                    animation: animations.fade.in,
                     display: 'flex',
-                    stagger: 90,
-                    duration: 850
+                    stagger: 100,
+                    duration: 350
                   }}
-                  leave={{animation: animations.rotate3d.out, display: 'flex'}}
+                  leave={{animation: animations.fade.out, display: 'flex'}}
                   runOnMount
                 >
                   {playlist.tracks.map((track, idx) => (
