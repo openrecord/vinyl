@@ -1,25 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const StyledSearchBar = styled.input`
-  background-color: none;
-  border: 0;
-  border-bottom: 0.0675rem solid rgba(0, 0, 0, 0.4);
-  border-radius: 0;
-  box-sizing: border-box;
-  color: #000000;
-  display: block;
-  font-size: 1.5rem;
-  outline: none;
-  padding: 1.5rem 0;
-  position: relative;
-  width: 100%;
-
-  &::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-  }
-`;
-
 interface $Props {
   query: string;
   onChange(query: string): void;
@@ -46,9 +27,28 @@ export default class SearchBar extends React.Component<$Props> {
         type="text"
         value={this.state.query}
         autoFocus
-        placeholder="Enter something from YouTube or Soundcloud..."
+        placeholder="Search YouTube or Soundcloud..."
         onChange={this.updateQuery}
       />
     );
   }
 }
+
+const StyledSearchBar = styled.input`
+  background-color: #aaaaaa;
+  border: 0;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  color: #000000;
+  display: block;
+  font-size: 1rem;
+  outline: none;
+  margin: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  position: relative;
+  width: calc(100% - 1rem);
+
+  &::placeholder {
+    color: #3c3c3c;
+  }
+`;

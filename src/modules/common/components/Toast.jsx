@@ -5,7 +5,7 @@ export default function Toast({message}) {
   return <StyledToast>{message}</StyledToast>;
 }
 const StyledToast = styled.div`
-  background: #9c4d9d;
+  background: black;
   border-radius: 0.25rem;
   color: white;
   font-size: 0.875rem;

@@ -12,6 +12,8 @@ import Options from './Options';
 const speaker = require('../../../controls/components/images/speaker.svg');
 const scIcon = require('../images/soundcloud.svg');
 const ytIcon = require('../images/youtube.svg');
+const miniAdd = require('../images/mini-plus.svg');
+const checkAdd = require('../images/check-mark.svg');
 
 interface $Props {
   thumbnail: string | null;
@@ -47,10 +49,22 @@ export default function Track({
       data-track-type={search ? 'search' : 'queue'}
       search={search}
     >
-      <OrderLines>
-        <span />
-        <span />
-      </OrderLines>
+      {search ? (
+        <AddIcon>
+          <MiniPlus>
+            <img src={miniAdd} />
+          </MiniPlus>
+          <CheckMark>
+            <img src={checkAdd} />
+          </CheckMark>
+        </AddIcon>
+      ) : (
+        <OrderLines>
+          <span />
+          <span />
+        </OrderLines>
+      )}
+
       <ImageHolder search={search}>
         {thumbnail ? (
           <Thumbnail
@@ -64,9 +78,7 @@ export default function Track({
         )}
         <PlayBackground>
           <IconContainer>
-            {search ? (
-              <AddPlus />
-            ) : (
+            {search ? null : (
               <>
                 {isCurrentSong && <Speaker src={speaker} />}
                 <PlayPause play={!playing || !isCurrentSong} />
@@ -115,52 +127,6 @@ const Speaker = styled.img`
   transform: translate(-50%, -50%);
 `;
 
-const AddPlus = styled.span`
-  height: 1.5rem;
-  left: 50%;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 1.5rem;
-
-  @media ${device.small} {
-    height: 1rem;
-    width: 1rem;
-  }
-
-  &:before {
-    background: white;
-    content: '';
-    height: 1.5rem;
-    left: 50%;
-    position: absolute;
-    width: 0.25rem;
-    transform: translateX(-50%);
-
-    @media ${device.small} {
-      height: 1rem;
-      width: 0.165rem;
-    }
-  }
-
-  &:after {
-    background: white;
-    content: '';
-    height: 1.5rem;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    width: 0.25rem;
-
-    @media ${device.small} {
-      height: 1rem;
-      width: 0.165rem;
-    }
-  }
-`;
-
 interface $ImageHolderProps {
   search: boolean;
 }
@@ -174,10 +140,39 @@ const OrderLines = styled.div`
     background: #e2e2e2;
     border-radius: 1px;
     display: block;
-    height: 1px;
-    margin: 1px 0;
-    width: 8px;
+    height: 0.0625rem;
+    margin: 0.0625rem 0;
+    width: 0.5rem;
   }
+`;
+
+const MiniPlus = styled.div`
+  position: absolute;
+  opacity: 1;
+  transition: all 0.1s;
+
+  img {
+    display: inherit;
+  }
+`;
+
+const CheckMark = styled.div`
+  position: absolute;
+  opacity: 0;
+  transition: all 0.1s;
+
+  img {
+    display: inherit;
+  }
+`;
+
+const AddIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.5rem;
+  padding: 0.5rem;
+  width: 0.5rem;
 `;
 
 const ImageHolder = styled.div`
@@ -192,32 +187,7 @@ const ImageHolder = styled.div`
     height: 2.75rem;
     min-width: 5rem;
   }
-
-  ${({search}: $ImageHolderProps) =>
-    search &&
-    css`
-      height: 3.3rem;
-      min-width: 6rem;
-
-      @media ${device.small} {
-        height: 2.75rem;
-        min-width: 5rem;
-      }
-
-      div {
-        height: 3.3rem;
-        min-width: 6rem;
-        @media ${device.small} {
-          height: 2.75rem;
-          min-width: 5rem;
-        }
-      }
-    `};
 `;
-
-interface $ThumbnailProps {
-  search: boolean;
-}
 
 const Thumbnail = styled.img`
   height: 4.125rem;
@@ -245,17 +215,12 @@ const NoArtwork = styled.div`
 const SourceIcon = styled.div`
   display: flex;
   margin-left: auto;
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
   opacity: 1;
-  filter: invert(100%);
   img {
     align-content: center;
   }
 `;
-
-interface $StyledResultProps {
-  search: boolean;
-}
 
 const StyledResult = styled.div`
   display: flex;
@@ -276,7 +241,7 @@ const StyledResult = styled.div`
 
   &.is-current-song,
   :hover {
-    ${PlayBackground}, ${AddPlus} {
+    ${PlayBackground} {
       opacity: 1;
     }
   }
@@ -291,7 +256,8 @@ const StyledResult = styled.div`
   }
 
   :hover {
-    background: rgba(34, 34, 34, 0.4);
+    background: ${(props: $ImageHolderProps) =>
+      props.search ? 'rgba(24,24,24,0.4)' : 'rgba(34, 34, 34, 0.3)'};
     ${PlayPause} {
       opacity: 1;
     }
@@ -300,8 +266,12 @@ const StyledResult = styled.div`
       opacity: 0;
     }
 
-    .options {
-      opacity: 0.8;
+    ${MiniPlus} {
+      opacity: 0;
+    }
+
+    ${CheckMark} {
+      opacity: 1;
     }
   }
 
@@ -311,7 +281,7 @@ const StyledResult = styled.div`
 
   h5 {
     overflow: hidden;
-    color: rgba(255, 255, 255, 0.8);
+    color: white;
     display: -webkit-box;
     margin-right: 0.5rem;
     -webkit-line-clamp: 2;
@@ -322,17 +292,6 @@ const StyledResult = styled.div`
       margin-right: 0.25rem;
     }
   }
-
-  ${({search}: $ImageHolderProps) =>
-    search &&
-    css`
-      &:hover {
-        background: #f2f2f2;
-      }
-      h4 {
-        color: black;
-      }
-    `};
 `;
 
 function getThumbnailUrl(url: string): string {

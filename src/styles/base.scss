@@ -99,17 +99,21 @@ li {
 .toast.toast {
   background: transparent;
   padding: 0;
+  box-shadow: none;
 }
 
 .toast-container.toast-container {
-  bottom: 3.5rem;
+  bottom: 2rem;
   left: 50% !important;
   margin-left: 0;
   width: auto;
   transform: translateX(-50%);
   z-index: z-index('toast');
+}
 
-  @media screen and (max-width: $small) {
-    bottom: 8.5rem;
+.ReactModal__Content {
+  @media screen and (max-width: $medium) {
+    max-width: none !important;
+    width: 100% !important;
   }
 }
