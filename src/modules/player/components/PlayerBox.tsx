@@ -7,6 +7,8 @@ import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
 import ControlsContainer from '../../controls/components/ControlsContainer';
 
+const selectArrow = require('../../common/components/images/arrow.svg');
+
 interface $Props {
   currentlyPlaying: $Track | undefined;
   expanded: boolean;
@@ -25,9 +27,14 @@ export default function PlayerBox({
     return (
       <Positioning expanded={expanded}>
         <PlayerHolder>
-          <SizingEmpty>
-            <h2>Select a song to start listening</h2>
-          </SizingEmpty>
+          <PlayerEmpty>
+            <EmptyMessage>
+              <h2>Select a song to start listening</h2>
+              <Arrow>
+                <img src={selectArrow} />
+              </Arrow>
+            </EmptyMessage>
+          </PlayerEmpty>
         </PlayerHolder>
       </Positioning>
     );
@@ -172,7 +179,7 @@ const SizingHack = styled.div`
     `};
 `;
 
-const SizingEmpty = styled.div`
+const PlayerEmpty = styled.div`
   border: 0.125rem solid white;
   padding-bottom: 50.5%;
   position: relative;
@@ -181,20 +188,48 @@ const SizingEmpty = styled.div`
   [data-style-id='react-player'] {
     position: absolute;
   }
+`;
+
+const EmptyMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+
+  @media ${device.medium} {
+    flex-direction: column;
+  }
 
   h2 {
     color: white;
-    left: 50%;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    transform: translate(-50%, -50%);
 
-    @media ${device.medium} {
+    @media ${device.large} {
       font-size: 1.25rem;
     }
     @media ${device.small} {
       font-size: 1rem;
+    }
+  }
+`;
+
+const Arrow = styled.div`
+  height: 0.9375rem;
+  margin-left: 0.5rem;
+
+  @media ${device.medium} {
+    width: 0rem;
+    transform: rotate(90deg);
+  }
+
+  img {
+    @media ${device.medium} {
+      height: 0.75rem;
+      width: 2.5rem;
     }
   }
 `;
