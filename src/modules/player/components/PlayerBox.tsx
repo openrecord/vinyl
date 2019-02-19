@@ -225,6 +225,13 @@ const Arrow = styled.div`
     width: 0rem;
     transform: rotate(90deg);
   }
+
+  img {
+    @media ${device.medium} {
+      height: 0.75rem;
+      width: 2.5rem;
+    }
+  }
 `;
 
 const Title = styled.h3`
