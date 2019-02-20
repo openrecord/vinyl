@@ -19,8 +19,6 @@ class Landing extends React.Component {
 
   nominateClick = event => {
     this.setState({nominate: true});
-
-    console.log(this.state.nominate);
   };
 
   updateRoom = ({target: {value}}) => {
@@ -34,10 +32,8 @@ class Landing extends React.Component {
   render() {
     return (
       <div className="landing-inner">
-        <h1 className="hero-headline">Music playlists for sharing</h1>
-        <h5 className="hero-description">
-          Create a collection and enjoy 🔥music with others for free
-        </h5>
+        <h1 className="hero-headline">Open music playlists</h1>
+        <h5 className="hero-description">A free way to collect and share 🔥music with others</h5>
         <div className="hero-action">
           <input
             id="open-collection"
