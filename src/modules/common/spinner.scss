@@ -1,0 +1,99 @@
+.loading-record {
+  position: relative;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  background: linear-gradient(30deg, transparent 40%, rgba(10, 10, 10, 0.2) 40%) no-repeat 100% 0,
+    linear-gradient(60deg, rgba(10, 10, 10, 0.2) 60%, transparent 60%) no-repeat 0 100%,
+    repeating-radial-gradient(#000000, #000000 4px, #141414 5px, #000000 6px);
+  background-size: 50% 100%, 100% 50%, 100% 100%;
+
+  -webkit-animation: rotating 5s linear infinite;
+  -moz-animation: rotating 5s linear infinite;
+  -ms-animation: rotating 5s linear infinite;
+  -o-animation: rotating 5s linear infinite;
+  animation: rotating 5s linear infinite;
+
+  @media screen and (max-width: $medium) {
+    width: 16rem;
+    height: 16rem;
+    background: linear-gradient(30deg, transparent 40%, rgba(10, 10, 10, 0.2) 40%) no-repeat 100% 0,
+      linear-gradient(60deg, rgba(10, 10, 10, 0.2) 60%, transparent 60%) no-repeat 0 100%,
+      repeating-radial-gradient(#000000, #000000 3px, rgba(255, 255, 255, 0.06) 4px, #000000 5px);
+  }
+  @media screen and (max-width: $small) {
+    width: 14rem;
+    height: 14rem;
+    background: linear-gradient(30deg, transparent 40%, rgba(10, 10, 10, 0.2) 40%) no-repeat 100% 0,
+      linear-gradient(60deg, rgba(10, 10, 10, 0.2) 60%, transparent 60%) no-repeat 0 100%,
+      repeating-radial-gradient(#000000, #000000 2px, rgba(255, 255, 255, 0.06) 3px, #000000 4px);
+  }
+
+  .record-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(120.21deg, #1b2845 0%, #5781cc 100%);
+    @media screen and (max-width: $medium) {
+      width: 4.75rem;
+      height: 4.75rem;
+    }
+    @media screen and (max-width: $small) {
+      width: 4.25rem;
+      height: 4.25rem;
+    }
+
+    .record-pinhole {
+      background: #222222;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+
+      @media screen and (max-width: $medium) {
+        width: 0.675rem;
+        height: 0.675rem;
+      }
+      @media screen and (max-width: $small) {
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+    }
+  }
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

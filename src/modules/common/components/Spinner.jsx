@@ -4,28 +4,22 @@ import styled from 'styled-components';
 export default function Spinner() {
   return (
     <Loader>
-      <Main />
-      <Sidebar />
+      <div className="loading-record">
+        <div className="record-inner">
+          <div className="record-pinhole" />
+        </div>
+      </div>
     </Loader>
   );
 }
 
 const Loader = styled.div`
+  align-items: center;
   bottom: 0;
   display: flex;
+  justify-content: center;
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
-`;
-
-const Main = styled.div`
-  width: 80%;
-`;
-
-const Sidebar = styled.div`
-  background: rgba(34, 34, 34, 0.4);
-  height: 100%;
-  max-width: 30rem;
-  width: 50%;
 `;
