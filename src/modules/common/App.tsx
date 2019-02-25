@@ -5,6 +5,7 @@ import {Route, Switch} from 'react-router-dom';
 import {Slide, toast, ToastContainer} from 'react-toastify';
 
 import Landing from '../landing/Landing';
+import About from '../about/About';
 import Nav from '../nav/NavContainer';
 import PlaylistContainer from '../playlist/components/PlaylistContainer';
 import {ROUTES} from '../routes/routes';
@@ -19,6 +20,7 @@ export default function App() {
         <React.Suspense fallback={<Spinner />}>
           <Switch>
             <Route exact path={ROUTES.LANDING} component={Landing} />
+            <Route exact path={ROUTES.ABOUT} component={About} />
             <Route path={ROUTES.PLAYER} component={PlaylistContainer} />
             <Route render={() => <div>Route does not exist!</div>} />
           </Switch>
