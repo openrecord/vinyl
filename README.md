@@ -1,25 +1,9 @@
 # Open Record
 
 1. **[Summary of Purpose](#summary-of-purpose)**
-   - [Vision](#vision)
-   - [Mission](#mission)
-   - [Hypothesis](#hypothesis)
-   - [Problems](#Problem)
-   - [Goals](#goals)
-   - [Status](#status)
-   - [Team](#team)
 1. **[Engineering](#engineering)**
-   - [Onboarding](#onboarding)
-   - [Backend](#Backend)
-   - [Frontend](#Fronted)
-   - [Devops](#Devops)
-   - [Codebase Intro Videos](#codebase-intro-videos)
 1. **[Design](#design)**
-   - [Toolset](#toolset)
-   - [User Flows](#user-flows)
-   - [Mockups](#mockups)
 1. **[Research](#research)**
-   - [Secondary Research](#secondary-research)
 1. **[Notes](#notes)**
 
 <br>
@@ -39,7 +23,7 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 - People experience friction when sharing songs due to paywalls and logins
 
 ### Goals 
-- Empower users to form and cultivate their music identity online
+- Empower users to create their music identity online
 - Facilitate human driven music discovery
 - Enable content collection from across multiple platforms & reduce friction in sharing
 
