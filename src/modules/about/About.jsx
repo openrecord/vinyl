@@ -37,15 +37,25 @@ class About extends React.Component {
         <div className="about-main">
           <div className="message-holder">
             <h1 className="message-header">
-              An open source experiment for creating colorful music collections
+              An open source experiment for collaborative music collecting
             </h1>
             <span className="divider" />
             <h4 className="call-to-action">
               Let us know what you think or better yet, come help us build!
             </h4>
             <div className="button-box">
-              <button>Feedback</button>
-              <button>Contribute</button>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScwbj_7R3jBl_m4gaK_edOyyldnT5E-RCdXmdJg3ruJLaphhA/viewform?usp=sf_link"
+                target="blank"
+              >
+                <button>Feedback</button>
+              </a>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc7OBaGMOYAiMAuxImXUbN9TtQ9aWJOHB1TqRaFR11MGOcKYg/viewform?usp=sf_link"
+                target="blank"
+              >
+                <button>Contribute</button>
+              </a>
             </div>
           </div>
         </div>

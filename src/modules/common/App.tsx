@@ -7,6 +7,7 @@ import {Slide, toast, ToastContainer} from 'react-toastify';
 import Landing from '../landing/Landing';
 import About from '../about/About';
 import Nav from '../nav/NavContainer';
+import Footer from '../footer/FooterContainer';
 import PlaylistContainer from '../playlist/components/PlaylistContainer';
 import {ROUTES} from '../routes/routes';
 import Router from './components/Router';
@@ -35,6 +36,7 @@ export default function App() {
           draggablePercent={60}
           autoClose={2500}
         />
+        <Footer />
       </div>
     </Router>
   );

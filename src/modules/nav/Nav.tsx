@@ -106,7 +106,7 @@ const Logo = styled.div`
 
     @media ${device.small} {
       &:before {
-        content: ${(props: $LogoProps) => (props.about ? '"OR"' : '"OPENRECORD"')};
+        content: ${(props: $LogoProps) => (props.about ? '"O/R"' : '"OPENRECORD"')};
       }
     }
   }
