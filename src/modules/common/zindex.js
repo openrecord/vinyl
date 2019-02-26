@@ -6,6 +6,7 @@ const baseZIndexList = [
   'hiddenplaytoggle',
   'controls',
   'nav',
+  'footer',
   'search',
   'search-results',
   'header'

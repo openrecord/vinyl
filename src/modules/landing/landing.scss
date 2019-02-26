@@ -1,5 +1,4 @@
 .landing-inner {
-  background: linear-gradient(120.21deg, #1b2845 34.35%, #416098 99.2%);
   display: flex;
   flex-direction: column;
 
@@ -88,7 +87,7 @@
   }
 
   .featured {
-    margin: 12rem 0;
+    margin: 12rem 0 4rem 0;
 
     @media screen and (max-width: $medium) {
       margin: 9rem 0;

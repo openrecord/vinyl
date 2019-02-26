@@ -11,19 +11,28 @@ const recordLogo = require('../common/components/images/record.svg');
 
 interface $Props {
   hide: boolean;
+  about: boolean;
 }
 
 export default function Nav({hide}: $Props) {
   return (
     <VelocityComponent animation={{opacity: hide ? 0 : 1}}>
-      <StyledNav landing={location.pathname === ROUTES.LANDING}>
+      <StyledNav
+        landing={location.pathname === ROUTES.LANDING}
+        about={location.pathname === ROUTES.ABOUT}
+      >
         <Link to={ROUTES.LANDING}>
-          <Logo>
+          <Logo about={location.pathname === ROUTES.ABOUT}>
             <Record>
               <img src={recordLogo} />
             </Record>
-            <span>OPENRECORD</span>
+            <span />
           </Logo>
+        </Link>
+        <Link to={ROUTES.ABOUT}>
+          <InfoBubble about={location.pathname === ROUTES.ABOUT}>
+            <span>i</span>
+          </InfoBubble>
         </Link>
       </StyledNav>
     </VelocityComponent>
@@ -32,14 +41,36 @@ export default function Nav({hide}: $Props) {
 
 interface $StyledNavProps {
   landing: boolean;
+  about: boolean;
 }
 
-const StyledNav = styled.nav`
-  background: 'transparent';
-  display: ${(props: $StyledNavProps) => (props.landing ? 'block' : 'none !important')};
-  display: block;
-  position: absolute;
-  z-index: ${zindex('nav')};
+interface $InfoBubbleProps {
+  about: boolean;
+}
+
+interface $LogoProps {
+  about: boolean;
+}
+
+const InfoBubble = styled.div`
+  align-items: center;
+  background: white;
+  border-radius: 50%;
+  display: ${(props: $InfoBubbleProps) => (props.about ? 'none' : 'flex')};
+  justify-content: center;
+
+  height: 2rem;
+  margin-right: 1rem;
+  width: 2rem;
+  text-align: center;
+  transition: all 0.1s;
+
+  span {
+    color: black;
+    font-family: 'Haas Med';
+    font-size: 1.25rem;
+    transition: all 0.1s;
+  }
 `;
 
 const Record = styled.div`
@@ -62,14 +93,47 @@ const Logo = styled.div`
   span {
     display: inline-block;
     cursor: pointer;
-
     color: white;
     font-size: 1.25rem;
     font-family: 'Haas Med';
     letter-spacing: 0.0675rem;
     position: relative;
+    transition: all 0.1s;
 
-    transition: all 0.1s;
-    transition: all 0.1s;
+    &:before {
+      content: 'OPENRECORD';
+    }
+
+    @media ${device.small} {
+      &:before {
+        content: ${(props: $LogoProps) => (props.about ? '"O/R"' : '"OPENRECORD"')};
+      }
+    }
+  }
+`;
+
+const StyledNav = styled.nav`
+  background: 'transparent';
+  display: ${(props: $StyledNavProps) =>
+    props.landing || props.about ? 'block' : 'none !important'};
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  width: 100%;
+  justify-content: space-between;
+  z-index: ${zindex('nav')};
+
+  a {
+    pointer-events: all;
+
+    &:hover {
+      ${InfoBubble} {
+        background: black;
+        span {
+          color: white;
+        }
+      }
+    }
   }
 `;
