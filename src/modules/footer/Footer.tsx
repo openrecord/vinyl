@@ -9,20 +9,23 @@ import {ROUTES} from '../routes/routes';
 
 interface $Props {
   hide: boolean;
+  info: boolean;
 }
 
-export default function Footer({hide}: $Props) {
+export default function Footer({hide, info}: $Props) {
   return (
     <VelocityComponent animation={{opacity: hide ? 0 : 1}}>
-      <StyledFooter about={location.pathname === ROUTES.ABOUT}>
-        <a href="https://twitter.com/openrecord" target="blank">
-          <h5>Twitter</h5>
-        </a>
-        <span>•</span>
-        <a href="https://github.com/openrecord/vinyl" target="blank">
-          <h5>Github</h5>
-        </a>
-      </StyledFooter>
+      {info && (
+        <StyledFooter about={location.pathname === ROUTES.ABOUT}>
+          <a href="https://twitter.com/openrecord" target="blank">
+            <h5>Twitter</h5>
+          </a>
+          <span>•</span>
+          <a href="https://github.com/openrecord/vinyl" target="blank">
+            <h5>Github</h5>
+          </a>
+        </StyledFooter>
+      )}
     </VelocityComponent>
   );
 }
