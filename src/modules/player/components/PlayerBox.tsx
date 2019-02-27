@@ -6,7 +6,6 @@ import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
 import ControlsContainer from '../../controls/components/ControlsContainer';
-import Spinner from '../../common/components/Spinner';
 const selectArrow = require('../../common/components/images/arrow.svg');
 
 interface $Props {
