@@ -5,9 +5,9 @@ export default function Spinner() {
   return (
     <Loader>
       <div className="loading-record">
-        <div className="record-inner">
-          <div className="record-pinhole" />
-        </div>
+        <div className="record-ring outer" />
+        <div className="record-ring inner" />
+        <div className="record-pinhole" />
       </div>
     </Loader>
   );
@@ -22,4 +22,5 @@ const Loader = styled.div`
   position: fixed;
   right: 0;
   top: 0;
+  background: rgb(25, 25, 25);
 `;
