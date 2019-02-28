@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter} from 'react-router-dom';
-
+import ReactGA from 'react-ga';
 import {ifEnter} from '../common/utils';
 
 const coBlur = require('./images/co-blur.png');
@@ -9,6 +9,20 @@ class About extends React.Component {
   state = {
     room: ''
   };
+
+  feedbackClick() {
+    ReactGA.event({
+      category: 'Collaborate',
+      action: 'feedback'
+    });
+  }
+  contributeClick() {
+    ReactGA.event({
+      category: 'Collaborate',
+      action: 'contribute'
+    });
+  }
+
   updateRoom = ({target: {value}}) => {
     this.setState({room: value});
   };
@@ -48,13 +62,13 @@ class About extends React.Component {
                 href="https://docs.google.com/forms/d/e/1FAIpQLScwbj_7R3jBl_m4gaK_edOyyldnT5E-RCdXmdJg3ruJLaphhA/viewform?usp=sf_link"
                 target="blank"
               >
-                <button>Feedback</button>
+                <button onClick={this.feedbackClick}>Feedback</button>
               </a>
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSc7OBaGMOYAiMAuxImXUbN9TtQ9aWJOHB1TqRaFR11MGOcKYg/viewform?usp=sf_link"
                 target="blank"
               >
-                <button>Contribute</button>
+                <button onClick={this.contributeClick}>Contribute</button>
               </a>
             </div>
           </div>
