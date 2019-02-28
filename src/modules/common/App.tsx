@@ -12,6 +12,9 @@ import PlaylistContainer from '../playlist/components/PlaylistContainer';
 import {ROUTES} from '../routes/routes';
 import Router from './components/Router';
 import Spinner from './components/Spinner';
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-135346278-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 export default function App() {
   return (

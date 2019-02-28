@@ -19,6 +19,10 @@ class Landing extends React.Component {
 
   nominateClick = event => {
     this.setState({nominate: true});
+    ReactGA.event({
+      category: 'Featured',
+      action: 'nominate'
+    });
   };
 
   updateRoom = ({target: {value}}) => {
