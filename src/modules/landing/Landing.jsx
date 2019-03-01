@@ -68,33 +68,33 @@ class Landing extends React.Component {
               </div>
               <h3 className="featured-name">/ryan</h3>
             </a>
-            <a href="/ben" className="swipeable-card two">
+            <a href="/dc" className="swipeable-card two">
               <div className="example-record">
                 <img src={picTwo} />
                 <span className="pinhole two" />
               </div>
-              <h3 className="featured-name">/ben</h3>
+              <h3 className="featured-name">/dc</h3>
             </a>
-            <a href="/moves" className="swipeable-card three">
+            <a href="/remixes" className="swipeable-card three">
               <div className="example-record">
                 <img src={picThree} />
                 <span className="pinhole three" />
               </div>
-              <h3 className="featured-name">/moves</h3>
+              <h3 className="featured-name">/remixes</h3>
             </a>
-            <a href="/vibes" className="swipeable-card four">
+            <a href="/ben" className="swipeable-card four">
               <div className="example-record">
                 <img src={picFour} />
                 <span className="pinhole four" />
               </div>
-              <h3 className="featured-name">/vibes</h3>
+              <h3 className="featured-name">/ben</h3>
             </a>
-            <a href="/mickin" className="swipeable-card five">
+            <a href="/latin" className="swipeable-card five">
               <div className="example-record">
                 <img src={picFive} />
                 <span className="pinhole five" />
               </div>
-              <h3 className="featured-name">/mickin</h3>
+              <h3 className="featured-name">/latin</h3>
             </a>
             <div className="swipeable-card nominate">
               {this.state.nominate ? (

@@ -25,7 +25,7 @@ export default function PlayerBox({
   if (!currentlyPlaying) {
     return (
       <Positioning expanded={expanded}>
-        <PlayerHolder>
+        <PlayerHolder expanded={expanded}>
           <PlayerEmpty>
             <EmptyMessage>
               <h2>Select a song to start listening</h2>
@@ -44,8 +44,12 @@ export default function PlayerBox({
   const art = getTrackThumbnail(currentlyPlaying);
   return (
     <Positioning data-id="player" expanded={expanded}>
-      <PlayerHolder>
-        {currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>}
+      <PlayerHolder expanded={expanded}>
+        {currentlyPlaying && (
+          <Title visible={visible} expanded={expanded}>
+            {currentlyPlaying.info.title}
+          </Title>
+        )}
         <SizingHack isSoundCloud={isSoundCloud}>
           <IFrameBlocker />
           <HiddenPlayToggle visible={visible} onClick={togglePlaying} />
@@ -81,10 +85,14 @@ interface $IsVisible {
   visible: boolean;
 }
 
+interface $IsActive {
+  currentlyActive: boolean;
+}
+
 const Positioning = styled.div`
   position: relative;
-  margin: 0 2rem;
-  width: ${(props: $IsExpanded) => (props.expanded ? '80%' : '100%')};
+  margin: ${(props: $IsExpanded) => (props.expanded ? '0 2rem' : '0 auto 0 auto')};
+  width: ${(props: $IsExpanded) => (props.expanded ? '80%' : '95%')};
   height: 100vh;
   z-index: ${zindex('player')};
   overflow: hidden;
@@ -98,9 +106,9 @@ const Positioning = styled.div`
 
   @media ${device.medium} {
     box-sizing: border-box;
-    height: auto;
+    height: ${(props: $IsExpanded) => (props.expanded ? 'auto' : '100vh')};
     margin: 0;
-    padding: 1rem;
+    padding: ${(props: $IsExpanded) => (props.expanded ? '1rem' : '0')};
     width: 100%;
   }
 `;
@@ -151,13 +159,13 @@ const PlayerHolder = styled.div`
   top: 50%;
   transform: translateY(-50%);
   @media ${device.medium} {
-    top: 0;
-    transform: translateY(0);
+    top: ${(props: $IsExpanded) => (props.expanded ? '0' : '50%')};
+    transform: ${(props: $IsExpanded) => (props.expanded ? 'translateY(0)' : 'translateY(-50%)')};
   }
 `;
 
 const SizingHack = styled.div`
-  padding-bottom: 50.5%;
+  padding-bottom: 55.5%;
   position: relative;
   overflow: hidden;
 
@@ -180,7 +188,7 @@ const SizingHack = styled.div`
 
 const PlayerEmpty = styled.div`
   border: 0.125rem solid white;
-  padding-bottom: 50.5%;
+  padding-bottom: 55.5%;
   position: relative;
   overflow: hidden;
 
@@ -237,10 +245,13 @@ const Title = styled.h3`
   color: rgb(255, 255, 255);
   max-width: 75%;
   overflow: hidden;
-  margin: 0.75rem 0;
+  z-index: ${zindex('title')};
   white-space: nowrap;
   text-overflow: ellipsis;
   opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+  margin: ${(props: $IsExpanded) => (props.expanded ? '0.75rem 0' : '0.75rem 1rem')};
+
+  position: ${(props: $IsExpanded) => (props.expanded ? 'relative' : 'fixed')};
 
   @media ${device.large} {
     font-size: 1.125rem;

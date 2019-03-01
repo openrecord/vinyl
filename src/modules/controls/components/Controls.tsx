@@ -45,7 +45,7 @@ export default function Controls({
   visible
 }: $Props) {
   const controls = (
-    <MediaControls>
+    <MediaControls expanded={expanded}>
       <SoundToggle onClick={toggleMuted}>
         <SoundSwitch muted={muted} />
       </SoundToggle>
@@ -63,7 +63,7 @@ export default function Controls({
 
   const desktop = (
     <Row>
-      {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
+      {currentlyPlaying && <Title expanded={expanded}>{currentlyPlaying.info.title}</Title>}
       {controls}
     </Row>
   );
@@ -71,17 +71,21 @@ export default function Controls({
   const mobile = (
     <>
       <Row>
-        {currentlyPlaying && <Title>{currentlyPlaying.info.title}</Title>}
+        {currentlyPlaying && <Title expanded={expanded}>{currentlyPlaying.info.title}</Title>}
         {controls}
       </Row>
     </>
   );
 
   return (
-    <ControlBar visible={visible}>
+    <ControlBar visible={visible} expanded={expanded}>
       <MediaQuery query={device.small}>{ifElse(mobile, desktop)}</MediaQuery>
     </ControlBar>
   );
+}
+
+interface $IsExpanded {
+  expanded: boolean;
 }
 
 interface $IsVisible {
@@ -91,15 +95,20 @@ interface $IsVisible {
 const ControlBar = styled.div`
   display: block;
   opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
-  padding: 0.5rem 0;
-  position: relative;
-  top: 100%;
+  padding: ${(props: $IsExpanded) => (props.expanded ? '0.5rem 0' : '0.25rem 0')};
+  position: ${(props: $IsExpanded) => (props.expanded ? 'relative' : 'fixed')};
+  top: ${(props: $IsExpanded) => (props.expanded ? '100%' : 'auto')};
+  bottom: ${(props: $IsExpanded) => (props.expanded ? 'auto' : '0')};
   transition: all 0.1s;
   width: 100%;
   z-index: ${zindex('controls')};
 
   @media ${device.medium} {
+    bottom: auto;
     opacity: 1;
+    padding: 0.5rem 0;
+    position: relative;
+    top: 100%;
   }
 `;
 
@@ -133,9 +142,10 @@ const MediaControls = styled.div`
   justify-content: space-between;
   width: 100%;
   position: relative;
+  padding: ${(props: $IsExpanded) => (props.expanded ? '0' : '0 0.5rem')};
 
-  @media ${device.small} {
-    width: 100%;
+  @media ${device.medium} {
+    width: ${(props: $IsExpanded) => (props.expanded ? '100%' : '95%')};
   }
 `;
 
