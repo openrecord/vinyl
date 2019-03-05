@@ -90,7 +90,7 @@ interface $IsExpanded {
 const QueueList = styled.div`
   background: rgba(34, 34, 34, 0.2);
   max-height: 100vh;
-  height: ${(props: $IsExpanded) => (props.expanded ? '100%' : '0')};
+  height: ${(props: $IsExpanded) => (props.expanded ? '100vh' : '0')};
   max-width: 30rem;
   overflow: scroll;
   position: relative;
@@ -103,6 +103,7 @@ const QueueList = styled.div`
 
   @media ${device.medium} {
     max-height: none;
+    height: auto;
     max-width: none;
     overflow: hidden;
   }
