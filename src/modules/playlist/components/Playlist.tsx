@@ -31,19 +31,25 @@ export default class Playlist extends React.Component<$Props> {
     return (
       <StyledPlaylistBackground style={{backgroundColor: toRGBString(color)}}>
         <StyledPlaylist>
-          <TopRight expanded={expanded}>
+          <BottomRight expanded={expanded}>
             <VelocityComponent animation={{opacity: showAddBtn ? 1 : 0}}>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
             </VelocityComponent>
-          </TopRight>
-          <PlayerContainer />
+          </BottomRight>
+
           <SearchContainer />
+
           {isEmpty ? (
             <EmptyCollection>
+              <h2>Add song to start playlist</h2>
               <AddSong onClick={toggleSearch} isOpen={isOpen} />
+              <h2 />
             </EmptyCollection>
           ) : (
-            <QueueContainer />
+            <>
+              <PlayerContainer />
+              <QueueContainer />
+            </>
           )}
         </StyledPlaylist>
       </StyledPlaylistBackground>
@@ -72,7 +78,7 @@ const StyledPlaylist = styled.div`
   }
 `;
 
-const TopRight = styled.div`
+const BottomRight = styled.div`
   display: ${(props: $IsExpanded) => (props.expanded ? 'inline-block' : 'none')};
   position: fixed;
   bottom: 0;
@@ -81,13 +87,12 @@ const TopRight = styled.div`
 `;
 
 const EmptyCollection = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   color: white;
-
-  button {
-    font-size: 2.25rem;
-    padding: 1.25rem 2.5rem;
-    position: relative;
-    top: 2.5rem;
-  }
+  height: 100vh;
+  width: 100%;
 `;

@@ -7,6 +7,7 @@ import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
 import ControlsContainer from '../../controls/components/ControlsContainer';
 const selectArrow = require('../../common/components/images/arrow.svg');
+const headphones = require('../../common/components/images/headphones.svg');
 
 interface $Props {
   currentlyPlaying: $Track | undefined;
@@ -28,6 +29,9 @@ export default function PlayerBox({
         <PlayerHolder expanded={expanded}>
           <PlayerEmpty>
             <EmptyMessage>
+              <Headphones>
+                <img src={headphones} />
+              </Headphones>
               <h2>Select a song to start listening</h2>
               <Arrow>
                 <img src={selectArrow} />
@@ -201,6 +205,7 @@ const EmptyMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   left: 50%;
   position: absolute;
   text-align: center;
@@ -208,18 +213,17 @@ const EmptyMessage = styled.div`
   transform: translate(-50%, -50%);
   width: 90%;
 
-  @media ${device.medium} {
-    flex-direction: column;
-  }
-
   h2 {
     color: white;
+    margin: 1.5rem 0;
 
     @media ${device.large} {
       font-size: 1.25rem;
+      margin: 1rem 0;
     }
     @media ${device.small} {
       font-size: 1rem;
+      margin: 0.75rem 0;
     }
   }
 `;
@@ -237,6 +241,25 @@ const Arrow = styled.div`
     @media ${device.medium} {
       height: 0.75rem;
       width: 2.5rem;
+    }
+  }
+`;
+
+const Headphones = styled.div`
+  height: 3rem;
+  width: 3.75rem;
+
+  @media ${device.medium} {
+    height: 2.5rem;
+    width: 3.125rem;
+  }
+
+  img {
+    height: 3rem;
+    width: 3.75rem;
+    @media ${device.medium} {
+      height: 2.5rem;
+      width: 3.125rem;
     }
   }
 `;
