@@ -60,7 +60,7 @@ const initialState: $State = {
     muted: false,
     played: 0,
     duration: 0,
-    live: true,
+    live: false,
     color: DEFAULT_BG,
     isActive: true
   },

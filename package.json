@@ -141,6 +141,7 @@
     "react-beautiful-dnd": "^10.0.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.0-alpha.1",
+    "react-ga": "^2.5.7",
     "react-hot-loader": "^4.6.3",
     "react-modal": "^3.7.1",
     "react-onclickoutside": "^6.7.1",

@@ -1,0 +1,104 @@
+.loading-record {
+  border: 0.125rem solid white;
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  @media screen and (max-width: $medium) {
+    width: 7rem;
+    height: 7rem;
+  }
+  @media screen and (max-width: $small) {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  -webkit-animation: rotating 5s linear infinite;
+  -moz-animation: rotating 5s linear infinite;
+  -ms-animation: rotating 5s linear infinite;
+  -o-animation: rotating 5s linear infinite;
+  animation: rotating 5s linear infinite;
+
+  .record-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    border-radius: 50%;
+    border: 0.125rem solid white;
+    border-color: transparent white transparent white;
+    transform: translate(-50%, -50%);
+
+    &.outer {
+      width: 5rem;
+      height: 5rem;
+      @media screen and (max-width: $medium) {
+        width: 4.375rem;
+        height: 4.375rem;
+      }
+      @media screen and (max-width: $small) {
+        width: 3.75rem;
+        height: 3.75rem;
+      }
+    }
+    &.inner {
+      width: 3.5rem;
+      height: 3.5rem;
+      @media screen and (max-width: $medium) {
+        width: 3rem;
+        height: 3rem;
+      }
+      @media screen and (max-width: $small) {
+        width: 2.625rem;
+        height: 2.625rem;
+      }
+    }
+  }
+  .record-pinhole {
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    @media screen and (max-width: $medium) {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+    @media screen and (max-width: $small) {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

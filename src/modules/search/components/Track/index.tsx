@@ -177,6 +177,7 @@ const AddIcon = styled.div`
 
 const ImageHolder = styled.div`
   display: inline-block;
+  background: linear-gradient(120.21deg, #1b2845 34.35%, #416098 99.2%);
   position: relative;
   height: 3rem;
   overflow: hidden;

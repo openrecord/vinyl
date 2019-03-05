@@ -5,7 +5,9 @@ const baseZIndexList = [
   'iframeblocker',
   'hiddenplaytoggle',
   'controls',
+  'title',
   'nav',
+  'footer',
   'search',
   'search-results',
   'header'

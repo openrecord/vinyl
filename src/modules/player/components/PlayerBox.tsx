@@ -6,6 +6,8 @@ import zindex from '../../common/zindex';
 import {$Track} from '../../search/components/types';
 import Player, {$PlayerProps} from './Player';
 import ControlsContainer from '../../controls/components/ControlsContainer';
+const selectArrow = require('../../common/components/images/arrow.svg');
+const headphones = require('../../common/components/images/headphones.svg');
 
 interface $Props {
   currentlyPlaying: $Track | undefined;
@@ -24,10 +26,18 @@ export default function PlayerBox({
   if (!currentlyPlaying) {
     return (
       <Positioning expanded={expanded}>
-        <PlayerHolder>
-          <SizingEmpty>
-            <h2>Select a song to start listening</h2>
-          </SizingEmpty>
+        <PlayerHolder expanded={expanded}>
+          <PlayerEmpty>
+            <EmptyMessage>
+              <Headphones>
+                <img src={headphones} />
+              </Headphones>
+              <h2>Select a song to start listening</h2>
+              <Arrow>
+                <img src={selectArrow} />
+              </Arrow>
+            </EmptyMessage>
+          </PlayerEmpty>
         </PlayerHolder>
       </Positioning>
     );
@@ -38,8 +48,12 @@ export default function PlayerBox({
   const art = getTrackThumbnail(currentlyPlaying);
   return (
     <Positioning data-id="player" expanded={expanded}>
-      <PlayerHolder>
-        {currentlyPlaying && <Title visible={visible}>{currentlyPlaying.info.title}</Title>}
+      <PlayerHolder expanded={expanded}>
+        {currentlyPlaying && (
+          <Title visible={visible} expanded={expanded}>
+            {currentlyPlaying.info.title}
+          </Title>
+        )}
         <SizingHack isSoundCloud={isSoundCloud}>
           <IFrameBlocker />
           <HiddenPlayToggle visible={visible} onClick={togglePlaying} />
@@ -75,10 +89,14 @@ interface $IsVisible {
   visible: boolean;
 }
 
+interface $IsActive {
+  currentlyActive: boolean;
+}
+
 const Positioning = styled.div`
   position: relative;
-  margin: 0 2rem;
-  width: ${(props: $IsExpanded) => (props.expanded ? '80%' : '100%')};
+  margin: ${(props: $IsExpanded) => (props.expanded ? '0 2rem' : '0 auto 0 auto')};
+  width: ${(props: $IsExpanded) => (props.expanded ? '80%' : '95%')};
   height: 100vh;
   z-index: ${zindex('player')};
   overflow: hidden;
@@ -92,9 +110,9 @@ const Positioning = styled.div`
 
   @media ${device.medium} {
     box-sizing: border-box;
-    height: auto;
+    height: ${(props: $IsExpanded) => (props.expanded ? 'auto' : '100vh')};
     margin: 0;
-    padding: 1rem;
+    padding: ${(props: $IsExpanded) => (props.expanded ? '1rem' : '0')};
     width: 100%;
   }
 `;
@@ -145,13 +163,13 @@ const PlayerHolder = styled.div`
   top: 50%;
   transform: translateY(-50%);
   @media ${device.medium} {
-    top: 0;
-    transform: translateY(0);
+    top: ${(props: $IsExpanded) => (props.expanded ? '0' : '50%')};
+    transform: ${(props: $IsExpanded) => (props.expanded ? 'translateY(0)' : 'translateY(-50%)')};
   }
 `;
 
 const SizingHack = styled.div`
-  padding-bottom: 50.5%;
+  padding-bottom: 55.5%;
   position: relative;
   overflow: hidden;
 
@@ -172,29 +190,76 @@ const SizingHack = styled.div`
     `};
 `;
 
-const SizingEmpty = styled.div`
+const PlayerEmpty = styled.div`
   border: 0.125rem solid white;
-  padding-bottom: 50.5%;
+  padding-bottom: 55.5%;
   position: relative;
   overflow: hidden;
 
   [data-style-id='react-player'] {
     position: absolute;
   }
+`;
+
+const EmptyMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
 
   h2 {
     color: white;
-    left: 50%;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: 1.5rem 0;
 
-    @media ${device.medium} {
+    @media ${device.large} {
       font-size: 1.25rem;
+      margin: 1rem 0;
     }
     @media ${device.small} {
       font-size: 1rem;
+      margin: 0.75rem 0;
+    }
+  }
+`;
+
+const Arrow = styled.div`
+  height: 0.9375rem;
+  margin-left: 0.5rem;
+
+  @media ${device.medium} {
+    width: 0rem;
+    transform: rotate(90deg);
+  }
+
+  img {
+    @media ${device.medium} {
+      height: 0.75rem;
+      width: 2.5rem;
+    }
+  }
+`;
+
+const Headphones = styled.div`
+  height: 3rem;
+  width: 3.75rem;
+
+  @media ${device.medium} {
+    height: 2.5rem;
+    width: 3.125rem;
+  }
+
+  img {
+    height: 3rem;
+    width: 3.75rem;
+    @media ${device.medium} {
+      height: 2.5rem;
+      width: 3.125rem;
     }
   }
 `;
@@ -203,10 +268,13 @@ const Title = styled.h3`
   color: rgb(255, 255, 255);
   max-width: 75%;
   overflow: hidden;
-  margin: 0.75rem 0;
+  z-index: ${zindex('title')};
   white-space: nowrap;
   text-overflow: ellipsis;
   opacity: ${(props: $IsVisible) => (props.visible ? '1' : '0')};
+  margin: ${(props: $IsExpanded) => (props.expanded ? '0.75rem 0' : '0.75rem 1rem')};
+
+  position: ${(props: $IsExpanded) => (props.expanded ? 'relative' : 'fixed')};
 
   @media ${device.large} {
     font-size: 1.125rem;
