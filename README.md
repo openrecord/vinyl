@@ -4,20 +4,15 @@
 1. **[Engineering](#engineering)**
 1. **[Design](#design)**
 1. **[Research](#research)**
-1. **[Notes](#notes)**
 
 <br>
 
 # Summary of Purpose
 
-### Vision
-Cultivate your music personality
-
 ### Hypothesis
-Listeners want a fun, colorful way to collect and share their favorite music with friends/followers. 
-- The value of human driven discovery vs algorithmic automation
+Listeners want a open easy way to collect and share their favorite music with friends/followers. 
 
-### Problem
+### Problems
 - Algorithmic curation feels unauthentic and limiting
 - Good songs and music videos are spread across different services
 - People experience friction when sharing songs due to paywalls and logins
@@ -32,14 +27,14 @@ Listeners want a fun, colorful way to collect and share their favorite music wit
 
 **Current Features:**
 - Create a collection - url based (i.e. [openrecord.co/ryan](https://openrecord.co/ryan))
-- Ad free music playback
+- Interruption free music playback with songs from YouTube & Soundcloud
 - Live playlists - if another users adds a song while your in the collection it will show up
 
 **Potential Enhancements** 
-- Create an endless feed of songs from the collections you follow
-- Syncing playback in real time
 - Collect music form other collections
-
+- Syncing playback in real time
+- Suggested music for adding
+- Feed of music from items being shared
 
 ### Team
 #### Join the Team
@@ -92,11 +87,7 @@ Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/maste
 <br>
 
 # Design
-### Toolset
-We use Figma for easy access and feedback.
 - [Figma WIP Design](https://www.figma.com/file/JA060sqEtiPBNkZE8VkWPKS4/Sidebar-Orientation?node-id=0%3A1)
-
-### Userflow
 
 ### Mockups
 **Sidebar**
@@ -123,34 +114,5 @@ Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](http
 
 <img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
 
-## Challenges to overcome
-**1. Music Staleness** *How do we prevent music from getting stale and repetative?*
-
-**Ideas**
-- Song limit (25 songs?)
-- Songs disappear after 30 days.
-
-**2. Adoption** *How do we get users to try a new music experience?*
-
-**3. Retention** *How do we get users to repetitively return to a new music experience?*
-
-**Create virtuous loops**
+**Notes on Virtuous loops**
 ![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
-
-
-# Notes
-Personality is who you are, traits that grow but also remain consistent over time.
-Personalitzaion is trying to predict what you like.
-Other people contributing to a shared community is exciting because their engagement leads to surprise, curiosity and encourages more engagement.
-
-**User Groups**
-1. Listeners
-1. DJs
-1. Music Creators
-1. Music Influencers 
-
-### Value Propositions
-### Success Metrics
-### KPIs
-### Key Storypoints
-### Screenshots
