@@ -1,11 +1,10 @@
 # Open Record
-
+**URL: https://openrecord.co/**
 1. **[Summary of Purpose](#summary-of-purpose)**
 1. **[Engineering](#engineering)**
 1. **[Design](#design)**
 1. **[Research](#research)**
 
-<br>
 
 # Summary of Purpose
 
@@ -23,8 +22,6 @@ Listeners want a open easy way to collect and share their favorite music with fr
 - Enable content collection from across multiple platforms & reduce friction in sharing
 
 ### Status
-**URL: https://openrecord.co/**
-
 **Current Features:**
 - Create a collection - url based (i.e. [openrecord.co/ryan](https://openrecord.co/ryan))
 - Interruption free music playback with songs from YouTube & Soundcloud
