@@ -58,7 +58,6 @@ If you're interested in contributing to OpenRecord, shoot us an email at [openre
 npm install     # Install packages.
 npm start       # Run the frontend using webpack-dev-server (with hot module replacement). Default address is http://localhost:8080
 ```
-**More to be written**
 
 ### Backend
 Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/master/turntable) folder of this repo
