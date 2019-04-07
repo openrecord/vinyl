@@ -40,7 +40,6 @@ If you're interested in contributing to OpenRecord, shoot us an email at [openre
 #### Active
 - Ryan - [@rtluu](https://github.com/rtluu)
 - Bruno - [@brunogarciagonzalez](https://github.com/brunogarciagonzalez)
-- Rian - [@rianfowler](https://github.com/rianfowler)
 - Alex - [@Agiraldez17](https://github.com/agiraldez17)
 
 #### Inactive
