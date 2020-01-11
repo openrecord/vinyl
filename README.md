@@ -1,41 +1,5 @@
 # Open Record
 **URL: https://openrecord.co/**
-1. **[Summary of Purpose](#summary-of-purpose)**
-1. **[Engineering](#engineering)**
-1. **[Design](#design)**
-1. **[Research](#research)**
-
-
-# Summary of Purpose
-
-### Hypothesis
-Listeners want a open easy way to collect and share their favorite music with friends/followers. 
-
-### Problems
-- Algorithmic curation feels unauthentic and limiting
-- Good songs and music videos are spread across different services
-- People experience friction when sharing songs due to paywalls and logins
-
-### Goals 
-- Empower users to create their music identity online
-- Facilitate human driven music discovery
-- Enable content collection from across multiple platforms & reduce friction in sharing
-
-### Status
-**Current Features:**
-- Create a collection - url based (i.e. [openrecord.co/ryan](https://openrecord.co/ryan))
-- Interruption free music playback with songs from YouTube & Soundcloud
-- Live playlists - if another users adds a song while your in the collection it will show up
-
-**Potential Enhancements** 
-- Collect music form other collections
-- Syncing playback in real time
-- Suggested music for adding
-- Feed of music from items being shared
-
-
-
-# Engineering
 
 ### Onboarding
 ```bash
@@ -83,16 +47,3 @@ Handled inside of the [turntable](https://github.com/openrecord/vinyl/tree/maste
 **Mobile History**
 
 <img width="220" alt="mobile history" src="https://user-images.githubusercontent.com/7230519/52543121-edc3d000-2d74-11e9-905e-bc5ad36fd20f.png">
-
-<br>
-
-# Research
-### Secondary Research
-Academic Paper - [WHAT ARE MUSICAL IDENTITIES, AND WHY ARE THEY IMPORTANT?](https://www.academia.edu/267455/What_Are_Musical_Identities_and_Why_Are_They_Important)
-
-<br>
-
-<img width="707" alt="screen shot 2019-02-08 at 8 48 18 pm" src="https://user-images.githubusercontent.com/7230519/52514791-ee2c6180-2be2-11e9-9e34-a7b81b7088db.png">
-
-**Notes on Virtuous loops**
-![virtuous loops](https://user-images.githubusercontent.com/7230519/52525741-17e59700-2c7c-11e9-9e51-7d6d259ac066.png)
