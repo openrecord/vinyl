@@ -33,22 +33,7 @@ Listeners want a open easy way to collect and share their favorite music with fr
 - Suggested music for adding
 - Feed of music from items being shared
 
-### Team
-#### Join the Team
-If you're interested in contributing to OpenRecord, shoot us an email at [openrecordteam@gmail.com](mailto:openrecordteam@gmail.com) for an invite to our Slack & Github Repo.
 
-#### Active
-- Ryan - [@rtluu](https://github.com/rtluu)
-- Bruno - [@brunogarciagonzalez](https://github.com/brunogarciagonzalez)
-- Alex - [@Agiraldez17](https://github.com/agiraldez17)
-
-#### Inactive
-- James - [@jamesmcnamara](https://github.com/jamesmcnamara)
-- Osebo - [@osebo](https://github.com/osebo)
-- Chas - [@chasdevs](https://github.com/chasdevs)
-- Cam - [@camlatimer](https://github.com/camlatimer)
-
-<br>
 
 # Engineering
 
